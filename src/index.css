@@ -27,10 +27,15 @@
     --ring: 245 52% 47%;
     --radius: 0.5rem;
 
-    /* App-specific tokens */
-    --nav-bg: 40 6% 98%;
-    --nav-border: 40 6% 90%;
-    --header-bg: 0 0% 100%;
+    /* Dark chrome (sidebar + header) */
+    --chrome-bg: 220 16% 12%;
+    --chrome-bg-hover: 220 14% 16%;
+    --chrome-bg-active: 220 14% 18%;
+    --chrome-fg: 220 10% 75%;
+    --chrome-fg-bright: 0 0% 92%;
+    --chrome-fg-muted: 220 10% 48%;
+    --chrome-border: 220 12% 20%;
+    --chrome-accent: 245 52% 58%;
 
     /* Semantic status colors */
     --stable: 145 55% 32%;
@@ -69,15 +74,20 @@
     --highlight-bg: 245 50% 97%;
     --highlight-border: 245 30% 82%;
 
-    /* Sidebar */
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 40 6% 40%;
-    --sidebar-primary: 245 52% 47%;
+    /* Sidebar — dark */
+    --sidebar-background: 220 16% 12%;
+    --sidebar-foreground: 220 10% 75%;
+    --sidebar-primary: 245 52% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 6% 96%;
-    --sidebar-accent-foreground: 40 10% 10%;
-    --sidebar-border: 40 6% 90%;
+    --sidebar-accent: 220 14% 18%;
+    --sidebar-accent-foreground: 0 0% 92%;
+    --sidebar-border: 220 12% 20%;
     --sidebar-ring: 245 52% 47%;
+
+    /* Dark epistemic section */
+    --dark-section-bg: 220 16% 10%;
+    --dark-section-fg: 220 10% 80%;
+    --dark-section-border: 220 12% 18%;
   }
 }
 
