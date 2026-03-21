@@ -124,6 +124,9 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   // SCRI
   const scri = computeSCRI(inputs);
 
+  // Composite Risk Index
+  const compositeRiskIndex = computeCompositeRiskIndex(afi, alri, agri);
+
   // Premium estimate
   const basePrem = 180 * sectorMult;
   const autoMult = [0, 0.5, 0.75, 1.0, 1.5, 2.2][inputs.automation] || 1;
