@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
@@ -130,7 +130,57 @@ export function DecisionIntelligence() {
         <BandBadge band={band} size="sm" />
       </div>
 
-      {/* This Means */}
+      {/* AFI Component Analysis — Radar Chart */}
+      <SectionCard title="AFI Component Analysis">
+        <div className="h-[250px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <RadarChart data={[
+              { dimension: 'Delegation Ratio', value: components.dr },
+              { dimension: 'Reversibility Cost', value: components.rc },
+              { dimension: 'Continuation Density', value: components.cd },
+              { dimension: 'Justificatory Density', value: components.jd },
+              { dimension: 'Network Amplification', value: components.na },
+            ]}>
+              <PolarGrid stroke="hsl(var(--border))" />
+              <PolarAngleAxis
+                dataKey="dimension"
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontFamily: 'Inter' }}
+              />
+              <PolarRadiusAxis
+                domain={[0, 1]}
+                tickCount={6}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 8, fontFamily: 'IBM Plex Mono' }}
+                tickFormatter={(v: number) => `${(v * 100).toFixed(0)}%`}
+                axisLine={false}
+              />
+              <Radar
+                name="Your Profile"
+                dataKey="value"
+                stroke="#b53020"
+                fill="rgba(181, 48, 32, 0.15)"
+                strokeWidth={2}
+                dot={{ fill: '#b53020', stroke: '#fff', strokeWidth: 1, r: 3 }}
+              />
+              <RechartsTooltip
+                content={({ active, payload }) => {
+                  if (!active || !payload?.length) return null;
+                  const d = payload[0].payload;
+                  return (
+                    <div className="bg-[#111108] border border-[#3a3828] rounded-lg px-3 py-2 text-[11px] shadow-xl">
+                      <div className="text-white font-medium">{d.dimension}</div>
+                      <div className="text-[#c0bcb0]">{(d.value * 100).toFixed(0)}%</div>
+                    </div>
+                  );
+                }}
+              />
+            </RadarChart>
+          </ResponsiveContainer>
+        </div>
+        <p className="text-[11px] text-muted-foreground mt-3">
+          Radar visualization of AFI sub-components. Values closer to 100% indicate higher structural exposure in that dimension. JD (Justificatory Density) is protective — higher values reduce AFI.
+        </p>
+      </SectionCard>
+
       <div className="bg-card rounded-xl p-5 mb-4 border-l-4 border-l-fragile border border-border flex items-start gap-[14px]">
         <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
           band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
