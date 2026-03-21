@@ -115,10 +115,10 @@ export function DecisionIntelligence() {
       {/* AFI Component chips */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         {[
-          { label: `DR ${Math.round(components.dr * 100)}`, desc: 'Delegation Ratio' },
-          { label: `JD ${Math.round(components.jd * 100)}`, desc: 'Justificatory Density' },
-          { label: `RC ${Math.round(components.rc * 100)}`, desc: 'Reversibility Cost' },
-          { label: `CD ${Math.round(components.cd * 100)}`, desc: 'Continuation Density' },
+          { label: `DR ${Math.round(components.dr * 100)}`, desc: 'Delegation Ratio', tooltip: TOOLTIPS.dr },
+          { label: `JD ${Math.round(components.jd * 100)}`, desc: 'Justificatory Density', tooltip: TOOLTIPS.jd },
+          { label: `RC ${Math.round(components.rc * 100)}`, desc: 'Reversibility Cost', tooltip: TOOLTIPS.rc },
+          { label: `CD ${Math.round(components.cd * 100)}`, desc: 'Continuation Density', tooltip: TOOLTIPS.cd },
         ].map((c, i) => (
           <div key={i} className="px-3 py-[6px] bg-card border border-border rounded-lg text-[10px]">
             <span className="font-mono font-bold text-foreground">{c.label}</span>
