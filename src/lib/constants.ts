@@ -72,6 +72,8 @@ export const SECTOR_MULTIPLIERS: Record<string, number> = {
 export const DEFAULT_INPUTS = {
   companyName: '',
   industry: 'Financial Services',
+  size: '',
+  revenue: '',
   useCases: ['Decision Support'],
   providers: ['OpenAI'],
   automation: 3,
@@ -106,3 +108,19 @@ export const DEFAULT_INPUTS = {
   gpuConcentration: 3,
   crossVendorContagion: 3,
 };
+
+export const COMPANY_SIZES = [
+  'Startup (<50)',
+  'SME (50–250)',
+  'Mid-Market (250–1000)',
+  'Enterprise (1000–10000)',
+  'Large Enterprise (10000+)',
+];
+
+export const REVENUE_RANGES = [
+  'Under €10M',
+  '€10M–€50M',
+  '€50M–€500M',
+  '€500M–€5B',
+  'Over €5B',
+];

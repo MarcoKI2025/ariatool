@@ -153,6 +153,7 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     agri,
     alri,
     scri,
+    compositeRiskIndex,
     premium: {
       lo: Math.round(midPrem * (1 - bandPct) / 10) * 10,
       mid: Math.round(midPrem / 10) * 10,
