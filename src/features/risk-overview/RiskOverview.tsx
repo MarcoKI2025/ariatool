@@ -38,7 +38,7 @@ export function RiskOverview() {
             <div className="text-[12px] text-foreground">{results.decisionClass}</div>
           </div>
           <div>
-            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Existence Cost</div>
+            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Existence Cost<InfoTip text={TOOLTIPS.eci} /></div>
             <div className="text-[12px] text-foreground">ECI-{eciTier} — {eciName}</div>
           </div>
         </div>
