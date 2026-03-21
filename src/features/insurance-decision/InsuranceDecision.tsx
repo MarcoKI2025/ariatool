@@ -270,6 +270,8 @@ export function InsuranceDecision() {
               Premium estimates are governance-oriented indicators only. Use with independent actuarial validation. Optimized scenario assumes governance improvements within 90 days.
             </div>
           </SectionCard>
+        );
+      })()}
 
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
