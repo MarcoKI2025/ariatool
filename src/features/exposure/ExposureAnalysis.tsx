@@ -251,10 +251,10 @@ export function ExposureAnalysis() {
           <div className="mb-3 space-y-[6px]">
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">AFI Components</div>
             {[
-              { label: 'DR', value: preview.components.dr, name: 'Delegation Ratio' },
-              { label: 'JD', value: preview.components.jd, name: 'Justificatory Density' },
-              { label: 'RC', value: preview.components.rc, name: 'Reversibility Cost' },
-              { label: 'CD', value: preview.components.cd, name: 'Continuation Density' },
+              { label: 'DR', value: preview.components.dr, name: 'Delegation Ratio', tooltip: TOOLTIPS.dr },
+              { label: 'JD', value: preview.components.jd, name: 'Justificatory Density', tooltip: TOOLTIPS.jd },
+              { label: 'RC', value: preview.components.rc, name: 'Reversibility Cost', tooltip: TOOLTIPS.rc },
+              { label: 'CD', value: preview.components.cd, name: 'Continuation Density', tooltip: TOOLTIPS.cd },
             ].map((c, i) => (
               <div key={i} className="flex items-center gap-2">
                 <span className="text-[9px] font-mono text-muted-foreground w-5" title={c.name}>{c.label}</span>
