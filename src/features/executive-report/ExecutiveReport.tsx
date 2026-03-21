@@ -14,7 +14,7 @@ export function ExecutiveReport() {
     return <LockedState title="Executive Report Locked" description="Complete the Exposure Analysis to generate a board-level executive report suitable for risk committees and reinsurers." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, decisionClass, lossEnvelope, eciTier, eciName, components } = results;
+  const { band, afi, decisionClass, lossEnvelope, eciTier, eciName, components, premium, amplificationFactor, correlationFactor } = results;
 
   const copyReport = () => {
     const text = buildExecutiveReport(inputs, results);
@@ -30,158 +30,214 @@ export function ExecutiveReport() {
 
   return (
     <div>
+      {/* Board-level finding banner */}
+      <div className={`rounded-xl p-5 mb-5 border-2 ${
+        band === 'Fragile' ? 'bg-fragile-bg border-fragile' :
+        band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' :
+        'bg-stable-bg border-stable'
+      }`}>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Board-Level Finding · Not a Compliance Report</div>
+        <div className="text-[16px] font-extrabold text-foreground leading-[1.3] mb-2">
+          {band === 'Fragile'
+            ? 'This system introduces structural AI risk that exceeds current underwriting assumptions — and is not visible through compliance frameworks, audit processes, or point-in-time regulatory reviews.'
+            : band === 'Sensitive'
+            ? 'This system introduces moderate structural AI risk. Conditional coverage with mandatory improvement timeline.'
+            : 'Structural exposure is within manageable bounds. Standard coverage terms apply.'}
+        </div>
+        <div className="text-[11px] text-muted-foreground">
+          Structural AI exposure of this risk profile is not priced, modelled, or reserved for in standard underwriting frameworks. The risk exists regardless of compliance status. This analysis reveals the gap.
+        </div>
+      </div>
+
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 5 of 6 · Reporting</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 5 · Board-Level Documentation</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Executive Report</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
-          Board-level finding for risk committees, boards, and reinsurers. This is a governance assessment, not a compliance report.
+          Decision-oriented summary based on structural systemic risk modelling. Structured for risk committees, boards, and reinsurers.
         </p>
       </div>
 
-      {/* Board finding */}
-      <div className={`rounded-xl p-6 mb-4 border-2 ${
-        band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' :
-        band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' :
-        'bg-stable-bg border-stable-border'
-      }`}>
-        <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-primary mb-3">AI Governance Assessment — Executive Summary</div>
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <div className="text-[28px] font-extrabold text-foreground tracking-tight leading-[1.1] mb-2">
-              {band === 'Fragile' ? 'STRUCTURAL EXPOSURE SIGNALS — COMMITTEE REVIEW REQUIRED' :
-               band === 'Sensitive' ? 'ELEVATED STRUCTURAL SIGNALS — CONDITIONAL REVIEW' :
-               'GOVERNANCE SIGNALS WITHIN RANGE — STANDARD PROCESS'}
+      {/* Main verdict */}
+      <div className="bg-card border border-border rounded-xl p-6 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-3">AI Systemic Risk Assessment · Governance Exposure Engine v3.0</div>
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <div className="text-[22px] font-extrabold text-foreground leading-[1.25] mb-3 max-w-[580px]">
+              Structural AI dependency creates underwriting exposure that current models do not price, reserve for, or capture — this profile exceeds standard tolerance thresholds.
             </div>
-            <div className="text-[13px] text-muted-foreground max-w-[480px] leading-[1.5]">
-              {band === 'Fragile' ? 'This system creates structural AI risk not priced, modelled, or reserved for in standard underwriting frameworks.' :
-               band === 'Sensitive' ? 'Governance gaps signal drift toward Fragile classification. Conditional coverage available.' :
-               'Structural exposure is within manageable bounds. Standard coverage terms apply.'}
+            <div className={`inline-block px-3 py-[6px] rounded-lg text-[12px] font-bold ${
+              band === 'Fragile' ? 'bg-fragile text-white' :
+              band === 'Sensitive' ? 'bg-sensitive text-white' :
+              'bg-stable text-white'
+            }`}>
+              THIS MEANS: {band === 'Fragile' ? 'Standard coverage is not justified. Apply mandatory premium loading and require structural remediation before renewal.' :
+                band === 'Sensitive' ? 'Conditional coverage — improvements required within 90 days.' :
+                'Standard coverage terms apply.'}
             </div>
           </div>
-          <div className="text-right flex-shrink-0 ml-5">
-            <div className={`text-[22px] font-extrabold font-mono ${
+          <div className="text-right flex-shrink-0 ml-6">
+            <div className={`text-[48px] font-extrabold font-mono leading-none ${
               band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
-            }`}>{decisionClass.toUpperCase()}</div>
+            }`}>{afi.toFixed(2)}</div>
+            <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground">AFI Score</div>
+            <div className="text-[11px] font-bold text-muted-foreground mt-1">{band.toUpperCase()}</div>
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="mt-4 pt-4 border-t border-border text-[11px] text-muted-foreground">
+          Decision-oriented summary · Not a compliance report · Generated {formatDate()}
+        </div>
+        <div className="mt-2 text-[10px] text-muted-foreground leading-[1.5]">
+          Risk characterization based on structural governance factors: AFI score, delegation depth, provider concentration, continuation risk, justificatory density. Swiss Re sigma insights 01/2026. EU AI Act Art. 99 penalty exposure shown separately. Framework ≠ guarantee.
+        </div>
+      </div>
+
+      {/* Risk Position + Financial Exposure */}
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <SectionCard title="Risk Position" icon="📋">
+          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
+            <div>• <strong className="text-foreground">Above underwriting tolerance</strong></div>
+            <div>• AFI {afi.toFixed(2)} — exceeds tolerance. Standard rates not applicable</div>
+            <div>• <strong className="text-foreground">Standard coverage not justified</strong></div>
+            <div>• Structural change required before standard rates apply</div>
+            <div>• <strong className="text-foreground">Premium loading mandatory</strong></div>
+            <div>• 150–180% above standard · mandatory pricing adjustment</div>
+            <div>• <strong className="text-foreground">Critical risk band: €{lossEnvelope.tail.toFixed(1)}M</strong></div>
+            <div>• Provider concentration and automation factors</div>
+            <div>• <strong className="text-foreground">Systemic exposure: €{Math.round(lossEnvelope.portfolio)}M</strong></div>
+            <div>• If 5 entities share similar AI infrastructure</div>
+          </div>
+        </SectionCard>
+        <SectionCard title="Financial Exposure" icon="📊">
+          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
+            <div>• <strong className="text-foreground">Base risk band: {formatCurrency(lossEnvelope.expected)}</strong></div>
+            <div>• Structural baseline → AI-derived characteristic</div>
+            <div>• <strong className="text-foreground">Elevated risk band: €{lossEnvelope.stress.toFixed(1)}M</strong></div>
+            <div>• Provider concentration and adoption factors</div>
+            <div>• <strong className="text-foreground">Critical risk band: €{lossEnvelope.tail.toFixed(1)}M</strong></div>
+            <div>• Systemic exposure: €{Math.round(lossEnvelope.portfolio)}M</div>
+          </div>
+        </SectionCard>
+      </div>
+
+      {/* Systemic Signals + Required Actions */}
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <SectionCard title="Systemic Signals" icon="⚡">
+          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
+            <div>• <strong className="text-foreground">Continuation risk</strong> — System persists without explicit re-authorisation — accumulating liability</div>
+            <div>• <strong className="text-foreground">Dependency concentration</strong> — External provider reliance creates single points of failure</div>
+            <div>• <strong className="text-foreground">Aggregation exposure</strong> — Shared AI creates portfolio-level correlated risk</div>
+            <div>• <strong className="text-foreground">Non-linear loss amplification</strong> — Cascade propagation across 5 layers · {amplificationFactor} amplification</div>
+          </div>
+        </SectionCard>
+        <SectionCard title="Required Actions" icon="⚠">
+          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
+            <div>• <strong className="text-foreground">Apply premium loading (150–180%)</strong> — Mandatory · structural risk exceeds standard pricing</div>
+            <div>• <strong className="text-foreground">Require dependency diversification</strong> — Mandatory within 90 days · minimum 3 providers</div>
+            <div>• <strong className="text-foreground">Enforce governance cadence</strong> — Condition of coverage · quarterly re-authorisation</div>
+            <div>• <strong className="text-foreground">Limit coverage to operational layers</strong> — Recommended · full-stack coverage uneconomic</div>
+          </div>
+        </SectionCard>
+      </div>
+
+      {/* Responsibility & Ownership */}
+      <SectionCard title="Responsibility & Ownership Structure" icon="👥" subtitle="Who Is Responsible? — And Can They Be Held Accountable?">
+        <div className="space-y-2 mb-4">
           {[
-            { label: 'Entity', value: inputs.companyName || '—' },
-            { label: 'Industry', value: inputs.industry },
-            { label: 'Date', value: formatDate() },
-            { label: 'Framework', value: 'AGAF v3.0' },
+            { icon: '✕', color: 'text-fragile', title: 'Deployer Accountability', body: 'Structurally incomplete — low justificatory density means decisions are not fully traceable to documented human oversight.' },
+            { icon: '✕', color: 'text-fragile', title: 'Provider Accountability', body: 'External providers bear technical responsibility but face no operational accountability for consequences at deployment site.' },
+            { icon: '✕', color: 'text-fragile', title: 'Oversight Actor — Named Human with Stop Authority', body: 'Insufficient human oversight — system operates without a clearly empowered individual capable of suspending it safely.' },
+            { icon: '✕', color: 'text-sensitive', title: 'Cross-System Liability — Cascade Accountability', body: 'Where failure propagates across correlated infrastructure, each actor\'s responsibility is entirely unaddressed.' },
           ].map((item, i) => (
-            <div key={i} className="text-[9px] text-muted-foreground leading-[1.6]">
-              <strong className="block text-[11px] text-foreground font-bold">{item.value}</strong>
-              {item.label}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Key metrics */}
-      <div className="grid grid-cols-3 gap-3 mb-4">
-        <div className="bg-card border border-border rounded-lg p-3">
-          <div className="text-[8px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">AFI Score</div>
-          <div className={`text-xl font-bold font-mono ${band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>{afi.toFixed(2)}</div>
-          <div className="text-[9px] text-muted-foreground">{band}</div>
-        </div>
-        <div className="bg-card border border-border rounded-lg p-3">
-          <div className="text-[8px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">ECI Tier</div>
-          <div className="text-xl font-bold font-mono text-foreground">ECI-{eciTier}</div>
-          <div className="text-[9px] text-muted-foreground">{eciName}</div>
-        </div>
-        <div className="bg-card border border-border rounded-lg p-3">
-          <div className="text-[8px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Decision</div>
-          <div className="text-xl font-bold text-foreground">{decisionClass}</div>
-          <div className="text-[9px] text-muted-foreground">Underwriting position</div>
-        </div>
-      </div>
-
-      {/* Loss envelope */}
-      <div className="grid grid-cols-4 gap-0 bg-card border border-border rounded-lg overflow-hidden mb-4">
-        {[
-          { label: 'Expected', value: lossEnvelope.expected },
-          { label: 'Stress', value: lossEnvelope.stress },
-          { label: 'Tail 99th%', value: lossEnvelope.tail },
-          { label: 'Portfolio', value: lossEnvelope.portfolio },
-        ].map((item, i) => (
-          <div key={i} className="p-3 border-r border-border last:border-none">
-            <div className="text-[8px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[5px]">{item.label}</div>
-            <div className="text-base font-bold font-mono text-foreground">{formatCurrency(item.value)}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Structural concerns */}
-      <SectionCard title="Structural Concerns" icon="⚠">
-        <div className="space-y-2">
-          {[
-            { label: 'Delegation Ratio', value: `${Math.round(components.dr * 100)}%`, concern: components.dr > 0.6 },
-            { label: 'Oversight Density', value: `${Math.round(components.jd * 100)}%`, concern: components.jd < 0.4 },
-            { label: 'Reversibility Cost', value: `${Math.round(components.rc * 100)}%`, concern: components.rc > 0.6 },
-            { label: 'Continuation Density', value: `${Math.round(components.cd * 100)}%`, concern: components.cd > 0.6 },
-          ].filter(i => i.concern).map((item, i) => (
-            <div key={i} className="flex items-center gap-3 p-2 bg-fragile-bg border border-fragile-border rounded-md">
-              <span className="text-fragile text-xs">⚠</span>
-              <span className="text-[11px] text-foreground font-medium">{item.label}: {item.value}</span>
+            <div key={i} className="flex items-start gap-3 p-3 bg-card border border-border rounded-lg">
+              <span className={`font-bold flex-shrink-0 mt-[1px] ${item.color}`}>{item.icon}</span>
+              <div>
+                <div className="text-[12px] font-semibold text-foreground">{item.title}</div>
+                <div className="text-[11px] text-muted-foreground mt-[2px] leading-[1.5]">{item.body}</div>
+              </div>
             </div>
           ))}
         </div>
       </SectionCard>
 
-      {/* Epistemic Status */}
-      <div className="bg-card border border-border rounded-[10px] p-5 mb-[14px]">
-        <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-primary mb-3">Epistemic Status · Governance Limits</div>
-        <div className="grid grid-cols-2 gap-4 text-[11px] text-muted-foreground leading-[1.6]">
-          <div>
-            <strong className="text-foreground">⊘ No external ground truth exists</strong> for AI governance fragility. AFI scores are structurally calibrated — not empirically verified against historical outcomes.
-          </div>
-          <div>
-            <strong className="text-foreground">⊘ Evaluation does not guarantee correctness.</strong> Compliance audits verify procedures — not that the system behaves correctly across all operational contexts.
-          </div>
-          <div>
-            <strong className="text-foreground">⊘ The interval between evaluations is ungoverned.</strong> This assessment reflects the moment of evaluation — not the current operational state if material changes have occurred.
-          </div>
-          <div>
-            <strong className="text-foreground">⊘ Performance ≠ authorisation for continued operation.</strong> Continued deployment requires explicit re-authorisation by decision — not by default performance evidence.
-          </div>
+      {/* Epistemic Status — Dark section */}
+      <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
+        <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Epistemic Status · What This Assessment Cannot Guarantee</div>
+        <div className="text-[18px] font-bold text-white mb-3">You Cannot Rely on This Evaluation</div>
+        <div className="text-[11px] text-dark-section-fg leading-[1.6] mb-4">
+          This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment.
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { title: 'This system operates without stable ground truth', body: 'AFI scores are structurally calibrated — not empirically verified against historical outcomes.' },
+            { title: 'Evaluation does not guarantee correctness', body: 'Compliance audits verify procedures — not that the system behaves correctly across all operational contexts.' },
+            { title: 'The interval between evaluations is ungoverned', body: 'A system verified at t=0 may have undergone significant interpretive drift by t+6 months.' },
+            { title: 'Performance is not justification for continued operation', body: 'Performance-based legitimacy is the primary mechanism by which governance oversight erodes.' },
+            { title: 'This assessment itself is subject to the limits it describes', body: 'All derived scores are structural proxies. They correlate with governance fragility — they do not predict specific incidents.' },
+          ].map((item, i) => (
+            <div key={i} className="p-3 bg-dark-section-border/50 border border-dark-section-border rounded-lg">
+              <div className="text-[11px] font-bold text-sensitive mb-1">{item.title}</div>
+              <div className="text-[10px] text-dark-section-fg leading-[1.5]">{item.body}</div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Disclaimer */}
-      <div className="bg-secondary border border-border rounded-lg p-4 mb-4 text-[11px] text-muted-foreground leading-relaxed">
-        <strong className="text-foreground block mb-1">This report is a structured governance assessment finding.</strong>
-        It is not an actuarially certified risk model, legal advice, compliance certification, or regulatory filing.
-        All inputs are self-attested. Loss figures are market-calibrated directional estimates for committee discussion.
-        <div className="mt-2 text-primary font-semibold">
-          This document constitutes a formal governance assessment. Intended for risk committee, board, and reinsurer review only.
+      {/* Assessment History */}
+      <SectionCard title="Assessment History" icon="📋" subtitle="Prior assessments for portfolio comparison and trend analysis.">
+        <div className="overflow-x-auto">
+          <table className="w-full text-[11px]">
+            <thead>
+              <tr className="border-b border-border">
+                {['Date', 'Entity', 'AFI', 'Band', 'Decision', 'Action'].map(h => (
+                  <th key={h} className="text-left py-2 pr-4 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border">
+                <td className="py-2 pr-4 text-muted-foreground">{formatDate()}</td>
+                <td className="py-2 pr-4 font-medium text-foreground">{inputs.companyName || 'Current Entity'}</td>
+                <td className="py-2 pr-4 font-mono font-bold text-foreground">{afi.toFixed(2)}</td>
+                <td className="py-2 pr-4"><BandBadge band={band} size="sm" /></td>
+                <td className="py-2 pr-4 text-muted-foreground">{decisionClass}</td>
+                <td className="py-2 text-primary font-semibold cursor-pointer hover:underline">View →</td>
+              </tr>
+              {[
+                { date: '2026-02-15', entity: 'Client B', afi: 1.35, band: 'Fragile' as const, decision: 'Premium Loading' },
+                { date: '2026-01-22', entity: 'Client A', afi: 0.92, band: 'Sensitive' as const, decision: 'Conditional Cover' },
+                { date: '2025-12-10', entity: 'Client C', afi: 0.77, band: 'Stable' as const, decision: 'Standard Cover' },
+              ].map((row, i) => (
+                <tr key={i} className="border-b border-border last:border-none">
+                  <td className="py-2 pr-4 text-muted-foreground">{row.date}</td>
+                  <td className="py-2 pr-4 font-medium text-foreground">{row.entity}</td>
+                  <td className="py-2 pr-4 font-mono font-bold text-foreground">{row.afi.toFixed(2)}</td>
+                  <td className="py-2 pr-4"><BandBadge band={row.band} size="sm" /></td>
+                  <td className="py-2 pr-4 text-muted-foreground">{row.decision}</td>
+                  <td className="py-2 text-primary font-semibold cursor-pointer hover:underline">View →</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </div>
-
-      {/* Methodology */}
-      <div className="bg-card border border-border rounded-lg p-4 mb-4 text-[11px] text-muted-foreground leading-relaxed">
-        <strong className="text-foreground block mb-1">Methodology</strong>
-        Authority Fragility Index (AFI) = (DR × RC × CD) / (JD × NA). Risk characterization based on structural governance factors.
-        Swiss Re sigma insights 01/2026: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."
-        EU AI Act Art. 99 penalty exposure shown separately.
-        <div className="mt-2">This is not a compliance report — a system can be fully compliant and still exceed underwriting tolerance and incur regulatory fines.</div>
-      </div>
+      </SectionCard>
 
       {/* Export controls */}
       <div className="bg-card border border-border rounded-[10px] p-5">
-        <div className="text-[13px] font-bold text-foreground mb-[3px]">Export & Distribution</div>
-        <div className="text-[11px] text-secondary-foreground mb-[14px]">Generate outputs for risk committee review.</div>
+        <div className="text-[13px] font-bold text-foreground mb-[3px]">Export & Share</div>
+        <div className="text-[11px] text-secondary-foreground mb-[14px]">Generate structured output for risk committee, board, or reinsurer review.</div>
         <div className="flex gap-2 flex-wrap">
           <button onClick={copyReport} className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
-            📋 Copy Executive Summary
+            📄 One-Pager PDF Preview
           </button>
-          <button onClick={copyORSA} className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
-            📄 Export ORSA-Style Text
+          <button onClick={copyReport} className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
+            📋 Board Executive Summary
+          </button>
+          <button onClick={copyReport} className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
+            ✍ Copy Plain Text
           </button>
           <button onClick={() => setShowOverlay(true)} className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
-            🖨️ Print View
+            🖨️ Print Full Report
           </button>
         </div>
       </div>

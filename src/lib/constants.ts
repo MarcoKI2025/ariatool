@@ -34,9 +34,9 @@ export const INDUSTRIES = [
 ];
 
 export const NAV_STEPS = [
-  { id: 1, title: 'Exposure Analysis', sublabel: 'Inputs · Structural profile', viewId: 'exposure' },
-  { id: 2, title: 'Risk Overview', sublabel: 'AFI · Authority fragility · Governance', viewId: 'risk-overview' },
-  { id: 3, title: 'Dependency Map', sublabel: 'Third-party concentration · SPOF', viewId: 'dependency-map' },
+  { id: 1, title: 'Exposure Analysis', sublabel: 'Configure AI profile · 29 inputs', viewId: 'exposure' },
+  { id: 2, title: 'Decision Intelligence', sublabel: 'AFI · ECI · AGRI · ALRI · SCRI', viewId: 'decision-intelligence' },
+  { id: 3, title: 'Scenario Simulation', sublabel: 'Stress test · What-if · Sensitivity', viewId: 'scenario-simulation' },
   { id: 4, title: 'Insurance Decision', sublabel: 'Loss envelope · Underwriting signals', viewId: 'insurance-decision' },
   { id: 5, title: 'Executive Report', sublabel: 'Board summary · ORSA export', viewId: 'executive-report' },
   { id: 6, title: 'Model Governance', sublabel: 'Methodology · Assumptions · Roadmap', viewId: 'model-governance' },

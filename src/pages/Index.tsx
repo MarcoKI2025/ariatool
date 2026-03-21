@@ -3,8 +3,8 @@ import { AppProvider, useApp } from '@/hooks/useAppState';
 import { AppSidebar } from '@/components/layout/AppSidebar';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { ExposureAnalysis } from '@/features/exposure/ExposureAnalysis';
-import { RiskOverview } from '@/features/risk-overview/RiskOverview';
-import { DependencyMap } from '@/features/dependency-map/DependencyMap';
+import { DecisionIntelligence } from '@/features/decision-intelligence/DecisionIntelligence';
+import { ScenarioSimulation } from '@/features/scenario-simulation/ScenarioSimulation';
 import { InsuranceDecision } from '@/features/insurance-decision/InsuranceDecision';
 import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
@@ -19,8 +19,8 @@ function AppContent() {
     if (perspective === 'company') return <CompanyView />;
     switch (activeStep) {
       case 1: return <ExposureAnalysis />;
-      case 2: return <RiskOverview />;
-      case 3: return <DependencyMap />;
+      case 2: return <DecisionIntelligence />;
+      case 3: return <ScenarioSimulation />;
       case 4: return <InsuranceDecision />;
       case 5: return <ExecutiveReport />;
       case 6: return <ModelGovernance />;
