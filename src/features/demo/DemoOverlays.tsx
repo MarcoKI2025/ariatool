@@ -28,59 +28,61 @@ export function CompanyDemoOverlay() {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[1200] bg-black/90 backdrop-blur-sm overflow-y-auto flex flex-col" onClick={() => setOpen(false)}>
+    <div className="fixed inset-0 z-[1200] bg-black/60 backdrop-blur-sm overflow-y-auto flex flex-col" onClick={() => setOpen(false)}>
       <div className="max-w-[960px] w-full mx-auto p-10 pb-16" onClick={e => e.stopPropagation()}>
-        <div className="flex items-start justify-between mb-9">
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-stable mb-2 flex items-center gap-2">
-              <div className="w-[6px] h-[6px] rounded-full bg-stable animate-pulse-dot" />
-              Company Demo · 3 Scenarios
+        <div className="bg-card border border-border rounded-2xl p-8 shadow-xl">
+          <div className="flex items-start justify-between mb-9">
+            <div>
+              <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-stable mb-2 flex items-center gap-2">
+                <div className="w-[6px] h-[6px] rounded-full bg-stable animate-pulse-dot" />
+                Company Demo · 3 Scenarios
+              </div>
+              <div className="text-4xl font-bold text-foreground tracking-tight leading-[1.1] mb-[10px]">
+                See the <span className="text-stable">Executive View</span> in action
+              </div>
+              <div className="text-sm text-muted-foreground max-w-[520px] leading-relaxed">
+                Select a pre-configured company profile to see the full Company View with risk level, insurance cost estimate, and premium reduction recommendations.
+              </div>
             </div>
-            <div className="text-4xl font-bold text-foreground tracking-tight leading-[1.1] mb-[10px]">
-              See the <span className="text-stable">Executive View</span> in action
-            </div>
-            <div className="text-sm text-muted-foreground max-w-[520px] leading-relaxed">
-              Select a pre-configured company profile to see the full Company View with risk level, insurance cost estimate, and premium reduction recommendations.
-            </div>
+            <button onClick={() => setOpen(false)} className="w-9 h-9 rounded-lg bg-secondary border border-border text-muted-foreground hover:text-foreground flex items-center justify-center text-base">✕</button>
           </div>
-          <button onClick={() => setOpen(false)} className="w-9 h-9 rounded-lg bg-secondary border border-border text-muted-foreground hover:text-foreground flex items-center justify-center text-base">✕</button>
-        </div>
 
-        <div className="grid grid-cols-3 gap-[14px] mb-8">
-          {DEMO_PROFILES.map((p, i) => (
+          <div className="grid grid-cols-3 gap-[14px] mb-8">
+            {DEMO_PROFILES.map((p, i) => (
+              <button
+                key={i}
+                onClick={() => setSelected(i)}
+                className={`text-left bg-secondary border rounded-xl p-5 transition-all hover:border-primary/40 hover:shadow-md hover:-translate-y-[2px] flex flex-col gap-[10px] relative overflow-hidden ${
+                  selected === i ? 'border-stable bg-stable-bg' : 'border-border'
+                }`}
+              >
+                <div className={`absolute top-0 left-0 right-0 h-[3px] rounded-t-xl opacity-60 ${
+                  p.band === 'Fragile' ? 'bg-gradient-to-r from-fragile to-fragile/50' :
+                  p.band === 'Sensitive' ? 'bg-gradient-to-r from-sensitive to-sensitive/50' :
+                  'bg-gradient-to-r from-stable to-stable/50'
+                }`} />
+                <div className="text-[26px]">{p.icon}</div>
+                <div className="text-sm font-bold text-foreground">{p.name}</div>
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{p.industry}</div>
+                <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1">{p.note}</div>
+                <div className={`text-[9px] font-bold uppercase tracking-wider px-2 py-[3px] rounded w-fit ${
+                  p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
+                }`}>{p.band}</div>
+                <div className="text-[11px] font-bold font-mono text-muted-foreground">{p.premiumEstimate}</div>
+              </button>
+            ))}
+          </div>
+
+          <div className="flex justify-center">
             <button
-              key={i}
-              onClick={() => setSelected(i)}
-              className={`text-left bg-[hsl(40,8%,7%)] border rounded-xl p-5 transition-all hover:border-[hsl(40,8%,20%)] hover:bg-[hsl(40,8%,9%)] hover:-translate-y-[2px] hover:shadow-xl flex flex-col gap-[10px] relative overflow-hidden ${
-                selected === i ? 'border-stable bg-[hsl(145,20%,5%)]' : 'border-[hsl(40,8%,13%)]'
-              }`}
+              onClick={launch}
+              disabled={selected === null}
+              className="inline-flex items-center gap-[10px] px-8 py-[14px] bg-primary border border-primary text-primary-foreground rounded-[10px] text-[13px] font-bold hover:bg-primary/90 hover:shadow-lg hover:-translate-y-[1px] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <div className={`absolute top-0 left-0 right-0 h-[3px] rounded-t-xl opacity-60 ${
-                p.band === 'Fragile' ? 'bg-gradient-to-r from-fragile to-[hsl(7,60%,50%)]' :
-                p.band === 'Sensitive' ? 'bg-gradient-to-r from-sensitive to-[hsl(36,80%,45%)]' :
-                'bg-gradient-to-r from-stable to-[hsl(145,50%,40%)]'
-              }`} />
-              <div className="text-[26px]">{p.icon}</div>
-              <div className="text-sm font-bold text-foreground">{p.name}</div>
-              <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{p.industry}</div>
-              <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1">{p.note}</div>
-              <div className={`text-[9px] font-bold uppercase tracking-wider px-2 py-[3px] rounded w-fit ${
-                p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
-              }`}>{p.band}</div>
-              <div className="text-[11px] font-bold font-mono text-muted-foreground">{p.premiumEstimate}</div>
+              <span>▶</span>
+              <span>{selected !== null ? `Launch ${DEMO_PROFILES[selected].name}` : 'Select a scenario above'}</span>
             </button>
-          ))}
-        </div>
-
-        <div className="flex justify-center">
-          <button
-            onClick={launch}
-            disabled={selected === null}
-            className="inline-flex items-center gap-[10px] px-8 py-[14px] bg-gradient-to-br from-stable to-[hsl(145,40%,30%)] border border-stable text-[hsl(145,60%,80%)] rounded-[10px] text-[13px] font-bold hover:shadow-lg hover:-translate-y-[1px] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <span>▶</span>
-            <span>{selected !== null ? `Launch ${DEMO_PROFILES[selected].name}` : 'Select a scenario above'}</span>
-          </button>
+          </div>
         </div>
       </div>
     </div>
@@ -122,7 +124,7 @@ export function DemoPitchOverlay() {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[2000] bg-[hsl(40,8%,3%)] flex flex-col">
+    <div className="fixed inset-0 z-[2000] bg-background flex flex-col">
       {/* Progress bar */}
       <div className="h-1 bg-border">
         <div className="h-full bg-primary transition-all duration-300" style={{ width: `${((slide + 1) / slides.length) * 100}%` }} />

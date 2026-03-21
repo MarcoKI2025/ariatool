@@ -27,7 +27,7 @@ export function ExposureAnalysis() {
 
       {/* Analysis status */}
       <div className={`flex items-start gap-[10px] p-[11px] px-[15px] rounded-lg mb-[18px] border transition-all ${
-        analysisComplete ? 'bg-[hsl(145,30%,8%)] border-[hsl(145,30%,20%)]' : 'bg-secondary border-border'
+        analysisComplete ? 'bg-stable-bg border-stable-border' : 'bg-secondary border-border'
       }`}>
         <div className="text-sm flex-shrink-0 mt-[1px]">{analysisComplete ? '✓' : '🔒'}</div>
         <div>
@@ -41,7 +41,7 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Demo profiles */}
-      <div className="bg-[hsl(40,8%,7%)] rounded-xl p-[18px] mb-5 border border-[hsl(40,8%,14%)]">
+      <div className="bg-secondary rounded-xl p-[18px] mb-5 border border-border">
         <div className="text-[12px] font-bold text-foreground mb-1">⚡ Start with a demo profile</div>
         <div className="text-[10px] text-muted-foreground mb-3">Click any scenario below to pre-fill all inputs instantly.</div>
         <div className="grid grid-cols-3 gap-2">
@@ -49,7 +49,7 @@ export function ExposureAnalysis() {
             <button
               key={i}
               onClick={() => setInputs(applyDemoProfile(p))}
-              className="text-left p-3 rounded-lg border border-border bg-secondary/50 hover:border-primary/50 hover:bg-secondary transition-all"
+              className="text-left p-3 rounded-lg border border-border bg-card hover:border-primary/50 hover:shadow-sm transition-all"
             >
               <div className="text-lg mb-1">{p.icon}</div>
               <div className="text-[11px] font-bold text-foreground">{p.name}</div>
@@ -143,10 +143,18 @@ export function ExposureAnalysis() {
             <SliderRow label="Switching Cost" value={inputs.switchingCost} onChange={v => updateInputs({ switchingCost: v })} description="1 = Easy to switch · 5 = Extreme lock-in" />
             <SliderRow label="Portability" value={inputs.portability} onChange={v => updateInputs({ portability: v })} description="1 = Fully portable · 5 = Zero portability" />
           </SectionCard>
+
+          {/* Agent Extensions */}
+          <SectionCard title="Agent Architecture Extensions" icon="⚙️" subtitle="Multi-agent systems, persistent memory, and tool-call authority create compounding exposure.">
+            <SliderRow label="Multi-Agent Orchestration" value={inputs.multiAgent} onChange={v => updateInputs({ multiAgent: v })} description="1 = Single agent · 5 = Complex multi-agent system" />
+            <SliderRow label="Tool-Call Authority" value={inputs.toolCallAuthority} onChange={v => updateInputs({ toolCallAuthority: v })} description="1 = No tool calls · 5 = Unrestricted tool execution" />
+            <SliderRow label="Persistent Memory" value={inputs.persistentMemory} onChange={v => updateInputs({ persistentMemory: v })} description="1 = Stateless · 5 = Full persistent memory across sessions" />
+            <SliderRow label="Human Checkpoints" value={inputs.humanCheckpoints} onChange={v => updateInputs({ humanCheckpoints: v })} description="1 = No checkpoints · 5 = Every action requires approval" />
+          </SectionCard>
         </div>
 
         {/* Right: Live interpretation panel */}
-        <div className="bg-secondary border border-border rounded-[10px] p-4 sticky top-2">
+        <div className="bg-card border border-border rounded-[10px] p-4 sticky top-2">
           <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-secondary-foreground mb-3">Live Interpretation</div>
           <div className="flex items-end gap-3 mb-3">
             <span className={`text-[40px] font-bold font-mono leading-none ${
@@ -165,10 +173,30 @@ export function ExposureAnalysis() {
           <div className="text-[11px] text-secondary-foreground leading-[1.55] mb-3">
             AFI {preview.afi.toFixed(2)} — {preview.band === 'Fragile' ? 'High governance fragility detected' : preview.band === 'Sensitive' ? 'Drift risk emerging — monitoring required' : 'Governance drift currently contained'}
           </div>
+
+          {/* AFI Components mini */}
+          <div className="mb-3 space-y-[6px]">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">AFI Components</div>
+            {[
+              { label: 'DR', value: preview.components.dr },
+              { label: 'JD', value: preview.components.jd },
+              { label: 'RC', value: preview.components.rc },
+              { label: 'CD', value: preview.components.cd },
+            ].map((c, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <span className="text-[9px] font-mono text-muted-foreground w-5">{c.label}</span>
+                <div className="flex-1 h-[4px] bg-border rounded overflow-hidden">
+                  <div className={`h-full rounded ${c.value > 0.7 ? 'bg-fragile' : c.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(c.value * 100)}%` }} />
+                </div>
+                <span className="text-[9px] font-mono text-muted-foreground w-6 text-right">{Math.round(c.value * 100)}</span>
+              </div>
+            ))}
+          </div>
+
           {/* Signals */}
           <div className="flex flex-col gap-[5px]">
             {preview.signals.slice(0, 4).map((sig, i) => (
-              <div key={i} className="flex items-start gap-[7px] p-[6px] px-[9px] bg-card border border-border rounded-md">
+              <div key={i} className="flex items-start gap-[7px] p-[6px] px-[9px] bg-secondary border border-border rounded-md">
                 <div className={`w-[5px] h-[5px] rounded-full flex-shrink-0 mt-[3px] ${
                   sig.color === 'fragile' ? 'bg-fragile' : sig.color === 'sensitive' ? 'bg-sensitive' : 'bg-stable'
                 }`} />

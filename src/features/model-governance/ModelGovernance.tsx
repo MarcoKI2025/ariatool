@@ -115,7 +115,7 @@ export function ModelGovernance() {
             { phase: 'Q1 2027', title: 'Audited input validation', desc: 'Replace self-attestation with system-derived parameters from architecture inventory' },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 p-3 bg-secondary border border-border rounded-lg">
-              <span className="text-[9px] font-bold font-mono text-primary bg-[hsl(245,40%,12%)] px-2 py-[2px] rounded flex-shrink-0">{item.phase}</span>
+              <span className="text-[9px] font-bold font-mono text-primary bg-purple-bg border border-purple-border px-2 py-[2px] rounded flex-shrink-0">{item.phase}</span>
               <div>
                 <div className="text-[12px] font-semibold text-foreground">{item.title}</div>
                 <div className="text-[10px] text-muted-foreground mt-[2px]">{item.desc}</div>
@@ -126,7 +126,7 @@ export function ModelGovernance() {
       </SectionCard>
 
       {/* Disclaimers */}
-      <div className="bg-[hsl(40,8%,5%)] border border-border rounded-xl p-5">
+      <div className="bg-card border border-border rounded-xl p-5">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-2">Important Disclaimers</div>
         <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.6]">
           <p>• This is a <strong className="text-foreground">structured governance assessment only</strong> — not an actuarially certified risk model.</p>

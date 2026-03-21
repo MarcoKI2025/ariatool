@@ -6,60 +6,77 @@
 
 @layer base {
   :root {
-    --background: 40 6% 7%;
-    --foreground: 42 30% 90%;
-    --card: 40 8% 9%;
-    --card-foreground: 42 30% 90%;
-    --popover: 40 8% 9%;
-    --popover-foreground: 42 30% 90%;
+    --background: 40 6% 97%;
+    --foreground: 40 10% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 40 10% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 40 10% 10%;
     --primary: 245 52% 47%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 8% 12%;
-    --secondary-foreground: 42 20% 65%;
-    --muted: 40 6% 14%;
-    --muted-foreground: 40 6% 52%;
+    --secondary: 40 6% 94%;
+    --secondary-foreground: 40 6% 40%;
+    --muted: 40 6% 92%;
+    --muted-foreground: 40 6% 46%;
     --accent: 245 52% 47%;
     --accent-foreground: 0 0% 100%;
     --destructive: 7 70% 45%;
     --destructive-foreground: 0 0% 100%;
-    --border: 40 10% 16%;
-    --input: 40 10% 16%;
+    --border: 40 6% 87%;
+    --input: 40 6% 87%;
     --ring: 245 52% 47%;
     --radius: 0.5rem;
 
     /* App-specific tokens */
-    --nav-bg: 40 8% 5%;
-    --nav-border: 40 8% 12%;
-    --header-bg: 40 8% 9%;
+    --nav-bg: 40 6% 98%;
+    --nav-border: 40 6% 90%;
+    --header-bg: 0 0% 100%;
 
     /* Semantic status colors */
-    --stable: 145 62% 23%;
+    --stable: 145 55% 32%;
     --stable-bg: 145 40% 94%;
-    --stable-border: 145 40% 65%;
-    --sensitive: 36 100% 31%;
-    --sensitive-bg: 36 80% 95%;
-    --sensitive-border: 36 60% 65%;
+    --stable-border: 145 30% 75%;
+    --sensitive: 36 85% 42%;
+    --sensitive-bg: 36 60% 94%;
+    --sensitive-border: 36 40% 75%;
     --fragile: 7 70% 45%;
-    --fragile-bg: 7 80% 96%;
-    --fragile-border: 7 50% 65%;
+    --fragile-bg: 7 60% 96%;
+    --fragile-border: 7 40% 75%;
 
     /* Purple accent */
     --purple: 245 52% 47%;
-    --purple-light: 245 52% 67%;
-    --purple-bg: 245 60% 95%;
-    --purple-border: 245 40% 65%;
+    --purple-light: 245 52% 60%;
+    --purple-bg: 245 60% 96%;
+    --purple-border: 245 30% 80%;
 
     /* Mono font */
     --font-mono: 'IBM Plex Mono', monospace;
     --font-sans: 'Inter', sans-serif;
 
-    --sidebar-background: 40 8% 5%;
-    --sidebar-foreground: 40 6% 65%;
+    /* Interpretation panel */
+    --interpret-bg: 40 6% 96%;
+    --interpret-border: 40 6% 90%;
+
+    /* Banner backgrounds */
+    --banner-fragile-bg: 7 60% 97%;
+    --banner-fragile-border: 7 40% 80%;
+    --banner-sensitive-bg: 36 50% 97%;
+    --banner-sensitive-border: 36 40% 80%;
+    --banner-stable-bg: 145 40% 96%;
+    --banner-stable-border: 145 30% 78%;
+
+    /* Section highlight */
+    --highlight-bg: 245 50% 97%;
+    --highlight-border: 245 30% 82%;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 40 6% 40%;
     --sidebar-primary: 245 52% 47%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 8% 10%;
-    --sidebar-accent-foreground: 42 30% 90%;
-    --sidebar-border: 40 8% 12%;
+    --sidebar-accent: 40 6% 96%;
+    --sidebar-accent-foreground: 40 10% 10%;
+    --sidebar-border: 40 6% 90%;
     --sidebar-ring: 245 52% 47%;
   }
 }
@@ -131,19 +148,19 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* Badge variants */
 .badge-stable {
-  background: hsl(145 40% 10%);
-  color: hsl(145 60% 55%);
-  border: 1px solid hsl(145 40% 20%);
+  background: hsl(var(--stable-bg));
+  color: hsl(var(--stable));
+  border: 1px solid hsl(var(--stable-border));
 }
 .badge-sensitive {
-  background: hsl(36 50% 10%);
-  color: hsl(36 80% 55%);
-  border: 1px solid hsl(36 40% 20%);
+  background: hsl(var(--sensitive-bg));
+  color: hsl(var(--sensitive));
+  border: 1px solid hsl(var(--sensitive-border));
 }
 .badge-fragile {
-  background: hsl(7 50% 10%);
-  color: hsl(7 70% 65%);
-  border: 1px solid hsl(7 40% 20%);
+  background: hsl(var(--fragile-bg));
+  color: hsl(var(--fragile));
+  border: 1px solid hsl(var(--fragile-border));
 }
 
 /* Status bar gradients */

@@ -55,13 +55,13 @@ export function DependencyMap() {
           <div className="flex flex-col gap-2">
             <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">External Providers</div>
             {providers.length === 0 ? (
-              <div className="rounded-lg p-3 border border-fragile-border bg-[hsl(7,50%,6%)] opacity-50">
+              <div className="rounded-lg p-3 border border-fragile-border bg-fragile-bg opacity-50">
                 <div className="text-[11px] font-semibold text-foreground">No provider selected</div>
                 <div className="text-[9px] text-muted-foreground">Unspecified</div>
               </div>
             ) : providers.map((p, i) => (
-              <div key={i} className="rounded-lg p-3 border border-fragile-border bg-[hsl(7,50%,6%)] flex items-center gap-2 relative">
-                <div className="w-[26px] h-[26px] rounded-md bg-[hsl(7,50%,12%)] text-fragile flex items-center justify-center text-[11px] font-bold flex-shrink-0">
+              <div key={i} className="rounded-lg p-3 border border-fragile-border bg-fragile-bg flex items-center gap-2 relative">
+                <div className="w-[26px] h-[26px] rounded-md bg-fragile/10 text-fragile flex items-center justify-center text-[11px] font-bold flex-shrink-0">
                   {p.substring(0, 2).toUpperCase()}
                 </div>
                 <div>
@@ -79,14 +79,14 @@ export function DependencyMap() {
           {/* Core AI layer */}
           <div className="flex flex-col gap-2">
             <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">AI / Orchestration Layer</div>
-            <div className="rounded-lg p-3 border border-purple-border bg-[hsl(245,40%,8%)] flex items-center gap-2">
+            <div className="rounded-lg p-3 border border-purple-border bg-purple-bg flex items-center gap-2">
               <div className="w-[26px] h-[26px] rounded-md bg-primary text-primary-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0">AI</div>
               <div>
                 <div className="text-[11px] font-semibold text-foreground">AI Governance Engine</div>
                 <div className="text-[9px] text-muted-foreground">{providers.length} external dependenc{providers.length === 1 ? 'y' : 'ies'}</div>
               </div>
             </div>
-            <div className="rounded-lg p-3 border border-purple-border bg-[hsl(245,40%,8%)] flex items-center gap-2">
+            <div className="rounded-lg p-3 border border-purple-border bg-purple-bg flex items-center gap-2">
               <div className="w-[26px] h-[26px] rounded-md bg-primary text-primary-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0">ML</div>
               <div>
                 <div className="text-[11px] font-semibold text-foreground">Model Pipeline</div>
@@ -103,7 +103,7 @@ export function DependencyMap() {
             <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">Internal Systems</div>
             {internalSystems.map((sys, i) => (
               <div key={i} className="rounded-lg p-3 border border-border bg-secondary flex items-center gap-2">
-                <div className="w-[26px] h-[26px] rounded-md bg-border text-secondary-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0">{sys.icon}</div>
+                <div className="w-[26px] h-[26px] rounded-md bg-muted text-secondary-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0">{sys.icon}</div>
                 <div>
                   <div className="text-[11px] font-semibold text-foreground">{sys.name}</div>
                   <div className="text-[9px] text-muted-foreground">{sys.sub}</div>
@@ -116,7 +116,7 @@ export function DependencyMap() {
 
       {/* SPOF warning */}
       {isSingle && (
-        <div className="p-3 bg-[hsl(7,50%,6%)] border border-fragile-border rounded-lg flex items-start gap-[7px] mb-4">
+        <div className="p-3 bg-fragile-bg border border-fragile-border rounded-lg flex items-start gap-[7px] mb-4">
           <span className="text-fragile text-[13px] flex-shrink-0 mt-[1px]">⚠</span>
           <div>
             <div className="text-[11px] text-fragile font-semibold">Single Point of Failure Detected</div>
