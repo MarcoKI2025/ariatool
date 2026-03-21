@@ -1,38 +1,57 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { computeFullAnalysis } from '@/lib/scoring';
-import { SectionCard, LockedState, BandBadge, MetricCard } from '@/components/shared/UIComponents';
+import { SECTOR_MULTIPLIERS } from '@/lib/constants';
 import { formatCurrency } from '@/lib/formatters';
-import { SIM_BASE, SIM_AUTO_M, SIM_CRIT_M, SIM_DEP_M, SIM_REV_M, SIM_OVST_R, SECTOR_MULTIPLIERS } from '@/lib/constants';
+import { getBand, calcAFI } from '@/lib/scoring';
+
+const SIM_BASE = 120;
+const SIM_AUTO_M = [0, 1.0, 1.2, 1.5, 1.9, 2.5];
+const SIM_CRIT_M = [0, 1.0, 1.25, 1.55, 1.8, 2.1];
+const SIM_DEP_M  = [0, 1.0, 1.15, 1.3, 1.55, 1.85];
+const SIM_OVST_R = [0, 0.40, 0.28, 0.16, 0.06, 0.0];
+const SIM_REV_M  = [0, 1.0, 1.3, 1.7, 2.4, 3.5];
+const SIM_AUTO_LABELS  = ['','Manual only','Mostly manual','Hybrid','Mostly autonomous','Fully autonomous'];
+const SIM_OVST_LABELS  = ['','Comprehensive','Strong','Moderate','Limited','Minimal / None'];
+const SIM_CRIT_LABELS  = ['','Support / Advisory','Operational support','Core operations','Business-critical','Mission-critical'];
+const SIM_DEP_LABELS   = ['','Multi-provider, low lock-in','Multi-provider','Mixed dependency','Single provider','Single provider, locked in'];
+const SIM_REV_LABELS   = ['','Under €10M (SME)','€10M–€50M','€50M–€500M','€500M–€5B','Over €5B'];
+
+const fmtK = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
 export function CompanyView() {
   const { state, setInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
-  const [showStickyHeader, setShowStickyHeader] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
+  const [showSticky, setShowSticky] = useState(false);
+  const [summaryGenerated, setSummaryGenerated] = useState(false);
 
-  // Live premium simulator state
-  const [simAuto, setSimAuto] = useState(3);
-  const [simCrit, setSimCrit] = useState(3);
-  const [simDep, setSimDep] = useState(3);
-  const [simOvst, setSimOvst] = useState(3);
+  // Simulator state
+  const [simAuto, setSimAuto] = useState(4);
+  const [simOvst, setSimOvst] = useState(2);
+  const [simCrit, setSimCrit] = useState(5);
+  const [simDep, setSimDep] = useState(4);
+  const [simRev, setSimRev] = useState(3);
+  const [simSec, setSimSec] = useState(1.4);
+  const [simEuaia, setSimEuaia] = useState(1.4);
 
-  // Sync sim sliders with actual inputs when results change
+  // Sync from analysis
   useEffect(() => {
     if (results && inputs) {
-      setSimAuto(inputs.automation);
-      setSimCrit(inputs.criticality);
-      setSimDep(inputs.providers.length <= 1 ? 5 : inputs.providers.length <= 2 ? 3 : 1);
-      setSimOvst(inputs.oversightLevel);
+      setSimAuto(Math.min(5, Math.max(1, Math.round(inputs.automation))));
+      setSimOvst(Math.min(5, Math.max(1, Math.round(inputs.oversightLevel))));
+      setSimCrit(Math.min(5, Math.max(1, Math.round(inputs.criticality))));
+      setSimDep(Math.min(5, Math.max(1, inputs.providers.length <= 1 ? 5 : inputs.providers.length <= 2 ? 3 : 1)));
+      const secMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
+      setSimSec(secMult);
     }
   }, [results, inputs]);
 
-  // Sticky header on scroll
+  // Sticky header
   useEffect(() => {
     const handleScroll = () => {
       if (heroRef.current) {
         const rect = heroRef.current.getBoundingClientRect();
-        setShowStickyHeader(rect.bottom < 0);
+        setShowSticky(rect.bottom < 0);
       }
     };
     const main = document.querySelector('main');
@@ -42,295 +61,446 @@ export function CompanyView() {
     }
   }, []);
 
-  // Live premium calculation
-  const simPremium = useMemo(() => {
-    if (!results || !inputs) return { lo: 0, mid: 0, hi: 0 };
-    const sectorMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
-    const basePrem = (SIM_BASE || 180) * sectorMult;
-    const autoMult = SIM_AUTO_M[simAuto] || 1;
-    const critMult = SIM_CRIT_M[simCrit] || 1;
-    const depMult = SIM_DEP_M[simDep] || 1;
-    const afi = results.afi;
-    const govPremium = 1 + Math.min(0.8, afi * 0.45);
-    const rawPrem = basePrem * autoMult * critMult * depMult * govPremium;
-    const ovstReduction = SIM_OVST_R[simOvst] || 0;
-    const midPrem = rawPrem * (1 - ovstReduction);
+  // Calculate premium
+  const sim = useMemo(() => {
+    const rawPrem = SIM_BASE * SIM_AUTO_M[simAuto] * SIM_CRIT_M[simCrit] * SIM_DEP_M[simDep] * SIM_REV_M[simRev] * simSec * simEuaia;
+    const ovstRed = SIM_OVST_R[simOvst];
+    const mid = rawPrem * (1 - ovstRed);
     const bandPct = simAuto >= 4 ? 0.20 : simAuto >= 3 ? 0.25 : 0.30;
-    return {
-      lo: Math.round(midPrem * (1 - bandPct) / 10) * 10,
-      mid: Math.round(midPrem / 10) * 10,
-      hi: Math.round(midPrem * (1 + bandPct) / 10) * 10,
-    };
-  }, [simAuto, simCrit, simDep, simOvst, inputs, results]);
+    const lo = Math.round(mid * (1 - bandPct) / 10) * 10;
+    const hi = Math.round(mid * (1 + bandPct) / 10) * 10;
+    const midR = Math.round(mid / 10) * 10;
+    const confPct = Math.min(85, 30 + (5-simAuto)*4 + simOvst*4);
+    // Benchmark
+    const worst = SIM_BASE * 2.5 * 2.1 * 1.85 * SIM_REV_M[simRev] * simSec * simEuaia;
+    const best = SIM_BASE * 1.0 * 1.0 * 1.0 * SIM_REV_M[simRev] * simSec * simEuaia * 0.6;
+    const benchPct = Math.max(5, Math.min(95, Math.round((mid - best) / (worst - best) * 100)));
+    return { lo, mid: midR, hi, confPct, benchPct, ovstRed };
+  }, [simAuto, simOvst, simCrit, simDep, simRev, simSec, simEuaia]);
 
+  const sliderFill = (val: number, min: number, max: number) => `${((val - min) / (max - min)) * 100}%`;
+
+  const generateSummary = useCallback(() => {
+    setSummaryGenerated(true);
+  }, []);
+
+  // Locked state
   if (!analysisComplete || !results) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="text-4xl mb-4 opacity-30">🏢</div>
-        <h2 className="text-lg font-bold text-foreground mb-2">Company View — Assessment Required</h2>
-        <p className="text-[13px] text-muted-foreground max-w-md mb-6 leading-relaxed">
-          The executive summary requires a completed assessment. Run the Exposure Analysis first, or load a Company Demo scenario.
-        </p>
-        <div className="flex gap-3">
-          <button onClick={() => { setPerspective('underwriter'); setActiveStep(1); }} className="px-5 py-[10px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold">
-            Switch to Underwriter View
-          </button>
-          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="px-5 py-[10px] border border-border text-foreground rounded-lg text-[12px] font-semibold hover:bg-secondary">
-            Load Company Demo
-          </button>
+      <div style={{ margin: '20px 28px', padding: '28px 32px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 14, textAlign: 'center' }}>
+        <div style={{ fontSize: 28, marginBottom: 12 }}>◈</div>
+        <div style={{ fontSize: 16, fontWeight: 700, color: 'hsl(var(--tx))', marginBottom: 6 }}>Run your AI Risk Assessment first</div>
+        <div style={{ fontSize: 12, color: 'hsl(var(--t2))', lineHeight: 1.65, marginBottom: 24, maxWidth: 460, marginLeft: 'auto', marginRight: 'auto' }}>
+          The Company View shows your executive AI risk summary — risk level, estimated insurance cost, cost drivers, and premium reduction actions. It's generated from your exposure profile in Step 1.
         </div>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button onClick={() => { setPerspective('underwriter'); setActiveStep(1); }} className="btn-p" style={{ fontSize: 13, padding: '12px 24px' }}>→ Start AI Risk Assessment</button>
+          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-s" style={{ fontSize: 13, padding: '12px 24px' }}>▶ Load Demo Scenario</button>
+        </div>
+        <div style={{ marginTop: 16, fontSize: 10, color: 'hsl(var(--t3))' }}>Takes 3 minutes · No account required · Results are not stored</div>
       </div>
     );
   }
 
-  const { band, afi, premium, decisionClass, lossEnvelope, components } = results;
-  const col = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
+  const { band, afi, structuralScore, eciTier, eciName, components, lossEnvelope, premium } = results;
+  const bandColor = band === 'Fragile' ? 'hsl(var(--red))' : band === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
+  const companyName = inputs.companyName || 'Your Organisation';
+  const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
-
-
+  // Cost drivers
   const drivers = [
-    { label: 'Execution Autonomy', pct: inputs.automation / 5, sev: inputs.automation >= 4 ? 'high' : inputs.automation >= 3 ? 'medium' : 'low', sub: `Level ${inputs.automation}/5 — ${inputs.automation >= 4 ? 'Autonomous execution creates unpriced governance gaps' : 'Moderate delegation risk'}` },
-    { label: 'Human Oversight', pct: 1 - inputs.oversightLevel / 5, sev: inputs.oversightLevel <= 2 ? 'high' : inputs.oversightLevel <= 3 ? 'medium' : 'low', sub: `Level ${inputs.oversightLevel}/5 — ${inputs.oversightLevel <= 2 ? 'Critical oversight deficit' : 'Adequate oversight'}` },
-    { label: 'Process Criticality', pct: inputs.criticality / 5, sev: inputs.criticality >= 4 ? 'high' : 'medium', sub: `Level ${inputs.criticality}/5 — ${inputs.criticality >= 4 ? 'High criticality magnifies failure consequence' : 'Standard criticality'}` },
-    { label: 'Provider Dependency', pct: inputs.providers.length <= 1 ? 1 : inputs.providers.length <= 2 ? 0.6 : 0.3, sev: inputs.providers.length <= 1 ? 'high' : 'medium', sub: `${inputs.providers.length} provider${inputs.providers.length !== 1 ? 's' : ''} — ${inputs.providers.length <= 1 ? 'Single-provider lock-in' : 'Some diversification'}` },
-    { label: 'Infrastructure Lock-In', pct: inputs.switchingCost / 5, sev: inputs.switchingCost >= 4 ? 'high' : inputs.switchingCost >= 3 ? 'medium' : 'low', sub: `Level ${inputs.switchingCost}/5 — ${inputs.switchingCost >= 4 ? 'High switching cost · structural entrenchment' : 'Manageable switching cost'}` },
-    { label: 'Monitoring Weakness', pct: 1 - inputs.reviewCadence / 5, sev: inputs.reviewCadence <= 2 ? 'high' : inputs.reviewCadence <= 3 ? 'medium' : 'low', sub: `Review cadence ${inputs.reviewCadence}/5 — ${inputs.reviewCadence <= 2 ? 'No formal review process' : 'Some monitoring in place'}` },
-  ].sort((a, b) => b.pct - a.pct);
+    { label: 'Provider Concentration', sub: 'Single-provider dependency creates correlated tail risk', level: components.cd > 0.6 ? 'high' : components.cd > 0.4 ? 'medium' : 'low', pct: Math.round(components.cd * 100) },
+    { label: 'Execution Autonomy', sub: 'High delegation density with limited human override capability', level: components.dr > 0.6 ? 'high' : components.dr > 0.4 ? 'medium' : 'low', pct: Math.round(components.dr * 100) },
+    { label: 'Limited Oversight', sub: 'Low governance review frequency and justificatory density', level: components.jd < 0.4 ? 'high' : components.jd < 0.6 ? 'medium' : 'low', pct: Math.round((1 - components.jd) * 100) },
+    { label: 'Infrastructure Lock-In', sub: 'High reversibility cost — exit would cause operational disruption', level: components.rc > 0.6 ? 'high' : components.rc > 0.4 ? 'medium' : 'low', pct: Math.round(components.rc * 100) },
+    { label: 'Weak Ownership Clarity', sub: 'No single actor has full authority and accountability for this system', level: components.dr > 0.5 && components.jd < 0.5 ? 'high' : 'medium', pct: Math.round((components.dr + (1 - components.jd)) / 2 * 100) },
+  ];
 
   const levers = [
-    { rank: 1, title: 'Strengthen Governance Cadence', body: 'Implement formal quarterly AI governance review with documented re-authorisation.', saving: `${formatCurrency(Math.round(premium.mid * 0.28 / 50) * 50, 'k')} / yr`, before: 'Ad-hoc review', after: 'Quarterly cadence' },
-    { rank: 2, title: 'Reduce Execution Authority', body: 'Introduce human confirmation checkpoints for high-stakes decision paths.', saving: `${formatCurrency(Math.round(premium.mid * 0.20 / 50) * 50, 'k')} / yr`, before: `Level ${inputs.automation}/5`, after: `Level ${Math.max(1, inputs.automation - 2)}/5` },
-    { rank: 3, title: 'Assign Named System Ownership', body: 'Designate a named individual with explicit authority for AI system continuation decisions.', saving: `${formatCurrency(Math.round(premium.mid * 0.14 / 50) * 50, 'k')} / yr`, before: 'Diffuse accountability', after: 'Named owner' },
+    { rank: 1, title: 'Implement Quarterly Governance Re-authorisation', body: 'Require explicit board-level re-authorisation of AI deployments every 90 days. This alone reduces continuation risk and demonstrates governance maturity to underwriters.', saving: fmtK(Math.round(premium.mid * 0.15 / 10) * 10), before: 'Annual / None', after: 'Quarterly' },
+    { rank: 2, title: 'Diversify AI Provider Infrastructure', body: 'Reduce single-provider dependency to minimum 3 providers. This eliminates the concentration premium loading and reduces correlated tail risk by 40-60%.', saving: fmtK(Math.round(premium.mid * 0.20 / 10) * 10), before: '1 provider', after: '3+ providers' },
+    { rank: 3, title: 'Establish Named AI System Ownership', body: 'Assign a named individual with stop authority and accountability for each AI deployment. Clear ownership reduces the responsibility fragmentation premium.', saving: fmtK(Math.round(premium.mid * 0.10 / 10) * 10), before: 'Diffuse', after: 'Named owner' },
   ];
 
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       {/* Sticky mini header */}
-      {showStickyHeader && (
-        <div className="fixed top-[52px] left-[236px] right-0 bg-card/95 backdrop-blur-sm border-b border-border px-[30px] py-2 flex items-center justify-between z-20">
-          <div className="flex items-center gap-3">
-            <span className="text-[13px] font-bold text-foreground">{inputs.companyName || 'Your Organisation'}</span>
-            <BandBadge band={band} size="sm" />
-            <span className="text-[11px] font-mono text-muted-foreground">{formatCurrency(premium.lo, 'k')} – {formatCurrency(premium.hi, 'k')}</span>
-          </div>
-          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="px-3 py-1 text-[11px] border border-border rounded-md text-muted-foreground hover:text-foreground">
-            Load Demo
-          </button>
+      <div style={{
+        position: 'sticky', top: 0, zIndex: 10,
+        background: 'hsl(var(--sf))', borderBottom: '1px solid hsl(var(--bd))',
+        padding: '10px 36px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+        opacity: showSticky ? 1 : 0, transform: showSticky ? 'none' : 'translateY(-4px)',
+        transition: 'opacity .2s, transform .2s', pointerEvents: showSticky ? 'auto' : 'none',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: 'hsl(var(--tx))' }}>{companyName}</span>
+          <span className={band === 'Fragile' ? 'badge-fragile' : band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'} style={{ fontSize: 10, padding: '4px 10px', borderRadius: 5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{band}</span>
         </div>
-      )}
-
-      {/* Hero */}
-      <div ref={heroRef} className="bg-card border border-border rounded-xl p-9 mb-4 relative">
-        <div className="text-[32px] font-bold text-foreground tracking-tight mb-1">{inputs.companyName || 'Your Organisation'}</div>
-        <div className="text-[13px] text-muted-foreground mb-8">{inputs.industry} · AI Governance Assessment Framework</div>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="bg-secondary border border-border rounded-[14px] p-6">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Risk Level</div>
-            <div className={`text-[22px] font-bold tracking-tight leading-[1.2] mb-2 ${col}`}>
-              {band === 'Fragile' ? 'Elevated Structural Risk' : band === 'Sensitive' ? 'Moderate Structural Risk' : 'Managed Risk Profile'}
-            </div>
-            <BandBadge band={band} size="md" />
-          </div>
-          <div className="bg-secondary border border-border rounded-[14px] p-6">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Estimated Annual Premium</div>
-            <div className="text-[22px] font-bold font-mono text-primary tracking-tight leading-[1.2] mb-2">
-              {formatCurrency(premium.lo, 'k')} – {formatCurrency(premium.hi, 'k')}
-            </div>
-            <div className="text-[11px] text-muted-foreground">Indicative AI Liability / Tech E&O range</div>
-          </div>
-          <div className="bg-secondary border border-border rounded-[14px] p-6">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Governance Posture</div>
-            <div className={`text-[22px] font-bold tracking-tight leading-[1.2] mb-2 ${afi >= 1.35 ? 'text-fragile' : afi >= 0.85 ? 'text-sensitive' : 'text-stable'}`}>
-              {afi >= 1.35 ? 'Elevated' : afi >= 0.85 ? 'Moderate' : 'Strong'}
-            </div>
-            <div className="text-[11px] text-muted-foreground">EU AI Act deployer obligations</div>
-          </div>
-        </div>
-        <div className="absolute top-5 right-5 text-center">
-          <div className={`text-[15px] font-bold font-mono ${col}`}>{afi.toFixed(2)}</div>
-          <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground">AFI</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+          <span style={{ fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{fmtK(sim.lo)} – {fmtK(sim.hi)} / yr</span>
+          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-p" style={{ padding: '6px 14px', fontSize: 11 }}>Load Demo</button>
         </div>
       </div>
 
-      {/* Strategic interpretation */}
-      <div className="bg-purple-bg border border-purple-border rounded-[14px] p-6 mx-0 mb-4 flex gap-5">
-        <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-xl flex-shrink-0 text-white">◈</div>
-        <div className="text-[13px] text-secondary-foreground leading-[1.75]" dangerouslySetInnerHTML={{
-          __html: band === 'Fragile'
-            ? 'Your current AI deployment creates <strong class="text-foreground">significant structural exposure</strong> due to high execution authority, deep integration, and insufficient governance oversight. Insurers price this as non-standard, typically requiring premium loading of 40–80%.'
-            : band === 'Sensitive'
-            ? 'Your deployment creates <strong class="text-foreground">meaningful structural exposure</strong>. Insurers apply conditional terms — coverage available with governance requirements. <strong class="text-foreground">Three targeted improvements</strong> could move you to standard terms.'
-            : 'Your deployment sits <strong class="text-foreground">within manageable parameters</strong>. Standard insurance terms are likely available. Focus on maintaining this profile as deployments evolve.'
-        }} />
+      {/* Company View Header */}
+      <div style={{ padding: '20px 28px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, paddingBottom: 16, borderBottom: '1px solid hsl(var(--bd))' }}>
+          <div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>◈ Company View — Executive AI Risk Summary</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))', letterSpacing: '-0.01em', marginBottom: 5 }}>What does your AI cost — and what can you do about it?</div>
+            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, maxWidth: 600 }}>This view translates the structural AI risk assessment into plain business language: your overall risk level, estimated annual insurance cost, what drives it, and three concrete actions to reduce it.</div>
+          </div>
+          <button onClick={() => setPerspective('underwriter')} className="btn-ghost" style={{ flexShrink: 0 }}>⊕ Underwriter View →</button>
+        </div>
+
+        {/* 4 section preview cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, padding: '14px 0 4px' }}>
+          <div style={{ background: 'hsl(var(--rb))', border: '1px solid hsl(var(--rbr))', borderRadius: 8, padding: '10px 12px' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--red))', marginBottom: 3 }}>① Risk Level</div>
+            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Overall AI risk score, ECI tier, and what it means for your organisation</div>
+          </div>
+          <div style={{ background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 8, padding: '10px 12px' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>② Insurance Cost</div>
+            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Indicative annual premium range and what's driving the price up</div>
+          </div>
+          <div style={{ background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', borderRadius: 8, padding: '10px 12px' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--grn))', marginBottom: 3 }}>③ Cost Reduction</div>
+            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Three concrete actions with estimated annual premium saving per action</div>
+          </div>
+          <div style={{ background: 'hsl(var(--ab))', border: '1px solid hsl(var(--abr))', borderRadius: 8, padding: '10px 12px' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--amb))', marginBottom: 3 }}>④ Regulatory</div>
+            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>EU AI Act & DORA exposure signal — what applies and when</div>
+          </div>
+        </div>
       </div>
 
-      {/* Live Premium Simulator */}
-      <SectionCard title="Live Premium Simulator" icon="💰" subtitle="Adjust levers to see how changes affect your estimated insurance premium in real-time.">
-        <div className="grid grid-cols-[1fr_280px] gap-6">
-          <div className="space-y-4">
-            {[
-              { label: 'Automation Level', value: simAuto, set: setSimAuto, desc: '1 = Manual · 5 = Fully autonomous' },
-              { label: 'Business Criticality', value: simCrit, set: setSimCrit, desc: '1 = Low impact · 5 = Mission-critical' },
-              { label: 'Provider Dependency', value: simDep, set: setSimDep, desc: '1 = Diversified · 5 = Single provider' },
-              { label: 'Oversight Level', value: simOvst, set: setSimOvst, desc: '1 = Minimal · 5 = Comprehensive' },
-            ].map((s, i) => {
-              const pct = ((s.value - 1) / 4) * 100;
-              return (
-                <div key={i}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[12px] font-medium text-foreground">{s.label}</span>
-                    <span className="text-[11px] font-bold font-mono bg-primary text-primary-foreground px-2 py-[1px] rounded">{s.value}</span>
+      {/* LIVE PRICING SIMULATOR */}
+      <div style={{ background: '#f8f7f4', borderBottom: '1px solid hsl(var(--bd))' }}>
+        <div style={{ padding: '20px 28px 0', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20 }}>
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>◈ AI Insurance Pricing Simulator · Live Calculation</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', letterSpacing: '-0.01em' }}>What does your AI profile cost to insure?</div>
+            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 3, lineHeight: 1.5 }}>Adjust the parameters below — the premium estimate updates in real time. All figures are indicative ranges for governance committee orientation.</div>
+          </div>
+          <div style={{ flexShrink: 0, padding: '8px 14px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 8, textAlign: 'center', minWidth: 120 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>Live Estimate</div>
+            <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{fmtK(sim.mid)}</div>
+            <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>per year</div>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 0, padding: '20px 28px 24px' }}>
+          {/* LEFT: Input controls */}
+          <div style={{ paddingRight: 24, borderRight: '1px solid hsl(var(--bd))', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              {/* Autonomy */}
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                  <span>Execution Autonomy</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_AUTO_LABELS[simAuto]}</span>
+                </div>
+                <input type="range" min={1} max={5} value={simAuto} onChange={e => setSimAuto(+e.target.value)} style={{ '--fill': sliderFill(simAuto, 1, 5) } as React.CSSProperties} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 3 }}>
+                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Manual</span>
+                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Fully autonomous</span>
+                </div>
+              </div>
+              {/* Oversight */}
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                  <span>Human Oversight</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_OVST_LABELS[simOvst]}</span>
+                </div>
+                <input type="range" min={1} max={5} value={simOvst} onChange={e => setSimOvst(+e.target.value)} style={{ '--fill': sliderFill(simOvst, 1, 5) } as React.CSSProperties} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 3 }}>
+                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Minimal</span>
+                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Comprehensive</span>
+                </div>
+              </div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              {/* Criticality */}
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                  <span>Business Criticality</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_CRIT_LABELS[simCrit]}</span>
+                </div>
+                <input type="range" min={1} max={5} value={simCrit} onChange={e => setSimCrit(+e.target.value)} style={{ '--fill': sliderFill(simCrit, 1, 5) } as React.CSSProperties} />
+              </div>
+              {/* Dependency */}
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+                  <span>Provider Dependency</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_DEP_LABELS[simDep]}</span>
+                </div>
+                <input type="range" min={1} max={5} value={simDep} onChange={e => setSimDep(+e.target.value)} style={{ '--fill': sliderFill(simDep, 1, 5) } as React.CSSProperties} />
+              </div>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              {/* Revenue */}
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 6 }}>
+                  <span>Annual Revenue</span>
+                </div>
+                <select className="fi-in" value={simRev} onChange={e => setSimRev(+e.target.value)} style={{ fontSize: 12 }}>
+                  {SIM_REV_LABELS.slice(1).map((l, i) => <option key={i+1} value={i+1}>{l}</option>)}
+                </select>
+              </div>
+              {/* EU AI Act */}
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 6 }}>EU AI Act Classification</div>
+                <select className="fi-in" value={simEuaia} onChange={e => setSimEuaia(+e.target.value)} style={{ fontSize: 12 }}>
+                  <option value={1.0}>Minimal Risk</option>
+                  <option value={1.15}>Limited Risk (transparency)</option>
+                  <option value={1.4}>High-Risk — Annex III</option>
+                  <option value={1.6}>High-Risk — Annex I (product safety)</option>
+                  <option value={2.0}>Unacceptable / Prohibited</option>
+                </select>
+              </div>
+            </div>
+            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', padding: '4px 0', lineHeight: 1.6 }}>
+              ⊙ Using standalone inputs
+            </div>
+          </div>
+
+          {/* RIGHT: Live Price Panel */}
+          <div style={{ paddingLeft: 24, display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {/* Main price */}
+            <div style={{ padding: '18px 20px', background: 'linear-gradient(135deg, hsl(var(--pb)), #f0eeff)', border: '1px solid hsl(var(--pbr))', borderRadius: 12, marginBottom: 12, position: 'relative', overflow: 'hidden' }}>
+              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 8 }}>Estimated Annual AI Liability Premium</div>
+              <div style={{ fontSize: 32, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--tx))', letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: 3, transition: 'all .3s' }}>{fmtK(sim.mid)}</div>
+              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginBottom: 14 }}>Range: {fmtK(sim.lo)} – {fmtK(sim.hi)} / year</div>
+              <div style={{ background: 'hsl(var(--s3))', borderRadius: 4, height: 5, marginBottom: 8, overflow: 'hidden' }}>
+                <div style={{ height: '100%', background: 'linear-gradient(90deg, hsl(var(--pur)), #7068e0)', borderRadius: 4, width: `${sim.confPct}%`, transition: 'width .4s' }} />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'hsl(var(--t3))' }}>
+                <span>Exploratory</span>
+                <span>{sim.confPct > 65 ? 'Directional estimate' : sim.confPct > 45 ? 'Low-medium' : 'Exploratory only'}</span>
+                <span>Validated</span>
+              </div>
+            </div>
+
+            {/* Cost driver rows */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {[
+                { icon: '⚡', cls: simAuto >= 4 ? 'red' : simAuto >= 3 ? 'amber' : 'green', action: 'Execution Autonomy', sub: `${SIM_AUTO_LABELS[simAuto]} · Level ${simAuto}/5`, neg: simAuto >= 3 },
+                { icon: '👁', cls: simOvst <= 2 ? 'red' : simOvst <= 3 ? 'amber' : 'green', action: 'Human Oversight', sub: `${SIM_OVST_LABELS[simOvst]} · Level ${simOvst}/5`, neg: simOvst <= 2 },
+                { icon: '🔗', cls: simDep >= 4 ? 'red' : simDep >= 3 ? 'amber' : 'green', action: 'Provider Dependency', sub: `${SIM_DEP_LABELS[simDep]} · Level ${simDep}/5`, neg: simDep >= 3 },
+              ].map((r, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', background: 'hsl(var(--sf))', border: '1px solid hsl(var(--bd))', borderRadius: 8 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0, background: r.cls === 'red' ? '#fde4e0' : r.cls === 'amber' ? '#fef5e6' : '#eaf6ee' }}>{r.icon}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 11, fontWeight: 600, color: 'hsl(var(--tx))' }}>{r.action}</div>
+                    <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>{r.sub}</div>
                   </div>
-                  <input
-                    type="range" min={1} max={5} step={1} value={s.value}
-                    onChange={e => s.set(parseInt(e.target.value))}
-                    style={{ '--fill': `${pct}%` } as React.CSSProperties}
-                    className="w-full"
-                  />
-                  <div className="text-[10px] text-muted-foreground mt-[2px]">{s.desc}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: r.neg ? 'hsl(var(--red))' : 'hsl(var(--grn))' }}>{r.neg ? '↑' : '↓'}</div>
                 </div>
-              );
-            })}
-          </div>
-          <div className="bg-secondary border border-border rounded-[14px] p-5 flex flex-col justify-center">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Simulated Annual Premium</div>
-            <div className="text-[28px] font-bold font-mono text-primary leading-none mb-1">
-              {formatCurrency(simPremium.lo, 'k')} – {formatCurrency(simPremium.hi, 'k')}
+              ))}
             </div>
-            <div className="text-[10px] text-muted-foreground mb-4">Mid-point: {formatCurrency(simPremium.mid, 'k')}</div>
-            <div className="h-[6px] bg-border rounded overflow-hidden mb-3">
-              <div className="h-full bg-primary rounded transition-all" style={{ width: `${Math.min(100, (simPremium.mid / (premium.hi * 1.5)) * 100)}%` }} />
+
+            {/* Benchmark */}
+            <div style={{ padding: '12px 14px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 8, marginTop: 6 }}>
+              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8 }}>◈ Peer Benchmark · Similar profile in your sector</div>
+              <div style={{ height: 8, background: 'hsl(var(--bd))', borderRadius: 4, overflow: 'hidden', position: 'relative', marginBottom: 6 }}>
+                <div style={{ height: '100%', borderRadius: 4, width: `${sim.benchPct}%`, background: sim.benchPct > 65 ? 'linear-gradient(90deg, #146030, #b53020)' : 'linear-gradient(90deg, #146030, #9c6200)', transition: 'width .5s' }} />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'hsl(var(--t3))' }}>
+                <span>Best governance</span><span>Sector avg</span><span>Worst governance</span>
+              </div>
+              <div style={{ fontSize: 10, fontWeight: 700, marginTop: 6, textAlign: 'center', color: sim.benchPct > 65 ? 'hsl(var(--red))' : sim.benchPct > 40 ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>
+                Your profile: {sim.benchPct > 70 ? `above average risk · Top ${100-sim.benchPct}% of sector` : sim.benchPct > 40 ? 'near sector average' : 'below average risk · well-governed'}
+              </div>
             </div>
-            <div className="flex items-center justify-between text-[9px] text-muted-foreground">
-              <span>vs. current: {formatCurrency(premium.mid, 'k')}</span>
-              <span className={`font-bold ${simPremium.mid < premium.mid ? 'text-stable' : simPremium.mid > premium.mid ? 'text-fragile' : 'text-muted-foreground'}`}>
-                {simPremium.mid < premium.mid ? `↓ ${formatCurrency(premium.mid - simPremium.mid, 'k')} saving` :
-                 simPremium.mid > premium.mid ? `↑ ${formatCurrency(simPremium.mid - premium.mid, 'k')} increase` : 'No change'}
-              </span>
-            </div>
+
+            {/* Generate Summary button */}
+            <button onClick={generateSummary} style={{ width: '100%', marginTop: 10, padding: '13px 16px', background: 'linear-gradient(135deg, hsl(var(--pur)), #6058d8)', border: 'none', borderRadius: 9, color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 4px 16px rgba(64,56,184,0.3)' }}>
+              <span>⊕</span>
+              <span>Generate Executive Summary →</span>
+            </button>
+            <div style={{ textAlign: 'center', marginTop: 7, fontSize: 10, color: 'hsl(var(--t3))' }}>Results appear below · Adjust inputs and click again to update</div>
           </div>
         </div>
-      </SectionCard>
+      </div>
 
-      {/* Cost Drivers */}
-      <SectionCard title="Cost Drivers" icon="📊" subtitle="Ranked by premium impact — highest pressure first.">
-        <div className="space-y-3">
-          {drivers.map((d, i) => (
-            <div key={i} className="bg-secondary border border-border rounded-xl p-[18px] grid grid-cols-[220px_1fr_100px] gap-5 items-center">
-              <div>
-                <div className="text-[13px] font-semibold text-foreground mb-1">{d.label}</div>
-                <div className="text-[11px] text-muted-foreground leading-[1.5]">{d.sub}</div>
+      {/* HERO SECTION */}
+      <div ref={heroRef} style={{ padding: '36px 36px 32px' }}>
+        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 7 }}>
+          <div style={{ width: 5, height: 5, borderRadius: '50%', background: bandColor, animation: 'pulse-dot 2s infinite' }} />
+          Company View · AI Risk Executive Summary · {now}
+        </div>
+        <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', marginBottom: 6, color: 'hsl(var(--tx))' }}>{companyName}</div>
+        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', marginBottom: 32 }}>AI Governance Architecture Framework · Structural Exposure Assessment</div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+          {/* Premium card */}
+          <div className="card" style={{ borderTop: `4px solid hsl(var(--pur))`, padding: '24px 24px 20px', borderRadius: 14 }}>
+            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Estimated Annual AI Insurance Premium</div>
+            <div style={{ fontSize: 28, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))', marginTop: 8, marginBottom: 10 }}>{fmtK(sim.lo)} – {fmtK(sim.hi)}</div>
+            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, marginBottom: 8 }}>Based on structural governance assessment. Indicative range for committee orientation.</div>
+            <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))' }}>
+              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>After governance improvements →</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{fmtK(sim.mid)}</span>
+                <span style={{ fontSize: 14, color: 'hsl(var(--t3))' }}>→</span>
+                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--grn))' }}>{fmtK(Math.round(sim.mid * 0.55 / 10) * 10)}</span>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', background: 'hsl(var(--gb))', color: 'hsl(var(--grn))', border: '1px solid hsl(var(--gbr))', borderRadius: 4 }}>Save ~{Math.round(45)}%</span>
               </div>
-              <div>
-                <div className="h-[10px] bg-border rounded-[5px] overflow-hidden">
-                  <div className={`h-full rounded-[5px] ${d.sev === 'high' ? 'bg-fragile' : d.sev === 'medium' ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(d.pct * 100)}%` }} />
-                </div>
+            </div>
+          </div>
+
+          {/* Risk card */}
+          <div className="card" style={{ borderTop: `4px solid ${bandColor}`, padding: '24px 24px 20px', borderRadius: 14 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Overall AI Risk</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: bandColor, marginTop: 8, marginBottom: 10 }}>{band} — Score {structuralScore}/100</div>
+            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>
+              {band === 'Fragile' ? 'Above underwriting tolerance. Structural remediation required before standard coverage.' :
+               band === 'Sensitive' ? 'Approaching threshold. Conditional review process with 90-day improvement plan.' :
+               'Within tolerance. Standard coverage terms apply.'}
+            </div>
+            <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))', display: 'flex', gap: 10 }}>
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>AFI</div>
+                <div style={{ fontSize: 17, fontWeight: 700, fontFamily: 'var(--font-mono)', color: bandColor }}>{afi.toFixed(2)}</div>
               </div>
-              <div className={`text-[12px] font-bold text-right ${d.sev === 'high' ? 'text-fragile' : d.sev === 'medium' ? 'text-sensitive' : 'text-stable'}`}>
-                {d.sev === 'high' ? '▲ Major' : d.sev === 'medium' ? '◆ Moderate' : '▼ Minor'}
+              <div style={{ width: 1, background: 'hsl(var(--bd))' }} />
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>ECI</div>
+                <div style={{ fontSize: 17, fontWeight: 700, fontFamily: 'var(--font-mono)', color: bandColor }}>ECI-{eciTier}</div>
+              </div>
+              <div style={{ width: 1, background: 'hsl(var(--bd))' }} />
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>Band</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: bandColor }}>{band}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Regulatory card */}
+          <div className="card" style={{ borderTop: '4px solid hsl(var(--amb))', padding: '24px 24px 20px', borderRadius: 14 }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Regulatory Exposure</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: 'hsl(var(--amb))', marginTop: 8, marginBottom: 10 }}>High-Risk (Annex III)</div>
+            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.</div>
+            <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))' }}>
+              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Compliance window</div>
+              <div style={{ background: 'hsl(var(--s2))', borderRadius: 6, overflow: 'hidden', height: 6 }}>
+                <div style={{ height: '100%', background: 'linear-gradient(90deg, #146030, #208040)', width: '40%' }} />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Today</span>
+                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Aug 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* COST DRIVERS */}
+      <div style={{ padding: '28px 36px 0' }}>
+        <div style={{ marginBottom: 20, paddingBottom: 14 }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Cost Drivers</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>What's Driving Your Insurance Cost</div>
+          <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 4 }}>Ranked by impact on annual premium. Address high-impact drivers first for maximum cost reduction.</div>
+        </div>
+        {drivers.map((d, i) => (
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 100px', gap: 20, padding: '18px 22px', background: 'hsl(var(--sf))', border: '1px solid hsl(var(--bd))', borderRadius: 12, marginBottom: 8, alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: 'hsl(var(--tx))', marginBottom: 5 }}>{d.label}</div>
+              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.5 }}>{d.sub}</div>
+            </div>
+            <div>
+              <div style={{ height: 10, background: 'hsl(var(--s2))', borderRadius: 5, overflow: 'hidden' }}>
+                <div style={{ height: '100%', borderRadius: 5, width: `${d.pct}%`, background: d.level === 'high' ? 'linear-gradient(90deg, hsl(var(--red)), #d85040)' : d.level === 'medium' ? 'linear-gradient(90deg, hsl(var(--amb)), #c88000)' : 'linear-gradient(90deg, hsl(var(--grn)), #208040)' }} />
+              </div>
+            </div>
+            <div style={{ textAlign: 'right', fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-mono)', color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* PREMIUM REDUCTION LEVERS */}
+      <div style={{ padding: '28px 36px 0' }}>
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Premium Reduction Levers</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>Three Actions to Reduce Your AI Insurance Cost</div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 8 }}>
+          {levers.map(l => (
+            <div key={l.rank} className="card" style={{ borderRadius: 14, padding: 24, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, width: 4, bottom: 0, background: 'hsl(var(--grn))', borderRadius: '14px 0 0 14px' }} />
+              <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: 'hsl(var(--grn))' }}>{l.rank}</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.25 }}>{l.title}</div>
+              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, flex: 1 }}>{l.body}</div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', borderRadius: 9, padding: '12px 16px' }}>
+                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--grn))' }}>Est. Saving</span>
+                <span style={{ fontSize: 16, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--grn))' }}>{l.saving}</span>
+              </div>
+              <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                <span style={{ fontSize: 9, fontWeight: 600, padding: '2px 7px', borderRadius: 3, background: 'hsl(var(--rb))', color: 'hsl(var(--red))' }}>{l.before}</span>
+                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>→</span>
+                <span style={{ fontSize: 9, fontWeight: 600, padding: '2px 7px', borderRadius: 3, background: 'hsl(var(--gb))', color: 'hsl(var(--grn))' }}>{l.after}</span>
               </div>
             </div>
           ))}
         </div>
-      </SectionCard>
+      </div>
 
-      {/* Premium Reduction Levers */}
-      <SectionCard title="Premium Reduction Levers" icon="💡" subtitle="Targeted improvements to reduce insurance cost.">
-        <div className="grid grid-cols-3 gap-4">
-          {levers.map((l, i) => (
-            <div key={i} className="bg-secondary border border-border rounded-[14px] p-6 flex flex-col gap-3">
-              <div className="flex items-center gap-[10px]">
-                <div className="w-8 h-8 rounded-[9px] bg-primary text-primary-foreground flex items-center justify-center text-[13px] font-bold">{l.rank}</div>
-                <div className="text-[14px] font-bold text-foreground">{l.title}</div>
-              </div>
-              <div className="text-[11px] text-muted-foreground leading-[1.6]">{l.body}</div>
-              <div className="flex items-center gap-2 text-[10px]">
-                <span className="text-muted-foreground">{l.before}</span>
-                <span className="text-primary">→</span>
-                <span className="text-stable font-semibold">{l.after}</span>
-              </div>
-              <div className="bg-stable-bg border border-stable-border rounded-[9px] p-3">
-                <div className="text-[9px] text-muted-foreground">Est. annual saving</div>
-                <div className="text-base font-bold font-mono text-stable">{l.saving}</div>
-              </div>
-            </div>
-          ))}
+      {/* REGULATORY READINESS */}
+      <div style={{ padding: '28px 36px 0' }}>
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Governance & Regulatory Readiness</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>Are You Ready for August 2026?</div>
         </div>
-      </SectionCard>
-
-      {/* Governance / Regulatory Readiness */}
-      <SectionCard title="Governance & Regulatory Readiness" icon="🛡️" subtitle="Current posture against key governance dimensions.">
-        <div className="grid grid-cols-3 gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 12 }}>
           {[
-            {
-              title: 'Oversight Maturity',
-              score: inputs.oversightLevel,
-              status: inputs.oversightLevel >= 4 ? 'Strong' : inputs.oversightLevel >= 3 ? 'Adequate' : 'Weak',
-              color: inputs.oversightLevel >= 4 ? 'text-stable' : inputs.oversightLevel >= 3 ? 'text-sensitive' : 'text-fragile',
-              desc: 'Human oversight coverage and quality of governance justification across AI decision pathways.',
-            },
-            {
-              title: 'Deployer Obligation Readiness',
-              score: inputs.reviewCadence,
-              status: inputs.reviewCadence >= 4 ? 'Ready' : inputs.reviewCadence >= 3 ? 'Partial' : 'Not Ready',
-              color: inputs.reviewCadence >= 4 ? 'text-stable' : inputs.reviewCadence >= 3 ? 'text-sensitive' : 'text-fragile',
-              desc: 'Preparedness for EU AI Act deployer obligations including re-authorisation cadence and documentation.',
-            },
-            {
-              title: 'Post-Market Monitoring',
-              score: Math.round((inputs.reviewCadence + inputs.sunsetPolicy) / 2),
-              status: (inputs.reviewCadence + inputs.sunsetPolicy) / 2 >= 4 ? 'Active' : (inputs.reviewCadence + inputs.sunsetPolicy) / 2 >= 3 ? 'Partial' : 'Minimal',
-              color: (inputs.reviewCadence + inputs.sunsetPolicy) / 2 >= 4 ? 'text-stable' : (inputs.reviewCadence + inputs.sunsetPolicy) / 2 >= 3 ? 'text-sensitive' : 'text-fragile',
-              desc: 'Continuous monitoring, drift detection, and sunset policy enforcement for deployed AI systems.',
-            },
-          ].map((g, i) => (
-            <div key={i} className="bg-secondary border border-border rounded-[14px] p-5">
-              <div className="text-[12px] font-bold text-foreground mb-2">{g.title}</div>
-              <div className={`text-[18px] font-bold mb-1 ${g.color}`}>{g.status}</div>
-              <div className="text-[10px] font-mono text-muted-foreground mb-2">Level {g.score}/5</div>
-              <div className="text-[10px] text-muted-foreground leading-[1.55]">{g.desc}</div>
+            { name: 'Oversight Maturity', level: components.jd > 0.6 ? 'green' : components.jd > 0.4 ? 'yellow' : 'red', label: components.jd > 0.6 ? 'Adequate' : components.jd > 0.4 ? 'Partial' : 'Insufficient', body: 'Human oversight density and governance review frequency. Art. 14 requires "appropriate" human oversight.', why: 'Directly affects insurability and premium loading' },
+            { name: 'Deployer Obligation Readiness', level: components.dr < 0.4 ? 'green' : components.dr < 0.6 ? 'yellow' : 'red', label: components.dr < 0.4 ? 'On Track' : components.dr < 0.6 ? 'Gaps Identified' : 'Not Ready', body: 'Readiness for Art. 26 deployer obligations (Aug 2026). Includes FRIA, incident reporting, post-market monitoring.', why: 'Non-compliance: up to €15M / 3% global turnover' },
+            { name: 'Post-Market Monitoring', level: 'yellow', label: 'Under Development', body: 'Art. 72 requires continuous monitoring systems. Most deployments currently lack structured AI-specific monitoring.', why: 'Required for all high-risk AI from Aug 2026' },
+          ].map((r, i) => (
+            <div key={i} className="card" style={{ borderRadius: 12, padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div style={{ width: 12, height: 12, borderRadius: '50%', background: r.level === 'green' ? '#18a050' : r.level === 'yellow' ? '#e09000' : '#c03020', animation: r.level !== 'green' ? 'pulse-dot 2s infinite' : undefined }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: r.level === 'green' ? 'hsl(var(--grn))' : r.level === 'yellow' ? 'hsl(var(--amb))' : 'hsl(var(--red))' }}>{r.label}</span>
+              </div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: 'hsl(var(--tx))' }}>{r.name}</div>
+              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>{r.body}</div>
+              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', paddingTop: 6, borderTop: '1px solid hsl(var(--bd))' }}>{r.why}</div>
             </div>
           ))}
         </div>
-      </SectionCard>
+      </div>
 
-      {/* Action Plan */}
-      <SectionCard title="Action Plan" icon="🎯" subtitle="Concrete next steps prioritised by impact.">
-        <div className="grid grid-cols-3 gap-4">
+      {/* ACTION PLAN */}
+      <div style={{ padding: '28px 36px 0' }}>
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Recommended Action Plan</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>What To Do Next</div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           {[
-            { title: 'Governance Review Sprint', body: 'Establish formal quarterly governance cadence with documented re-authorisation process.', horizon: '30–60 days', priority: 'High' },
-            { title: 'Authority Reduction', body: 'Reduce autonomous execution authority in critical pathways by introducing human confirmation checkpoints.', horizon: '60–90 days', priority: 'High' },
-            { title: 'Ownership Assignment', body: 'Designate named system owner with explicit authority for AI continuation and decommission decisions.', horizon: '14 days', priority: 'Critical' },
-          ].map((a, i) => (
-            <div key={i} className="bg-secondary border border-border rounded-[14px] p-6">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-[9px] bg-primary/10 text-primary flex items-center justify-center text-[13px] font-bold">{i + 1}</div>
-                <div className="text-[14px] font-bold text-foreground">{a.title}</div>
-              </div>
-              <div className="text-[11px] text-muted-foreground leading-[1.65] mb-3">{a.body}</div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[6px]">
-                  <div className="w-[6px] h-[6px] rounded-full bg-primary" />
-                  <span className="text-[9px] font-bold tracking-wider uppercase text-primary">{a.horizon}</span>
-                </div>
-                <span className={`text-[9px] font-bold uppercase px-2 py-[2px] rounded ${
-                  a.priority === 'Critical' ? 'badge-fragile' : 'badge-sensitive'
-                }`}>{a.priority}</span>
+            { num: '1', title: 'Schedule AI Governance Review', body: 'Book a 90-minute governance review session with your risk committee. Use this assessment as the agenda basis. Focus on the three cost drivers identified above.', horizon: 'This Week' },
+            { num: '2', title: 'Document AI System Inventory', body: 'Create a structured inventory of all AI systems, their providers, integration points, and decision authority. This is a prerequisite for EU AI Act Art. 26 compliance.', horizon: '30 Days' },
+            { num: '3', title: 'Engage Insurance Broker', body: 'Share this assessment with your insurance broker or risk advisor. Use the pricing simulator outputs to start a conversation about AI-specific coverage terms.', horizon: '60 Days' },
+          ].map(a => (
+            <div key={a.num} className="card" style={{ borderRadius: 14, padding: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <div style={{ width: 32, height: 32, borderRadius: 9, background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{a.num}</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.25 }}>{a.title}</div>
+              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.65, flex: 1 }}>{a.body}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'hsl(var(--pur))' }} />
+                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'hsl(var(--pur))' }}>{a.horizon}</span>
               </div>
             </div>
           ))}
         </div>
-      </SectionCard>
+      </div>
 
-      {/* Footer CTA */}
-      <div className="bg-purple-bg border border-purple-border rounded-2xl p-7 flex items-center justify-between">
-        <div className="text-[13px] text-muted-foreground leading-[1.5]">
-          <strong className="text-[15px] font-bold block mb-1 text-foreground">Ready to reduce your AI insurance cost?</strong>
-          Implement the three recommended levers above to move toward standard coverage terms.
+      {/* FOOTER CTA */}
+      <div style={{ margin: '28px 36px', padding: '28px 32px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
+        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', lineHeight: 1.5 }}>
+          <strong style={{ fontSize: 15, fontWeight: 700, display: 'block', marginBottom: 4, color: 'hsl(var(--tx))' }}>Ready to take action?</strong>
+          Download the executive report for your board, or switch to the Underwriter View for the full structural analysis.
         </div>
-        <button onClick={() => { setPerspective('underwriter'); setActiveStep(5); }} className="px-6 py-[11px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors flex-shrink-0 whitespace-nowrap">
-          View Executive Report →
-        </button>
+        <button onClick={() => setPerspective('underwriter')} className="btn-p" style={{ padding: '13px 26px', fontSize: 13, borderRadius: 9, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
       </div>
     </div>
   );
