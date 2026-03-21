@@ -131,7 +131,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* AFI Component Analysis — Radar Chart */}
-      <SectionCard title="AFI Component Analysis" badge="Structural">
+      <SectionCard title="AFI Component Analysis">
         <div className="h-[250px]">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart data={[
