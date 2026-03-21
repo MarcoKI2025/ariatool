@@ -123,6 +123,7 @@ export function DecisionIntelligence() {
           <div key={i} className="px-3 py-[6px] bg-card border border-border rounded-lg text-[10px]">
             <span className="font-mono font-bold text-foreground">{c.label}</span>
             <span className="text-muted-foreground ml-1">{c.desc}</span>
+            {(c as any).tooltip && <InfoTip text={(c as any).tooltip} />}
           </div>
         ))}
         <BandBadge band={band} size="sm" />
