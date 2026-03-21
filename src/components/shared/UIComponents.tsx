@@ -1,5 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Band } from '@/lib/types';
+
+interface InfoTipProps {
+  text: string;
+}
+
+export function InfoTip({ text }: InfoTipProps) {
+  const [show, setShow] = useState(false);
+  const triggerRef = useRef<HTMLSpanElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (show && boxRef.current && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      const box = boxRef.current;
+      box.style.left = `${rect.left}px`;
+      box.style.top = `${rect.bottom + 8}px`;
+      const boxRect = box.getBoundingClientRect();
+      if (boxRect.right > window.innerWidth) {
+        box.style.left = `${window.innerWidth - boxRect.width - 20}px`;
+      }
+    }
+  }, [show]);
+
+  return (
+    <span
+      className="relative inline-flex items-center cursor-help ml-[5px]"
+      onMouseEnter={() => setShow(true)}
+      onMouseLeave={() => setShow(false)}
+      ref={triggerRef}
+    >
+      <i className="w-[14px] h-[14px] rounded-full bg-muted border border-border text-muted-foreground text-[9px] font-bold not-italic inline-flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-colors">i</i>
+      {show && (
+        <div
+          ref={boxRef}
+          className="fixed z-[9000] bg-[#111108] text-white text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-[#3a3828] pointer-events-none"
+          style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.35)' }}
+        >
+          {text}
+        </div>
+      )}
+    </span>
+  );
+}
 
 interface MetricCardProps {
   label: string;

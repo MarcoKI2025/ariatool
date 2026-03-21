@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { Banner, MetricCard, BandBadge, SectionCard, LockedState } from '@/components/shared/UIComponents';
+import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
+import { TOOLTIPS } from '@/lib/tooltips';
 
 export function RiskOverview() {
   const { state, setActiveStep } = useApp();
@@ -29,7 +30,7 @@ export function RiskOverview() {
       }>
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Authority Fragility Index</div>
+            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Authority Fragility Index<InfoTip text={TOOLTIPS.afi} /></div>
             <div className="text-[12px] text-foreground">AFI {afi.toFixed(2)} — {band}</div>
           </div>
           <div>
@@ -37,7 +38,7 @@ export function RiskOverview() {
             <div className="text-[12px] text-foreground">{results.decisionClass}</div>
           </div>
           <div>
-            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Existence Cost</div>
+            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Existence Cost<InfoTip text={TOOLTIPS.eci} /></div>
             <div className="text-[12px] text-foreground">ECI-{eciTier} — {eciName}</div>
           </div>
         </div>
@@ -78,10 +79,10 @@ export function RiskOverview() {
 
       {/* Key metrics grid */}
       <div className="grid grid-cols-2 gap-3 mb-4">
-        <MetricCard label="AFI · Authority Fragility" value={afi.toFixed(2)} band={band} sublabel={`${band} — ${afi < 0.85 ? 'below threshold' : afi < 1.35 ? 'approaching threshold' : 'above threshold'}`} />
-        <MetricCard label="Governance Exposure" value={`${Math.round(components.jd * 100)}%`} band={components.jd < 0.4 ? 'Fragile' : components.jd < 0.6 ? 'Sensitive' : 'Stable'} sublabel="Justificatory Density" />
-        <MetricCard label="Dependency Concentration" value={`${Math.round(components.rc * 100)}%`} band={components.rc > 0.7 ? 'Fragile' : components.rc > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Reversibility Cost" />
-        <MetricCard label="Continuation Density" value={`${Math.round(components.cd * 100)}%`} band={components.cd > 0.7 ? 'Fragile' : components.cd > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Integration lock-in" />
+        <MetricCard label="AFI · Authority Fragility" value={afi.toFixed(2)} band={band} sublabel={`${band} — ${afi < 0.85 ? 'below threshold' : afi < 1.35 ? 'approaching threshold' : 'above threshold'}`} icon="📊" />
+        <MetricCard label="Governance Exposure" value={`${Math.round(components.jd * 100)}%`} band={components.jd < 0.4 ? 'Fragile' : components.jd < 0.6 ? 'Sensitive' : 'Stable'} sublabel="Justificatory Density" icon="🛡" />
+        <MetricCard label="Dependency Concentration" value={`${Math.round(components.rc * 100)}%`} band={components.rc > 0.7 ? 'Fragile' : components.rc > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Reversibility Cost" icon="🔗" />
+        <MetricCard label="Continuation Density" value={`${Math.round(components.cd * 100)}%`} band={components.cd > 0.7 ? 'Fragile' : components.cd > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Integration lock-in" icon="⚙" />
       </div>
 
       {/* Continuation Risk / Dependency Lock-In / Portfolio Contagion */}

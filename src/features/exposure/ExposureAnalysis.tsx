@@ -2,10 +2,11 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { computeLivePreview } from '@/lib/scoring';
 import { USE_CASES, PROVIDERS, INDUSTRIES } from '@/lib/constants';
-import { SliderRow, SectionCard } from '@/components/shared/UIComponents';
+import { SliderRow, SectionCard, InfoTip } from '@/components/shared/UIComponents';
 import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
 import { ExposureResults } from './ExposureResults';
 import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
+import { TOOLTIPS } from '@/lib/tooltips';
 import { ExposureInputs } from '@/lib/types';
 
 const PROGRESS_STEPS = ['Company', 'Core AFI', 'Agent', 'Liability', 'Governance', 'Systemic'];
@@ -243,20 +244,20 @@ export function ExposureAnalysis() {
             }`} style={{ width: `${Math.min(100, preview.score)}%` }} />
           </div>
           <div className="text-[11px] text-secondary-foreground leading-[1.55] mb-3">
-            AFI {preview.afi.toFixed(2)} — {preview.band === 'Fragile' ? 'High governance fragility detected' : preview.band === 'Sensitive' ? 'Drift risk emerging — monitoring required' : 'Governance drift currently contained'}
+            AFI {preview.afi.toFixed(2)}<InfoTip text={TOOLTIPS.afi} /> — {preview.band === 'Fragile' ? 'High governance fragility detected' : preview.band === 'Sensitive' ? 'Drift risk emerging — monitoring required' : 'Governance drift currently contained'}
           </div>
 
           {/* AFI Components */}
           <div className="mb-3 space-y-[6px]">
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">AFI Components</div>
             {[
-              { label: 'DR', value: preview.components.dr, name: 'Delegation Ratio' },
-              { label: 'JD', value: preview.components.jd, name: 'Justificatory Density' },
-              { label: 'RC', value: preview.components.rc, name: 'Reversibility Cost' },
-              { label: 'CD', value: preview.components.cd, name: 'Continuation Density' },
+              { label: 'DR', value: preview.components.dr, name: 'Delegation Ratio', tooltip: TOOLTIPS.dr },
+              { label: 'JD', value: preview.components.jd, name: 'Justificatory Density', tooltip: TOOLTIPS.jd },
+              { label: 'RC', value: preview.components.rc, name: 'Reversibility Cost', tooltip: TOOLTIPS.rc },
+              { label: 'CD', value: preview.components.cd, name: 'Continuation Density', tooltip: TOOLTIPS.cd },
             ].map((c, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="text-[9px] font-mono text-muted-foreground w-5" title={c.name}>{c.label}</span>
+                <span className="text-[9px] font-mono text-muted-foreground w-5 cursor-help" title={c.name}>{c.label}<InfoTip text={(c as any).tooltip} /></span>
                 <div className="flex-1 h-[4px] bg-border rounded overflow-hidden">
                   <div className={`h-full rounded ${c.value > 0.7 ? 'bg-fragile' : c.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(c.value * 100)}%` }} />
                 </div>

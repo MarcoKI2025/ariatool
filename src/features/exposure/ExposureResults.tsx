@@ -1,7 +1,8 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { formatCurrency } from '@/lib/formatters';
-import { BandBadge, SectionCard } from '@/components/shared/UIComponents';
+import { BandBadge, SectionCard, InfoTip } from '@/components/shared/UIComponents';
+import { TOOLTIPS } from '@/lib/tooltips';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
@@ -68,7 +69,7 @@ export function ExposureResults() {
       {/* ═══ HERO SECTION ═══ */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="p-6 pb-4">
-          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0<InfoTip text={TOOLTIPS.afi} /></div>
           <div className="flex items-start gap-8">
             <div>
               <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
@@ -90,7 +91,7 @@ export function ExposureResults() {
             </div>
             <div className="flex-shrink-0 text-right">
               <div className={`p-3 rounded-lg ${bandBg} border`}>
-                <div className={`text-[22px] font-bold font-mono ${bandColor}`}>ECI-{eciTier}</div>
+              <div className={`text-[22px] font-bold font-mono ${bandColor}`}>ECI-{eciTier}<InfoTip text={TOOLTIPS.eci} /></div>
                 <div className="text-[9px] text-muted-foreground uppercase tracking-wider">{eciName}</div>
               </div>
             </div>
@@ -131,22 +132,22 @@ export function ExposureResults() {
       {/* Metrics grid: DR, JD, RC, CD */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Delegation Ratio (DR)</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Delegation Ratio (DR)<InfoTip text={TOOLTIPS.dr} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${dr100 > 60 ? 'text-fragile' : dr100 > 40 ? 'text-sensitive' : 'text-stable'}`}>{dr100}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">High delegation — <span className={`inline-flex items-center text-[9px] font-bold tracking-wider uppercase px-[7px] py-[2px] rounded ${dr100 > 60 ? 'badge-fragile' : dr100 > 40 ? 'badge-sensitive' : 'badge-stable'}`}>{dr100 > 60 ? 'High' : dr100 > 40 ? 'Moderate' : 'Low'}</span></div>
         </div>
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Justificatory Density (JD)</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Justificatory Density (JD)<InfoTip text={TOOLTIPS.jd} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${jd100 < 40 ? 'text-fragile' : jd100 < 60 ? 'text-sensitive' : 'text-stable'}`}>{jd100}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">{jd100 < 40 ? 'Low audit coverage' : 'Partial audit coverage'}</div>
         </div>
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Reversibility Cost Index</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Reversibility Cost Index<InfoTip text={TOOLTIPS.rc} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${rc100 > 60 ? 'text-fragile' : rc100 > 40 ? 'text-sensitive' : 'text-stable'}`}>{rc100}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">{rc100 > 60 ? 'Elevated exit difficulty' : 'Moderate exit difficulty'}</div>
         </div>
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Correlation Density</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Correlation Density<InfoTip text={TOOLTIPS.cd} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${cd100 > 60 ? 'text-fragile' : cd100 > 40 ? 'text-sensitive' : 'text-stable'}`}>{cd100}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">{cd100 > 60 ? 'High homogeneity' : 'Moderate homogeneity'}</div>
         </div>

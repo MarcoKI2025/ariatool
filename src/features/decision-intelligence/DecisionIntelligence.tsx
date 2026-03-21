@@ -1,7 +1,8 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { Banner, MetricCard, BandBadge, SectionCard, LockedState } from '@/components/shared/UIComponents';
+import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
+import { TOOLTIPS } from '@/lib/tooltips';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
@@ -60,7 +61,7 @@ export function DecisionIntelligence() {
         <div className="bg-card border border-border rounded-xl p-6">
           <div className="flex items-end gap-6">
             <div>
-              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Structural Exposure Score</div>
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Structural Exposure Score<InfoTip text={TOOLTIPS.afi} /></div>
               <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${
                 band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
               }`}>{structuralScore}</div>
@@ -77,7 +78,7 @@ export function DecisionIntelligence() {
                 </svg>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
                   <div className={`text-[18px] font-bold font-mono ${band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>
-                    ECI-{eciTier}
+                    ECI-{eciTier}<InfoTip text={TOOLTIPS.eci} />
                   </div>
                   <div className="text-[8px] text-muted-foreground uppercase tracking-wider">{eciName}</div>
                 </div>
@@ -97,12 +98,12 @@ export function DecisionIntelligence() {
         {/* Quick metrics */}
         <div className="flex flex-col gap-3">
           {[
-            { label: 'AFI Score', value: afi.toFixed(2), band },
+            { label: 'AFI Score', value: afi.toFixed(2), band, tooltip: TOOLTIPS.afi },
             { label: 'AGRI', value: `${agri}`, band: agri >= 60 ? 'Fragile' as const : agri >= 35 ? 'Sensitive' as const : 'Stable' as const },
             { label: 'Decision Class', value: results.decisionClass, band },
           ].map((m, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}{(m as any).tooltip && <InfoTip text={(m as any).tooltip} />}</div>
               <div className={`text-[18px] font-bold font-mono ${m.band === 'Fragile' ? 'text-fragile' : m.band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>
                 {m.value}
               </div>
@@ -114,14 +115,15 @@ export function DecisionIntelligence() {
       {/* AFI Component chips */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         {[
-          { label: `DR ${Math.round(components.dr * 100)}`, desc: 'Delegation Ratio' },
-          { label: `JD ${Math.round(components.jd * 100)}`, desc: 'Justificatory Density' },
-          { label: `RC ${Math.round(components.rc * 100)}`, desc: 'Reversibility Cost' },
-          { label: `CD ${Math.round(components.cd * 100)}`, desc: 'Continuation Density' },
+          { label: `DR ${Math.round(components.dr * 100)}`, desc: 'Delegation Ratio', tooltip: TOOLTIPS.dr },
+          { label: `JD ${Math.round(components.jd * 100)}`, desc: 'Justificatory Density', tooltip: TOOLTIPS.jd },
+          { label: `RC ${Math.round(components.rc * 100)}`, desc: 'Reversibility Cost', tooltip: TOOLTIPS.rc },
+          { label: `CD ${Math.round(components.cd * 100)}`, desc: 'Continuation Density', tooltip: TOOLTIPS.cd },
         ].map((c, i) => (
           <div key={i} className="px-3 py-[6px] bg-card border border-border rounded-lg text-[10px]">
             <span className="font-mono font-bold text-foreground">{c.label}</span>
             <span className="text-muted-foreground ml-1">{c.desc}</span>
+            {(c as any).tooltip && <InfoTip text={(c as any).tooltip} />}
           </div>
         ))}
         <BandBadge band={band} size="sm" />
@@ -281,7 +283,7 @@ export function DecisionIntelligence() {
           ].map((m, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1 flex items-center gap-1">
-                {m.label} <span className="text-muted-foreground/50 cursor-help">ⓘ</span>
+                {m.label} <InfoTip text={m.label.includes('Fragmentation') ? TOOLTIPS.rfs : m.label.includes('Stewardship') ? TOOLTIPS.jd : TOOLTIPS.dr} />
               </div>
               <div className={`text-[32px] font-bold font-mono leading-none mb-2 ${
                 m.value >= 60 ? 'text-fragile' : m.value >= 40 ? 'text-sensitive' : 'text-stable'
