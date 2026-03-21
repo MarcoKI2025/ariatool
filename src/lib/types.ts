@@ -1,0 +1,95 @@
+export type Band = 'Stable' | 'Sensitive' | 'Fragile';
+export type DecisionClass = 'Approved' | 'Conditional Review' | 'Escalate to Committee' | 'Not Approved';
+export type Perspective = 'underwriter' | 'company';
+
+export interface SliderInput {
+  id: string;
+  label: string;
+  description: string;
+  tooltip?: string;
+  min: number;
+  max: number;
+  step: number;
+  defaultValue: number;
+}
+
+export interface ExposureInputs {
+  companyName: string;
+  industry: string;
+  useCases: string[];
+  providers: string[];
+  // Deployment (1-5)
+  automation: number;
+  criticality: number;
+  integrationDepth: number;
+  workflowBreadth: number;
+  // Agentic (1-5)
+  executionAuthority: number;
+  actionDensity: number;
+  toolCallScope: number;
+  oversightLevel: number;
+  reviewCadence: number;
+  sunsetPolicy: number;
+  switchingCost: number;
+  portability: number;
+  // Agent extensions
+  multiAgent: number;
+  toolCallAuthority: number;
+  persistentMemory: number;
+  humanCheckpoints: number;
+}
+
+export interface AFIComponents {
+  dr: number; // Delegation Ratio
+  jd: number; // Justificatory Density
+  rc: number; // Reversibility Cost
+  cd: number; // Continuation Density
+  na: number; // Network Amplification
+}
+
+export interface AnalysisResults {
+  afi: number;
+  band: Band;
+  structuralScore: number;
+  ses: number;
+  components: AFIComponents;
+  decisionClass: DecisionClass;
+  lossEnvelope: {
+    expected: number;
+    stress: number;
+    tail: number;
+    portfolio: number;
+  };
+  amplificationFactor: string;
+  correlationFactor: number;
+  eciTier: number;
+  eciName: string;
+  agri: number;
+  premium: { lo: number; mid: number; hi: number };
+}
+
+export interface DemoProfile {
+  name: string;
+  industry: string;
+  useCases: string[];
+  providers: string[];
+  sliders: Record<string, number>;
+  note: string;
+  band: Band;
+  premiumEstimate: string;
+  icon: string;
+}
+
+export interface DemoSlide {
+  title: string;
+  subtitle: string;
+  content: React.ReactNode;
+}
+
+export interface AppState {
+  perspective: Perspective;
+  activeStep: number;
+  analysisComplete: boolean;
+  inputs: ExposureInputs;
+  results: AnalysisResults | null;
+}
