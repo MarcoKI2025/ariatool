@@ -7,9 +7,9 @@ export function AppSidebar() {
   const { perspective, activeStep, analysisComplete } = state;
 
   return (
-    <aside className="w-[236px] min-w-[236px] bg-nav flex flex-col h-screen flex-shrink-0 border-r border-nav-border">
+    <aside className="w-[236px] min-w-[236px] bg-card flex flex-col h-screen flex-shrink-0 border-r border-border">
       {/* Brand */}
-      <div className="px-[18px] pt-[22px] pb-[18px] border-b border-[hsl(40,8%,12%)]">
+      <div className="px-[18px] pt-[22px] pb-[18px] border-b border-border">
         <div className="flex items-center gap-[10px] mb-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-light flex items-center justify-center text-sm flex-shrink-0 text-primary-foreground font-bold">⊕</div>
           <div>
@@ -20,7 +20,7 @@ export function AppSidebar() {
         {/* Session status */}
         <div className="flex items-center gap-[6px] px-[10px] py-[6px] bg-secondary rounded-md border border-border">
           <div className={`w-[6px] h-[6px] rounded-full flex-shrink-0 ${
-            analysisComplete ? 'bg-stable animate-pulse-dot' : 'bg-[hsl(40,6%,28%)]'
+            analysisComplete ? 'bg-stable animate-pulse-dot' : 'bg-muted-foreground/40'
           }`} />
           <span className={`text-[10px] font-semibold tracking-wider uppercase ${
             analysisComplete ? 'text-stable' : 'text-muted-foreground'
@@ -57,6 +57,14 @@ export function AppSidebar() {
         </button>
       </div>
 
+      {/* Company View notice */}
+      {perspective === 'company' && (
+        <div className="mx-[10px] mb-2 px-[10px] py-[6px] bg-purple-bg border border-purple-border rounded-md">
+          <div className="text-[9px] text-primary font-semibold">Company View active</div>
+          <div className="text-[8px] text-muted-foreground mt-[1px]">Detailed analysis in Underwriter View</div>
+        </div>
+      )}
+
       {/* Nav steps */}
       <nav className="px-[10px] py-3 flex-1 overflow-y-auto">
         <div className="text-[9px] font-semibold tracking-[0.1em] uppercase text-muted-foreground px-2 pb-[10px]">Underwriter Workflow</div>
@@ -69,7 +77,7 @@ export function AppSidebar() {
           return (
             <button
               key={step.id}
-              onClick={() => !isLocked && !isDisabled && setActiveStep(step.id)}
+              onClick={() => { if (!isLocked && !isDisabled) { setPerspective('underwriter'); setActiveStep(step.id); } }}
               disabled={isLocked || isDisabled}
               className={`w-full flex items-center gap-[10px] px-[10px] py-[9px] rounded-[7px] mb-[2px] text-left transition-colors relative select-none ${
                 isActive ? 'bg-secondary text-foreground font-semibold' :
@@ -81,15 +89,15 @@ export function AppSidebar() {
               <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 font-mono ${
                 isActive ? 'bg-primary text-primary-foreground' :
                 isDone ? 'bg-stable text-primary-foreground' :
-                isLocked ? 'bg-[hsl(40,8%,15%)] text-[hsl(40,6%,28%)]' :
-                'bg-[hsl(40,8%,13%)] text-muted-foreground'
+                isLocked ? 'bg-muted text-muted-foreground/50' :
+                'bg-muted text-muted-foreground'
               }`}>
                 {isDone ? '✓' : step.id}
               </div>
               <div className="flex flex-col gap-[1px] flex-1">
                 <span className="text-[12px] leading-[1.2]">{step.title}</span>
                 <span className={`text-[9px] tracking-[0.02em] leading-[1.3] ${
-                  isActive ? 'text-purple-light' :
+                  isActive ? 'text-primary' :
                   isDone ? 'text-stable/60' :
                   'text-muted-foreground/60'
                 }`}>{step.sublabel}</span>
@@ -102,20 +110,15 @@ export function AppSidebar() {
       </nav>
 
       {/* Footer actions */}
-      <div className="px-[10px] py-3 border-t border-[hsl(40,8%,8%)]">
+      <div className="px-[10px] py-3 border-t border-border">
         <button
-          onClick={() => {
-            // Will be handled by demo overlay
-            document.dispatchEvent(new CustomEvent('open-demo-pitch'));
-          }}
+          onClick={() => document.dispatchEvent(new CustomEvent('open-demo-pitch'))}
           className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-muted-foreground hover:text-foreground text-[12px] transition-colors"
         >
           <span>▶</span> Demo Mode · 3-Min Pitch
         </button>
         <button
-          onClick={() => {
-            document.dispatchEvent(new CustomEvent('open-company-demo'));
-          }}
+          onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))}
           className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-muted-foreground hover:text-foreground text-[12px] transition-colors"
         >
           <span>🏢</span> Company Demo · 3 Scenarios

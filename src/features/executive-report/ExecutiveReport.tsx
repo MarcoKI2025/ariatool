@@ -40,9 +40,9 @@ export function ExecutiveReport() {
 
       {/* Board finding */}
       <div className={`rounded-xl p-6 mb-4 border-2 ${
-        band === 'Fragile' ? 'bg-[hsl(7,30%,5%)] border-[hsl(7,40%,20%)]' :
-        band === 'Sensitive' ? 'bg-[hsl(36,30%,5%)] border-[hsl(36,40%,20%)]' :
-        'bg-[hsl(145,20%,5%)] border-[hsl(145,30%,20%)]'
+        band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' :
+        band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' :
+        'bg-stable-bg border-stable-border'
       }`}>
         <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-primary mb-3">AI Governance Assessment — Executive Summary</div>
         <div className="flex items-start justify-between mb-4">
@@ -123,7 +123,7 @@ export function ExecutiveReport() {
             { label: 'Reversibility Cost', value: `${Math.round(components.rc * 100)}%`, concern: components.rc > 0.6 },
             { label: 'Continuation Density', value: `${Math.round(components.cd * 100)}%`, concern: components.cd > 0.6 },
           ].filter(i => i.concern).map((item, i) => (
-            <div key={i} className="flex items-center gap-3 p-2 bg-[hsl(7,30%,6%)] border border-[hsl(7,30%,15%)] rounded-md">
+            <div key={i} className="flex items-center gap-3 p-2 bg-fragile-bg border border-fragile-border rounded-md">
               <span className="text-fragile text-xs">⚠</span>
               <span className="text-[11px] text-foreground font-medium">{item.label}: {item.value}</span>
             </div>
@@ -131,11 +131,42 @@ export function ExecutiveReport() {
         </div>
       </SectionCard>
 
+      {/* Epistemic Status */}
+      <div className="bg-card border border-border rounded-[10px] p-5 mb-[14px]">
+        <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-primary mb-3">Epistemic Status · Governance Limits</div>
+        <div className="grid grid-cols-2 gap-4 text-[11px] text-muted-foreground leading-[1.6]">
+          <div>
+            <strong className="text-foreground">⊘ No external ground truth exists</strong> for AI governance fragility. AFI scores are structurally calibrated — not empirically verified against historical outcomes.
+          </div>
+          <div>
+            <strong className="text-foreground">⊘ Evaluation does not guarantee correctness.</strong> Compliance audits verify procedures — not that the system behaves correctly across all operational contexts.
+          </div>
+          <div>
+            <strong className="text-foreground">⊘ The interval between evaluations is ungoverned.</strong> This assessment reflects the moment of evaluation — not the current operational state if material changes have occurred.
+          </div>
+          <div>
+            <strong className="text-foreground">⊘ Performance ≠ authorisation for continued operation.</strong> Continued deployment requires explicit re-authorisation by decision — not by default performance evidence.
+          </div>
+        </div>
+      </div>
+
       {/* Disclaimer */}
       <div className="bg-secondary border border-border rounded-lg p-4 mb-4 text-[11px] text-muted-foreground leading-relaxed">
         <strong className="text-foreground block mb-1">This report is a structured governance assessment finding.</strong>
         It is not an actuarially certified risk model, legal advice, compliance certification, or regulatory filing.
         All inputs are self-attested. Loss figures are market-calibrated directional estimates for committee discussion.
+        <div className="mt-2 text-primary font-semibold">
+          This document constitutes a formal governance assessment. Intended for risk committee, board, and reinsurer review only.
+        </div>
+      </div>
+
+      {/* Methodology */}
+      <div className="bg-card border border-border rounded-lg p-4 mb-4 text-[11px] text-muted-foreground leading-relaxed">
+        <strong className="text-foreground block mb-1">Methodology</strong>
+        Authority Fragility Index (AFI) = (DR × RC × CD) / (JD × NA). Risk characterization based on structural governance factors.
+        Swiss Re sigma insights 01/2026: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."
+        EU AI Act Art. 99 penalty exposure shown separately.
+        <div className="mt-2">This is not a compliance report — a system can be fully compliant and still exceed underwriting tolerance and incur regulatory fines.</div>
       </div>
 
       {/* Export controls */}
@@ -157,16 +188,16 @@ export function ExecutiveReport() {
 
       {/* Print overlay */}
       {showOverlay && (
-        <div className="fixed inset-0 bg-black/80 z-[3000] flex items-start justify-center p-6 overflow-y-auto" onClick={() => setShowOverlay(false)}>
+        <div className="fixed inset-0 bg-black/50 z-[3000] flex items-start justify-center p-6 overflow-y-auto" onClick={() => setShowOverlay(false)}>
           <div className="bg-white w-[820px] max-w-full rounded shadow-2xl" onClick={e => e.stopPropagation()}>
-            <div className="sticky top-0 bg-[#f4f3ef] border-b border-[#dedbd2] px-4 py-[10px] flex items-center justify-between rounded-t z-10">
-              <span className="text-[11px] font-bold text-[#141410] tracking-[0.04em]">Executive Report — Print Preview</span>
+            <div className="sticky top-0 bg-background border-b border-border px-4 py-[10px] flex items-center justify-between rounded-t z-10">
+              <span className="text-[11px] font-bold text-foreground tracking-[0.04em]">Executive Report — Print Preview</span>
               <div className="flex gap-2">
                 <button onClick={() => window.print()} className="px-3 py-1 bg-primary text-primary-foreground rounded text-[11px] font-semibold">Print</button>
-                <button onClick={() => setShowOverlay(false)} className="px-3 py-1 border border-[#dedbd2] rounded text-[11px] text-[#5a5850]">Close</button>
+                <button onClick={() => setShowOverlay(false)} className="px-3 py-1 border border-border rounded text-[11px] text-muted-foreground">Close</button>
               </div>
             </div>
-            <div className="p-[52px] px-[60px] text-[11px] text-[#141410] leading-relaxed font-sans">
+            <div className="p-[52px] px-[60px] text-[11px] text-foreground leading-relaxed font-sans">
               <pre className="whitespace-pre-wrap font-sans text-[11px]">{buildExecutiveReport(inputs, results)}</pre>
             </div>
           </div>

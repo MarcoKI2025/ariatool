@@ -21,7 +21,7 @@ export function AppHeader() {
       <div className="flex items-center gap-[10px]">
         <div className={`inline-flex items-center gap-[6px] px-[10px] py-1 rounded-md border text-[10px] font-semibold tracking-[0.04em] uppercase ${
           analysisComplete
-            ? 'bg-[hsl(145,40%,10%)] border-[hsl(145,40%,20%)] text-stable'
+            ? 'bg-stable-bg border-stable-border text-stable'
             : 'bg-secondary border-border text-muted-foreground'
         }`}>
           <div className={`w-[5px] h-[5px] rounded-full flex-shrink-0 ${

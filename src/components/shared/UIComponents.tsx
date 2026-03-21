@@ -51,7 +51,7 @@ interface SectionCardProps {
 
 export function SectionCard({ title, subtitle, children, highlight, icon }: SectionCardProps) {
   return (
-    <div className={`bg-card border rounded-[10px] p-5 mb-[14px] ${highlight ? 'border-purple-border bg-[hsl(245,60%,6%)]' : 'border-border'}`}>
+    <div className={`bg-card border rounded-[10px] p-5 mb-[14px] ${highlight ? 'border-purple-border bg-purple-bg' : 'border-border'}`}>
       <div className="flex items-start justify-between mb-2">
         <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-secondary-foreground flex items-center gap-[6px]">
           {icon && <span>{icon}</span>}
@@ -72,10 +72,10 @@ interface BannerProps {
 
 export function Banner({ band, title, children }: BannerProps) {
   const cls = band === 'Fragile'
-    ? 'bg-[hsl(7,50%,8%)] border-[hsl(7,40%,25%)]'
+    ? 'bg-fragile-bg border-fragile-border'
     : band === 'Sensitive'
-    ? 'bg-[hsl(36,40%,8%)] border-[hsl(36,40%,25%)]'
-    : 'bg-[hsl(145,30%,8%)] border-[hsl(145,30%,25%)]';
+    ? 'bg-sensitive-bg border-sensitive-border'
+    : 'bg-stable-bg border-stable-border';
   const titleColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
 
   return (

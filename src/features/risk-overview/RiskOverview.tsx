@@ -10,7 +10,7 @@ export function RiskOverview() {
     return <LockedState title="Risk Overview Locked" description="Complete the Exposure Analysis to unlock the risk overview with AFI scoring, governance exposure, and dependency analysis." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri } = results;
+  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor } = results;
 
   return (
     <div>
@@ -54,10 +54,12 @@ export function RiskOverview() {
         </div>
       </div>
 
-      {/* Interpretation */}
-      <div className="bg-[hsl(40,8%,5%)] rounded-xl p-5 mb-4 border-l-4 border-fragile flex items-start gap-[14px]">
-        <div className="w-[22px] h-[22px] rounded-full bg-fragile flex items-center justify-center flex-shrink-0 mt-[2px]">
-          <span className="text-[11px] text-primary-foreground font-bold">!</span>
+      {/* This Means interpretation */}
+      <div className="bg-card rounded-xl p-5 mb-4 border-l-4 border-l-fragile border border-border flex items-start gap-[14px]">
+        <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
+          band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
+        }`}>
+          <span className="text-[11px] text-white font-bold">!</span>
         </div>
         <div>
           <div className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground font-bold mb-[5px]">This Means</div>
@@ -82,16 +84,41 @@ export function RiskOverview() {
         <MetricCard label="Continuation Density" value={`${Math.round(components.cd * 100)}%`} band={components.cd > 0.7 ? 'Fragile' : components.cd > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Integration lock-in" />
       </div>
 
+      {/* Continuation Risk / Dependency Lock-In / Portfolio Contagion */}
+      <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="bg-card border border-border rounded-[10px] p-4">
+          <div className="text-[11px] font-bold text-foreground mb-2">Continuation Risk</div>
+          <div className="text-[11px] text-muted-foreground leading-[1.55]">
+            System persists without explicit re-authorisation — accumulating liability with no upper bound.
+          </div>
+        </div>
+        <div className="bg-card border border-border rounded-[10px] p-4">
+          <div className="text-[11px] font-bold text-foreground mb-2">Dependency Lock-In</div>
+          <div className="text-[11px] text-muted-foreground leading-[1.55]">
+            Provider concentration exceeds exit threshold — structural entrenchment creates single points of failure.
+          </div>
+        </div>
+        <div className="bg-card border border-border rounded-[10px] p-4">
+          <div className="text-[11px] font-bold text-foreground mb-2">Portfolio Contagion</div>
+          <div className="text-[11px] text-muted-foreground leading-[1.55]">
+            Shared AI infrastructure creates correlated exposure — {amplificationFactor} cascade amplification across 5 layers.
+          </div>
+        </div>
+      </div>
+
       {/* AFI Components */}
       <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
         {[
-          { label: 'Delegation Ratio (DR)', value: components.dr, desc: 'Measures how much decision authority is transferred to AI systems' },
-          { label: 'Justificatory Density (JD)', value: components.jd, desc: 'Quality and frequency of human oversight justification', inverted: true },
-          { label: 'Reversibility Cost (RC)', value: components.rc, desc: 'Cost and difficulty of reverting or exiting AI dependency' },
-          { label: 'Continuation Density (CD)', value: components.cd, desc: 'How deeply the system persists without re-authorisation' },
+          { label: 'Delegation Ratio (DR)', value: components.dr, desc: 'Autonomous decision share without human review' },
+          { label: 'Justificatory Density (JD)', value: components.jd, desc: 'Governance transparency and audit coverage', inverted: true },
+          { label: 'Reversibility Cost (RC)', value: components.rc, desc: 'Structural lock-in — exit difficulty' },
+          { label: 'Continuation Density (CD)', value: components.cd, desc: 'Cross-system propagation surface' },
         ].map((item, i) => (
           <div key={i} className="flex items-center gap-3 py-[9px] border-b border-border last:border-none">
-            <span className="w-[140px] text-[12px] text-secondary-foreground">{item.label}</span>
+            <div className="w-[200px]">
+              <span className="text-[12px] text-foreground font-medium">{item.label}</span>
+              <div className="text-[9px] text-muted-foreground">{item.desc}</div>
+            </div>
             <div className="flex-1 h-[5px] bg-secondary rounded-[3px] overflow-hidden">
               <div className={`h-full rounded-[3px] ${item.value > 0.7 ? 'bg-fragile' : item.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`}
                    style={{ width: `${Math.round(item.value * 100)}%` }} />
@@ -100,6 +127,48 @@ export function RiskOverview() {
           </div>
         ))}
       </SectionCard>
+
+      {/* Required Underwriting Actions */}
+      <SectionCard title="Required Underwriting Actions" icon="⚠" subtitle="All conditions must be met before standard coverage applies.">
+        <div className="space-y-3">
+          {(band === 'Fragile' ? [
+            { title: 'Apply premium loading 150–180% above standard', body: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor.' },
+            { title: 'Require dependency diversification within 90 days', body: 'Mandatory — minimum 3 providers. Reduces aggregate tail exposure 40–60%. Reinsurance treaty review required.' },
+            { title: 'Mandate quarterly governance re-authorisation', body: 'Condition of coverage — without re-authorisation cadence, risk accumulates indefinitely.' },
+            { title: 'Limit coverage to operational layers only', body: 'Recommended — full-stack coverage uneconomic at current lock-in depth. Exclude autonomous execution liability.' },
+          ] : band === 'Sensitive' ? [
+            { title: 'Governance improvement plan within 90 days', body: 'Required — conditional terms depend on measurable improvement in oversight cadence.' },
+            { title: 'Committee review before coverage renewal', body: 'Standard — elevated signals require documented committee sign-off.' },
+            { title: 'Monitor dependency concentration', body: 'Active monitoring of provider dependencies with quarterly assessment updates.' },
+          ] : [
+            { title: 'Standard monitoring — maintain governance cadence', body: 'Routine — continue current oversight programme.' },
+            { title: 'Annual reassessment at renewal cycle', body: 'Standard — reassess structural profile at policy renewal.' },
+          ]).map((a, i) => (
+            <div key={i} className="flex items-start gap-3 p-3 bg-secondary border border-border rounded-lg">
+              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                band === 'Fragile' ? 'bg-fragile text-white' : band === 'Sensitive' ? 'bg-sensitive text-white' : 'bg-stable text-white'
+              }`}>{i + 1}</div>
+              <div>
+                <div className="text-[12px] font-semibold text-foreground">{a.title}</div>
+                <div className="text-[11px] text-muted-foreground mt-[2px] leading-[1.5]">{a.body}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </SectionCard>
+
+      {/* Epistemic Status */}
+      <div className="bg-card border border-border rounded-[10px] p-5 mb-[14px]">
+        <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-primary mb-3">Epistemic Status · Governance Limits</div>
+        <div className="grid grid-cols-2 gap-4 text-[11px] text-muted-foreground leading-[1.6]">
+          <div>
+            <strong className="text-foreground">⊘ No external ground truth exists</strong> for AI governance fragility. AFI scores are structurally calibrated — not empirically verified against historical outcomes.
+          </div>
+          <div>
+            <strong className="text-foreground">⊘ Evaluation does not guarantee correctness.</strong> Compliance audits verify procedures — not that the system behaves correctly across all operational contexts.
+          </div>
+        </div>
+      </div>
 
       {/* AGRI */}
       <SectionCard title="Agentic Risk Index (AGRI)" icon="🤖" subtitle="Autonomous system governance complexity signal.">
