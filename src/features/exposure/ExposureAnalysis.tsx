@@ -186,6 +186,30 @@ export function ExposureAnalysis() {
                 </select>
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-[14px] mb-3">
+              <div>
+                <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Company Size</label>
+                <select
+                  value={inputs.size}
+                  onChange={(e) => updateInputs({ size: e.target.value })}
+                  className="w-full px-3 py-[9px] border border-border rounded-lg bg-card text-foreground text-[13px] focus:border-primary outline-none cursor-pointer appearance-none"
+                >
+                  <option value="">Select size</option>
+                  {COMPANY_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Annual Revenue</label>
+                <select
+                  value={inputs.revenue}
+                  onChange={(e) => updateInputs({ revenue: e.target.value })}
+                  className="w-full px-3 py-[9px] border border-border rounded-lg bg-card text-foreground text-[13px] focus:border-primary outline-none cursor-pointer appearance-none"
+                >
+                  <option value="">Select revenue range</option>
+                  {REVENUE_RANGES.map(r => <option key={r} value={r}>{r}</option>)}
+                </select>
+              </div>
+            </div>
             <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Primary AI Use Cases</label>
             <div className="flex flex-wrap gap-[6px] mb-3">
               {USE_CASES.map(uc => (
