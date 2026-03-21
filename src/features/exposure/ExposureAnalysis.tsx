@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { computeLivePreview } from '@/lib/scoring';
 import { USE_CASES, PROVIDERS, INDUSTRIES } from '@/lib/constants';
-import { SliderRow, SectionCard } from '@/components/shared/UIComponents';
+import { SliderRow, SectionCard, InfoTip } from '@/components/shared/UIComponents';
 import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
 import { ExposureResults } from './ExposureResults';
 import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
