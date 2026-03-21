@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Band } from '@/lib/types';
 
 interface MetricCardProps {
@@ -68,7 +68,7 @@ export function SectionCard({ title, subtitle, children, highlight, icon, badgeT
           )}
         </div>
       </div>
-      {subtitle && <div className="text-[11px] text-muted-foreground mt-[3px] mb-[10px] leading-[1.5]">{subtitle}</div>}
+      {subtitle && <div className="text-[11px] text-muted-foreground mt-[3px] mb-[10px] leading-[1.5]" dangerouslySetInnerHTML={{ __html: subtitle }} />}
       {children}
     </div>
   );
@@ -109,15 +109,25 @@ interface SliderRowProps {
   max?: number;
   description: string;
   tooltip?: string;
+  explainText?: string;
 }
 
-export function SliderRow({ label, value, onChange, min = 1, max = 5, description, tooltip }: SliderRowProps) {
+export function SliderRow({ label, value, onChange, min = 1, max = 5, description, tooltip, explainText }: SliderRowProps) {
   const pct = ((value - min) / (max - min)) * 100;
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <div className="py-[14px] border-b border-border last:border-none last:pb-0">
       <div className="flex items-center gap-[6px] mb-[6px]">
-        <span className="flex-1 text-[13px] font-medium text-foreground">{label}</span>
+        <span className="flex-1 text-[13px] font-medium text-foreground">
+          {label}
+          {tooltip && (
+            <span className="tip">
+              <i className="tip-ic">i</i>
+              <span className="tip-box">{tooltip}</span>
+            </span>
+          )}
+        </span>
         <span className="min-w-[28px] h-[22px] rounded-[5px] bg-primary text-primary-foreground text-[11px] font-bold font-mono flex items-center justify-center px-[6px]">
           {value}
         </span>
@@ -133,6 +143,16 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
         className="w-full my-[6px]"
       />
       <div className="text-[11px] text-muted-foreground">{description}</div>
+      {explainText && (
+        <div className="expand-wrap">
+          <button className="expand-btn" onClick={() => setExpanded(!expanded)}>
+            {expanded ? '▼' : '▶'} Explain this
+          </button>
+          {expanded && (
+            <div className="expand-content">{explainText}</div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
