@@ -50,31 +50,38 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
 
 function computeALRI(inputs: ExposureInputs): number {
   const { hallucinationLiability, deepfakeFraud, promptInjection, modelDrift,
-    algorithmicBias, shadowAI, explainabilityGap, dataIntegrity, esgLiability } = inputs;
-  const raw = (
-    hallucinationLiability * 15 +
-    deepfakeFraud * 10 +
-    promptInjection * 12 +
-    modelDrift * 12 +
-    algorithmicBias * 12 +
-    shadowAI * 10 +
-    explainabilityGap * 12 +
-    dataIntegrity * 9 +
-    esgLiability * 8
-  ) / 5;
-  return Math.min(100, Math.round(raw));
+    algorithmicBias, shadowAI, explainabilityGap } = inputs;
+  const alri = Math.min(100,
+    ((hallucinationLiability - 1) / 4) * 22 +
+    ((deepfakeFraud - 1) / 4) * 18 +
+    ((promptInjection - 1) / 4) * 16 +
+    ((modelDrift - 1) / 4) * 18 +
+    ((algorithmicBias - 1) / 4) * 14 +
+    ((shadowAI - 1) / 4) * 7 +
+    ((explainabilityGap - 1) / 4) * 5
+  );
+  return Math.round(alri);
 }
 
 function computeSCRI(inputs: ExposureInputs): number {
   const { cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion } = inputs;
-  // Low values = high concentration risk (inverted for cloud/model/gpu), crossVendor is direct
-  const raw = (
-    ((6 - cloudConcentration) * 28) +
-    ((6 - modelConcentration) * 28) +
-    ((6 - gpuConcentration) * 22) +
-    ((6 - crossVendorContagion) * 22)
-  ) / 5;
-  return Math.min(100, Math.round(raw));
+  const concentrationScore = (
+    (6 - cloudConcentration) +
+    (6 - modelConcentration) +
+    (6 - gpuConcentration) +
+    (6 - crossVendorContagion)
+  ) / 4;
+  const depFactor = inputs.providers.length > 0
+    ? Math.min(1.5, 1 + (inputs.providers.length - 1) * 0.1)
+    : 1;
+  const scri = Math.min(100, (concentrationScore / 5) * 100 * depFactor);
+  return Math.round(scri);
+}
+
+function computeCompositeRiskIndex(afi: number, alri: number, agri: number): number {
+  const afiNorm = Math.min(100, Math.round((afi / 3.0) * 100));
+  const composite = Math.round(afiNorm * 0.50 + alri * 0.30 + agri * 0.20);
+  return Math.min(100, composite);
 }
 
 export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
