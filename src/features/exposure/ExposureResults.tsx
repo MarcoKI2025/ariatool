@@ -91,7 +91,7 @@ export function ExposureResults() {
             </div>
             <div className="flex-shrink-0 text-right">
               <div className={`p-3 rounded-lg ${bandBg} border`}>
-                <div className={`text-[22px] font-bold font-mono ${bandColor}`}>ECI-{eciTier}</div>
+              <div className={`text-[22px] font-bold font-mono ${bandColor}`}>ECI-{eciTier}<InfoTip text={TOOLTIPS.eci} /></div>
                 <div className="text-[9px] text-muted-foreground uppercase tracking-wider">{eciName}</div>
               </div>
             </div>

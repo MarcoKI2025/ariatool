@@ -283,7 +283,7 @@ export function DecisionIntelligence() {
           ].map((m, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1 flex items-center gap-1">
-                {m.label} <span className="text-muted-foreground/50 cursor-help">ⓘ</span>
+                {m.label} <InfoTip text={m.label.includes('Fragmentation') ? TOOLTIPS.rfs : m.label.includes('Stewardship') ? TOOLTIPS.jd : TOOLTIPS.dr} />
               </div>
               <div className={`text-[32px] font-bold font-mono leading-none mb-2 ${
                 m.value >= 60 ? 'text-fragile' : m.value >= 40 ? 'text-sensitive' : 'text-stable'
