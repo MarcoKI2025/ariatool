@@ -95,6 +95,8 @@ export function applyDemoProfile(profile: DemoProfile): ExposureInputs {
     ...DEFAULT_INPUTS,
     companyName: profile.name,
     industry: profile.industry,
+    size: profile.size,
+    revenue: '',
     useCases: [],
     providers: profile.dependencies,
     automation: profile.sliders.automation ?? 3,
@@ -126,5 +128,5 @@ export function applyDemoProfile(profile: DemoProfile): ExposureInputs {
     modelConcentration: profile.sliders.modelConcentration ?? 3,
     gpuConcentration: profile.sliders.gpuConcentration ?? 3,
     crossVendorContagion: profile.sliders.crossVendorContagion ?? 3,
-  };
+  } as ExposureInputs;
 }

@@ -2,8 +2,8 @@ import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 
 export function AppHeader() {
-  const { state } = useApp();
-  const { perspective, analysisComplete } = state;
+  const { state, toggleDarkMode } = useApp();
+  const { perspective, analysisComplete, darkMode } = state;
 
   const isCompany = perspective === 'company';
   const title = isCompany
@@ -34,6 +34,13 @@ export function AppHeader() {
           <span className="hidden md:inline font-mono text-[10px] bg-secondary border border-border px-2 py-[3px] rounded text-muted-foreground">
             v3.0 · GEE
           </span>
+          <button
+            onClick={toggleDarkMode}
+            className="w-7 h-7 rounded-full bg-secondary border border-border flex items-center justify-center text-[12px] hover:bg-muted transition-colors"
+            title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {darkMode ? '☀' : '🌙'}
+          </button>
           <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-purple-light flex items-center justify-center text-[10px] font-bold text-white">
             AJ
           </div>

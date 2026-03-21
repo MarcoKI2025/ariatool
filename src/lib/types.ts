@@ -16,6 +16,8 @@ export interface SliderInput {
 export interface ExposureInputs {
   companyName: string;
   industry: string;
+  size: string;
+  revenue: string;
   useCases: string[];
   providers: string[];
   // Deployment (1-5)
@@ -82,8 +84,13 @@ export interface AnalysisResults {
   agri: number;
   alri: number;
   scri: number;
+  compositeRiskIndex: number;
   premium: { lo: number; mid: number; hi: number };
 }
+
+export type IATState = Record<number, boolean>;
+
+export type IATStatus = 'none' | 'approaching' | 'triggered' | 'infrastructural';
 
 export interface DemoProfile {
   id: string;
@@ -111,4 +118,6 @@ export interface AppState {
   analysisComplete: boolean;
   inputs: ExposureInputs;
   results: AnalysisResults | null;
+  iatState: IATState;
+  darkMode: boolean;
 }
