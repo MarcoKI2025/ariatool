@@ -84,8 +84,13 @@ export interface AnalysisResults {
   agri: number;
   alri: number;
   scri: number;
+  compositeRiskIndex: number;
   premium: { lo: number; mid: number; hi: number };
 }
+
+export type IATState = Record<number, boolean>;
+
+export type IATStatus = 'none' | 'approaching' | 'triggered' | 'infrastructural';
 
 export interface DemoProfile {
   id: string;
