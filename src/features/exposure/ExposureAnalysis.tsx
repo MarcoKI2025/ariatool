@@ -111,7 +111,7 @@ export function ExposureAnalysis() {
               onClick={() => setInputs(applyDemoProfile(p))}
               className="text-center p-3 rounded-[9px] border border-[#3a3828] bg-[#1e1d14] hover:bg-[#2e2c20] hover:border-primary transition-all cursor-pointer flex flex-col items-center gap-1"
             >
-              <div className="text-lg mb-[2px]">{p.icon}</div>
+              <div className="text-[10px] font-bold text-[#f0ece0] leading-[1.3] text-center mb-[2px]">{p.id}</div>
               <div className="text-[10px] font-bold text-[#f0ece0] leading-[1.3] text-center">{p.name}</div>
               <div className="text-[9px] text-[#c0bca8] font-medium mt-[1px]">{p.industry}</div>
               <div className={`mt-[3px] text-[8px] font-bold uppercase tracking-[0.06em] px-[7px] py-[2px] rounded-[3px] ${
