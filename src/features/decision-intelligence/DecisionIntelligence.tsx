@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
