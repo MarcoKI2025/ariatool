@@ -42,6 +42,27 @@ export function CompanyView() {
     }
   }, []);
 
+  // Live premium calculation
+  const simPremium = useMemo(() => {
+    if (!results || !inputs) return { lo: 0, mid: 0, hi: 0 };
+    const sectorMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
+    const basePrem = (SIM_BASE || 180) * sectorMult;
+    const autoMult = SIM_AUTO_M[simAuto] || 1;
+    const critMult = SIM_CRIT_M[simCrit] || 1;
+    const depMult = SIM_DEP_M[simDep] || 1;
+    const afi = results.afi;
+    const govPremium = 1 + Math.min(0.8, afi * 0.45);
+    const rawPrem = basePrem * autoMult * critMult * depMult * govPremium;
+    const ovstReduction = SIM_OVST_R[simOvst] || 0;
+    const midPrem = rawPrem * (1 - ovstReduction);
+    const bandPct = simAuto >= 4 ? 0.20 : simAuto >= 3 ? 0.25 : 0.30;
+    return {
+      lo: Math.round(midPrem * (1 - bandPct) / 10) * 10,
+      mid: Math.round(midPrem / 10) * 10,
+      hi: Math.round(midPrem * (1 + bandPct) / 10) * 10,
+    };
+  }, [simAuto, simCrit, simDep, simOvst, inputs, results]);
+
   if (!analysisComplete || !results) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
