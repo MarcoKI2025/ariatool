@@ -63,10 +63,9 @@ export function CompanyDemoOverlay() {
                   p.band === 'Sensitive' ? 'bg-gradient-to-r from-sensitive to-sensitive/50' :
                   'bg-gradient-to-r from-stable to-stable/50'
                 }`} />
-                <div className="text-[26px]">{p.icon}</div>
                 <div className="text-sm font-bold text-foreground">{p.name}</div>
                 <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{p.industry}</div>
-                <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1">{p.note}</div>
+                <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1">{p.description}</div>
                 <div className={`text-[9px] font-bold uppercase tracking-wider px-2 py-[3px] rounded w-fit ${
                   p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
                 }`}>{p.band}</div>
