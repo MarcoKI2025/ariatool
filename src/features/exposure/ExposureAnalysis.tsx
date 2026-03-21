@@ -14,6 +14,8 @@ export function ExposureAnalysis() {
   const [dismissedWelcome, setDismissedWelcome] = useState(false);
   const [showForm, setShowForm] = useState(!analysisComplete);
 
+  const preview = useMemo(() => computeLivePreview(inputs), [inputs]);
+
   // Listen for "show form" event from results view
   useEffect(() => {
     const handler = () => setShowForm(true);
@@ -30,8 +32,6 @@ export function ExposureAnalysis() {
   if (analysisComplete && !showForm) {
     return <ExposureResults />;
   }
-
-  const preview = useMemo(() => computeLivePreview(inputs), [inputs]);
 
   const toggleChip = (list: string[], item: string) => {
     return list.includes(item) ? list.filter(i => i !== item) : [...list, item];
