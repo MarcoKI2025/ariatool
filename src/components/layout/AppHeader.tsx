@@ -2,8 +2,8 @@ import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 
 export function AppHeader() {
-  const { state } = useApp();
-  const { perspective, analysisComplete } = state;
+  const { state, toggleDarkMode } = useApp();
+  const { perspective, analysisComplete, darkMode } = state;
 
   const isCompany = perspective === 'company';
   const title = isCompany
