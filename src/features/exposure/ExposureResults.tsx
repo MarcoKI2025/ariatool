@@ -69,7 +69,7 @@ export function ExposureResults() {
       {/* ═══ HERO SECTION ═══ */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="p-6 pb-4">
-          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0<InfoTip text={TOOLTIPS.afi} /></div>
           <div className="flex items-start gap-8">
             <div>
               <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
