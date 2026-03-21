@@ -187,6 +187,97 @@ input[type="range"]::-webkit-slider-thumb {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
+/* Tooltip system — matching HTML prototype */
+.tip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: help;
+}
+.tip-ic {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: hsl(var(--secondary));
+  border: 1px solid hsl(var(--border));
+  color: hsl(var(--muted-foreground));
+  font-size: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background 0.12s;
+  font-style: normal;
+}
+.tip:hover .tip-ic {
+  background: hsl(var(--purple));
+  color: #fff;
+}
+.tip-box {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: -20px;
+  margin-bottom: 8px;
+  background: #111108;
+  color: #ffffff;
+  font-size: 11px;
+  padding: 10px 13px;
+  border-radius: 8px;
+  width: 280px;
+  line-height: 1.6;
+  z-index: 9000;
+  font-family: var(--font-sans);
+  border: 1px solid #3a3828;
+  pointer-events: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  font-weight: 400;
+}
+.tip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 28px;
+  border: 5px solid transparent;
+  border-top-color: #111108;
+}
+.tip:hover .tip-box {
+  display: block;
+}
+
+/* Expand/collapse sections */
+.expand-wrap {
+  margin-top: 5px;
+}
+.expand-btn {
+  font-size: 10px;
+  color: hsl(var(--purple));
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  padding: 0;
+  font-weight: 500;
+}
+.expand-btn:hover {
+  color: #3030a0;
+}
+.expand-content {
+  margin-top: 7px;
+  padding: 8px 11px;
+  background: hsl(var(--purple-bg));
+  border: 1px solid hsl(var(--purple-border));
+  border-radius: 6px;
+  font-size: 11px;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.55;
+}
+
 /* Print styles */
 @media print {
   .no-print { display: none !important; }
