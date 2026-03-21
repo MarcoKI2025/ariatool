@@ -61,7 +61,7 @@ export function DecisionIntelligence() {
         <div className="bg-card border border-border rounded-xl p-6">
           <div className="flex items-end gap-6">
             <div>
-              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Structural Exposure Score</div>
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Structural Exposure Score<InfoTip text={TOOLTIPS.afi} /></div>
               <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${
                 band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
               }`}>{structuralScore}</div>
