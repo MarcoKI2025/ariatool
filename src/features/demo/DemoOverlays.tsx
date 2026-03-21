@@ -13,8 +13,7 @@ export function CompanyDemoOverlay() {
     return () => document.removeEventListener('open-company-demo', handler);
   }, []);
 
-  // Only use first 3 profiles for Company Demo (Meridian, HealthPath, CivicAI)
-  const demoProfiles = [DEMO_PROFILES[0], DEMO_PROFILES[1], DEMO_PROFILES[4]]; // Fragile, Sensitive, Stable
+  const demoProfiles = DEMO_PROFILES;
 
   const launch = () => {
     if (selected === null) return;

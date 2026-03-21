@@ -86,15 +86,17 @@ export interface AnalysisResults {
 }
 
 export interface DemoProfile {
+  id: string;
   name: string;
   industry: string;
-  useCases: string[];
-  providers: string[];
-  sliders: Record<string, number>;
-  note: string;
+  size: string;
+  description: string;
+  afi: number;
   band: Band;
   premiumEstimate: string;
-  icon: string;
+  sliders: Record<string, number>;
+  dependencies: string[];
+  signals: string[];
 }
 
 export interface DemoSlide {
