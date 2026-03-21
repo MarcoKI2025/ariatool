@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { Banner, MetricCard, BandBadge, SectionCard, LockedState } from '@/components/shared/UIComponents';
+import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
+import { TOOLTIPS } from '@/lib/tooltips';
 
 export function RiskOverview() {
   const { state, setActiveStep } = useApp();

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { Banner, MetricCard, BandBadge, SectionCard, LockedState } from '@/components/shared/UIComponents';
+import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
+import { TOOLTIPS } from '@/lib/tooltips';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();

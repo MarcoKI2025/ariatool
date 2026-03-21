@@ -1,7 +1,8 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { Banner, MetricCard, SectionCard, LockedState, BandBadge } from '@/components/shared/UIComponents';
+import { Banner, MetricCard, SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
+import { TOOLTIPS } from '@/lib/tooltips';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();

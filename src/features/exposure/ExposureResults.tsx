@@ -1,7 +1,8 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { formatCurrency } from '@/lib/formatters';
-import { BandBadge, SectionCard } from '@/components/shared/UIComponents';
+import { BandBadge, SectionCard, InfoTip } from '@/components/shared/UIComponents';
+import { TOOLTIPS } from '@/lib/tooltips';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
