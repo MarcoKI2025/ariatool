@@ -16,6 +16,8 @@ export interface SliderInput {
 export interface ExposureInputs {
   companyName: string;
   industry: string;
+  size: string;
+  revenue: string;
   useCases: string[];
   providers: string[];
   // Deployment (1-5)
