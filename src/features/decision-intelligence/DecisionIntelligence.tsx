@@ -191,6 +191,55 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
+      {/* Risk Comparison — Governance Gap Analysis */}
+      <SectionCard title="Risk Comparison — Governance Gap Analysis" icon="📊" subtitle="Comparing your current governance profile against a well-governed baseline across risk scenarios.">
+        {(() => {
+          const mapToRiskLevel = (afiVal: number) => {
+            if (afiVal < 0.5) return 1;
+            if (afiVal < 0.85) return 2;
+            if (afiVal < 1.35) return 3;
+            return 4;
+          };
+          const chartData = [
+            { name: 'Base Risk', baseline: 1, profile: mapToRiskLevel(afi * 0.6) },
+            { name: 'Elevated Risk', baseline: 2, profile: mapToRiskLevel(afi * 0.9) },
+            { name: 'Critical Risk', baseline: 2, profile: mapToRiskLevel(afi * 1.2) },
+          ];
+          const riskLabels = ['', 'Low', 'Medium', 'High', 'Critical'];
+          return (
+            <>
+              <div className="h-[200px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData} barGap={4} barCategoryGap="20%">
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                    <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontFamily: 'Inter' }} axisLine={{ stroke: 'hsl(var(--border))' }} tickLine={false} />
+                    <YAxis domain={[0, 4]} ticks={[0, 1, 2, 3, 4]} tickFormatter={(v: number) => riskLabels[v] || ''} tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={{ stroke: 'hsl(var(--border))' }} tickLine={false} />
+                    <RechartsTooltip
+                      contentStyle={{ backgroundColor: '#111108', border: '1px solid #3a3828', borderRadius: '8px', padding: '10px' }}
+                      labelStyle={{ color: '#ffffff', fontSize: 11, fontWeight: 600 }}
+                      itemStyle={{ color: '#c0bcb0', fontSize: 11 }}
+                      formatter={(value: number, name: string) => [riskLabels[Math.round(value)] || '', name === 'baseline' ? 'Well-Governed Baseline' : 'Your Current Profile']}
+                    />
+                    <Legend
+                      verticalAlign="bottom"
+                      iconType="rect"
+                      iconSize={8}
+                      formatter={(value: string) => value === 'baseline' ? 'Well-Governed Baseline' : 'Your Current Profile'}
+                      wrapperStyle={{ fontSize: 10, color: 'hsl(var(--muted-foreground))' }}
+                    />
+                    <Bar dataKey="baseline" fill="rgba(64, 56, 184, 0.55)" stroke="#4038b8" strokeWidth={1} radius={[3, 3, 0, 0]} />
+                    <Bar dataKey="profile" fill="rgba(181, 48, 32, 0.75)" stroke="#b53020" strokeWidth={1} radius={[3, 3, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="mt-3 p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground leading-[1.5]">
+                Comparison methodology: Well-governed baseline assumes AFI &lt;0.5 across all scenarios. Your profile maps current AFI ({afi.toFixed(2)}) to Base (×0.6), Elevated (×0.9), and Critical (×1.2) risk multipliers. Gap between profiles indicates governance-driven excess exposure.
+              </div>
+            </>
+          );
+        })()}
+      </SectionCard>
+
       {/* Continuation / Dependency / Portfolio */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div className="bg-card border border-border rounded-[10px] p-4">
