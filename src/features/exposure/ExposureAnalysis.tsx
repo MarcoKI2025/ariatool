@@ -244,7 +244,7 @@ export function ExposureAnalysis() {
             }`} style={{ width: `${Math.min(100, preview.score)}%` }} />
           </div>
           <div className="text-[11px] text-secondary-foreground leading-[1.55] mb-3">
-            AFI {preview.afi.toFixed(2)} — {preview.band === 'Fragile' ? 'High governance fragility detected' : preview.band === 'Sensitive' ? 'Drift risk emerging — monitoring required' : 'Governance drift currently contained'}
+            AFI {preview.afi.toFixed(2)}<InfoTip text={TOOLTIPS.afi} /> — {preview.band === 'Fragile' ? 'High governance fragility detected' : preview.band === 'Sensitive' ? 'Drift risk emerging — monitoring required' : 'Governance drift currently contained'}
           </div>
 
           {/* AFI Components */}
