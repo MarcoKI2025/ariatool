@@ -118,4 +118,6 @@ export interface AppState {
   analysisComplete: boolean;
   inputs: ExposureInputs;
   results: AnalysisResults | null;
+  iatState: IATState;
+  darkMode: boolean;
 }
