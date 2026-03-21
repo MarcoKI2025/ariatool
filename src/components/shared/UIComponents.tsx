@@ -110,11 +110,30 @@ interface SliderRowProps {
   description: string;
   tooltip?: string;
   explainText?: string;
+  scaleLabels?: Record<number, string>;
 }
 
-export function SliderRow({ label, value, onChange, min = 1, max = 5, description, tooltip, explainText }: SliderRowProps) {
+export function SliderRow({ label, value, onChange, min = 1, max = 5, description, tooltip, explainText, scaleLabels }: SliderRowProps) {
   const pct = ((value - min) / (max - min)) * 100;
   const [expanded, setExpanded] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipRef = React.useRef<HTMLDivElement>(null);
+  const triggerRef = React.useRef<HTMLSpanElement>(null);
+
+  // Position tooltip on hover
+  React.useEffect(() => {
+    if (showTooltip && tooltipRef.current && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      const box = tooltipRef.current;
+      box.style.left = `${rect.left}px`;
+      box.style.top = `${rect.bottom + 8}px`;
+      // Adjust if off-screen right
+      const boxRect = box.getBoundingClientRect();
+      if (boxRect.right > window.innerWidth) {
+        box.style.left = `${window.innerWidth - boxRect.width - 20}px`;
+      }
+    }
+  }, [showTooltip]);
 
   return (
     <div className="py-[14px] border-b border-border last:border-none last:pb-0">
@@ -122,9 +141,22 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
         <span className="flex-1 text-[13px] font-medium text-foreground">
           {label}
           {tooltip && (
-            <span className="tip">
-              <i className="tip-ic">i</i>
-              <span className="tip-box">{tooltip}</span>
+            <span
+              className="relative inline-flex items-center cursor-help ml-[5px]"
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+              ref={triggerRef}
+            >
+              <i className="w-[14px] h-[14px] rounded-full bg-muted border border-border text-muted-foreground text-[9px] font-bold not-italic inline-flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-colors">i</i>
+              {showTooltip && (
+                <div
+                  ref={tooltipRef}
+                  className="fixed z-[9000] bg-[#111108] text-white text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-[#3a3828] pointer-events-none"
+                  style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.35)' }}
+                >
+                  {tooltip}
+                </div>
+              )}
             </span>
           )}
         </span>
@@ -132,6 +164,7 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
           {value}
         </span>
       </div>
+      <div className="text-[11px] text-muted-foreground mb-[6px]">{description}</div>
       <input
         type="range"
         min={min}
@@ -142,14 +175,21 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
         style={{ '--fill': `${pct}%` } as React.CSSProperties}
         className="w-full my-[6px]"
       />
-      <div className="text-[11px] text-muted-foreground">{description}</div>
+      {/* Scale labels */}
+      {scaleLabels && (
+        <div className="flex justify-between mt-[2px]">
+          <span className="text-[9px] text-muted-foreground">{scaleLabels[min]}</span>
+          <span className="text-[9px] text-muted-foreground font-medium">{scaleLabels[value]}</span>
+          <span className="text-[9px] text-muted-foreground">{scaleLabels[max]}</span>
+        </div>
+      )}
       {explainText && (
-        <div className="expand-wrap">
-          <button className="expand-btn" onClick={() => setExpanded(!expanded)}>
+        <div className="mt-2">
+          <button className="text-[10px] text-primary hover:text-primary/80 font-medium cursor-pointer bg-transparent border-none" onClick={() => setExpanded(!expanded)}>
             {expanded ? '▼' : '▶'} Explain this
           </button>
           {expanded && (
-            <div className="expand-content">{explainText}</div>
+            <div className="mt-1 text-[11px] text-secondary-foreground leading-[1.55] p-[8px_10px] bg-secondary border border-border rounded-md">{explainText}</div>
           )}
         </div>
       )}
