@@ -1,30 +1,46 @@
 
 
-## Plan: Add Premium Simulation Horizontal Bar Chart
+## Plan: Update Demo Profiles to Match HTML Specification
 
 ### What This Does
-Add the `createPremiumChart` from the HTML spec — a horizontal stacked bar chart showing premium ranges across Current, Optimized, and Worst Case scenarios. Place it in the Insurance Decision view (Step 4).
+Replace the current 5 demo profiles with the exact 3 profiles from the HTML spec (Meridian Financial, HealthPath Analytics, CivicAI Gov), updating slider field names, descriptions, signals, dependencies, and metadata to match the spec exactly.
 
-### File to Modify
+### Files to Modify
 
-**`src/features/insurance-decision/InsuranceDecision.tsx`**
+**1. `src/lib/types.ts`** — Update `DemoProfile` interface
+- Add fields: `id`, `size`, `description`, `afi`, `signals`, `dependencies` (rename from `providers`)
+- Remove: `useCases`, `icon`, `note`
+- Keep: `name`, `industry`, `band`, `premiumEstimate` (rename `premiumRange` in data to match existing field name), `sliders`
 
-- Import `BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell` from `recharts`
-- Add a new `SectionCard` titled **"Premium Simulation"** after the existing premium/loss sections
-- Build 3 scenarios from `results.premium`:
-  - **Current**: `{ label: 'Current', low: premium.lo, high: premium.hi }`
-  - **Optimized**: `{ label: 'Optimized', low: Math.round(premium.lo * 0.65), high: Math.round(premium.mid * 0.85) }`
-  - **Worst Case**: `{ label: 'Worst Case', low: Math.round(premium.mid * 1.5), high: Math.round(premium.hi * 1.8) }`
-- Chart: horizontal stacked bars (`indexAxis: 'y'` → Recharts `layout="vertical"`)
-  - Dataset 1 "Low End": solid purple `rgba(64, 56, 184, 0.7)`
-  - Dataset 2 "Range": light purple `rgba(64, 56, 184, 0.3)` (value = `high - low`)
-  - No legend
-  - X-axis: `€Xk` format ticks, grid `#dedbd2`
-  - Y-axis: scenario labels, no grid
-  - Dark tooltip showing `€{low}k – €{high}k / year`
-- Height: ~180px
+**2. `src/lib/demoData.ts`** — Replace profiles entirely
+- Remove all 5 current profiles, replace with 3 from spec
+- Map spec slider names to existing `ExposureInputs` field names:
+  - `autonomy` → `automation`
+  - `execution` → `executionAuthority`
+  - `oversight` → `oversightLevel`
+  - `sunsetCapability` → `sunsetPolicy`
+  - `deploymentDensity` → `actionDensity` (closest mapping)
+  - `systemBreadth` → `workflowBreadth`
+  - `criticalityScore` → `criticality`
+  - `multiAgentOrch` → `multiAgent`
+  - `hallucinationExposure` → `hallucinationLiability`
+  - `deepfakeRisk` → `deepfakeFraud`
+  - `explainability` → `explainabilityGap`
+  - `esgAlignment` → `esgLiability`
+  - `cloudProviderConcentration` → `cloudConcentration`
+  - `modelProviderConcentration` → `modelConcentration`
+  - `gpuConcentration` → `gpuConcentration` (same)
+  - `crossVendorContagion` → `crossVendorContagion` (same)
+- Update `applyDemoProfile` to use new field names
+- Profiles: Meridian (Fragile, €420k–€680k), HealthPath (Sensitive, €210k–€340k), CivicAI (Stable, €80k–€140k)
+
+**3. `src/features/demo/DemoOverlays.tsx`** — Update CompanyDemoOverlay
+- Use all 3 profiles directly (no index skipping — line 17 fix: `DEMO_PROFILES[0], [1], [2]`)
+- Update card rendering to use new fields: `description` instead of `note`, `premiumEstimate` for price display
+- Add `signals` display if present in the profile card
 
 ### Technical Notes
-- Stacked horizontal bar = Recharts `BarChart` with `layout="vertical"` and `stackId="a"` on both `Bar` components
-- Premium values already in `k` from `results.premium`
+- The slider values differ between spec and current code — use the spec values exactly
+- `dependencies` field on profile maps to `providers` in `ExposureInputs`
+- No changes to scoring logic or UI layout — only data replacement
 
