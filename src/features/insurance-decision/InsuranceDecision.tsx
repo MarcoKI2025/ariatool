@@ -53,11 +53,11 @@ export function InsuranceDecision() {
             <div className="text-[14px] font-bold text-white">{decisionClass}</div>
           </div>
           <div>
-            <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">AFI Position</div>
+            <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">AFI Position<InfoTip text={TOOLTIPS.afi} /></div>
             <div className="text-[14px] font-bold text-white font-mono">{afi.toFixed(2)} · {band}</div>
           </div>
           <div>
-            <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">Premium Range</div>
+            <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">Premium Range<InfoTip text={TOOLTIPS.premium} /></div>
             <div className="text-[14px] font-bold text-white font-mono">{formatCurrency(premium.lo, 'k')} – {formatCurrency(premium.hi, 'k')}</div>
           </div>
         </div>

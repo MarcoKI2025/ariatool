@@ -79,10 +79,10 @@ export function RiskOverview() {
 
       {/* Key metrics grid */}
       <div className="grid grid-cols-2 gap-3 mb-4">
-        <MetricCard label="AFI · Authority Fragility" value={afi.toFixed(2)} band={band} sublabel={`${band} — ${afi < 0.85 ? 'below threshold' : afi < 1.35 ? 'approaching threshold' : 'above threshold'}`} />
-        <MetricCard label="Governance Exposure" value={`${Math.round(components.jd * 100)}%`} band={components.jd < 0.4 ? 'Fragile' : components.jd < 0.6 ? 'Sensitive' : 'Stable'} sublabel="Justificatory Density" />
-        <MetricCard label="Dependency Concentration" value={`${Math.round(components.rc * 100)}%`} band={components.rc > 0.7 ? 'Fragile' : components.rc > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Reversibility Cost" />
-        <MetricCard label="Continuation Density" value={`${Math.round(components.cd * 100)}%`} band={components.cd > 0.7 ? 'Fragile' : components.cd > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Integration lock-in" />
+        <MetricCard label="AFI · Authority Fragility" value={afi.toFixed(2)} band={band} sublabel={`${band} — ${afi < 0.85 ? 'below threshold' : afi < 1.35 ? 'approaching threshold' : 'above threshold'}`} icon="📊" />
+        <MetricCard label="Governance Exposure" value={`${Math.round(components.jd * 100)}%`} band={components.jd < 0.4 ? 'Fragile' : components.jd < 0.6 ? 'Sensitive' : 'Stable'} sublabel="Justificatory Density" icon="🛡" />
+        <MetricCard label="Dependency Concentration" value={`${Math.round(components.rc * 100)}%`} band={components.rc > 0.7 ? 'Fragile' : components.rc > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Reversibility Cost" icon="🔗" />
+        <MetricCard label="Continuation Density" value={`${Math.round(components.cd * 100)}%`} band={components.cd > 0.7 ? 'Fragile' : components.cd > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Integration lock-in" icon="⚙" />
       </div>
 
       {/* Continuation Risk / Dependency Lock-In / Portfolio Contagion */}

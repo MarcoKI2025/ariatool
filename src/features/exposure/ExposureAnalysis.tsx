@@ -257,7 +257,7 @@ export function ExposureAnalysis() {
               { label: 'CD', value: preview.components.cd, name: 'Continuation Density', tooltip: TOOLTIPS.cd },
             ].map((c, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="text-[9px] font-mono text-muted-foreground w-5" title={c.name}>{c.label}</span>
+                <span className="text-[9px] font-mono text-muted-foreground w-5 cursor-help" title={c.name}>{c.label}<InfoTip text={(c as any).tooltip} /></span>
                 <div className="flex-1 h-[4px] bg-border rounded overflow-hidden">
                   <div className={`h-full rounded ${c.value > 0.7 ? 'bg-fragile' : c.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(c.value * 100)}%` }} />
                 </div>
