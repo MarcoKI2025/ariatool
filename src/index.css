@@ -2,95 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    --background: 40 6% 7%;
+    --foreground: 42 30% 90%;
+    --card: 40 8% 9%;
+    --card-foreground: 42 30% 90%;
+    --popover: 40 8% 9%;
+    --popover-foreground: 42 30% 90%;
+    --primary: 245 52% 47%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 8% 12%;
+    --secondary-foreground: 42 20% 65%;
+    --muted: 40 6% 14%;
+    --muted-foreground: 40 6% 52%;
+    --accent: 245 52% 47%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 7 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 10% 16%;
+    --input: 40 10% 16%;
+    --ring: 245 52% 47%;
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* App-specific tokens */
+    --nav-bg: 40 8% 5%;
+    --nav-border: 40 8% 12%;
+    --header-bg: 40 8% 9%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Semantic status colors */
+    --stable: 145 62% 23%;
+    --stable-bg: 145 40% 94%;
+    --stable-border: 145 40% 65%;
+    --sensitive: 36 100% 31%;
+    --sensitive-bg: 36 80% 95%;
+    --sensitive-border: 36 60% 65%;
+    --fragile: 7 70% 45%;
+    --fragile-bg: 7 80% 96%;
+    --fragile-border: 7 50% 65%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Purple accent */
+    --purple: 245 52% 47%;
+    --purple-light: 245 52% 67%;
+    --purple-bg: 245 60% 95%;
+    --purple-border: 245 40% 65%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Mono font */
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
 
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 40 8% 5%;
+    --sidebar-foreground: 40 6% 65%;
+    --sidebar-primary: 245 52% 47%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 40 8% 10%;
+    --sidebar-accent-foreground: 42 30% 90%;
+    --sidebar-border: 40 8% 12%;
+    --sidebar-ring: 245 52% 47%;
   }
 }
 
@@ -98,8 +68,99 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  background: linear-gradient(to right, hsl(var(--purple)) var(--fill, 50%), hsl(var(--border)) var(--fill, 50%));
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: hsl(var(--card));
+  cursor: pointer;
+  border: 2px solid hsl(var(--purple));
+  box-shadow: 0 1px 4px rgba(64, 56, 184, 0.2);
+}
+
+/* Chip component */
+.chip {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border cursor-pointer select-none transition-all;
+  border-color: hsl(var(--border));
+  color: hsl(var(--muted-foreground));
+  background: hsl(var(--card));
+}
+.chip:hover {
+  border-color: hsl(var(--purple));
+  color: hsl(var(--purple));
+}
+.chip.active {
+  background: hsl(var(--purple-bg));
+  border-color: hsl(var(--purple));
+  color: hsl(var(--purple));
+  font-weight: 600;
+}
+
+/* Badge variants */
+.badge-stable {
+  background: hsl(145 40% 10%);
+  color: hsl(145 60% 55%);
+  border: 1px solid hsl(145 40% 20%);
+}
+.badge-sensitive {
+  background: hsl(36 50% 10%);
+  color: hsl(36 80% 55%);
+  border: 1px solid hsl(36 40% 20%);
+}
+.badge-fragile {
+  background: hsl(7 50% 10%);
+  color: hsl(7 70% 65%);
+  border: 1px solid hsl(7 40% 20%);
+}
+
+/* Status bar gradients */
+.gradient-bar {
+  background: linear-gradient(to right, hsl(var(--stable)), hsl(var(--sensitive)), hsl(var(--fragile)));
+}
+
+/* Animation keyframes */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Print styles */
+@media print {
+  .no-print { display: none !important; }
 }
