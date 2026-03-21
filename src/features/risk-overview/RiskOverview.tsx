@@ -30,7 +30,7 @@ export function RiskOverview() {
       }>
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Authority Fragility Index</div>
+            <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-[3px]">Authority Fragility Index<InfoTip text={TOOLTIPS.afi} /></div>
             <div className="text-[12px] text-foreground">AFI {afi.toFixed(2)} — {band}</div>
           </div>
           <div>
