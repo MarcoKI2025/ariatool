@@ -98,7 +98,7 @@ export function DecisionIntelligence() {
         {/* Quick metrics */}
         <div className="flex flex-col gap-3">
           {[
-            { label: 'AFI Score', value: afi.toFixed(2), band },
+            { label: 'AFI Score', value: afi.toFixed(2), band, tooltip: TOOLTIPS.afi },
             { label: 'AGRI', value: `${agri}`, band: agri >= 60 ? 'Fragile' as const : agri >= 35 ? 'Sensitive' as const : 'Stable' as const },
             { label: 'Decision Class', value: results.decisionClass, band },
           ].map((m, i) => (
