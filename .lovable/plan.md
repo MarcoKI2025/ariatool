@@ -1,46 +1,39 @@
 
 
-## Plan: Update Demo Profiles to Match HTML Specification
+## Plan: Add Responsive Breakpoints and Print Styles
 
 ### What This Does
-Replace the current 5 demo profiles with the exact 3 profiles from the HTML spec (Meridian Financial, HealthPath Analytics, CivicAI Gov), updating slider field names, descriptions, signals, dependencies, and metadata to match the spec exactly.
+Make the app responsive across desktop, tablet, and mobile breakpoints — plus print-friendly styles. Currently the sidebar is fixed at 236px and no mobile layout exists.
 
-### Files to Modify
+### Changes
 
-**1. `src/lib/types.ts`** — Update `DemoProfile` interface
-- Add fields: `id`, `size`, `description`, `afi`, `signals`, `dependencies` (rename from `providers`)
-- Remove: `useCases`, `icon`, `note`
-- Keep: `name`, `industry`, `band`, `premiumEstimate` (rename `premiumRange` in data to match existing field name), `sliders`
+**1. `src/index.css`** — Add responsive media queries and print styles at the end of the file
 
-**2. `src/lib/demoData.ts`** — Replace profiles entirely
-- Remove all 5 current profiles, replace with 3 from spec
-- Map spec slider names to existing `ExposureInputs` field names:
-  - `autonomy` → `automation`
-  - `execution` → `executionAuthority`
-  - `oversight` → `oversightLevel`
-  - `sunsetCapability` → `sunsetPolicy`
-  - `deploymentDensity` → `actionDensity` (closest mapping)
-  - `systemBreadth` → `workflowBreadth`
-  - `criticalityScore` → `criticality`
-  - `multiAgentOrch` → `multiAgent`
-  - `hallucinationExposure` → `hallucinationLiability`
-  - `deepfakeRisk` → `deepfakeFraud`
-  - `explainability` → `explainabilityGap`
-  - `esgAlignment` → `esgLiability`
-  - `cloudProviderConcentration` → `cloudConcentration`
-  - `modelProviderConcentration` → `modelConcentration`
-  - `gpuConcentration` → `gpuConcentration` (same)
-  - `crossVendorContagion` → `crossVendorContagion` (same)
-- Update `applyDemoProfile` to use new field names
-- Profiles: Meridian (Fragile, €420k–€680k), HealthPath (Sensitive, €210k–€340k), CivicAI (Stable, €80k–€140k)
+- **Desktop ≤1439px**: Sidebar 220px, reduced content padding (24px), smaller hero scores
+- **Tablet ≤1023px**: Sidebar 200px, header 48px, stack hero score rows vertically, hide nav sublabels, reduce card/slider padding
+- **Mobile ≤767px**: Stack layout vertically (flex-direction: column), sidebar becomes full-width sticky top bar, hide sidebar tagline, collapsible nav (hidden by default), full-width buttons, stack nav footer vertically, full-width tooltips, full-screen demo modals
+- **Small mobile ≤479px**: Further reduce padding (12px), smaller hero scores (36px), smaller text
+- **Print**: Hide sidebar/header/buttons/tooltips/modals, full-width content, page-break-inside: avoid on cards
 
-**3. `src/features/demo/DemoOverlays.tsx`** — Update CompanyDemoOverlay
-- Use all 3 profiles directly (no index skipping — line 17 fix: `DEMO_PROFILES[0], [1], [2]`)
-- Update card rendering to use new fields: `description` instead of `note`, `premiumEstimate` for price display
-- Add `signals` display if present in the profile card
+**2. `src/components/layout/AppSidebar.tsx`** — Add mobile nav toggle
+- Add a hamburger button (hidden on desktop via `lg:hidden`)
+- Toggle sidebar nav visibility on mobile with local state
+- Hide tagline on mobile (`hidden md:block`)
+- Hide nav sublabels on tablet (`hidden lg:block`)
+
+**3. `src/pages/Index.tsx`** — Responsive layout classes
+- Change outer div from `flex h-screen` to `flex flex-col lg:flex-row h-screen`
+- Sidebar: responsive width classes `w-full lg:w-[236px] lg:min-w-[236px]`
+- Main content: responsive padding `p-4 md:p-5 lg:p-7`
+
+**4. `src/components/layout/AppHeader.tsx`** — Responsive header
+- Hide category label on mobile (`hidden md:inline`)
+- Reduce padding on smaller screens
+- Responsive header height
 
 ### Technical Notes
-- The slider values differ between spec and current code — use the spec values exactly
-- `dependencies` field on profile maps to `providers` in `ExposureInputs`
-- No changes to scoring logic or UI layout — only data replacement
+- Primary approach: Tailwind responsive prefixes (`sm:`, `md:`, `lg:`, `xl:`) on components + CSS media queries in `index.css` for global overrides
+- Mobile sidebar: sticky top with hamburger toggle using React `useState`
+- Print styles use `@media print` with `!important` overrides to hide interactive elements
+- No new dependencies
 
