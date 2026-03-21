@@ -249,6 +249,9 @@ export function ExposureAnalysis() {
               ))}
             </SectionCard>
           ))}
+
+          {/* IAT Assessment Panel */}
+          <IATAssessmentPanel />
         </div>
 
         {/* Right: Live interpretation panel */}
