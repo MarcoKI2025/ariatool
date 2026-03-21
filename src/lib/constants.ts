@@ -8,6 +8,7 @@ export const USE_CASES = [
   'Code Generation',
   'Risk Assessment',
   'Compliance Monitoring',
+  'Other',
 ];
 
 export const PROVIDERS = [
@@ -89,4 +90,19 @@ export const DEFAULT_INPUTS = {
   toolCallAuthority: 1,
   persistentMemory: 1,
   humanCheckpoints: 3,
+  // Liability
+  hallucinationLiability: 1,
+  deepfakeFraud: 1,
+  promptInjection: 1,
+  modelDrift: 1,
+  algorithmicBias: 1,
+  shadowAI: 3,
+  explainabilityGap: 3,
+  dataIntegrity: 2,
+  esgLiability: 2,
+  // Systemic
+  cloudConcentration: 3,
+  modelConcentration: 3,
+  gpuConcentration: 3,
+  crossVendorContagion: 3,
 };
