@@ -1,7 +1,48 @@
-import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
-import { AppState, Perspective, ExposureInputs, AnalysisResults } from '@/lib/types';
+import React, { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';
+import { AppState, Perspective, ExposureInputs, AnalysisResults, IATState } from '@/lib/types';
 import { DEFAULT_INPUTS } from '@/lib/constants';
 import { computeFullAnalysis } from '@/lib/scoring';
+
+const STORAGE_KEY = 'aria_state';
+
+const DEFAULT_IAT: IATState = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false };
+
+function createDefaultState(): AppState {
+  return {
+    perspective: 'underwriter',
+    activeStep: 1,
+    analysisComplete: false,
+    inputs: { ...DEFAULT_INPUTS } as ExposureInputs,
+    results: null,
+    iatState: { ...DEFAULT_IAT },
+    darkMode: false,
+  };
+}
+
+function loadPersistedState(): AppState {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return { ...createDefaultState(), ...parsed };
+    }
+  } catch (e) {
+    console.error('Failed to load state:', e);
+  }
+  return createDefaultState();
+}
+
+function persistState(state: AppState) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      inputs: state.inputs,
+      iatState: state.iatState,
+      darkMode: state.darkMode,
+    }));
+  } catch (e) {
+    // silent
+  }
+}
 
 interface AppContextType {
   state: AppState;
@@ -11,6 +52,8 @@ interface AppContextType {
   setInputs: (inputs: ExposureInputs) => void;
   runAnalysis: () => void;
   resetAnalysis: () => void;
+  toggleIAT: (criterion: number) => void;
+  toggleDarkMode: () => void;
   results: AnalysisResults | null;
   inputs: ExposureInputs;
 }
@@ -18,13 +61,17 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | null>(null);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<AppState>({
-    perspective: 'underwriter',
-    activeStep: 1,
-    analysisComplete: false,
-    inputs: { ...DEFAULT_INPUTS } as ExposureInputs,
-    results: null,
-  });
+  const [state, setState] = useState<AppState>(loadPersistedState);
+
+  // Persist on changes
+  useEffect(() => {
+    persistState(state);
+  }, [state.inputs, state.iatState, state.darkMode]);
+
+  // Apply dark mode class
+  useEffect(() => {
+    document.body.classList.toggle('dark', state.darkMode);
+  }, [state.darkMode]);
 
   const setActiveStep = useCallback((step: number) => {
     if (!state.analysisComplete && step > 1) return;
@@ -49,13 +96,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, [state.inputs]);
 
   const resetAnalysis = useCallback(() => {
-    setState({
-      perspective: 'underwriter',
-      activeStep: 1,
-      analysisComplete: false,
-      inputs: { ...DEFAULT_INPUTS } as ExposureInputs,
-      results: null,
-    });
+    setState(createDefaultState());
+    localStorage.removeItem(STORAGE_KEY);
+  }, []);
+
+  const toggleIAT = useCallback((criterion: number) => {
+    setState(s => ({
+      ...s,
+      iatState: { ...s.iatState, [criterion]: !s.iatState[criterion] },
+    }));
+  }, []);
+
+  const toggleDarkMode = useCallback(() => {
+    setState(s => ({ ...s, darkMode: !s.darkMode }));
   }, []);
 
   const value = useMemo(() => ({
@@ -66,9 +119,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setInputs,
     runAnalysis,
     resetAnalysis,
+    toggleIAT,
+    toggleDarkMode,
     results: state.results,
     inputs: state.inputs,
-  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis]);
+  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
