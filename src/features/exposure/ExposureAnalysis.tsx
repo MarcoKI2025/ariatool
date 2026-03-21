@@ -5,8 +5,10 @@ import { USE_CASES, PROVIDERS, INDUSTRIES } from '@/lib/constants';
 import { SliderRow, SectionCard } from '@/components/shared/UIComponents';
 import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
 import { ExposureResults } from './ExposureResults';
+import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
+import { ExposureInputs } from '@/lib/types';
 
-const PROGRESS_STEPS = ['Company', 'Deployment', 'Agentic', 'Governance'];
+const PROGRESS_STEPS = ['Company', 'Core AFI', 'Agent', 'Liability', 'Governance', 'Systemic'];
 
 export function ExposureAnalysis() {
   const { state, updateInputs, setInputs, runAnalysis } = useApp();
@@ -37,12 +39,14 @@ export function ExposureAnalysis() {
     return list.includes(item) ? list.filter(i => i !== item) : [...list, item];
   };
 
-  // Simple progress calculation
+  // Progress calculation based on categories touched
   const hasCompany = inputs.companyName.length > 0 && inputs.industry.length > 0;
-  const hasDeployment = inputs.automation !== 3 || inputs.criticality !== 3;
-  const hasAgentic = inputs.executionAuthority !== 3 || inputs.actionDensity !== 3;
-  const hasGov = inputs.reviewCadence !== 3 || inputs.sunsetPolicy !== 3;
-  const progressIdx = hasGov ? 3 : hasAgentic ? 2 : hasDeployment ? 1 : hasCompany ? 1 : 0;
+  const hasCoreAFI = inputs.automation !== 3 || inputs.executionAuthority !== 3 || inputs.oversightLevel !== 3;
+  const hasAgent = inputs.multiAgent !== 1 || inputs.toolCallAuthority !== 1;
+  const hasLiability = inputs.hallucinationLiability !== 1 || inputs.deepfakeFraud !== 1;
+  const hasGov = inputs.shadowAI !== 3 || inputs.explainabilityGap !== 3;
+  const hasSystemic = inputs.cloudConcentration !== 3 || inputs.modelConcentration !== 3;
+  const progressIdx = hasSystemic ? 5 : hasGov ? 4 : hasLiability ? 3 : hasAgent ? 2 : hasCoreAFI ? 1 : hasCompany ? 1 : 0;
 
   return (
     <div>
@@ -140,12 +144,12 @@ export function ExposureAnalysis() {
       <div className="flex items-center gap-0 mb-5">
         {PROGRESS_STEPS.map((step, i) => (
           <React.Fragment key={i}>
-            <div className={`flex items-center gap-[6px] text-[11px] font-medium ${i <= progressIdx ? 'text-primary' : 'text-muted-foreground'}`}>
+            <div className={`flex items-center gap-[6px] text-[10px] font-medium ${i <= progressIdx ? 'text-primary' : 'text-muted-foreground'}`}>
               <div className={`w-[7px] h-[7px] rounded-full ${i <= progressIdx ? 'bg-primary' : 'bg-border'}`} />
               {step}
             </div>
             {i < PROGRESS_STEPS.length - 1 && (
-              <div className={`flex-1 h-px mx-3 ${i < progressIdx ? 'bg-primary' : 'bg-border'}`} />
+              <div className={`flex-1 h-px mx-2 ${i < progressIdx ? 'bg-primary' : 'bg-border'}`} />
             )}
           </React.Fragment>
         ))}
@@ -194,61 +198,31 @@ export function ExposureAnalysis() {
             </div>
           </SectionCard>
 
-          {/* Deployment */}
-          <SectionCard title="Deployment Characteristics" icon="📊" subtitle="Defines scope and authority of AI. High values amplify Delegation Ratio and Correlation Density." badgeText="4 inputs" confidenceBadge="Self-Declared">
-            <SliderRow label="Automation Level" value={inputs.automation} onChange={v => updateInputs({ automation: v })} description="1 = Manual processes · 5 = Fully autonomous execution" />
-            <SliderRow label="Business Criticality" value={inputs.criticality} onChange={v => updateInputs({ criticality: v })} description="1 = Low importance · 5 = Mission-critical operations" />
-            <SliderRow label="Integration Depth" value={inputs.integrationDepth} onChange={v => updateInputs({ integrationDepth: v })} description="1 = Isolated tool · 5 = Deeply embedded in infrastructure" />
-            <SliderRow label="AI Workflow Breadth" value={inputs.workflowBreadth} onChange={v => updateInputs({ workflowBreadth: v })} description="1 = Single workflow · 5 = Organisation-wide deployment" />
-          </SectionCard>
-
-          {/* Agentic */}
-          <SectionCard title="Agentic Exposure Parameters" icon="🤖" subtitle="Autonomous systems create non-linear exposure through action density and execution authority." badgeText="8 inputs · Core + Agent extensions">
-            <SliderRow label="Execution Authority" value={inputs.executionAuthority} onChange={v => updateInputs({ executionAuthority: v })} description="1 = No autonomous action · 5 = Full autonomous execution" />
-            <SliderRow label="Action Density" value={inputs.actionDensity} onChange={v => updateInputs({ actionDensity: v })} description="1 = Infrequent actions · 5 = Continuous autonomous actions" />
-            <SliderRow label="External Tool Access" value={inputs.toolCallScope} onChange={v => updateInputs({ toolCallScope: v })} description="1 = No external access · 5 = Broad API and tool integrations" />
-            <SliderRow label="Human Oversight Level" value={inputs.oversightLevel} onChange={v => updateInputs({ oversightLevel: v })} description="1 = No oversight · 5 = Comprehensive human-in-the-loop" />
-
-            {/* Agent Architecture sub-section */}
-            <div className="mt-4 mb-2 p-[10px] px-[14px] bg-secondary border border-border rounded-lg border-l-[3px] border-l-primary">
-              <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[3px]">⚡ AI Agent Architecture — New Risk Dimensions</div>
-              <div className="text-[10px] text-secondary-foreground leading-[1.5]">The following inputs apply specifically to <strong className="text-foreground">agentic AI systems</strong> — autonomous agents that plan, use tools, spawn sub-agents, or maintain persistent memory.</div>
-            </div>
-
-            <SliderRow label="Multi-Agent Orchestration" value={inputs.multiAgent} onChange={v => updateInputs({ multiAgent: v })} description="1 = Single model · 3 = Orchestrates 2–5 sub-agents · 5 = Complex multi-agent network" />
-            <SliderRow label="Tool-Call Authority Scope" value={inputs.toolCallAuthority} onChange={v => updateInputs({ toolCallAuthority: v })} description="1 = Read-only / no tools · 3 = API access, database writes · 5 = Financial transactions, code execution" />
-            <SliderRow label="Persistent Memory Exposure" value={inputs.persistentMemory} onChange={v => updateInputs({ persistentMemory: v })} description="1 = Stateless / no memory · 3 = Session memory · 5 = Full persistent memory" />
-            <SliderRow label="Human Checkpoint Coverage" value={inputs.humanCheckpoints} onChange={v => updateInputs({ humanCheckpoints: v })} description="1 = No checkpoints · 3 = High-value actions only · 5 = Approval before every action" />
-          </SectionCard>
-
-          {/* AI-Specific Liability */}
-          <SectionCard title="AI-Specific Liability Exposure" icon="⚠" subtitle="These dimensions reflect actual AI liability claim patterns emerging in 2025–2026." badgeText="9 inputs · 2025–26 claim vectors" confidenceBadge="2025–2026 Claim Patterns">
-            <SliderRow label="Hallucination Liability Exposure" value={inputs.hallucinationLiability} onChange={v => updateInputs({ hallucinationLiability: v })} description="1 = All outputs human-verified · 3 = Some automated, spot-checked · 5 = AI outputs directly to customers" />
-            <SliderRow label="Deepfake / Synthetic Fraud Exposure" value={inputs.deepfakeFraud} onChange={v => updateInputs({ deepfakeFraud: v })} description="1 = Strong auth protocols · 3 = Standard video/voice auth · 5 = Video/voice for high-value, no controls" />
-            <SliderRow label="Prompt Injection & Input Manipulation" value={inputs.promptInjection} onChange={v => updateInputs({ promptInjection: v })} description="1 = Only trusted internal content · 3 = Some external, sandboxed · 5 = Untrusted external + financial actions" />
-            <SliderRow label="Model Drift & Data Poisoning" value={inputs.modelDrift} onChange={v => updateInputs({ modelDrift: v })} description="1 = Formal drift monitoring · 3 = Periodic manual review · 5 = No drift monitoring" />
-            <SliderRow label="Algorithmic Bias & Discriminatory Output" value={inputs.algorithmicBias} onChange={v => updateInputs({ algorithmicBias: v })} description="1 = Regular bias audits · 3 = Some testing, no systematic audit · 5 = No bias testing" />
-            <SliderRow label="Shadow AI & Uncontrolled Deployment" value={inputs.shadowAI} onChange={v => updateInputs({ shadowAI: v })} description="1 = Approved tools only, monitored · 3 = Policy exists but not enforced · 5 = No AI usage policy" />
-            <SliderRow label="Explainability Gap & Black Box Liability" value={inputs.explainabilityGap} onChange={v => updateInputs({ explainabilityGap: v })} description="1 = Full explainability · 3 = Partial — high-level only · 5 = Black box — not interpretable" />
-            <SliderRow label="Data Supply Chain Integrity" value={inputs.dataIntegrity} onChange={v => updateInputs({ dataIntegrity: v })} description="1 = Formal data lineage, verified · 3 = Partial validation · 5 = Third-party data without verification" />
-            <SliderRow label="ESG & Carbon Liability Exposure" value={inputs.esgLiability} onChange={v => updateInputs({ esgLiability: v })} description="1 = Green-certified compute, CSRD-documented · 3 = Standard cloud, partial reporting · 5 = High-intensity, no monitoring" />
-          </SectionCard>
-
-          {/* Systemic & Concentration */}
-          <SectionCard title="Systemic & Concentration Risk" icon="🌐" subtitle='Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk."' badgeText="4 inputs · Swiss Re sigma 01/2026">
-            <SliderRow label="Cloud Provider Concentration" value={inputs.cloudConcentration} onChange={v => updateInputs({ cloudConcentration: v })} description="1 = Single provider (critical) · 3 = Two providers · 5 = Multi-cloud, no single >40%" />
-            <SliderRow label="AI Model Provider Concentration" value={inputs.modelConcentration} onChange={v => updateInputs({ modelConcentration: v })} description="1 = Single model provider · 3 = Two providers, fallback exists · 5 = Multi-provider + open-weight" />
-            <SliderRow label="GPU / Compute Infrastructure Concentration" value={inputs.gpuConcentration} onChange={v => updateInputs({ gpuConcentration: v })} description="1 = Single data centre · 3 = Two facilities · 5 = Geographically distributed, multi-vendor" />
-            <SliderRow label="Cross-Vendor Contagion Exposure" value={inputs.crossVendorContagion} onChange={v => updateInputs({ crossVendorContagion: v })} description="1 = Vendors share infrastructure (hidden correlation) · 3 = Partial independence · 5 = Full vendor independence" />
-          </SectionCard>
-
-          {/* Governance & Dependency */}
-          <SectionCard title="Governance & Dependency" icon="🔒" subtitle="Low scores here signal systemic entrenchment — the system cannot be safely exited without significant disruption." badgeText="4 inputs">
-            <SliderRow label="Review Cadence" value={inputs.reviewCadence} onChange={v => updateInputs({ reviewCadence: v })} description="1 = Never reviewed · 5 = Continuous review process" />
-            <SliderRow label="Sunset Policy" value={inputs.sunsetPolicy} onChange={v => updateInputs({ sunsetPolicy: v })} description="1 = No sunset process · 5 = Formal decommission framework" />
-            <SliderRow label="Switching Cost" value={inputs.switchingCost} onChange={v => updateInputs({ switchingCost: v })} description="1 = Trivial to switch · 5 = Prohibitively expensive" />
-            <SliderRow label="Data Portability" value={inputs.portability} onChange={v => updateInputs({ portability: v })} description="1 = Fully portable · 5 = Completely locked in" />
-          </SectionCard>
+          {/* Render all 6 slider categories from config */}
+          {SLIDER_CATEGORIES.map((cat) => (
+            <SectionCard
+              key={cat.key}
+              title={cat.title}
+              icon={cat.icon}
+              subtitle={cat.subtitle}
+              badgeText={cat.badge}
+              confidenceBadge={cat.confidenceBadge}
+            >
+              {cat.sliders.map((slider) => (
+                <SliderRow
+                  key={slider.id}
+                  label={slider.name}
+                  value={(inputs as Record<string, any>)[slider.fieldKey] ?? slider.defaultValue}
+                  onChange={(v) => updateInputs({ [slider.fieldKey]: v } as Partial<ExposureInputs>)}
+                  min={slider.min}
+                  max={slider.max}
+                  description={slider.description}
+                  tooltip={slider.tooltip}
+                  scaleLabels={slider.labels}
+                />
+              ))}
+            </SectionCard>
+          ))}
         </div>
 
         {/* Right: Live interpretation panel */}
@@ -276,13 +250,13 @@ export function ExposureAnalysis() {
           <div className="mb-3 space-y-[6px]">
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">AFI Components</div>
             {[
-              { label: 'DR', value: preview.components.dr },
-              { label: 'JD', value: preview.components.jd },
-              { label: 'RC', value: preview.components.rc },
-              { label: 'CD', value: preview.components.cd },
+              { label: 'DR', value: preview.components.dr, name: 'Delegation Ratio' },
+              { label: 'JD', value: preview.components.jd, name: 'Justificatory Density' },
+              { label: 'RC', value: preview.components.rc, name: 'Reversibility Cost' },
+              { label: 'CD', value: preview.components.cd, name: 'Continuation Density' },
             ].map((c, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="text-[9px] font-mono text-muted-foreground w-5">{c.label}</span>
+                <span className="text-[9px] font-mono text-muted-foreground w-5" title={c.name}>{c.label}</span>
                 <div className="flex-1 h-[4px] bg-border rounded overflow-hidden">
                   <div className={`h-full rounded ${c.value > 0.7 ? 'bg-fragile' : c.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(c.value * 100)}%` }} />
                 </div>
@@ -318,7 +292,7 @@ export function ExposureAnalysis() {
           ⊕ Generate AI Risk Assessment
         </button>
         <div className="text-[10px] text-white/40 tracking-[0.04em]">
-          {inputs.companyName ? `${inputs.companyName} · ` : ''}AFI {preview.afi.toFixed(2)} · {preview.band}
+          {inputs.companyName ? `${inputs.companyName} · ` : ''}AFI {preview.afi.toFixed(2)} · {preview.band} · 28 inputs
         </div>
       </div>
     </div>
