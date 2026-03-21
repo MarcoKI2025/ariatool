@@ -1074,13 +1074,69 @@ select.fi-in {
   background: #1e1d14;
 }
 
-/* Print styles */
-@media print {
-  .no-print { display: none !important; }
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════════════════════ */
+
+/* Desktop (1024px - 1439px) */
+@media (max-width: 1439px) {
+  .sc { padding: 18px; }
+  .hero-score-val { font-size: 52px; }
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
+  .sc { padding: 16px; }
+  .sr { padding: 12px 0; }
+  .hero-score-val { font-size: 48px; }
+  .c2, .c3 { grid-template-columns: 1fr; }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .sc { padding: 14px; margin-bottom: 12px; }
+  .hero-score-val { font-size: 42px; }
+  .sr { padding: 10px 0; }
+  .sr-nm { font-size: 12px; }
+  .sr-val { min-width: 24px; height: 20px; font-size: 10px; }
   .c2, .c3, .c4, .c5 { grid-template-columns: 1fr; }
   .run-bar { left: 0; }
+  .btn-p, .btn-s { width: 100%; justify-content: center; }
+  .tip-box {
+    position: fixed;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    max-width: none;
+  }
+}
+
+/* Small Mobile (< 480px) */
+@media (max-width: 479px) {
+  .sc { padding: 12px; }
+  .sc-t { font-size: 9px; }
+  .hero-score-val { font-size: 36px; }
+  .sr-nm { font-size: 11px; }
+  .card { padding: 12px 14px; }
+  .cv-metric { font-size: 22px; }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════════════════════════ */
+@media print {
+  body { background: white !important; color: black !important; }
+  .no-print,
+  .app-sidebar,
+  .app-header,
+  .use-restriction-banner,
+  .view-nav-footer,
+  .btn-p,
+  .btn-s,
+  .tip,
+  .demo-overlay { display: none !important; }
+  .app-main { width: 100% !important; }
+  .app-content { padding: 0 !important; overflow: visible !important; }
+  .sc { page-break-inside: avoid; border: 1px solid #ddd; margin-bottom: 20px; }
+  .hero-card { page-break-inside: avoid; }
 }

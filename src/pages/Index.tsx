@@ -29,11 +29,11 @@ function AppContent() {
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden">
+    <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden">
       <AppSidebar />
-      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+      <div className="app-main flex-1 flex flex-col overflow-hidden min-w-0">
         <AppHeader />
-        <main className="flex-1 overflow-y-auto p-7 pb-20">
+        <main className="app-content flex-1 overflow-y-auto p-4 pb-16 md:p-5 md:pb-18 lg:p-7 lg:pb-20">
           {renderStep()}
         </main>
       </div>
