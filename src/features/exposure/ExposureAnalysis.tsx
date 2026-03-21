@@ -1,13 +1,14 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { computeLivePreview } from '@/lib/scoring';
-import { USE_CASES, PROVIDERS, INDUSTRIES } from '@/lib/constants';
+import { USE_CASES, PROVIDERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES } from '@/lib/constants';
 import { SliderRow, SectionCard, InfoTip } from '@/components/shared/UIComponents';
 import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
 import { ExposureResults } from './ExposureResults';
 import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { ExposureInputs } from '@/lib/types';
+import { IATAssessmentPanel } from '@/features/iat/IATAssessmentPanel';
 
 const PROGRESS_STEPS = ['Company', 'Core AFI', 'Agent', 'Liability', 'Governance', 'Systemic'];
 
