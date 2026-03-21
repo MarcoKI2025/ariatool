@@ -78,7 +78,7 @@ export function DecisionIntelligence() {
                 </svg>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
                   <div className={`text-[18px] font-bold font-mono ${band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>
-                    ECI-{eciTier}
+                    ECI-{eciTier}<InfoTip text={TOOLTIPS.eci} />
                   </div>
                   <div className="text-[8px] text-muted-foreground uppercase tracking-wider">{eciName}</div>
                 </div>
