@@ -209,6 +209,13 @@ export function ScenarioSimulation() {
           <div className="text-[12px] text-muted-foreground leading-[1.55]">{s.operationalImplication}</div>
         </div>
       </div>
+
+      {/* View nav footer */}
+      <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
+        <button onClick={() => setActiveStep(2)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Decision Intelligence</button>
+        <span className="text-[10px] text-muted-foreground italic">Step 3 of 6 · Scenario stress testing</span>
+        <button onClick={() => setActiveStep(4)} className="view-nav-next">Insurance Decision →</button>
+      </div>
     </div>
   );
 }

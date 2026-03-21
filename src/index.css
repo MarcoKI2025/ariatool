@@ -1037,6 +1037,43 @@ select.fi-in {
   line-height: 1.55;
 }
 
+/* Dark section utility classes */
+.bg-dark-section {
+  background: #141410;
+}
+.text-dark-section-fg {
+  color: #c0bca8;
+}
+.border-dark-section-border {
+  border-color: #2e2c22;
+}
+.bg-dark-section-border\/50 {
+  background: rgba(46, 44, 34, 0.5);
+}
+
+/* Chrome utility classes */
+.bg-chrome {
+  background: #141410;
+}
+.border-chrome-border {
+  border-color: #262420;
+}
+.text-chrome-fg {
+  color: #a0a09a;
+}
+.text-chrome-fg-bright {
+  color: #e8e4d8;
+}
+.text-chrome-fg-muted {
+  color: #585650;
+}
+.text-chrome-accent {
+  color: #7068e0;
+}
+.bg-chrome-hover {
+  background: #1e1d14;
+}
+
 /* Print styles */
 @media print {
   .no-print { display: none !important; }

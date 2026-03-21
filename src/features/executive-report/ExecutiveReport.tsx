@@ -259,6 +259,13 @@ export function ExecutiveReport() {
           </div>
         </div>
       )}
+
+      {/* View nav footer */}
+      <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
+        <button onClick={() => setActiveStep(4)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Insurance Decision</button>
+        <span className="text-[10px] text-muted-foreground italic">Step 5 of 6 · Board-level documentation</span>
+        <button onClick={() => setActiveStep(6)} className="view-nav-next">Model Governance →</button>
+      </div>
     </div>
   );
 }

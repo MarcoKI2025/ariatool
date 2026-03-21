@@ -86,6 +86,20 @@ export default {
           bg: "hsl(var(--purple-bg))",
           border: "hsl(var(--purple-border))",
         },
+        chrome: {
+          DEFAULT: "#141410",
+          hover: "#1e1d14",
+          fg: "#a0a09a",
+          "fg-bright": "#e8e4d8",
+          "fg-muted": "#585650",
+          border: "#262420",
+          accent: "#7068e0",
+        },
+        "dark-section": {
+          DEFAULT: "#141410",
+          fg: "#c0bca8",
+          border: "#2e2c22",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
