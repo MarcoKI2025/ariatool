@@ -103,7 +103,7 @@ export function DecisionIntelligence() {
             { label: 'Decision Class', value: results.decisionClass, band },
           ].map((m, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}{(m as any).tooltip && <InfoTip text={(m as any).tooltip} />}</div>
               <div className={`text-[18px] font-bold font-mono ${m.band === 'Fragile' ? 'text-fragile' : m.band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>
                 {m.value}
               </div>
