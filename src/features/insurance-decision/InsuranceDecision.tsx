@@ -212,6 +212,13 @@ export function InsuranceDecision() {
           <div>• <strong className="text-foreground">Cap aggregate AI exposure per treaty</strong> — Sets maximum per-entity and per-portfolio limits on AI-related claims</div>
         </div>
       </SectionCard>
+
+      {/* View nav footer */}
+      <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
+        <button onClick={() => setActiveStep(3)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Scenario Simulation</button>
+        <span className="text-[10px] text-muted-foreground italic">Step 4 of 6 · Insurance & financial exposure</span>
+        <button onClick={() => setActiveStep(5)} className="view-nav-next">Executive Report →</button>
+      </div>
     </div>
   );
 }
