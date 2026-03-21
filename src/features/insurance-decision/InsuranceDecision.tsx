@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { Banner, MetricCard, SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 
@@ -213,6 +214,64 @@ export function InsuranceDecision() {
           <div>• <strong className="text-foreground">Cap aggregate AI exposure per treaty</strong> — Sets maximum per-entity and per-portfolio limits on AI-related claims</div>
         </div>
       </SectionCard>
+
+      {/* Premium Simulation Chart */}
+      {(() => {
+        const scenarios = [
+          { label: 'Current', low: premium.lo, high: premium.hi },
+          { label: 'Optimized', low: Math.round(premium.lo * 0.65), high: Math.round(premium.mid * 0.85) },
+          { label: 'Worst Case', low: Math.round(premium.mid * 1.5), high: Math.round(premium.hi * 1.8) },
+        ];
+        const chartData = scenarios.map(s => ({
+          name: s.label,
+          low: s.low,
+          range: s.high - s.low,
+          high: s.high,
+        }));
+        return (
+          <SectionCard title="Premium Simulation — Scenario Range" icon="💰" subtitle="Indicative annual premium · NOT actuarially certified">
+            <div style={{ height: 180 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart layout="vertical" data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 10 }}>
+                  <XAxis
+                    type="number"
+                    tickFormatter={(v: number) => `€${v}k`}
+                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontFamily: 'IBM Plex Mono' }}
+                    axisLine={{ stroke: 'hsl(var(--border))' }}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11, fontFamily: 'Inter', fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    width={80}
+                  />
+                  <Tooltip
+                    cursor={{ fill: 'hsl(var(--muted) / 0.3)' }}
+                    content={({ active, payload }) => {
+                      if (!active || !payload?.length) return null;
+                      const d = payload[0]?.payload;
+                      return (
+                        <div className="bg-[#111108] border border-[#3a3828] rounded-lg px-3 py-2 text-[11px] shadow-lg">
+                          <div className="text-white font-semibold mb-1">{d.name}</div>
+                          <div className="text-[#c0bcb0]">€{d.low}k – €{d.high}k / year</div>
+                        </div>
+                      );
+                    }}
+                  />
+                  <Bar dataKey="low" stackId="a" fill="rgba(64, 56, 184, 0.7)" radius={[4, 0, 0, 4]} />
+                  <Bar dataKey="range" stackId="a" fill="rgba(64, 56, 184, 0.3)" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground mt-3">
+              Premium estimates are governance-oriented indicators only. Use with independent actuarial validation. Optimized scenario assumes governance improvements within 90 days.
+            </div>
+          </SectionCard>
+        );
+      })()}
 
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
