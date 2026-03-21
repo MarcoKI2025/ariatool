@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { computeLivePreview } from '@/lib/scoring';
 import { USE_CASES, PROVIDERS, INDUSTRIES } from '@/lib/constants';
 import { SliderRow, SectionCard } from '@/components/shared/UIComponents';
 import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
+import { ExposureResults } from './ExposureResults';
 
 const PROGRESS_STEPS = ['Company', 'Deployment', 'Agentic', 'Governance'];
 
@@ -11,6 +12,24 @@ export function ExposureAnalysis() {
   const { state, updateInputs, setInputs, runAnalysis } = useApp();
   const { inputs, analysisComplete } = state;
   const [dismissedWelcome, setDismissedWelcome] = useState(false);
+  const [showForm, setShowForm] = useState(!analysisComplete);
+
+  // Listen for "show form" event from results view
+  useEffect(() => {
+    const handler = () => setShowForm(true);
+    document.addEventListener('show-exposure-form', handler);
+    return () => document.removeEventListener('show-exposure-form', handler);
+  }, []);
+
+  // When analysis completes, switch to results
+  useEffect(() => {
+    if (analysisComplete) setShowForm(false);
+  }, [analysisComplete]);
+
+  // If analysis is complete and not showing form, show results
+  if (analysisComplete && !showForm) {
+    return <ExposureResults />;
+  }
 
   const preview = useMemo(() => computeLivePreview(inputs), [inputs]);
 
