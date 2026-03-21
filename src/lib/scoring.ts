@@ -48,6 +48,35 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
   return { dr, jd, rc, cd, na };
 }
 
+function computeALRI(inputs: ExposureInputs): number {
+  const { hallucinationLiability, deepfakeFraud, promptInjection, modelDrift,
+    algorithmicBias, shadowAI, explainabilityGap, dataIntegrity, esgLiability } = inputs;
+  const raw = (
+    hallucinationLiability * 15 +
+    deepfakeFraud * 10 +
+    promptInjection * 12 +
+    modelDrift * 12 +
+    algorithmicBias * 12 +
+    shadowAI * 10 +
+    explainabilityGap * 12 +
+    dataIntegrity * 9 +
+    esgLiability * 8
+  ) / 5;
+  return Math.min(100, Math.round(raw));
+}
+
+function computeSCRI(inputs: ExposureInputs): number {
+  const { cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion } = inputs;
+  // Low values = high concentration risk (inverted for cloud/model/gpu), crossVendor is direct
+  const raw = (
+    ((6 - cloudConcentration) * 28) +
+    ((6 - modelConcentration) * 28) +
+    ((6 - gpuConcentration) * 22) +
+    ((6 - crossVendorContagion) * 22)
+  ) / 5;
+  return Math.min(100, Math.round(raw));
+}
+
 export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   const components = computeAFIComponents(inputs);
   const { dr, jd, rc, cd, na } = components;
@@ -82,12 +111,19 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     (inputs.persistentMemory / 5 * 20) + ((6 - inputs.humanCheckpoints) / 5 * 15)
   ));
 
+  // ALRI
+  const alri = computeALRI(inputs);
+
+  // SCRI
+  const scri = computeSCRI(inputs);
+
   // Premium estimate
   const basePrem = 180 * sectorMult;
   const autoMult = [0, 0.5, 0.75, 1.0, 1.5, 2.2][inputs.automation] || 1;
   const critMult = [0, 0.5, 0.7, 1.0, 1.4, 2.0][inputs.criticality] || 1;
   const depMult = inputs.providers.length <= 1 ? 1.8 : inputs.providers.length <= 2 ? 1.3 : 1.0;
-  const rawPrem = basePrem * autoMult * critMult * depMult * govPremium;
+  const alriLoading = 1 + (alri / 100) * 0.4;
+  const rawPrem = basePrem * autoMult * critMult * depMult * govPremium * alriLoading;
   const ovstReduction = [0, 0, 0.05, 0.12, 0.22, 0.35][inputs.oversightLevel] || 0;
   const midPrem = rawPrem * (1 - ovstReduction);
   const bandPct = inputs.automation >= 4 ? 0.20 : inputs.automation >= 3 ? 0.25 : 0.30;
@@ -105,6 +141,8 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     eciTier,
     eciName: eciNames[eciTier],
     agri,
+    alri,
+    scri,
     premium: {
       lo: Math.round(midPrem * (1 - bandPct) / 10) * 10,
       mid: Math.round(midPrem / 10) * 10,
@@ -126,6 +164,8 @@ export function computeLivePreview(inputs: ExposureInputs) {
   if (inputs.providers.length <= 1) signals.push({ text: 'Single provider dependency — concentration risk', color: 'fragile' });
   if (inputs.switchingCost >= 4) signals.push({ text: 'High switching cost — structural lock-in', color: 'sensitive' });
   if (inputs.integrationDepth >= 4) signals.push({ text: 'Deep integration — exit complexity elevated', color: 'sensitive' });
+  if (inputs.hallucinationLiability >= 3) signals.push({ text: 'Hallucination liability exposure — unverified AI outputs', color: 'fragile' });
+  if (inputs.shadowAI >= 3) signals.push({ text: 'Shadow AI risk — uncontrolled AI deployments', color: 'sensitive' });
   if (signals.length === 0) signals.push({ text: 'Governance signals within normal range', color: 'stable' });
 
   return { afi, band, score, signals, components };

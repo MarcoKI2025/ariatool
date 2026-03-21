@@ -47,15 +47,25 @@ interface SectionCardProps {
   children: React.ReactNode;
   highlight?: boolean;
   icon?: string;
+  badgeText?: string;
+  confidenceBadge?: string;
 }
 
-export function SectionCard({ title, subtitle, children, highlight, icon }: SectionCardProps) {
+export function SectionCard({ title, subtitle, children, highlight, icon, badgeText, confidenceBadge }: SectionCardProps) {
   return (
     <div className={`bg-card border rounded-[10px] p-5 mb-[14px] ${highlight ? 'border-purple-border bg-purple-bg' : 'border-border'}`}>
       <div className="flex items-start justify-between mb-2">
         <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-secondary-foreground flex items-center gap-[6px]">
           {icon && <span>{icon}</span>}
           {title}
+        </div>
+        <div className="flex items-center gap-2">
+          {badgeText && (
+            <span className="text-[9px] font-semibold text-muted-foreground px-[7px] py-[2px] bg-secondary border border-border rounded">{badgeText}</span>
+          )}
+          {confidenceBadge && (
+            <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ {confidenceBadge}</span>
+          )}
         </div>
       </div>
       {subtitle && <div className="text-[11px] text-muted-foreground mt-[3px] mb-[10px] leading-[1.5]">{subtitle}</div>}

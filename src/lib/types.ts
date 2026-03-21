@@ -37,6 +37,21 @@ export interface ExposureInputs {
   toolCallAuthority: number;
   persistentMemory: number;
   humanCheckpoints: number;
+  // AI-Specific Liability (1-5)
+  hallucinationLiability: number;
+  deepfakeFraud: number;
+  promptInjection: number;
+  modelDrift: number;
+  algorithmicBias: number;
+  shadowAI: number;
+  explainabilityGap: number;
+  dataIntegrity: number;
+  esgLiability: number;
+  // Systemic & Concentration (1-5)
+  cloudConcentration: number;
+  modelConcentration: number;
+  gpuConcentration: number;
+  crossVendorContagion: number;
 }
 
 export interface AFIComponents {
@@ -65,6 +80,8 @@ export interface AnalysisResults {
   eciTier: number;
   eciName: string;
   agri: number;
+  alri: number;
+  scri: number;
   premium: { lo: number; mid: number; hi: number };
 }
 
