@@ -148,9 +148,9 @@ function ModelGovernanceRegister() {
 
       <div className="px-[18px] py-3 flex items-center gap-[10px]">
         <div className="text-[10px] text-secondary-foreground">Model ID: <span className="font-mono text-primary">AGAF-v3.0-AFI-2026Q1</span></div>
-        <div className="w-px h-3 bg-dark-section-border" />
+        <div className="w-px h-3 bg-border" />
         <div className="text-[10px] text-secondary-foreground">Formula: <span className="font-mono text-secondary-foreground/80">AFI = (DR × RC × CD) / (JD × NA + 0.001)</span></div>
-        <div className="w-px h-3 bg-dark-section-border" />
+        <div className="w-px h-3 bg-border" />
         <div className="text-[10px] text-secondary-foreground">Thresholds: <span className="font-mono text-secondary-foreground/80">Stable &lt;0.85 · Sensitive 0.85–1.35 · Fragile &gt;1.35</span></div>
       </div>
     </div>

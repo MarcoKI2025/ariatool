@@ -769,27 +769,27 @@ export function InsuranceDecision() {
           <div className="text-[13px] font-bold text-foreground mb-1">Statutory fine ceilings applicable to this deployment</div>
           <div className="text-[11px] text-secondary-foreground leading-[1.5] mb-[14px]">Penalties apply independently of AFI score or insurance status. A system within underwriting tolerance can still incur maximum fines.</div>
           <div className="grid grid-cols-3 gap-3 mb-[14px]">
-            <div className="bg-[#1a0808] border border-[#5a1810] rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[6px]">Art. 99 §3 · Prohibited Practices</div>
-              <div className="text-[24px] font-bold font-mono text-[#ff6b5b] leading-none mb-1">€35M</div>
-              <div className="text-[10px] text-[#c08070]">or 7% worldwide annual turnover</div>
-              <div className="text-[9px] text-muted-foreground mt-[6px] leading-[1.45]">Triggered by: Art. 5 violations (subliminal manipulation, social scoring, predictive policing, biometric scraping)</div>
+            <div className="bg-fragile-bg border border-fragile-border rounded-lg p-4">
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-fragile mb-[6px]">Art. 99 §3 · Prohibited Practices</div>
+              <div className="text-[24px] font-bold font-mono text-fragile leading-none mb-1">€35M</div>
+              <div className="text-[10px] text-fragile/80">or 7% worldwide annual turnover</div>
+              <div className="text-[9px] text-secondary-foreground mt-[6px] leading-[1.45]">Triggered by: Art. 5 violations (subliminal manipulation, social scoring, predictive policing, biometric scraping)</div>
             </div>
-            <div className="bg-[#1a1200] border border-[#4a3400] rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[6px]">Art. 99 §4 · Provider & Deployer</div>
+            <div className="bg-sensitive-bg border border-sensitive-border rounded-lg p-4">
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-sensitive mb-[6px]">Art. 99 §4 · Provider & Deployer</div>
               <div className="text-[24px] font-bold font-mono text-sensitive leading-none mb-1">€15M</div>
-              <div className="text-[10px] text-[#c09040]">or 3% worldwide annual turnover</div>
-              <div className="text-[9px] text-muted-foreground mt-[6px] leading-[1.45]">Triggered by: Art. 16, Art. 26, Art. 50 obligations. Covers failure to implement human oversight or maintain logs.</div>
+              <div className="text-[10px] text-sensitive/80">or 3% worldwide annual turnover</div>
+              <div className="text-[9px] text-secondary-foreground mt-[6px] leading-[1.45]">Triggered by: Art. 16, Art. 26, Art. 50 obligations. Covers failure to implement human oversight or maintain logs.</div>
             </div>
-            <div className="bg-[#0e1a10] border border-[#1a3a28] rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[6px]">Art. 99 §5 · Misleading Regulators</div>
+            <div className="bg-stable-bg border border-stable-border rounded-lg p-4">
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-stable mb-[6px]">Art. 99 §5 · Misleading Regulators</div>
               <div className="text-[24px] font-bold font-mono text-stable leading-none mb-1">€7.5M</div>
-              <div className="text-[10px] text-[#609070]">or 1% worldwide annual turnover</div>
-              <div className="text-[9px] text-muted-foreground mt-[6px] leading-[1.45]">Triggered by: Supplying incorrect or misleading information to notified bodies or authorities.</div>
+              <div className="text-[10px] text-stable/80">or 1% worldwide annual turnover</div>
+              <div className="text-[9px] text-secondary-foreground mt-[6px] leading-[1.45]">Triggered by: Supplying incorrect or misleading information to notified bodies or authorities.</div>
             </div>
           </div>
-          <div className="p-[10px_14px] bg-[#120606] border border-[#5a1810] rounded-md text-[11px] text-[#d08070] leading-[1.5]">
-            <strong className="text-[#ff8878]">Critical distinction for underwriters:</strong> Art. 99 §4 penalties apply directly to Art. 26 deployer failures — including failure to assign qualified human oversight (§2), failure to maintain logs for 6 months (§6), and failure to suspend use when risk is identified (§5). Standard cyber policies do not cover regulatory fines of this type.
+          <div className="p-[10px_14px] bg-fragile-bg border border-fragile-border rounded-md text-[11px] text-foreground leading-[1.5]">
+            <strong className="text-fragile">Critical distinction for underwriters:</strong> Art. 99 §4 penalties apply directly to Art. 26 deployer failures — including failure to assign qualified human oversight (§2), failure to maintain logs for 6 months (§6), and failure to suspend use when risk is identified (§5). Standard cyber policies do not cover regulatory fines of this type.
           </div>
         </div>
       </div>
