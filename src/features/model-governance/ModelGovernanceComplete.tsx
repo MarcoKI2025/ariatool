@@ -792,7 +792,7 @@ function APIIntegrationReference() {
           <pre className="text-[10px] text-primary bg-secondary border border-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-[10px] mx-5 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[10px] mx-5 mb-4">
         {[
           { name: 'Guidewire PolicyCenter', desc: 'POST → parse committee_signal + loss_envelope → populate AI Risk Assessment field.' },
           { name: 'SAP Fioneer / Insurance', desc: 'AGAF JSON → SAP BTP via REST adapter. AFI score + flags → Risk Management module.' },
