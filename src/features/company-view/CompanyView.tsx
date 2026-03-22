@@ -96,149 +96,149 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
   return (
-    <div style={{ margin: 0, background: 'hsl(var(--sf))', borderBottom: '1px solid hsl(var(--bd))', position: 'relative', overflow: 'hidden', borderRadius: '12px', marginLeft: 28, marginRight: 28 }}>
+    <div className="mx-8 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(to right, #b53020, #c0392b, #e09000, #4038b8, #6058d8)' }} />
-      <div style={{ padding: '0 28px', paddingTop: 4 }}>
-        {/* Row 1: Risk Index + Loss Exposure + Industry Comparison */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(var(--bd))' }}>
-          {/* AI Risk Index */}
-          <div style={{ padding: '20px', borderRight: '1px solid hsl(var(--bd))', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8 }}>AI Risk Index</div>
-            <div style={{ position: 'relative', width: 88, height: 88, margin: '0 auto 8px' }}>
-              <svg viewBox="0 0 88 88" style={{ width: 88, height: 88, transform: 'rotate(-90deg)' }}>
-                <circle cx="44" cy="44" r="36" fill="none" stroke="#e1e4e8" strokeWidth="8" />
-                <circle cx="44" cy="44" r="36" fill="none" stroke={riskColor} strokeWidth="8" strokeDasharray="226" strokeDashoffset={ringOffset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease, stroke .3s' }} />
-              </svg>
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ fontSize: 26, fontWeight: 700, fontFamily: 'var(--font-mono)', lineHeight: 1, color: riskColor }}>{riskIdx}</div>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>/ 100</div>
-              </div>
-            </div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: riskColor }}>{riskLabel}</div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', marginTop: 2 }}>{riskSub}</div>
-          </div>
-
-          {/* Annual Loss Exposure */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--bd))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Risk Characterization</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>Baseline (expected)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--t2))' }}>{baseBand}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>Stress scenario (correlated event)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{elevBand}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>Tail risk (99th percentile)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{critBand}</span>
-              </div>
-            </div>
-            <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid hsl(var(--bd))', fontSize: 9, color: 'hsl(var(--t3))', lineHeight: 1.5 }}>
-              Indicative governance-heuristic risk bands. Not actuarially certified.
+      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
+      
+      {/* Row 1: Risk Index + Characterization + Industry */}
+      <div className="grid grid-cols-1 md:grid-cols-3 border-b border-border" style={{ paddingTop: 4 }}>
+        {/* AI Risk Index */}
+        <div className="flex flex-col items-center justify-center text-center p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-4">AI Risk Index</div>
+          <div className="relative mb-4" style={{ width: 110, height: 110 }}>
+            <svg viewBox="0 0 110 110" style={{ width: 110, height: 110, transform: 'rotate(-90deg)' }}>
+              <circle cx="55" cy="55" r="44" fill="none" stroke="hsl(var(--s2))" strokeWidth="9" />
+              <circle cx="55" cy="55" r="44" fill="none" stroke={riskColor} strokeWidth="9" strokeDasharray="276" strokeDashoffset={Math.round(276 - (riskIdx / 100) * 276)} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease' }} />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="text-[34px] font-bold font-mono leading-none" style={{ color: riskColor }}>{riskIdx}</div>
+              <div className="text-[10px] text-muted-foreground mt-0.5">/ 100</div>
             </div>
           </div>
+          <div className="text-sm font-bold" style={{ color: riskColor }}>{riskLabel}</div>
+          <div className="text-[11px] text-muted-foreground mt-1 max-w-[180px]">{riskSub}</div>
+        </div>
 
-          {/* Industry Comparison */}
-          <div style={{ padding: '18px 22px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Industry Comparison · Your Sector</div>
-            <div style={{ marginBottom: 10 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--t3))' }}>
-                <span>Your profile</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--t2))', fontWeight: 700 }}>{riskIdx} / 100</span>
-              </div>
-              <div style={{ background: 'hsl(var(--s2))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 6 }}>
-                <div style={{ height: '100%', background: riskColor, borderRadius: 4, width: `${riskIdx}%`, transition: 'width .5s ease' }} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--t3))' }}>
-                <span>Sector average</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--t3))', fontWeight: 700 }}>{sectorAvg} / 100</span>
-              </div>
-              <div style={{ background: 'hsl(var(--s2))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 8 }}>
-                <div style={{ height: '100%', background: 'hsl(220 6% 52%)', borderRadius: 4, width: `${sectorAvg}%`, transition: 'width .5s ease' }} />
-              </div>
-              <div style={{
-                fontSize: 11, fontWeight: 700, padding: '6px 10px', borderRadius: 6, textAlign: 'center',
-                background: diff > 10 ? 'hsl(var(--rb))' : diff > 0 ? 'hsl(var(--ab))' : 'hsl(var(--gb))',
-                color: diff > 10 ? 'hsl(var(--red))' : diff > 0 ? 'hsl(var(--amb))' : 'hsl(var(--grn))',
-                border: `1px solid ${diff > 10 ? 'hsl(var(--rbr))' : diff > 0 ? 'hsl(var(--abr))' : 'hsl(var(--gbr))'}`
-              }}>
-                {diff > 10 ? `+${diffPct}% above sector average — elevated exposure` : diff > 0 ? 'Slightly above sector average' : 'Below sector average — well-governed'}
-              </div>
+        {/* Risk Characterization */}
+        <div className="p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Risk Characterization</div>
+          <div className="flex flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-secondary-foreground">Baseline (expected)</span>
+              <span className="text-[16px] font-bold font-mono text-foreground">{baseBand}</span>
             </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-secondary-foreground">Stress scenario (correlated event)</span>
+              <span className="text-[16px] font-bold font-mono text-sensitive">{elevBand}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-secondary-foreground">Tail risk (99th percentile)</span>
+              <span className="text-[16px] font-bold font-mono text-fragile">{critBand}</span>
+            </div>
+          </div>
+          <div className="mt-6 pt-5 border-t border-border text-[10px] text-muted-foreground leading-relaxed">
+            Indicative governance-heuristic risk bands. Not actuarially certified.
           </div>
         </div>
 
-        {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 0 }}>
-          {/* Top Loss Scenarios */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--bd))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Top Loss Scenarios</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {scenarios.map((s, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 7 }}>
-                  <span style={{ fontSize: 14 }}>{s.icon}</span>
-                  <span style={{ flex: 1, fontSize: 10, color: 'hsl(var(--t2))' }}>{s.label}</span>
-                  <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: s.col }}>{s.risk}</span>
-                </div>
-              ))}
+        {/* Industry Comparison */}
+        <div className="p-8">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Industry Comparison · Your Sector</div>
+          <div className="mb-5">
+            <div className="flex justify-between mb-2 text-[12px] text-secondary-foreground">
+              <span>Your profile</span>
+              <span className="font-mono text-foreground font-bold">{riskIdx} / 100</span>
+            </div>
+            <div className="bg-secondary rounded h-3 overflow-hidden mb-5">
+              <div className="h-full rounded" style={{ background: riskColor, width: `${riskIdx}%`, transition: 'width .5s ease' }} />
+            </div>
+            <div className="flex justify-between mb-2 text-[12px] text-secondary-foreground">
+              <span>Sector average</span>
+              <span className="font-mono text-muted-foreground font-bold">{sectorAvg} / 100</span>
+            </div>
+            <div className="bg-secondary rounded h-3 overflow-hidden mb-5">
+              <div className="h-full rounded" style={{ background: 'hsl(220 6% 52%)', width: `${sectorAvg}%`, transition: 'width .5s ease' }} />
             </div>
           </div>
+          <div className="text-[12px] font-bold py-2.5 px-4 rounded-lg text-center border" style={{
+            background: diff > 10 ? 'hsl(var(--rb))' : diff > 0 ? 'hsl(var(--ab))' : 'hsl(var(--gb))',
+            color: diff > 10 ? 'hsl(var(--red))' : diff > 0 ? 'hsl(var(--amb))' : 'hsl(var(--grn))',
+            borderColor: diff > 10 ? 'hsl(var(--rbr))' : diff > 0 ? 'hsl(var(--abr))' : 'hsl(var(--gbr))'
+          }}>
+            {diff > 10 ? `+${diffPct}% above sector average — elevated exposure` : diff > 0 ? 'Slightly above sector average' : 'Below sector average — well-governed'}
+          </div>
+        </div>
+      </div>
 
-          {/* Exposure Trajectory */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--bd))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Exposure Trajectory · 12 Months</div>
-            <div style={{ marginBottom: 8 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Today</span>
-                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--t2))' }}>{baseBand}</span>
+      {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        {/* Top Loss Scenarios */}
+        <div className="p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Top Loss Scenarios</div>
+          <div className="flex flex-col gap-3">
+            {scenarios.map((s, i) => (
+              <div key={i} className="flex items-center gap-4 p-4 bg-secondary border border-border rounded-xl">
+                <span className="text-xl">{s.icon}</span>
+                <span className="flex-1 text-[12px] text-foreground leading-snug">{s.label}</span>
+                <span className="text-[15px] font-bold font-mono" style={{ color: s.col }}>{s.risk}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>In 6 months</span>
-                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{trend6m}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>In 12 months</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{trend12m}</span>
-              </div>
-              {/* Mini bar chart */}
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 36, marginTop: 8 }}>
-                {[
-                  { l: 'Now', h: 12, c: 'hsl(220 6% 52%)' },
-                  { l: '6mo', h: band === 'Fragile' ? 24 : 16, c: 'hsl(var(--amb))' },
-                  { l: '12mo', h: 34, c: 'hsl(var(--red))' },
-                ].map((bar, i) => (
-                  <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, justifyContent: 'flex-end' }}>
-                    <div style={{ width: '100%', height: bar.h, background: bar.c, borderRadius: '3px 3px 0 0' }} />
-                    <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>{bar.l}</span>
-                  </div>
-                ))}
-              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Exposure Trajectory */}
+        <div className="p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Exposure Trajectory · 12 Months</div>
+          <div className="flex flex-col gap-3 mb-5">
+            <div className="flex justify-between items-end">
+              <span className="text-[12px] text-secondary-foreground">Today</span>
+              <span className="text-[16px] font-bold font-mono text-foreground">{baseBand}</span>
             </div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', lineHeight: 1.5 }}>
-              Without governance changes: +{Math.round(growthRate * 100)}% exposure growth in 12 months. {band === 'Fragile' ? 'EU AI Act (Aug 2026) adds regulatory loading on top.' : 'Regulatory obligations from Aug 2026 will accelerate this.'}
+            <div className="flex justify-between items-end">
+              <span className="text-[12px] text-secondary-foreground">In 6 months</span>
+              <span className="text-[16px] font-bold font-mono text-sensitive">{trend6m}</span>
+            </div>
+            <div className="flex justify-between items-end">
+              <span className="text-[12px] text-secondary-foreground">In 12 months</span>
+              <span className="text-[16px] font-bold font-mono text-fragile">{trend12m}</span>
             </div>
           </div>
+          {/* Mini bar chart */}
+          <div className="flex items-end gap-3 mb-5" style={{ height: 50 }}>
+            {[
+              { l: 'Now', h: 16, c: 'hsl(220 6% 52%)' },
+              { l: '6mo', h: band === 'Fragile' ? 32 : 22, c: 'hsl(var(--amb))' },
+              { l: '12mo', h: 46, c: 'hsl(var(--red))' },
+            ].map((bar, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1.5 justify-end">
+                <div className="w-full rounded-t" style={{ height: bar.h, background: bar.c }} />
+                <span className="text-[10px] text-muted-foreground">{bar.l}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-[11px] text-muted-foreground leading-relaxed">
+            Without governance changes: +{Math.round(growthRate * 100)}% exposure growth in 12 months. {band === 'Fragile' ? 'EU AI Act (Aug 2026) adds regulatory loading on top.' : 'Regulatory obligations from Aug 2026 will accelerate this.'}
+          </div>
+        </div>
 
-          {/* What If You Do Nothing */}
-          <div style={{ padding: '18px 22px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>If Nothing Changes · 12 Month Impact</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {[
-                { icon: '📈', label: `+${Math.round(growthRate * 100)}% exposure growth`, sub: 'Risk compounds without structural intervention', col: riskColor },
-                { icon: '💸', label: `+${fmtM(Math.round(sim.mid * growthRate / 10) * 10)} additional annual exposure`, sub: 'Incremental loss exposure in 12 months vs today', col: 'hsl(var(--red))' },
-                { icon: '⚖', label: 'EU AI Act Art. 26 — August 2026', sub: `Deployer obligations in ${monthsToAug} months`, col: 'hsl(var(--amb))' },
-                { icon: '🔒', label: 'Insurers adding AI exclusions now', sub: 'Coverage gaps grow without governance evidence', col: band === 'Fragile' ? 'hsl(var(--red))' : 'hsl(var(--amb))' },
-              ].map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                  <span style={{ fontSize: 14, flexShrink: 0 }}>{item.icon}</span>
-                  <div>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: item.col }}>{item.label}</div>
-                    <div style={{ fontSize: 9, color: 'hsl(var(--t3))', marginTop: 1 }}>{item.sub}</div>
-                  </div>
+        {/* What If You Do Nothing */}
+        <div className="p-8">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">If Nothing Changes · 12 Month Impact</div>
+          <div className="flex flex-col gap-5">
+            {[
+              { icon: '📈', label: `+${Math.round(growthRate * 100)}% exposure growth`, sub: 'Risk compounds without structural intervention', col: riskColor },
+              { icon: '💸', label: `+${fmtM(Math.round(sim.mid * growthRate / 10) * 10)} additional annual exposure`, sub: 'Incremental loss exposure in 12 months vs today', col: 'hsl(var(--red))' },
+              { icon: '⚖', label: 'EU AI Act Art. 26 — August 2026', sub: `Deployer obligations in ${monthsToAug} months`, col: 'hsl(var(--amb))' },
+              { icon: '🔒', label: 'Insurers adding AI exclusions now', sub: 'Coverage gaps grow without governance evidence', col: band === 'Fragile' ? 'hsl(var(--red))' : 'hsl(var(--amb))' },
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <span className="text-xl flex-shrink-0 mt-0.5">{item.icon}</span>
+                <div>
+                  <div className="text-[13px] font-bold leading-snug" style={{ color: item.col }}>{item.label}</div>
+                  <div className="text-[11px] text-muted-foreground mt-1">{item.sub}</div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
