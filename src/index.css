@@ -1120,21 +1120,20 @@ select.fi-in {
 }
 
 /* ═══ DARK SECTION UTILITIES — always dark regardless of theme ═══ */
-.bg-dark-section { background: hsl(220 16% 13%); }
-.text-dark-section-fg { color: hsl(220 8% 72%); }
-.border-dark-section-border { border-color: hsl(220 10% 24%); }
+.bg-dark-section { background: hsl(220 16% 13%) !important; color: hsl(220 10% 92%); }
+.text-dark-section-fg { color: hsl(220 8% 72%) !important; }
+.border-dark-section-border { border-color: hsl(220 10% 24%) !important; }
 .bg-dark-section-border\/50 { background: hsl(220 10% 24% / 0.5); }
 
 /* Chrome utility classes — always dark for callout/tooltip panels */
-.bg-chrome { background: hsl(220 16% 13%); }
-.border-chrome-border { border-color: hsl(220 10% 24%); }
-.text-chrome-fg { color: hsl(220 8% 72%); }
-.text-chrome-fg-bright { color: hsl(220 10% 92%); }
-.text-chrome-fg-muted { color: hsl(220 6% 52%); }
-.text-chrome-accent { color: hsl(225 50% 58%); }
-.bg-chrome-hover { background: hsl(220 14% 17%); }
-.bg-chrome-active { background: hsl(220 12% 21%); }
-.bg-chrome-active { background: hsl(var(--chrome-bg-active)); }
+.bg-chrome { background: hsl(220 16% 13%) !important; color: hsl(220 10% 92%); }
+.border-chrome-border { border-color: hsl(220 10% 24%) !important; }
+.text-chrome-fg { color: hsl(220 8% 72%) !important; }
+.text-chrome-fg-bright { color: hsl(220 10% 92%) !important; }
+.text-chrome-fg-muted { color: hsl(220 6% 52%) !important; }
+.text-chrome-accent { color: hsl(225 50% 58%) !important; }
+.bg-chrome-hover { background: hsl(220 14% 17%) !important; }
+.bg-chrome-active { background: hsl(220 12% 21%) !important; }
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE BREAKPOINTS

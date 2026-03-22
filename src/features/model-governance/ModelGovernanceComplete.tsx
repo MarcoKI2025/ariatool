@@ -574,13 +574,13 @@ function EvaluationLimitsPanel() {
           { t: 'Self-Assessment Bias', s: 'This assessment relies on operator-reported inputs. Systematic under-reporting of delegation depth or oversight gaps will produce optimistic scores.' },
           { t: 'Behavioral Drift Is Not Auditable', s: 'Gradual shifts in what a system effectively prioritizes — while remaining behaviorally compliant — are not detectable by standard audits.' },
         ].map((item, i) => (
-          <div key={i} className="p-3 bg-secondary/30 rounded-lg text-[10px] text-muted-foreground leading-[1.5]">
+          <div key={i} className="p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground leading-[1.5]">
             <span className="text-fragile mr-1">⊘</span>
             <strong className="text-foreground">{item.t}</strong> — {item.s}
           </div>
         ))}
       </div>
-      <div className="p-3 border border-sensitive/30 rounded-lg bg-sensitive/5 text-[11px] text-muted-foreground leading-[1.6] italic">
+      <div className="p-3 border border-sensitive rounded-lg bg-sensitive-bg text-[11px] text-foreground leading-[1.6] italic">
         "Alignment is conditional, context-dependent, and frame-dependent. A system aligned under one set of conditions may not be aligned under another — and standard evaluation cannot establish when the boundary has been crossed." — AI Governance Architecture Framework (AGAF)
       </div>
     </div>
@@ -593,22 +593,29 @@ function EvaluationLimitsPanel() {
 
 function EpistemicLimitations() {
   const limitations = [
-    { title: "No external ground truth exists", text: "for AI governance fragility. AFI scores are structurally calibrated — not empirically verified against historical outcomes." },
-    { title: "Evaluation does not guarantee correctness.", text: "Compliance audits verify procedures — not that the system behaves correctly across all operational contexts." },
-    { title: "The interval between evaluations is ungoverned.", text: "This assessment reflects the moment of evaluation — not the current operational state if material changes have occurred." },
-    { title: "Performance ≠ authorisation for continued operation.", text: "Continued deployment requires explicit re-authorisation by decision — not by default performance evidence." },
+    { title: "This system operates without stable ground truth", text: "AFI scores are structurally calibrated — not empirically verified against historical outcomes." },
+    { title: "Evaluation does not guarantee correctness", text: "Compliance audits verify procedures — not that the system behaves correctly across all operational contexts." },
+    { title: "The interval between evaluations is ungoverned", text: "A system verified at t=0 may have undergone significant interpretive drift by t+6 months." },
+    { title: "Performance is not justification for continued operation", text: "Performance-based legitimacy is the primary mechanism by which governance oversight erodes." },
+    { title: "This assessment itself is subject to the limits it describes", text: "All derived scores are structural proxies. They correlate with governance fragility — they do not predict specific incidents." },
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
-      <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Epistemic Status · Governance Limits</div>
-      <div className="grid grid-cols-2 gap-3">
-        {limitations.map((lim, i) => (
-          <div key={i} className="text-[10px] text-secondary-foreground leading-[1.5] p-3 bg-secondary/30 rounded-lg">
-            <span className="text-fragile mr-1">⊘</span>
-            <strong className="text-foreground">{lim.title}</strong> {lim.text}
-          </div>
-        ))}
+    <div className="bg-dark-section border border-dark-section-border rounded-xl overflow-hidden mb-5">
+      <div className="p-6">
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-2">◈ Epistemic Status · What This Assessment Cannot Guarantee</div>
+        <div className="text-[18px] font-bold text-white mb-3">You Cannot Rely on This Evaluation</div>
+        <div className="text-[11px] text-dark-section-fg leading-[1.6] mb-5 max-w-[700px]">
+          This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment.
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {limitations.map((lim, i) => (
+            <div key={i} className="p-3 bg-chrome-hover border border-dark-section-border rounded-lg">
+              <div className="text-[11px] font-semibold text-sensitive/70 mb-1">{lim.title}</div>
+              <div className="text-[10px] text-dark-section-fg leading-[1.5]">{lim.text}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

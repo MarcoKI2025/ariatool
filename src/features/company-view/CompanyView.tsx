@@ -69,7 +69,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   // Risk Index (simplified)
   const afiNorm = Math.min(100, Math.round(afi / 3.0 * 100));
   const riskIdx = Math.round(afiNorm * 0.50 + 25 * 0.30 + 20 * 0.20); // simplified without full slider access
-  const riskColor = riskIdx >= 65 ? 'var(--red)' : riskIdx >= 40 ? 'var(--amb)' : 'var(--grn)';
+  const riskColor = riskIdx >= 65 ? 'hsl(4 72% 46%)' : riskIdx >= 40 ? 'hsl(32 90% 38%)' : 'hsl(152 55% 30%)';
   const riskLabel = riskIdx >= 65 ? 'High Risk' : riskIdx >= 40 ? 'Moderate Risk' : 'Low Risk';
   const riskSub = riskIdx >= 65 ? 'Immediate governance action required' : riskIdx >= 40 ? 'Governance improvements recommended' : 'Profile within acceptable parameters';
   const ringOffset = Math.round(226 - (riskIdx / 100) * 226);
