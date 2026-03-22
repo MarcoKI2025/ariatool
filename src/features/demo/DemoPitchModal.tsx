@@ -243,12 +243,12 @@ function Slide2() {
           { icon: '⟲', title: 'Behavioral Drift', color: '#9c6200', desc: 'The system shifts what it optimizes for — silently. Detectable by audit: No. Detectable by this engine: Yes.', metric: 'Silent', metricDesc: 'undetectable by standard audit' },
           { icon: '⊗', title: 'Responsibility Collapse', color: '#780840', desc: 'Deployer → provider → regulator. No single actor owns full accountability.', metric: 'Structural', metricDesc: 'accountability gap in AI liability' },
         ].map((r, i) => (
-          <div key={i} className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-4 flex flex-col">
+          <div key={i} className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4 flex flex-col">
             <div className="text-[22px] mb-2">{r.icon}</div>
             <div className="text-[11px] font-bold uppercase tracking-[0.06em] mb-[5px]" style={{ color: r.color }}>{r.title}</div>
-            <div className="text-[10px] text-[#686458] leading-[1.55] flex-1 mb-[10px]">{r.desc}</div>
+            <div className="text-[10px] text-[#b0aca0] leading-[1.55] flex-1 mb-[10px]">{r.desc}</div>
             <div className="font-mono text-[24px] font-bold" style={{ color: r.color }}>{r.metric}</div>
-            <div className="text-[9px] text-[#585650]">{r.metricDesc}</div>
+            <div className="text-[9px] text-[#a8a49c]">{r.metricDesc}</div>
           </div>
         ))}
       </div>
