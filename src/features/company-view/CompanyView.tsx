@@ -533,7 +533,7 @@ export function CompanyView() {
                 { icon: '🔗', cls: simDep >= 4 ? 'red' : simDep >= 3 ? 'amber' : 'green', action: 'Provider Dependency', sub: `${SIM_DEP_LABELS[simDep]} · Level ${simDep}/5`, neg: simDep >= 3 },
               ].map((r, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', background: 'hsl(var(--sf))', border: '1px solid hsl(var(--bd))', borderRadius: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0, background: r.cls === 'red' ? '#fde4e0' : r.cls === 'amber' ? '#fef5e6' : '#eaf6ee' }}>{r.icon}</div>
+                  <div style={{ width: 28, height: 28, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0, background: r.cls === 'red' ? 'hsl(var(--rb))' : r.cls === 'amber' ? 'hsl(var(--ab))' : 'hsl(var(--gb))' }}>{r.icon}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 11, fontWeight: 600, color: 'hsl(var(--tx))' }}>{r.action}</div>
                     <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>{r.sub}</div>
