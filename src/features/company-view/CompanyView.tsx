@@ -258,7 +258,7 @@ function StrategicInterpretation({ band, components }: { band: string; component
     <div className="mx-2 sm:mx-8 mt-6 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
       <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
-      <div className="grid grid-cols-[56px_1fr] gap-5 p-10 pt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-[56px_1fr] gap-3 sm:gap-5 p-4 sm:p-10 pt-6 sm:pt-8">
         <div className="text-3xl text-primary text-center pt-1">◈</div>
         <div>
           <div className="flex items-center justify-between mb-5">
