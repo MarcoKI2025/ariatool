@@ -150,6 +150,7 @@ export const AGENT_SLIDERS: SliderConfig[] = [
     name: 'Multi-Agent Orchestration',
     description: 'Number of AI agents coordinating in workflows',
     tooltip: 'Complexity of multi-agent coordination. 1 = Single AI model, no agent orchestration. 3 = 2-3 agents coordinating (e.g. research agent → writing agent). 5 = Complex agent swarms, 5+ agents with hierarchical orchestration. Each agent layer adds delegation depth and amplifies DR. Multi-agent failures cascade non-linearly.',
+    explainText: 'OpenAI Agents SDK, Anthropic tool-use chains, LangGraph, CrewAI, AutoGen and similar frameworks enable one AI to instruct another. Risk is non-linear: in a 5-agent chain, a 20% error rate per step compounds to an 80%+ failure probability at the output — but each step may appear valid in isolation. Standard underwriting frameworks have no mechanism to price this compounding.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Single Agent', 2: 'Dual Agents', 3: '3-4 Agents', 4: '5-7 Agents', 5: '8+ Agent Swarm' }
   },
@@ -160,6 +161,7 @@ export const AGENT_SLIDERS: SliderConfig[] = [
     name: 'Tool-Call Authority',
     description: 'Can AI agents call external APIs, databases, or services?',
     tooltip: 'Authority for AI to invoke external tools or APIs. 1 = No tool access, AI only processes text. 3 = Limited tool calls (read-only APIs, internal databases). 5 = Full tool authority: write to databases, send emails, execute code, financial APIs. Tool-calling agents create execution paths outside traditional oversight. Amplifies DR significantly.',
+    explainText: 'MCP (Model Context Protocol), OpenAI function calling, and similar frameworks allow agents to execute real actions: send emails, execute SQL, call payment APIs, write code, modify files. A tool-calling agent at level 4–5 can produce irreversible real-world consequences in milliseconds — far faster than any human governance mechanism can respond. This is qualitatively different from "automation level" — it is about consequence velocity.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'No Tools', 2: 'Read-Only', 3: 'Limited Write', 4: 'Broad Write', 5: 'Full Authority' }
   },
@@ -170,6 +172,7 @@ export const AGENT_SLIDERS: SliderConfig[] = [
     name: 'Persistent Memory',
     description: 'Does AI maintain state/memory across sessions?',
     tooltip: 'Whether AI retains context and state across interactions. 1 = Stateless, every interaction is independent. 3 = Session memory (context within single conversation). 5 = Long-term memory across sessions, learns from history, builds user profiles. Persistent memory creates proprietary lock-in (cannot migrate memory stores easily). Increases Reversibility Cost (RC).',
+    explainText: 'Persistent memory systems (OpenAI persistent threads, Claude\'s memory feature, LangChain vector stores, Mem0) accumulate context that shapes future agent behaviour without explicit human review. A governance decision logged in memory 6 months ago may be silently influencing today\'s agent actions — creating a semantic drift vector that no audit trail captures unless specifically designed to do so.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Stateless', 2: 'Session Only', 3: 'Short-Term', 4: 'Long-Term', 5: 'Permanent Profile' }
   },
@@ -180,6 +183,7 @@ export const AGENT_SLIDERS: SliderConfig[] = [
     name: 'Human Checkpoint Coverage',
     description: 'Percentage of AI workflows with mandatory human review',
     tooltip: 'What % of AI execution paths have human checkpoints. 1 = <20% coverage, most actions unchecked. 3 = 40-60% coverage, key decisions reviewed. 5 = >80% coverage, comprehensive checkpoint architecture. Higher checkpoint coverage constrains delegation, reducing DR. EU AI Act Art. 26 §2 requires human oversight for high-risk systems.',
+    explainText: 'For agentic systems, the question is not "is there oversight?" but "at which decision nodes does a human explicitly approve before action?" An agent that sends 1,000 routine emails autonomously but requires approval before any financial commitment has a very different risk profile than one that acts freely across all domains. Checkpoint coverage is the primary lever for reducing agent governance fragility.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: '<20% Coverage', 2: '20-40%', 3: '40-60%', 4: '60-80%', 5: '>80% Coverage' }
   },
