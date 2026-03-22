@@ -96,7 +96,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
   return (
-    <div className="mx-8 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
+    <div className="mx-2 sm:mx-8 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
       <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
       
