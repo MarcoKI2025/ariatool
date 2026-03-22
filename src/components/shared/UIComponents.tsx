@@ -34,7 +34,7 @@ export function InfoTip({ text }: InfoTipProps) {
       {show && (
         <div
           ref={boxRef}
-          className="fixed z-[9000] bg-[#111108] text-white text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-[#3a3828] pointer-events-none"
+          className="fixed z-[9000] bg-chrome text-white text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-chrome-border pointer-events-none"
           style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.35)' }}
         >
           {text}
@@ -194,7 +194,7 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
               {showTooltip && (
                 <div
                   ref={tooltipRef}
-                  className="fixed z-[9000] bg-[#111108] text-white text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-[#3a3828] pointer-events-none"
+                  className="fixed z-[9000] bg-chrome text-white text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-chrome-border pointer-events-none"
                   style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.35)' }}
                 >
                   {tooltip}
