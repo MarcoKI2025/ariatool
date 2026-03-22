@@ -173,7 +173,7 @@ export function ExposureAnalysis() {
         <div>
           {/* Company Profile */}
           <SectionCard title="Company Profile" icon="🏢" subtitle="Establish the entity and its AI deployment context for structural risk classification.">
-            <div className="grid grid-cols-2 gap-[14px] mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-3">
               <div>
                 <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Company Name</label>
                 <input
