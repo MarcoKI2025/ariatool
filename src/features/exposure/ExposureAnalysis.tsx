@@ -108,11 +108,11 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Demo profiles */}
-      <div className="rounded-xl p-[18px] px-5 mb-5 border border-chrome-border bg-chrome">
+      <div className="rounded-xl p-[18px] px-5 mb-5 border border-border bg-secondary">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <div className="text-[12px] font-bold text-chrome-fg-bright tracking-[0.01em]">⚡ New here? Start with a demo profile</div>
-            <div className="text-[10px] text-chrome-fg mt-[3px]">Click any scenario below to pre-fill all inputs instantly — then click "Generate AI Risk Assessment" to see the full analysis. Takes 10 seconds.</div>
+            <div className="text-[12px] font-bold text-foreground tracking-[0.01em]">⚡ New here? Start with a demo profile</div>
+            <div className="text-[10px] text-secondary-foreground mt-[3px]">Click any scenario below to pre-fill all inputs instantly — then click "Generate AI Risk Assessment" to see the full analysis. Takes 10 seconds.</div>
           </div>
         </div>
         <div className="grid grid-cols-5 gap-2">
@@ -120,11 +120,11 @@ export function ExposureAnalysis() {
             <button
               key={i}
               onClick={() => setInputs(applyDemoProfile(p))}
-              className="text-center p-3 rounded-[9px] border border-chrome-border bg-chrome-hover hover:bg-chrome-active hover:border-primary transition-all cursor-pointer flex flex-col items-center gap-1"
+              className="text-center p-3 rounded-[9px] border border-border bg-secondary-hover hover:bg-secondary-active hover:border-primary transition-all cursor-pointer flex flex-col items-center gap-1"
             >
-              <div className="text-[10px] font-bold text-chrome-fg-bright leading-[1.3] text-center mb-[2px]">{p.id}</div>
-              <div className="text-[10px] font-bold text-chrome-fg-bright leading-[1.3] text-center">{p.name}</div>
-              <div className="text-[9px] text-chrome-fg font-medium mt-[1px]">{p.industry}</div>
+              <div className="text-[10px] font-bold text-foreground leading-[1.3] text-center mb-[2px]">{p.id}</div>
+              <div className="text-[10px] font-bold text-foreground leading-[1.3] text-center">{p.name}</div>
+              <div className="text-[9px] text-secondary-foreground font-medium mt-[1px]">{p.industry}</div>
               <div className={`mt-[3px] text-[8px] font-bold uppercase tracking-[0.06em] px-[7px] py-[2px] rounded-[3px] ${
                 p.band === 'Fragile' ? 'badge-fragile' :
                 p.band === 'Sensitive' ? 'badge-sensitive' :
@@ -133,7 +133,7 @@ export function ExposureAnalysis() {
             </button>
           ))}
         </div>
-        <div className="mt-[10px] text-[10px] text-chrome-fg-muted italic">Each profile reflects a real-world AI deployment pattern with different risk characteristics. Adjust any slider after loading to explore scenarios.</div>
+        <div className="mt-[10px] text-[10px] text-muted-foreground italic">Each profile reflects a real-world AI deployment pattern with different risk characteristics. Adjust any slider after loading to explore scenarios.</div>
       </div>
 
       {/* Divider */}

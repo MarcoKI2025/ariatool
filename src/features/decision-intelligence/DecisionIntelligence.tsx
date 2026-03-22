@@ -35,9 +35,9 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO BOARD STATEMENT ═══ */}
-      <div className="bg-dark-section rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">
+      <div className="bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">
         <div className="w-1 h-1 rounded-full bg-fragile flex-shrink-0 mt-[7px] opacity-70" />
-        <div className="text-[13px] font-semibold text-white leading-[1.45]">
+        <div className="text-[13px] font-semibold text-foreground leading-[1.45]">
           {band === 'Fragile' ? 'This system creates structural AI risk that is not captured by compliance frameworks, point-in-time audits, or standard underwriting models — and that accumulates without a triggering incident.' :
            band === 'Sensitive' ? 'This system introduces moderate structural risk approaching underwriting tolerance. Conditional coverage available with mandatory governance improvement timeline.' :
            'This system operates within current governance tolerance. Standard monitoring cadence applies.'}
@@ -162,11 +162,11 @@ export function DecisionIntelligence() {
       <div className="flex items-center justify-between mb-4 p-3 bg-card border border-border rounded-xl">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[9px] text-muted-foreground font-bold tracking-[0.08em] uppercase mr-1">Required Action:</span>
-          <span className={`px-3 py-1 rounded text-[10px] font-bold text-white ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>
+          <span className={`px-3 py-1 rounded text-[10px] font-bold text-foreground ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>
             {band === 'Fragile' ? 'Insurable with Premium Loading' : band === 'Sensitive' ? 'Conditional Coverage' : 'Standard Terms'}
           </span>
-          {band !== 'Stable' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-white">Structural Remediation Required</span>}
-          {band === 'Fragile' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-white">Dependency Diversification Required</span>}
+          {band !== 'Stable' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-foreground">Structural Remediation Required</span>}
+          {band === 'Fragile' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-foreground">Dependency Diversification Required</span>}
         </div>
         <div className="flex gap-2">
           <button onClick={() => setActiveStep(4)} className="px-3 py-[6px] bg-secondary text-foreground border border-border rounded-lg text-[11px] font-semibold hover:bg-muted transition-colors">Insurance View →</button>
@@ -243,7 +243,7 @@ export function DecisionIntelligence() {
         <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
           band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
         }`}>
-          <span className="text-[11px] text-white font-bold">!</span>
+          <span className="text-[11px] text-foreground font-bold">!</span>
         </div>
         <div>
           <div className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground font-bold mb-[5px]">This Means</div>
@@ -259,47 +259,47 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ EXECUTIVE DECISION LAYER (gradient-top-bar, actions, classification badge, bottom pills) ═══ */}
-      <div className="bg-dark-section border border-dark-section-border rounded-xl mb-4 relative overflow-hidden">
+      <div className="bg-card border border-border rounded-xl mb-4 relative overflow-hidden">
         {/* Gradient top bar */}
         <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: 'linear-gradient(to right, #b53020, #c0392b, #4038b8)' }} />
         
         {/* Top section: judgment + classification badge */}
         <div className="p-[22px_28px_18px] grid grid-cols-[1fr_auto] gap-6 items-start">
           <div>
-            <div className="text-[9px] font-bold tracking-[0.13em] uppercase text-[#7068e0] mb-2 flex items-center gap-[6px]">
+            <div className="text-[9px] font-bold tracking-[0.13em] uppercase text-primary mb-2 flex items-center gap-[6px]">
               <div className="w-1 h-1 rounded-full bg-[#7068e0]" />
               Governance Assessment · Structured Risk Signal for Committee Review
               <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ Governance Signal</span>
             </div>
-            <div className="text-[16px] font-bold text-[#e8e4d8] leading-[1.35] mb-[10px] max-w-[560px]">
+            <div className="text-[16px] font-bold text-foreground leading-[1.35] mb-[10px] max-w-[560px]">
               {band === 'Fragile' ? <>This deployment exceeds underwriting tolerance — <span className="text-fragile">structural remediation is required</span> before standard coverage terms can apply.</> :
                band === 'Sensitive' ? <>This deployment approaches tolerance threshold — <span className="text-sensitive">conditional governance improvements required</span> within 90 days.</> :
                <>This deployment is within tolerance — <span className="text-stable">maintain current governance cadence</span> and re-assess at renewal.</>}
             </div>
-            <div className="text-[11px] text-[#a8a49c] leading-[1.6] max-w-[520px] mb-[14px]">
-              The Authority Fragility Index exceeds the threshold above which continuation risk, delegation density, and dependency lock-in create non-linear financial exposure. A system can be fully compliant with the EU AI Act and still create this exposure. Compliance measures intent — this model measures <strong className="text-[#c8c4b8]">structural cost</strong>.
+            <div className="text-[11px] text-muted-foreground leading-[1.6] max-w-[520px] mb-[14px]">
+              The Authority Fragility Index exceeds the threshold above which continuation risk, delegation density, and dependency lock-in create non-linear financial exposure. A system can be fully compliant with the EU AI Act and still create this exposure. Compliance measures intent — this model measures <strong className="text-foreground">structural cost</strong>.
             </div>
             {/* Action items */}
             <div className="flex flex-col gap-[7px]">
               {(band === 'Fragile' ? [
-                { cls: 'bg-[#1a0808] border-[#5a1810]', badge: 'Critical', badgeCls: 'bg-[#3a1010] text-[#ff8878] border border-[#5a2018]', t: 'Apply mandatory premium loading (150–180%)', s: 'Below this loading, reserves are structurally understated by 3–5×.' },
-                { cls: 'bg-[#1a0808] border-[#5a1810]', badge: 'Critical', badgeCls: 'bg-[#3a1010] text-[#ff8878] border border-[#5a2018]', t: 'Require dependency diversification within 90 days', s: `Current provider concentration creates single points of failure — correlated exposure ${amplificationFactor}.` },
-                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Condition', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Institute quarterly governance re-authorisation', s: 'Without re-authorisation cadence, structural risk accumulates without upper bound.' },
-                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Required', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Commission exit feasibility assessment', s: `ECI tier indicates institutional dependency — exit path must be documented before next renewal.` },
-                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Recommended', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Initiate cross-system cascade impact study', s: `Amplification factor ${amplificationFactor} suggests non-linear portfolio exposure. Reinsurance treaty review warranted.` },
+                { cls: 'bg-fragile-bg border-fragile-border', badge: 'Critical', badgeCls: 'bg-fragile-bg text-fragile border border-fragile-border', t: 'Apply mandatory premium loading (150–180%)', s: 'Below this loading, reserves are structurally understated by 3–5×.' },
+                { cls: 'bg-fragile-bg border-fragile-border', badge: 'Critical', badgeCls: 'bg-fragile-bg text-fragile border border-fragile-border', t: 'Require dependency diversification within 90 days', s: `Current provider concentration creates single points of failure — correlated exposure ${amplificationFactor}.` },
+                { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Condition', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Institute quarterly governance re-authorisation', s: 'Without re-authorisation cadence, structural risk accumulates without upper bound.' },
+                { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Required', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Commission exit feasibility assessment', s: `ECI tier indicates institutional dependency — exit path must be documented before next renewal.` },
+                { cls: 'bg-purple-bg border-purple-border', badge: 'Recommended', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Initiate cross-system cascade impact study', s: `Amplification factor ${amplificationFactor} suggests non-linear portfolio exposure. Reinsurance treaty review warranted.` },
               ] : band === 'Sensitive' ? [
-                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Required', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Increase governance review cadence to quarterly', s: 'Current oversight level is insufficient given dependency concentration trajectory.' },
-                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Required', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Document and test dependency exit paths', s: 'Reversibility cost is elevated — exit capability must be verified before it becomes operationally infeasible.' },
-                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Recommended', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Apply precautionary premium loading (80–120%)', s: 'Below Fragile threshold, but trajectory warrants proactive pricing adjustment.' },
+                { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Required', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Increase governance review cadence to quarterly', s: 'Current oversight level is insufficient given dependency concentration trajectory.' },
+                { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Required', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Document and test dependency exit paths', s: 'Reversibility cost is elevated — exit capability must be verified before it becomes operationally infeasible.' },
+                { cls: 'bg-purple-bg border-purple-border', badge: 'Recommended', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Apply precautionary premium loading (80–120%)', s: 'Below Fragile threshold, but trajectory warrants proactive pricing adjustment.' },
               ] : [
-                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Maintain', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Continue governance cadence — re-assess annually', s: 'Current profile is within tolerance. Structural changes require re-assessment.' },
-                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Monitor', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Monitor delegation density and dependency concentration', s: 'Key drift vectors to watch — both tend to increase silently over time.' },
+                { cls: 'bg-purple-bg border-purple-border', badge: 'Maintain', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Continue governance cadence — re-assess annually', s: 'Current profile is within tolerance. Structural changes require re-assessment.' },
+                { cls: 'bg-purple-bg border-purple-border', badge: 'Monitor', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Monitor delegation density and dependency concentration', s: 'Key drift vectors to watch — both tend to increase silently over time.' },
               ]).map((ac, i) => (
                 <div key={i} className={`flex items-start gap-[10px] p-[9px_12px] rounded-[7px] border ${ac.cls}`}>
                   <span className={`text-[8px] font-bold tracking-[0.07em] uppercase px-[7px] py-[2px] rounded-[3px] flex-shrink-0 mt-[1px] ${ac.badgeCls}`}>{ac.badge}</span>
                   <div>
-                    <div className="text-[11px] font-semibold text-[#c8c4b8] leading-[1.4]">{ac.t}</div>
-                    <div className="text-[10px] text-[#888478] mt-[2px] leading-[1.4]">{ac.s}</div>
+                    <div className="text-[11px] font-semibold text-foreground leading-[1.4]">{ac.t}</div>
+                    <div className="text-[10px] text-muted-foreground mt-[2px] leading-[1.4]">{ac.s}</div>
                   </div>
                 </div>
               ))}
@@ -307,23 +307,23 @@ export function DecisionIntelligence() {
           </div>
           {/* Risk Classification Badge */}
           <div className="text-right">
-            <div className="text-[8px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-[6px]">Risk Classification</div>
+            <div className="text-[8px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-[6px]">Risk Classification</div>
             <div className={`text-[22px] font-extrabold font-mono leading-none p-[10px_16px] rounded-lg inline-block tracking-tight border ${
-              band === 'Fragile' ? 'bg-[#1a0808] text-[#ff6b5b] border-[#5a1810]' :
-              band === 'Sensitive' ? 'bg-[#1a1200] text-[#ffc040] border-[#4a3400]' :
-              'bg-[#0e1e14] text-[#60d090] border-[#1a4a28]'
+              band === 'Fragile' ? 'bg-fragile-bg text-[#ff6b5b] border-fragile-border' :
+              band === 'Sensitive' ? 'bg-sensitive-bg text-sensitive border-sensitive-border' :
+              'bg-stable-bg text-stable border-stable-border'
             }`}>
               {band === 'Fragile' ? 'CRITICAL' : band === 'Sensitive' ? 'MODERATE' : 'LOW'}
             </div>
-            <div className="text-[9px] text-[#a8a49c] mt-[5px]">
+            <div className="text-[9px] text-muted-foreground mt-[5px]">
               {band === 'Fragile' ? 'Above tolerance' : band === 'Sensitive' ? 'Approaching threshold' : 'Within tolerance'}
             </div>
           </div>
         </div>
         
         {/* Bottom pills bar */}
-        <div className="px-7 py-3 border-t border-chrome-border bg-chrome flex items-center gap-4">
-          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-chrome-fg-muted flex-shrink-0">Structural Signals:</div>
+        <div className="px-7 py-3 border-t border-border bg-secondary flex items-center gap-4">
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground flex-shrink-0">Structural Signals:</div>
           {(() => {
             const drPct = Math.round(components.dr * 100);
             const rcPct = Math.round(components.rc * 100);
@@ -692,7 +692,7 @@ export function DecisionIntelligence() {
              'This assessment is no longer structurally valid. Governance findings from prior evaluations should not be assumed to hold. Re-evaluation is required immediately.'}
           </div>
           {rfsiTier === 'limited' && (
-            <div className="mt-[10px] p-[10px_14px] bg-[#1a0808] border border-[#5a1810] rounded-md text-[11px] text-[#d08070] leading-[1.5]">
+            <div className="mt-[10px] p-[10px_14px] bg-fragile-bg border border-fragile-border rounded-md text-[11px] text-[#d08070] leading-[1.5]">
               ⚠ <strong>This governance assessment may no longer be valid under current operational conditions.</strong> The deployment context has shifted significantly from the conditions under which this system was assessed.
             </div>
           )}
@@ -721,7 +721,7 @@ export function DecisionIntelligence() {
                     alert.sev === 'critical' ? 'bg-fragile-bg' : alert.sev === 'high' ? 'bg-sensitive-bg' : 'bg-secondary'
                   }`}>
                     <span className={`text-[9px] font-bold tracking-wider uppercase px-[7px] py-[2px] rounded ${
-                      alert.sev === 'critical' ? 'bg-fragile text-white' : alert.sev === 'high' ? 'bg-sensitive text-white' : 'bg-muted text-muted-foreground'
+                      alert.sev === 'critical' ? 'bg-fragile text-foreground' : alert.sev === 'high' ? 'bg-sensitive text-foreground' : 'bg-muted text-muted-foreground'
                     }`}>{alert.sev}</span>
                     <span className="text-[12px] font-bold text-foreground">{alert.title}</span>
                   </div>
@@ -762,37 +762,37 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ FRAMEWORK LIMITATIONS DISCLAIMER ═══ */}
-      <div className="p-[14px_18px] bg-chrome border-2 border-chrome-border rounded-[10px] mb-4">
+      <div className="p-[14px_18px] bg-secondary border-2 border-border rounded-[10px] mb-4">
         <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-sensitive mb-[6px]">⚠ FRAMEWORK LIMITATIONS — READ BEFORE USE</div>
-        <div className="text-[11px] text-chrome-fg leading-[1.6]">
-          This is an <strong className="text-chrome-fg-bright">internal structuring and simulation tool</strong>. NOT actuarially certified. NOT a regulatory submission. NOT legal or compliance advice.
+        <div className="text-[11px] text-secondary-foreground leading-[1.6]">
+          This is an <strong className="text-foreground">internal structuring and simulation tool</strong>. NOT actuarially certified. NOT a regulatory submission. NOT legal or compliance advice.
           <br /><br />
-          <strong className="text-chrome-fg-bright">DO NOT use for:</strong> Binding capital allocation · Treaty structuring · Regulatory filing · Insurance pricing decisions · Legal compliance certification
+          <strong className="text-foreground">DO NOT use for:</strong> Binding capital allocation · Treaty structuring · Regulatory filing · Insurance pricing decisions · Legal compliance certification
           <br /><br />
-          <strong className="text-chrome-fg-bright">Use ONLY with:</strong> Independent actuarial validation · Legal counsel review · Regulatory compliance assessment · Professional risk management advice
+          <strong className="text-foreground">Use ONLY with:</strong> Independent actuarial validation · Legal counsel review · Regulatory compliance assessment · Professional risk management advice
         </div>
       </div>
 
       {/* ═══ RESEARCH FOUNDATION (dark panel) ═══ */}
-      <div className="flex items-stretch bg-chrome rounded-[10px] overflow-hidden mb-5">
+      <div className="flex items-stretch bg-secondary border border-border rounded-[10px] overflow-hidden mb-5">
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px] px-[18px]">
-          <div className="text-[9px] tracking-wider uppercase text-chrome-fg-muted font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
+          <div className="text-[9px] tracking-wider uppercase text-muted-foreground font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
           <div className="grid grid-cols-3 gap-[14px]">
             <div>
               <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper I · EU AI Act Blind Spots</div>
-              <div className="text-[10px] text-chrome-fg leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-chrome-fg-bright">continuation</em>. Systems persist without re-authorisation.</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-foreground">continuation</em>. Systems persist without re-authorisation.</div>
             </div>
             <div>
               <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper II · Price of Convenience</div>
-              <div className="text-[10px] text-chrome-fg leading-[1.5]">Agentic AI erodes oversight without malice — through <em className="text-chrome-fg-bright">delegation density</em> and oversight decay.</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">Agentic AI erodes oversight without malice — through <em className="text-foreground">delegation density</em> and oversight decay.</div>
             </div>
             <div>
               <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper III · Governing Continuation</div>
-              <div className="text-[10px] text-chrome-fg leading-[1.5]">Evaluation cannot authorise existence. Once ECI-2 is reached, <em className="text-chrome-fg-bright">performance ≠ permission</em>.</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">Evaluation cannot authorise existence. Once ECI-2 is reached, <em className="text-foreground">performance ≠ permission</em>.</div>
             </div>
           </div>
-          <div className="mt-[10px] pt-2 border-t border-chrome-border text-[10px] text-chrome-fg-muted">AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. <span className="text-chrome-fg">Buyers who adopt this framework now are 3 years ahead of enforcement.</span></div>
+          <div className="mt-[10px] pt-2 border-t border-border text-[10px] text-muted-foreground">AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. <span className="text-secondary-foreground">Buyers who adopt this framework now are 3 years ahead of enforcement.</span></div>
         </div>
       </div>
 
@@ -834,10 +834,10 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ EPISTEMIC STATUS ═══ */}
-      <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Epistemic Status · What This Assessment Cannot Guarantee</div>
-        <div className="text-[18px] font-bold text-white mb-3">You Cannot Rely on This Evaluation</div>
-        <div className="text-[11px] text-dark-section-fg leading-[1.6] mb-5">
+        <div className="text-[18px] font-bold text-foreground mb-3">You Cannot Rely on This Evaluation</div>
+        <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-5">
           This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment — including this one. Decisions made without acknowledging these constraints are decisions made on false confidence.
         </div>
 
@@ -849,14 +849,14 @@ export function DecisionIntelligence() {
             { title: 'Performance is not justification for continued operation', body: 'A system that works is not a system that has been authorised to continue. Performance-based legitimacy is the primary mechanism by which governance oversight erodes.' },
             { title: 'This assessment itself is subject to the limits it describes', body: 'The AFI, SES, ERS, and all derived scores in this tool are structural proxies, not empirical measurements. They correlate with governance fragility — they do not cause or predict specific incidents.' },
           ].map((item, i) => (
-            <div key={i} className="p-4 bg-dark-section-border/50 border border-dark-section-border rounded-lg">
+            <div key={i} className="p-4 bg-secondary border border-border rounded-lg">
               <div className="text-[12px] font-bold text-sensitive mb-1">{item.title}</div>
-              <div className="text-[11px] text-dark-section-fg leading-[1.55]">{item.body}</div>
+              <div className="text-[11px] text-secondary-foreground leading-[1.55]">{item.body}</div>
             </div>
           ))}
         </div>
 
-        <div className="mt-4 p-4 border border-sensitive/30 rounded-lg bg-sensitive/5 text-[11px] text-dark-section-fg leading-[1.6] italic">
+        <div className="mt-4 p-4 border border-sensitive/30 rounded-lg bg-sensitive/5 text-[11px] text-secondary-foreground leading-[1.6] italic">
           "Alignment is conditional, context-dependent, and frame-dependent. A system aligned under one set of conditions may not be aligned under another — and no evaluation can establish when the boundary has been crossed. The only safe posture is to treat alignment as provisional, re-authorisation as mandatory, and epistemic humility as an operational requirement." — AI Governance Architecture Framework (AGAF), programme research.
         </div>
       </div>
