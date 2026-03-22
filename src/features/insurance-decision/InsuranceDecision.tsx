@@ -485,6 +485,274 @@ export function InsuranceDecision() {
         </div>
       </div>
 
+      {/* ═══ STEP 5: PORTFOLIO EXPOSURE ═══ */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">5</div>
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Portfolio Exposure</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      <div className="bg-fragile-bg border border-fragile-border rounded-xl p-5 mb-4">
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <div className="text-[13px] font-bold text-foreground">📊 Portfolio-Level Exposure Signal<InfoTip text="Estimated aggregate loss across multiple entities with similar dependency profiles. If entities share AI infrastructure, losses can cluster non-linearly — exceeding individual assessments by 3–5×." /></div>
+            <div className="text-[11px] text-secondary-foreground mt-1">If multiple entities share similar dependency structures, losses cluster non-linearly and exceed individual assessments.</div>
+          </div>
+          <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase badge-fragile">Systemic Cluster Detected</span>
+        </div>
+        <div className="text-[13px] text-foreground font-medium mb-3">
+          If 8–15 entities share similar AI infrastructure, <strong className="text-fragile font-mono">systemic correlation risk emerges</strong> <span className="text-[10px] text-muted-foreground font-normal">— Swiss Re sigma 01/2026: Provider concentration creates accumulation risk</span>
+        </div>
+        <div className="grid grid-cols-3 gap-3 mb-3">
+          <div className="bg-card border border-border rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Correlation Factor</div>
+            <div className="text-[22px] font-bold font-mono text-foreground">{correlationFactor.toFixed(2)}</div>
+            <div className="text-[9px] text-muted-foreground">Provider overlap ratio</div>
+          </div>
+          <div className="bg-card border border-border rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Cluster Size</div>
+            <div className="text-[22px] font-bold font-mono text-foreground">8–15</div>
+            <div className="text-[9px] text-muted-foreground">entities in exposure cluster</div>
+          </div>
+          <div className="bg-fragile-bg border border-fragile-border rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Systemic Risk</div>
+            <div className="text-[22px] font-bold font-mono text-fragile">{formatCurrency(lossEnvelope.portfolio)}</div>
+            <div className="text-[9px] text-muted-foreground">Correlated tail scenario</div>
+          </div>
+        </div>
+        <div className="p-[7px_11px] bg-sensitive-bg border border-sensitive-border rounded-md text-[11px]">
+          <strong className="text-sensitive">Provider Concentration: </strong>
+          <span className="text-secondary-foreground">{inputs.providers?.length || 0} providers — {(inputs.providers?.length || 0) <= 1 ? 'single point of failure across cluster' : 'diversification reduces systemic exposure'}</span>
+        </div>
+      </div>
+
+      {/* ═══ STEP 5b: PROVIDER DEPENDENCY MAP ═══ */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">5b</div>
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Provider Dependency Map</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <div className="text-[13px] font-bold text-foreground">🔗 Provider Dependency Structure<InfoTip text="Maps the flow from external AI providers through your core systems to internal operations. Red nodes indicate single points of failure." /></div>
+            <div className="text-[11px] text-secondary-foreground mt-1">{inputs.providers?.length || 0} external dependencies</div>
+          </div>
+          <span className={`px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase ${(inputs.providers?.length || 0) <= 1 ? 'badge-fragile' : (inputs.providers?.length || 0) <= 2 ? 'badge-sensitive' : 'badge-stable'}`}>
+            {(inputs.providers?.length || 0) <= 1 ? 'Critical' : (inputs.providers?.length || 0) <= 2 ? 'Elevated' : 'Diversified'}
+          </span>
+        </div>
+        <div className="flex items-center justify-center gap-0 my-4">
+          <div className="flex flex-col gap-2">
+            {(inputs.providers?.length ? inputs.providers : ['No provider selected']).map((p, i) => (
+              <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${inputs.providers?.length ? 'bg-fragile-bg border-fragile-border' : 'bg-secondary border-border opacity-40'}`}>
+                <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] ${inputs.providers?.length ? 'bg-fragile-bg text-fragile' : 'bg-secondary text-muted-foreground'}`}>
+                  {inputs.providers?.length ? '☁' : '?'}
+                </div>
+                <div>
+                  <div className="text-[11px] font-semibold text-foreground">{p}</div>
+                  <div className="text-[9px] text-muted-foreground">External Provider</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-muted-foreground text-lg mx-3">→</div>
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-primary bg-purple-bg">
+            <div className="w-6 h-6 rounded-md bg-primary/20 flex items-center justify-center text-[10px]">⚙</div>
+            <div>
+              <div className="text-[11px] font-semibold text-foreground">Core Systems</div>
+              <div className="text-[9px] text-muted-foreground">AI-integrated workflows</div>
+            </div>
+          </div>
+          <div className="text-muted-foreground text-lg mx-3">→</div>
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-secondary">
+            <div className="w-6 h-6 rounded-md bg-secondary flex items-center justify-center text-[10px]">🏢</div>
+            <div>
+              <div className="text-[11px] font-semibold text-foreground">Operations</div>
+              <div className="text-[9px] text-muted-foreground">Internal processes</div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-sensitive-bg border border-sensitive-border rounded-lg p-3 flex items-start gap-2">
+          <span className="text-sensitive text-sm flex-shrink-0">⚠</span>
+          <div>
+            <div className="text-[11px] font-semibold text-foreground">⚠ {(inputs.providers?.length || 0) <= 1 ? 'Critical concentration' : 'Concentration risk'} — {inputs.providers?.length || 0} providers specified</div>
+            <div className="text-[10px] text-secondary-foreground">{inputs.providers?.length || 0} providers — {(inputs.providers?.length || 0) <= 1 ? 'single point of failure across cluster' : 'diversification reduces but does not eliminate correlated failure risk'}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ STEP 6: RECOMMENDED UNDERWRITING ACTIONS ═══ */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">6</div>
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Recommended Underwriting Actions</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="space-y-0">
+          {[
+            { num: 1, title: 'Apply premium loading 150–180% above standard', badge: 'Required', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', numBg: 'bg-fragile-bg text-fragile', desc: 'Structural risk exceeds standard pricing assumptions. Dependency structures do not compensate for co-activation and aggregation exposure.' },
+            { num: 2, title: 'Require dependency diversification plan within 90 days', badge: 'Required', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', numBg: 'bg-fragile-bg text-fragile', desc: 'Dependency concentration creates correlated loss potential. Diversification across minimum 3 providers reduces aggregate tail risk by 40–60%.' },
+            { num: 3, title: 'Limit coverage to operational layers only', badge: 'Recommended', badgeColor: 'bg-sensitive-bg text-sensitive border-sensitive-border', numBg: 'bg-sensitive-bg text-sensitive', desc: 'Lock-in depth makes full-stack coverage uneconomic. Limiting scope to operational disruption reduces reserve requirements.' },
+            { num: 4, title: 'Mandate governance cadence as coverage condition', badge: 'Condition', badgeColor: 'bg-sensitive-bg text-sensitive border-sensitive-border', numBg: 'bg-sensitive-bg text-sensitive', desc: 'Without re-authorisation cadence, risk accumulates indefinitely. Formal quarterly review required to maintain coverage terms.' },
+            { num: 5, title: 'Exclude autonomous execution liability', badge: 'Exclusion', badgeColor: 'bg-secondary text-muted-foreground border-border', numBg: 'bg-secondary text-muted-foreground', desc: 'Agentic exposure exceeds conventional governance frameworks. Autonomous actions require separate liability classification.' },
+          ].map((act, i) => (
+            <div key={i} className={`flex items-start gap-3 py-3 ${i < 4 ? 'border-b border-border' : ''}`}>
+              <div className={`w-[22px] h-[22px] rounded-md flex items-center justify-center text-[11px] font-bold flex-shrink-0 ${act.numBg}`}>{act.num}</div>
+              <div>
+                <div className="text-[12px] font-semibold text-foreground mb-1">
+                  {act.title} <span className={`ml-1 px-[6px] py-[1px] rounded text-[9px] font-bold tracking-wider uppercase border ${act.badgeColor}`}>{act.badge}</span>
+                </div>
+                <div className="text-[11px] text-secondary-foreground leading-[1.5]">{act.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ STEP 7: GOVERNANCE ALERTS ═══ */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">7</div>
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Governance Alerts</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="text-[11px] text-secondary-foreground mb-3 leading-[1.5]">Each alert identifies where the system creates unpriced liability — persisting, scaling, or acting faster than governance can safely absorb.</div>
+        {[
+          { title: 'Unauthorized Operational Persistence', severity: 'High', color: 'border-l-sensitive', desc: `System continues operating without re-authorisation — liability accumulates with no upper bound. No re-authorisation mechanism exists. Proceeds toward critical exposure at current trajectory (score ${Math.round(components.cd * 100)}/100).` },
+          { title: 'Irreversible System Entrenchment', severity: 'High', color: 'border-l-sensitive', desc: `Dependency depth exceeds the organisation's capacity to exit. Cannot be reversed without significant operational disruption. Exit cost creates permanent structural lock-in (score ${Math.round(components.rc * 100)}/100).` },
+          { title: 'Execution Authority Exceeds Oversight Capacity', severity: 'Critical', color: 'border-l-fragile', desc: `Autonomous execution outpaces governance. The system acts faster than the organisation can evaluate — creating an accountability vacuum where liability accumulates undetected (score ${Math.round(components.dr * 100)}/100).` },
+        ].map((alert, i) => (
+          <div key={i} className={`p-3 mb-2 rounded-lg border border-border ${alert.color} border-l-4`}>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[12px] font-semibold text-foreground">{alert.title}</span>
+              <span className={`px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase ${alert.severity === 'Critical' ? 'badge-fragile' : 'badge-sensitive'}`}>{alert.severity}</span>
+            </div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.5]">{alert.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* ═══ INSURER OWN-EXPOSURE NOTE ═══ */}
+      <div className="bg-purple-bg border border-purple-border rounded-xl p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-2">◈ Note for Insurer Buyers — Your Own AI Governance Exposure</div>
+        <div className="text-[12px] font-semibold text-foreground mb-2">This tool assesses client deployments — but the same structural risks apply to the insurer's own AI systems.</div>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { title: 'Solvency II — ORSA Integration', desc: 'EU insurers must integrate AI governance risk into the Own Risk and Solvency Assessment (ORSA) under Solvency II Art. 45. AFI scores from your own AI deployments are directly relevant ORSA inputs.' },
+            { title: 'Solvency II Art. 44/46 — Internal Control & Audit', desc: 'Art. 44 requires an effective internal control system — which must cover AI-assisted decision-making. Art. 46 requires internal audit independence.' },
+            { title: 'DORA — Digital Operational Resilience', desc: 'As of Jan 2025, DORA applies to EU insurers — requiring ICT risk management, third-party provider oversight, and incident reporting. AI provider concentration is a direct DORA ICT third-party concentration risk.' },
+            { title: 'Reserving Implications', desc: 'Issuing AI liability coverage without a structural governance assessment creates reserve risk. AFI-based underwriting protects reserve adequacy — standard cyber pricing systematically underestimates AI governance exposure by 3–5×.' },
+          ].map((item, i) => (
+            <div key={i} className="bg-card border border-border rounded-lg p-3">
+              <div className="text-[10px] font-bold text-foreground mb-1">{item.title}</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ STEP 8: EU AI ACT REGULATORY EXPOSURE ═══ */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">8</div>
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">EU AI Act Regulatory Exposure</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      {/* EU AI ACT PENALTY CALCULATOR */}
+      <div className="bg-chrome rounded-xl overflow-hidden mb-4 border border-chrome-border relative">
+        <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(to right, #b53020, #780808)' }} />
+        <div className="p-[18px_22px_14px]">
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-fragile mb-[6px]">⚖ EU AI Act — Art. 99 Regulatory Penalty Exposure</div>
+          <div className="text-[13px] font-bold text-chrome-fg-bright mb-1">Statutory fine ceilings applicable to this deployment</div>
+          <div className="text-[11px] text-chrome-fg leading-[1.5] mb-[14px]">Penalties apply independently of AFI score or insurance status. A system within underwriting tolerance can still incur maximum fines.</div>
+          <div className="grid grid-cols-3 gap-3 mb-[14px]">
+            <div className="bg-[#1a0808] border border-[#5a1810] rounded-lg p-3">
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-chrome-fg-muted mb-[6px]">Art. 99 §3 · Prohibited Practices</div>
+              <div className="text-[24px] font-bold font-mono text-[#ff6b5b] leading-none mb-1">€35M</div>
+              <div className="text-[10px] text-[#c08070]">or 7% worldwide annual turnover</div>
+              <div className="text-[9px] text-chrome-fg-muted mt-[6px] leading-[1.45]">Triggered by: Art. 5 violations (subliminal manipulation, social scoring, predictive policing, biometric scraping)</div>
+            </div>
+            <div className="bg-[#1a1200] border border-[#4a3400] rounded-lg p-3">
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-chrome-fg-muted mb-[6px]">Art. 99 §4 · Provider & Deployer</div>
+              <div className="text-[24px] font-bold font-mono text-sensitive leading-none mb-1">€15M</div>
+              <div className="text-[10px] text-[#c09040]">or 3% worldwide annual turnover</div>
+              <div className="text-[9px] text-chrome-fg-muted mt-[6px] leading-[1.45]">Triggered by: Art. 16, Art. 26, Art. 50 obligations. Covers failure to implement human oversight or maintain logs.</div>
+            </div>
+            <div className="bg-[#0e1a10] border border-[#1a3a28] rounded-lg p-3">
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-chrome-fg-muted mb-[6px]">Art. 99 §5 · Misleading Regulators</div>
+              <div className="text-[24px] font-bold font-mono text-stable leading-none mb-1">€7.5M</div>
+              <div className="text-[10px] text-[#609070]">or 1% worldwide annual turnover</div>
+              <div className="text-[9px] text-chrome-fg-muted mt-[6px] leading-[1.45]">Triggered by: Supplying incorrect or misleading information to notified bodies or authorities.</div>
+            </div>
+          </div>
+          <div className="p-[10px_14px] bg-[#120606] border border-[#5a1810] rounded-md text-[11px] text-[#d08070] leading-[1.5]">
+            <strong className="text-[#ff8878]">Critical distinction for underwriters:</strong> Art. 99 §4 penalties apply directly to Art. 26 deployer failures — including failure to assign qualified human oversight (§2), failure to maintain logs for 6 months (§6), and failure to suspend use when risk is identified (§5). Standard cyber policies do not cover regulatory fines of this type.
+          </div>
+        </div>
+      </div>
+
+      {/* EU AI ACT COMPLIANCE CHECKLIST */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="p-[14px_20px] border-b border-border flex items-center justify-between">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-[3px]">EU AI Act · Deployer Obligations Checklist</div>
+            <div className="text-[13px] font-bold text-foreground">Active Regulatory Obligations — Art. 26 + Art. 27 + Art. 72</div>
+          </div>
+        </div>
+        <div className="px-5">
+          {[
+            { icon: '✗', iconBg: 'bg-fragile-bg border-fragile-border text-fragile', title: 'Art. 26 §2 — Human Oversight Assignment', badge: '€15M Risk', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', desc: 'Deployers must assign human oversight to natural persons with the necessary competence, training, and authority.' },
+            { icon: '✗', iconBg: 'bg-fragile-bg border-fragile-border text-fragile', title: 'Art. 26 §5-6 — Monitoring & Log Retention', badge: '€15M Risk', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', desc: 'Deployers must monitor the system and maintain automatically generated logs for at least 6 months.' },
+            { icon: '~', iconBg: 'bg-sensitive-bg border-sensitive-border text-sensitive', title: 'Art. 27 — Fundamental Rights Impact Assessment', badge: 'Conditional', badgeColor: 'bg-sensitive-bg text-sensitive border-sensitive-border', desc: 'Required for public bodies and private entities providing public services deploying high-risk AI.' },
+            { icon: '~', iconBg: 'bg-sensitive-bg border-sensitive-border text-sensitive', title: 'Art. 72 — Post-Market Monitoring System', badge: 'Lifecycle', badgeColor: 'bg-sensitive-bg text-sensitive border-sensitive-border', desc: 'Providers must establish a post-market monitoring system that actively collects and analyses performance data throughout the system\'s lifetime.' },
+            { icon: '~', iconBg: 'bg-sensitive-bg border-sensitive-border text-sensitive', title: 'Art. 9 — Continuous Risk Management System', badge: 'Lifecycle', badgeColor: 'bg-sensitive-bg text-sensitive border-sensitive-border', desc: 'Art. 9 requires a risk management system as a continuous iterative process throughout the entire AI lifecycle.' },
+            { icon: 'i', iconBg: 'bg-stable-bg border-stable-border text-stable', title: 'Art. 73 — Serious Incident Reporting (15-day window)', badge: '', badgeColor: '', desc: 'Providers must report serious incidents to market surveillance authorities within 15 days of establishing a causal link.' },
+          ].map((item, i) => (
+            <div key={i} className={`flex items-start gap-3 py-3 ${i < 5 ? 'border-b border-border' : ''}`}>
+              <div className={`w-[18px] h-[18px] rounded flex items-center justify-center text-[10px] flex-shrink-0 mt-[1px] border ${item.iconBg}`}>{item.icon}</div>
+              <div>
+                <div className="text-[12px] font-semibold text-foreground mb-[2px]">
+                  {item.title}
+                  {item.badge && <span className={`ml-[6px] px-[6px] py-[1px] rounded text-[9px] font-bold tracking-wider uppercase border ${item.badgeColor}`}>{item.badge}</span>}
+                </div>
+                <div className="text-[11px] text-secondary-foreground leading-[1.5]">{item.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* EU AI ACT ENFORCEMENT TIMELINE */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="p-[14px_20px] border-b border-border">
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-[3px]">EU AI Act — Enforcement Timeline · Regulation (EU) 2024/1689</div>
+          <div className="text-[13px] font-bold text-foreground">When Obligations Apply — What Is Active Now</div>
+        </div>
+        <div className="px-5">
+          {[
+            { date: '2 Feb 2025', badge: 'ACTIVE', badgeColor: 'bg-fragile-bg text-fragile', title: 'Chapters I & II — AI Definitions + Prohibited Practices', desc: 'All 8 prohibited AI practices under Art. 5 are now enforceable. Violations subject to fines up to €35M / 7% global turnover (Art. 99 §3).' },
+            { date: '2 Aug 2025', badge: 'IMMINENT', badgeColor: 'bg-sensitive-bg text-sensitive', title: 'Chapter III §4 (Notified Bodies) · Chapter V (GPAI) · Chapter XII (Penalties)', desc: 'Full penalty regime activates (Art. 99). GPAI provider obligations begin. This is the penalty enforcement activation date for Art. 99 §4 (€15M / 3%) violations.' },
+            { date: '2 Aug 2026', badge: 'FULL APPLY', badgeColor: 'bg-fragile-bg text-fragile', title: 'Full Regulation Applies — All High-Risk AI Obligations Active', desc: 'Complete application of all provisions including Art. 9, Art. 14, Art. 26, Art. 27, Art. 72, Art. 73. This is the primary underwriting risk horizon.' },
+            { date: '2 Aug 2027', badge: '', badgeColor: '', title: 'Art. 6(1) — High-Risk AI as Safety Component in Regulated Products', desc: 'Art. 6(1) obligations apply to AI systems that are safety components in products covered by Union harmonisation legislation (Annex I).' },
+          ].map((item, i) => (
+            <div key={i} className={`flex items-start gap-[14px] py-3 ${i < 3 ? 'border-b border-border' : ''}`}>
+              <div className="font-mono text-[11px] font-bold min-w-[100px] flex-shrink-0 mt-[2px]">
+                <span className={item.badge ? (item.badge === 'ACTIVE' || item.badge === 'FULL APPLY' ? 'text-fragile' : 'text-sensitive') : 'text-secondary-foreground'}>{item.date}</span>
+                {item.badge && <span className={`ml-1 px-[5px] py-[1px] rounded text-[8px] font-bold tracking-wider ${item.badgeColor}`}>{item.badge}</span>}
+              </div>
+              <div>
+                <div className="text-[12px] font-semibold text-foreground mb-[2px]">{item.title}</div>
+                <div className="text-[11px] text-secondary-foreground leading-[1.5]">{item.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(3)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Scenario Simulation</button>

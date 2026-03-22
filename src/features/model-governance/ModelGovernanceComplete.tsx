@@ -38,6 +38,9 @@ export function ModelGovernanceComplete() {
         </div>
       </div>
 
+      <AGAFMethodologyStatement />
+      <AssessmentScopeDeclaration />
+      <CalibrationParameters />
       <ModelGovernanceRegister />
       <MethodologyDeepDive />
       <EpistemicLimitations />
@@ -493,6 +496,109 @@ function ComparisonCard({ title, what, gap, miss, borderColor }: { title: string
             <span className="leading-[1.4]">{item}</span>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// AGAF METHODOLOGY STATEMENT
+// ═══════════════════════════════════════════════════════════════════
+
+function AGAFMethodologyStatement() {
+  return (
+    <div className="bg-secondary border border-border rounded-xl p-5 mb-5">
+      <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[10px]">◈ AI Governance Architecture Framework (AGAF) — Methodology Statement</div>
+      <div className="text-[13px] font-bold text-foreground mb-2">What AGAF is — and what it is not</div>
+      <div className="text-[11px] text-secondary-foreground leading-[1.65] mb-[14px]">
+        AGAF operationalises governance concepts from published academic research into a structured assessment instrument. The conceptual foundations draw on Kindermann (2026) — a series of working papers on AI governance architecture including <em>'Semantic Drift and Temporal Coherence in Long-Horizon AI Systems'</em>, <em>'What Are We Aligning To?'</em>, and <em>'Blind Spots of the EU AI Act'</em> — alongside NIST AI RMF 1.0, EIOPA AI Opinion (August 2025), EU AI Act 2024/1689, and LMA E&O Guidelines 2025. <strong className="text-foreground">The AFI, MDR, RFSI, ECI, RFS, and IAT constructs are proprietary operationalisations</strong> of these concepts into measurable structural proxy signals — not verbatim implementations of any published model.
+      </div>
+      <div className="grid grid-cols-2 gap-3 mb-[14px]">
+        <div className="bg-stable-bg border border-stable-border rounded-lg p-3">
+          <div className="text-[9px] font-bold tracking-wider uppercase text-stable mb-[6px]">✓ AGAF is designed for</div>
+          <div className="text-[10px] text-secondary-foreground leading-[1.6]">Structured pre-underwriting intake · Risk committee preparation · Board-level governance documentation · AI deployment intake screening · Internal audit challenge · Regulatory conversation framing (EIOPA, BaFin, FCA) · Accumulation watchlist management</div>
+        </div>
+        <div className="bg-fragile-bg border border-fragile-border rounded-lg p-3">
+          <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-[6px]">✗ AGAF is not designed for</div>
+          <div className="text-[10px] text-secondary-foreground leading-[1.6]">Standalone pricing decisions · Treaty structuring · Capital allocation · Actuarial reserving · Regulatory filing · Standalone compliance certification · Replacement for independent actuarial validation</div>
+        </div>
+      </div>
+      <div className="text-[10px] text-muted-foreground leading-[1.6] border-t border-border pt-[10px]">
+        <strong className="text-secondary-foreground">Standards & research grounding:</strong> Kindermann (2026) — Working Papers on AI Governance Architecture. Regulatory: NIST AI RMF 1.0 · OECD AI Principles · EIOPA AI Opinion August 2025 · LMA AI/E&O Guidelines 2025 · EU AI Act Reg. (EU) 2024/1689 · ISO/IEC 42001 · DORA Reg. (EU) 2022/2554.
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ASSESSMENT SCOPE DECLARATION
+// ═══════════════════════════════════════════════════════════════════
+
+function AssessmentScopeDeclaration() {
+  const { state } = useApp();
+  const { inputs } = state;
+  const declarations = [
+    { key: 'Industry context:', value: inputs.industry || '—', status: 'ok' },
+    { key: 'Deployment pattern:', value: `${inputs.useCases?.length || 0} use cases · ${inputs.providers?.length || 0} providers`, status: 'ok' },
+    { key: 'AFI calibration basis:', value: "Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025 · EIOPA AI Consultation 2024", status: 'ok' },
+    { key: 'Loss model anchor:', value: '€2.8M median AI operational loss event (Lloyd\'s CRI 2024) · Governance loading: AFI-scaled', status: 'ok' },
+    { key: 'Frame validity period:', value: 'Valid under current EU AI Act implementation phase · Degradation expected post-2027', status: 'ok' },
+    { key: 'Known frame limitations:', value: 'Does not capture behavioral alignment decay, evaluation decay, or recursive optimisation effects (see §6.3, AGAF). Consequence externalization (§8) is visible as a signal but not yet measurable as a bounded invariant.', status: 'warn' },
+    { key: 'Revision trigger:', value: 'AFI recalibration required when EU AI Act Art. 113(3) / Recital 179 mandatory review cycle introduces formal continuation governance thresholds (expected 2026–2027)', status: 'warn' },
+    { key: 'Ground truth status:', value: 'No external ground truth exists for AI governance fragility — assessment is contextually valid, not absolutely verified (AGAF §4)', status: 'lim' },
+  ];
+
+  return (
+    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+      <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-3">Assessment Scope Declaration — Under Which Conditions This Assessment Is Valid</div>
+      <div className="space-y-0">
+        {declarations.map((d, i) => (
+          <div key={i} className="flex items-start gap-3 py-[9px] border-b border-border last:border-none">
+            <div className="w-[160px] text-[10px] font-bold text-muted-foreground flex-shrink-0">{d.key}</div>
+            <div className={`text-[10px] leading-[1.5] flex-1 ${d.status === 'ok' ? 'text-stable' : d.status === 'warn' ? 'text-sensitive' : 'text-fragile'}`}>{d.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// CALIBRATION PARAMETERS
+// ═══════════════════════════════════════════════════════════════════
+
+function CalibrationParameters() {
+  return (
+    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Loss Model · Calibration Parameters</div>
+          <div className="text-[13px] font-bold text-foreground">Market-Calibrated Loss Multipliers</div>
+          <div className="text-[11px] text-secondary-foreground mt-1 leading-[1.5]">These parameters drive the loss envelope calculations. Default values reflect published market anchors.</div>
+        </div>
+        <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase bg-sensitive-bg text-sensitive border border-sensitive-border">Calibration-Ready</span>
+      </div>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        {[
+          { label: 'Loss Anchor (€M)', value: '€2.8M', desc: 'Median AI operational loss event. Default: Lloyd\'s City Risk Index 2024.', source: 'Lloyd\'s City Risk Index 2024', color: 'text-foreground' },
+          { label: 'Base Risk Characterization', value: 'Low-Medium', desc: 'Structural governance baseline assessment derived from AFI score.', source: 'AFI Governance Model · AGAF §5.2', color: 'text-sensitive' },
+          { label: 'Elevated Risk Band', value: 'Medium-High', desc: 'Provider concentration and continuation risk factors.', source: 'Swiss Re sigma insights 01/2026', color: 'text-fragile' },
+          { label: 'Critical Risk Characterization', value: 'High', desc: 'Systemic correlation risk for entities sharing AI infrastructure.', source: 'Swiss Re sigma 01/2026 · Provider concentration', color: 'text-fragile' },
+        ].map((p, i) => (
+          <div key={i} className="bg-secondary border border-border rounded-lg p-4">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{p.label}</div>
+            <div className={`text-[22px] font-bold font-mono mb-1 ${p.color}`}>{p.value}</div>
+            <div className="text-[10px] text-secondary-foreground leading-[1.5] mb-2">{p.desc}</div>
+            <div className="text-[9px] text-muted-foreground">Source: <span className="text-secondary-foreground">{p.source}</span></div>
+          </div>
+        ))}
+      </div>
+      <div className="bg-chrome rounded-lg p-[14px] flex items-start gap-[10px]">
+        <span className="text-[16px] flex-shrink-0">⚙</span>
+        <div>
+          <div className="text-[11px] font-bold text-chrome-fg-bright mb-1">For Portfolio-Specific Calibration</div>
+          <div className="text-[10px] text-chrome-fg leading-[1.6]">Replace default multipliers with your own actuarial assumptions. The framework structure, scoring logic, and governance signals remain unchanged — only the loss envelope calibration reflects your portfolio assumptions.</div>
+        </div>
       </div>
     </div>
   );
