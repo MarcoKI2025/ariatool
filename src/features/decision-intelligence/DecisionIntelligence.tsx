@@ -13,7 +13,7 @@ export function DecisionIntelligence() {
     return <LockedState title="Decision Intelligence Locked" description="Complete the Exposure Analysis to unlock AFI scoring, governance exposure, and structural risk signals." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor } = results;
+  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor, alri, scri, compositeRiskIndex, mdr, mdrTier, mdrLabel } = results;
 
   // Responsibility scores
   const respFragmentation = Math.round(Math.min(99, (1 - components.jd) * 100 + components.dr * 20));
