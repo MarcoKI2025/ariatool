@@ -486,7 +486,7 @@ function Slide9({ onClose }: { onClose: () => void }) {
         <div className="p-3 bg-[#0a1a0a] border border-[#1a4028] rounded-[9px] text-center">
           <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">AI Risk Index</div>
           <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">72 / 100</div>
-          <div className="text-[9px] text-[#686460] mt-[2px]">High Risk · Meridian Financial</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">High Risk · Meridian Financial</div>
         </div>
         <div className="p-3 bg-[#1a0a06] border border-[#5a1810] rounded-[9px] text-center">
           <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">Annual Loss Exposure</div>
