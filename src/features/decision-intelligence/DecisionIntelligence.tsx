@@ -425,7 +425,7 @@ export function DecisionIntelligence() {
             ? (pct < 40 ? 'bg-fragile' : pct < 60 ? 'bg-sensitive' : 'bg-stable')
             : (pct > 70 ? 'bg-fragile' : pct > 50 ? 'bg-sensitive' : 'bg-stable');
           return (
-            <div key={i} className="flex items-center gap-3 py-[9px] border-b border-border last:border-none">
+            <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 py-[9px] border-b border-border last:border-none">
               <div className="w-full sm:w-[200px]">
                 <span className="text-[12px] text-foreground font-medium">{item.label}</span>
                 {item.tooltip && <InfoTip text={item.tooltip} />}
