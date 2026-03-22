@@ -1059,41 +1059,41 @@ select.fi-in {
   line-height: 1.55;
 }
 
-/* Dark section utility classes */
+/* Dark section utility classes — use CSS variables for theme support */
 .bg-dark-section {
-  background: #141410;
+  background: hsl(var(--chrome-bg));
 }
 .text-dark-section-fg {
-  color: #c0bca8;
+  color: hsl(var(--chrome-fg));
 }
 .border-dark-section-border {
-  border-color: #2e2c22;
+  border-color: hsl(var(--chrome-border));
 }
 .bg-dark-section-border\/50 {
-  background: rgba(46, 44, 34, 0.5);
+  background: hsl(var(--chrome-border) / 0.5);
 }
 
-/* Chrome utility classes */
+/* Chrome utility classes — use CSS variables for theme support */
 .bg-chrome {
-  background: #141410;
+  background: hsl(var(--chrome-bg));
 }
 .border-chrome-border {
-  border-color: #262420;
+  border-color: hsl(var(--chrome-border));
 }
 .text-chrome-fg {
-  color: #a0a09a;
+  color: hsl(var(--chrome-fg));
 }
 .text-chrome-fg-bright {
-  color: #e8e4d8;
+  color: hsl(var(--chrome-fg-bright));
 }
 .text-chrome-fg-muted {
-  color: #585650;
+  color: hsl(var(--chrome-fg-muted));
 }
 .text-chrome-accent {
-  color: #7068e0;
+  color: hsl(var(--chrome-accent));
 }
 .bg-chrome-hover {
-  background: #1e1d14;
+  background: hsl(var(--chrome-bg-hover));
 }
 
 /* ══════════════════════════════════════════════════════════
