@@ -45,9 +45,9 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO DIAGNOSIS ═══ */}
-      <div className={`rounded-xl p-6 mb-4 border-2 ${bandBg}`}>
+      <div className={`rounded-xl p-4 sm:p-6 mb-4 border-2 ${bandBg}`}>
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
-        <div className={`text-[28px] font-extrabold tracking-tight leading-[1.1] mb-3 uppercase ${bandColor}`}>
+        <div className={`text-[18px] sm:text-[28px] font-extrabold tracking-tight leading-[1.1] mb-3 uppercase ${bandColor}`}>
           {band === 'Fragile' ? 'Structural Exposure Detected' :
            band === 'Sensitive' ? 'Elevated Structural Signals' :
            'Governance Signals Within Range'}
@@ -67,14 +67,14 @@ export function DecisionIntelligence() {
 
       {/* ═══ HERO SCORE + ECI ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 mb-0">
-        <div className="bg-card border border-border rounded-xl p-6">
-          <div className="flex items-end gap-6">
+        <div className="bg-card border border-border rounded-xl p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 sm:gap-6">
             <div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">
                 Structural Exposure Score<InfoTip text={TOOLTIPS.afi} />
                 <span className="ml-2 text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ Governance Signal</span>
               </div>
-              <div className={`text-[48px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
+              <div className={`text-[36px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
               <div className="text-[11px] text-muted-foreground mt-1">
                 {band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}
               </div>
@@ -88,7 +88,7 @@ export function DecisionIntelligence() {
               </div>
             </div>
             <div className="flex-1">
-              <div className="relative w-[140px] h-[70px] mx-auto">
+              <div className="relative w-[120px] sm:w-[140px] h-[60px] sm:h-[70px] mx-auto">
                 <svg viewBox="0 0 140 70" className="w-full h-full">
                   <path d="M 10 65 A 60 60 0 0 1 130 65" fill="none" stroke="hsl(var(--border))" strokeWidth="8" strokeLinecap="round" />
                   <path d="M 10 65 A 60 60 0 0 1 130 65" fill="none" 
@@ -197,11 +197,11 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
-        <div className="flex items-start gap-6">
+      <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚡ AI Governance Readiness Index (AGRI)<InfoTip text="Multi-agent orchestration, tool-call authority, persistent memory, human checkpoints" /></div>
-            <div className={`text-[48px] font-bold font-mono leading-none ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</div>
+            <div className={`text-[32px] sm:text-[48px] font-bold font-mono leading-none ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</div>
             <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>
               {agri >= 60 ? 'Critical — Autonomous Governance Required' : agri >= 35 ? 'Elevated — Governance Gaps Emerging' : agri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Standard Governance Adequate'}
             </div>
@@ -218,11 +218,11 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ ALRI — Standalone Panel (matches HTML position) ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
-        <div className="flex items-start gap-6">
+      <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚠ AI Liability Risk Index (ALRI)</div>
-            <div className={`text-[48px] font-bold font-mono leading-none ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{alri}</div>
+            <div className={`text-[32px] sm:text-[48px] font-bold font-mono leading-none ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{alri}</div>
             <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>
               {alri >= 60 ? 'Critical — Multiple Active Claim Vectors' : alri >= 35 ? 'Elevated — Emerging Claim Exposure' : alri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Controlled Liability Profile'}
             </div>

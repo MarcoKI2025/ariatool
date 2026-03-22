@@ -68,7 +68,7 @@ export function ModelGovernanceComplete() {
 function ModelGovernanceRegister() {
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
-      <div className="p-[16px_22px] border-b border-border flex items-center justify-between">
+      <div className="p-[12px_14px] sm:p-[16px_22px] border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Model Governance Register · AGAF v3.0 · Required for audit trail</div>
           <div className="text-[15px] font-bold text-foreground">Model Governance & Validation Status</div>
@@ -82,13 +82,13 @@ function ModelGovernanceRegister() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-0 border-b border-border">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border-b border-border">
         {[
           { label: 'Model Type', title: 'Structural Heuristic', desc: 'Rule-based weighted ratio. Deterministic, not stochastic. No ML, no historical claims distribution, no Monte Carlo. Outputs are structural proxy signals — not probabilistic estimates.' },
           { label: 'Data Basis', title: 'Qualitative · Market-Derived', desc: 'Inputs: self-attested operator assessment (12 parameters). Loss anchors: published market guidance (Lloyd\'s CRI 2024, EIOPA 2024). No proprietary claims database. No system-derived inputs.' },
           { label: 'Last Calibration', title: 'Q4 2025 Market Data', desc: 'Multipliers anchored to Q4 2025 market guidance. Formula thresholds (AFI 0.85 / 1.35) internally calibrated. Annual recalibration recommended. Next trigger: EIOPA Opinion implementation 2026–2027.' },
         ].map((item, i) => (
-          <div key={i} className={`p-[14px_18px] ${i < 2 ? 'border-r border-border' : ''}`}>
+          <div key={i} className={`p-[14px_18px] ${i < 2 ? 'sm:border-r border-b sm:border-b-0 border-border' : ''}`}>
             <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-[5px]">{item.label}</div>
             <div className="text-[13px] font-bold text-foreground mb-[3px]">{item.title}</div>
             <div className="text-[10px] text-secondary-foreground leading-[1.4]">{item.desc}</div>
@@ -96,8 +96,8 @@ function ModelGovernanceRegister() {
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-0 border-b border-border">
-        <div className="p-[14px_18px] border-r border-border">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border-b border-border">
+        <div className="p-[14px_18px] sm:border-r border-b sm:border-b-0 border-border">
           <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-[5px]">Validation Pathway</div>
           <div className="flex flex-col gap-[5px]">
             {[
@@ -114,7 +114,7 @@ function ModelGovernanceRegister() {
             ))}
           </div>
         </div>
-        <div className="p-[14px_18px] border-r border-border">
+        <div className="p-[14px_18px] sm:border-r border-b sm:border-b-0 border-border">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-[5px]">Known Failure Modes</div>
           <div className="flex flex-col gap-[5px]">
             {[
@@ -146,7 +146,7 @@ function ModelGovernanceRegister() {
         </div>
       </div>
 
-      <div className="px-[18px] py-3 flex items-center gap-[10px]">
+      <div className="px-[14px] sm:px-[18px] py-3 flex flex-wrap items-center gap-[10px]">
         <div className="text-[10px] text-secondary-foreground">Model ID: <span className="font-mono text-primary">AGAF-v3.0-AFI-2026Q1</span></div>
         <div className="w-px h-3 bg-border" />
         <div className="text-[10px] text-secondary-foreground">Formula: <span className="font-mono text-secondary-foreground/80">AFI = (DR × RC × CD) / (JD × NA + 0.001)</span></div>
@@ -223,7 +223,7 @@ function NonGoals() {
         </div>
         <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-primary/10 text-primary border border-primary/30">Formally Declared</span>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {nonGoals.map((ng, i) => (
           <div key={i} className="p-3 bg-secondary border border-border rounded-lg">
             <div className="text-[11px] font-bold text-foreground mb-1"><span className="text-fragile mr-1">✗</span>{ng.title}</div>

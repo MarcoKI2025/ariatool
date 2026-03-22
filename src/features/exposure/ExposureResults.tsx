@@ -247,21 +247,21 @@ export function ExposureResults() {
         <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div className="bg-card border-2 border-border rounded-xl p-6 mb-4 relative overflow-hidden shadow-sm">
+      <div className="bg-card border-2 border-border rounded-xl p-3 sm:p-6 mb-4 relative overflow-hidden shadow-sm">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #f39c12, #c0392b, #7b0e0e)' }} />
-        <div className="flex items-start justify-between mb-5">
+        <div className="flex flex-col sm:flex-row items-start justify-between mb-4 sm:mb-5 gap-3">
           <div>
             <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-fragile">Cascade Propagation Model — Signature Analysis</div>
-            <div className="text-[16px] font-bold text-foreground mt-[3px] mb-[3px]">How failure travels across systems — and amplifies at each layer</div>
+            <div className="text-[14px] sm:text-[16px] font-bold text-foreground mt-[3px] mb-[3px]">How failure travels across systems — and amplifies at each layer</div>
             <div className="text-[12px] text-secondary-foreground">Each operational layer amplifies the preceding disruption.</div>
           </div>
-          <div className="flex gap-4 text-right">
-            <div><div className="text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div></div>
-            <div><div className="text-[18px] font-bold font-mono text-fragile">6–48h</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Propagation Time</div></div>
+          <div className="flex gap-4 text-left sm:text-right">
+            <div><div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div></div>
+            <div><div className="text-[14px] sm:text-[18px] font-bold font-mono text-fragile">6–48h</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Propagation Time</div></div>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },

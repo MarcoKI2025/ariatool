@@ -96,14 +96,14 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
   return (
-    <div className="mx-8 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
+    <div className="mx-2 sm:mx-8 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
       <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
       
       {/* Row 1: Risk Index + Characterization + Industry */}
       <div className="grid grid-cols-1 md:grid-cols-3 border-b border-border" style={{ paddingTop: 4 }}>
         {/* AI Risk Index */}
-        <div className="flex flex-col items-center justify-center text-center p-8 md:border-r border-border">
+        <div className="flex flex-col items-center justify-center text-center p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-4">AI Risk Index</div>
           <div className="relative mb-4" style={{ width: 110, height: 110 }}>
             <svg viewBox="0 0 110 110" style={{ width: 110, height: 110, transform: 'rotate(-90deg)' }}>
@@ -120,7 +120,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
 
         {/* Risk Characterization */}
-        <div className="p-8 md:border-r border-border">
+        <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Risk Characterization</div>
           <div className="flex flex-col gap-5">
             <div className="flex items-center justify-between">
@@ -142,7 +142,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
 
         {/* Industry Comparison */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Industry Comparison · Your Sector</div>
           <div className="mb-5">
             <div className="flex justify-between mb-2 text-[12px] text-secondary-foreground">
@@ -173,7 +173,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
       {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
       <div className="grid grid-cols-1 md:grid-cols-3">
         {/* Top Loss Scenarios */}
-        <div className="p-8 md:border-r border-border">
+        <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Top Loss Scenarios</div>
           <div className="flex flex-col gap-3">
             {scenarios.map((s, i) => (
@@ -187,7 +187,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
 
         {/* Exposure Trajectory */}
-        <div className="p-8 md:border-r border-border">
+        <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Exposure Trajectory · 12 Months</div>
           <div className="flex flex-col gap-3 mb-5">
             <div className="flex justify-between items-end">
@@ -222,7 +222,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
 
         {/* What If You Do Nothing */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">If Nothing Changes · 12 Month Impact</div>
           <div className="flex flex-col gap-5">
             {[
@@ -255,15 +255,15 @@ function StrategicInterpretation({ band, components }: { band: string; component
   };
 
   return (
-    <div className="mx-8 mt-6 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
+    <div className="mx-2 sm:mx-8 mt-6 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
       <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
-      <div className="grid grid-cols-[56px_1fr] gap-5 p-10 pt-8">
-        <div className="text-3xl text-primary text-center pt-1">◈</div>
+      <div className="grid grid-cols-1 sm:grid-cols-[56px_1fr] gap-3 sm:gap-5 p-4 sm:p-10 pt-6 sm:pt-8">
+        <div className="text-2xl sm:text-3xl text-primary text-center pt-1 hidden sm:block">◈</div>
         <div>
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-5 gap-3">
             <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-primary">Governance Assessment · Structured Risk Signal for Committee Review</div>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3">
               <span className="text-[9px] font-bold tracking-[0.07em] uppercase py-1.5 px-3 bg-purple-bg border border-purple-border rounded text-primary">◆ Governance Signal</span>
               <div className="text-right">
                 <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Risk Classification</div>
@@ -284,7 +284,7 @@ function StrategicInterpretation({ band, components }: { band: string; component
               { tag: 'MAINTAIN', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Continue governance cadence — re-assess annually', sub: 'Current profile is within tolerance. Structural changes require re-assessment.' },
               { tag: 'MONITOR', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Monitor delegation density and dependency concentration', sub: 'Key drift vectors to watch — both tend to increase silently over time.' },
             ]).map((item, i) => (
-              <div key={i} className="flex items-center gap-4 p-5 bg-secondary border border-border rounded-xl">
+              <div key={i} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-5 bg-secondary border border-border rounded-xl">
                 <span className="text-[10px] font-bold tracking-[0.06em] uppercase py-1 px-3 rounded-md" style={{ color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
                 <div>
                   <div className="text-[13px] font-bold text-foreground">{item.title}</div>
@@ -295,7 +295,7 @@ function StrategicInterpretation({ band, components }: { band: string; component
           </div>
           
           {/* Structural signals strip */}
-          <div className="flex items-center gap-3 pt-5 border-t border-border flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-3 pt-4 sm:pt-5 border-t border-border flex-wrap">
             <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Structural Signals:</span>
             {[
               `Delegation Density: ${components.dr > 0.6 ? 'High' : components.dr > 0.4 ? 'Moderate' : 'Low'} (${Math.round(components.dr * 100)})`,
@@ -417,73 +417,65 @@ export function CompanyView() {
   return (
     <div style={{ position: 'relative' }}>
       {/* Sticky mini header */}
-      <div style={{
-        position: 'sticky', top: 0, zIndex: 10,
-        background: 'hsl(var(--sf))', borderBottom: '1px solid hsl(var(--bd))',
-        padding: '10px 36px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+      <div className="sticky top-0 z-10 bg-card border-b border-border px-3 sm:px-9 py-2.5 flex items-center justify-between gap-3" style={{
         opacity: showSticky ? 1 : 0, transform: showSticky ? 'none' : 'translateY(-4px)',
         transition: 'opacity .2s, transform .2s', pointerEvents: showSticky ? 'auto' : 'none',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: 'hsl(var(--tx))' }}>{companyName}</span>
+        <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+          <span className="text-[12px] sm:text-[13px] font-bold text-foreground truncate">{companyName}</span>
           <span className={band === 'Fragile' ? 'badge-fragile' : band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'} style={{ fontSize: 10, padding: '4px 10px', borderRadius: 5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{band}</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          <span style={{ fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{fmtK(sim.lo)} – {fmtK(sim.hi)} / yr</span>
-          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-p" style={{ padding: '6px 14px', fontSize: 11 }}>Load Demo</button>
+        <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
+          <span className="text-[11px] sm:text-[12px] font-bold font-mono text-primary">{fmtK(sim.lo)} – {fmtK(sim.hi)} / yr</span>
+          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-p hidden sm:inline-flex" style={{ padding: '6px 14px', fontSize: 11 }}>Load Demo</button>
         </div>
       </div>
 
       {/* Company View Header */}
-      <div style={{ padding: '20px 28px 0' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, paddingBottom: 16, borderBottom: '1px solid hsl(var(--bd))' }}>
+      <div className="px-4 sm:px-7 pt-5">
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-3 pb-4 border-b border-border">
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>◈ Company View — Executive AI Risk Summary</div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))', letterSpacing: '-0.01em', marginBottom: 5 }}>What does your AI cost — and what can you do about it?</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, maxWidth: 600 }}>This view translates the structural AI risk assessment into plain business language: your overall risk level, estimated annual insurance cost, what drives it, and three concrete actions to reduce it.</div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Company View — Executive AI Risk Summary</div>
+            <div className="text-[15px] sm:text-[18px] font-bold text-foreground tracking-tight mb-1.5">What does your AI cost — and what can you do about it?</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.6] max-w-[600px]">This view translates the structural AI risk assessment into plain business language: your overall risk level, estimated annual insurance cost, what drives it, and three concrete actions to reduce it.</div>
           </div>
-          <button onClick={() => setPerspective('underwriter')} className="btn-ghost" style={{ flexShrink: 0 }}>⊕ Underwriter View →</button>
+          <button onClick={() => setPerspective('underwriter')} className="btn-ghost text-[11px] flex-shrink-0">⊕ Underwriter View →</button>
         </div>
 
         {/* 4 section preview cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, padding: '14px 0 4px' }}>
-          <div style={{ background: 'hsl(var(--rb))', border: '1px solid hsl(var(--rbr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--red))', marginBottom: 3 }}>① Risk Level</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Overall AI risk score, ECI tier, and what it means for your organisation</div>
-          </div>
-          <div style={{ background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>② Insurance Cost</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Indicative annual premium range and what's driving the price up</div>
-          </div>
-          <div style={{ background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--grn))', marginBottom: 3 }}>③ Cost Reduction</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Three concrete actions with estimated annual premium saving per action</div>
-          </div>
-          <div style={{ background: 'hsl(var(--ab))', border: '1px solid hsl(var(--abr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--amb))', marginBottom: 3 }}>④ Regulatory</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>EU AI Act & DORA exposure signal — what applies and when</div>
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-3">
+          {[
+            { bg: 'hsl(var(--rb))', border: 'hsl(var(--rbr))', color: 'hsl(var(--red))', label: '① Risk Level', desc: 'Overall AI risk score, ECI tier' },
+            { bg: 'hsl(var(--pb))', border: 'hsl(var(--pbr))', color: 'hsl(var(--pur))', label: '② Insurance Cost', desc: 'Annual premium range & drivers' },
+            { bg: 'hsl(var(--gb))', border: 'hsl(var(--gbr))', color: 'hsl(var(--grn))', label: '③ Cost Reduction', desc: 'Concrete actions & savings' },
+            { bg: 'hsl(var(--ab))', border: 'hsl(var(--abr))', color: 'hsl(var(--amb))', label: '④ Regulatory', desc: 'EU AI Act & DORA signal' },
+          ].map((c, i) => (
+            <div key={i} style={{ background: c.bg, border: `1px solid ${c.border}`, borderRadius: 8, padding: '10px 12px' }}>
+              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: c.color, marginBottom: 3 }}>{c.label}</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.4]">{c.desc}</div>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* LIVE PRICING SIMULATOR */}
       <div style={{ background: 'hsl(var(--s2))', borderBottom: '1px solid hsl(var(--bd))' }}>
-        <div style={{ padding: '20px 28px 0', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20 }}>
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-4 px-4 sm:px-7 pt-5">
           <div>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>◈ AI Insurance Pricing Simulator · Live Calculation</div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', letterSpacing: '-0.01em' }}>What does your AI profile cost to insure?</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 3, lineHeight: 1.5 }}>Adjust the parameters below — the premium estimate updates in real time. All figures are indicative ranges for governance committee orientation.</div>
+            <div className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight">What does your AI profile cost to insure?</div>
+            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 3, lineHeight: 1.5 }}>Adjust the parameters below — the premium estimate updates in real time.</div>
           </div>
-          <div style={{ flexShrink: 0, padding: '8px 14px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 8, textAlign: 'center', minWidth: 120 }}>
+          <div className="flex-shrink-0 py-2 px-3.5 bg-purple-bg border border-purple-border rounded-lg text-center min-w-[100px]">
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>Live Estimate</div>
-            <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{fmtK(sim.mid)}</div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>per year</div>
+            <div className="text-[18px] sm:text-[20px] font-bold font-mono text-primary">{fmtK(sim.mid)}</div>
+            <div className="text-[9px] text-muted-foreground">per year</div>
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 0, padding: '20px 28px 24px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_340px] gap-0 px-4 sm:px-7 py-5">
           {/* LEFT: Input controls */}
-          <div style={{ paddingRight: 24, borderRight: '1px solid hsl(var(--bd))', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="pr-0 md:pr-6 md:border-r border-b md:border-b-0 border-border pb-5 md:pb-0 flex flex-col gap-4">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
               {/* Autonomy */}
               <div>

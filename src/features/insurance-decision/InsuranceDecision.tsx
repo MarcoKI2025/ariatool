@@ -31,7 +31,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
-      <div className={`rounded-xl p-8 mb-4 border-2 relative overflow-hidden ${
+      <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${
         band === 'Fragile' ? 'bg-card border-fragile' :
         band === 'Sensitive' ? 'bg-card border-sensitive' :
         'bg-card border-stable'
@@ -39,7 +39,7 @@ export function InsuranceDecision() {
         <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-muted-foreground mb-3">
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
-        <div className={`text-[24px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
+        <div className={`text-[20px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
           {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
            decisionClass === 'Conditional Review' ? 'Conditional Review' :
            'Standard Coverage'}
@@ -113,7 +113,7 @@ export function InsuranceDecision() {
         <div className="text-[11px] text-muted-foreground leading-[1.55] mb-4">
           AFI {afi.toFixed(2)} exceeds standard underwriting threshold. Structural risk requires committee-level review before coverage terms can be offered.
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {[
             { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
@@ -220,27 +220,27 @@ export function InsuranceDecision() {
       </SectionCard>
 
       {/* ═══ 8. CASCADE PROPAGATION — CIRCLES + ARROWS ═══ */}
-      <div className="bg-card border-2 border-border rounded-xl p-6 mb-4 relative overflow-hidden">
+      <div className="bg-card border-2 border-border rounded-xl p-3 sm:p-6 mb-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #f39c12, #c0392b, #7b0e0e)' }} />
-        <div className="flex items-start justify-between mb-5">
+        <div className="flex flex-col sm:flex-row items-start justify-between mb-5 gap-3">
           <div>
             <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-fragile">How this system propagates to portfolio loss</div>
-            <div className="text-[16px] font-bold text-foreground mt-[3px] mb-[3px]">How failure travels across systems — and amplifies at each layer</div>
+            <div className="text-[14px] sm:text-[16px] font-bold text-foreground mt-[3px] mb-[3px]">How failure travels across systems — and amplifies at each layer</div>
             <div className="text-[12px] text-secondary-foreground">Each operational layer amplifies the preceding disruption.</div>
           </div>
-          <div className="flex gap-4 text-right">
+          <div className="flex gap-4 text-left sm:text-right">
             <div>
-              <div className="text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div>
+              <div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div>
             </div>
             <div>
-              <div className="text-[18px] font-bold font-mono text-fragile">6–48h</div>
+              <div className="text-[14px] sm:text-[18px] font-bold font-mono text-fragile">6–48h</div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Propagation Time</div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },
@@ -313,13 +313,13 @@ export function InsuranceDecision() {
         return (
           <div className={`rounded-none -mx-2 sm:-mx-4 md:-mx-5 lg:-mx-7 mb-6 relative overflow-hidden ${bgMap[statusCls]}`}>
             <div className="absolute top-0 left-0 right-0 h-[5px]" style={{ background: topBarMap[statusCls] }} />
-            <div className="p-[28px_30px_24px]">
+            <div className="p-[16px_16px_16px] sm:p-[28px_30px_24px]">
               <div className={`text-[9px] font-bold tracking-[0.12em] uppercase mb-2 flex items-center gap-[6px] ${eyebrowColorMap[statusCls]}`}>
                 <div className={`w-[5px] h-[5px] rounded-full animate-pulse ${dotBgMap[statusCls]}`} />
                 Governance Assessment Signal · AI Governance Engine · {inputs.companyName || '—'}
                 <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded ml-1">◈ Committee-Grade</span>
               </div>
-              <div className={`text-[24px] sm:text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
+              <div className={`text-[18px] sm:text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
                 {statusText}
               </div>
               <div className={`text-[13px] leading-[1.55] mb-4 max-w-[700px] ${rationaleColorMap[statusCls]}`}>
@@ -329,7 +329,7 @@ export function InsuranceDecision() {
                 <span className="text-[18px] flex-shrink-0">{consIcon}</span>
                 <div className={`text-[11px] leading-[1.55] ${rationaleColorMap[statusCls]}`}>{consTxt}</div>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[10px]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-[10px]">
                 {[
                   { label: 'Decision Basis:', value: `AFI ${afi.toFixed(2)} · ${band} · ${afi >= 1.35 ? 'Above tolerance' : afi >= 0.85 ? 'Approaching threshold' : 'Within tolerance'}` },
                   { label: 'Valid Until:', value: band === 'Fragile' ? 'Next structural re-assessment' : 'Until next renewal or material change' },
