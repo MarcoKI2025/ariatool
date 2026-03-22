@@ -108,8 +108,8 @@ function ModelGovernanceRegister() {
               { done: false, text: 'Regulatory acknowledgement (BaFin/FCA) — pending' },
             ].map((v, i) => (
               <div key={i} className="flex items-center gap-[7px]">
-                <div className={`w-[7px] h-[7px] rounded-full flex-shrink-0 ${v.done ? 'bg-[#60d090]' : 'bg-[#5a3800]'}`} />
-                <span className={`text-[10px] ${v.done ? 'text-secondary-foreground' : 'text-secondary-foreground/60'}`}>{v.text}</span>
+                <div className={`w-[7px] h-[7px] rounded-full flex-shrink-0 ${v.done ? 'bg-stable' : 'bg-sensitive'}`} />
+                <span className={`text-[10px] ${v.done ? 'text-foreground' : 'text-muted-foreground'}`}>{v.text}</span>
               </div>
             ))}
           </div>
