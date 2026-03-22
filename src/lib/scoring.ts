@@ -50,32 +50,32 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
 
 function computeALRI(inputs: ExposureInputs): number {
   const { hallucinationLiability, deepfakeFraud, promptInjection, modelDrift,
-    algorithmicBias, shadowAI, explainabilityGap } = inputs;
+    algorithmicBias, shadowAI, explainabilityGap, dataIntegrity, esgLiability } = inputs;
+  // Weights match HTML exactly: hallu 20, dpfk 16, pinj 14, mdrift 16, abias 12, shdw 7, xai 5, dint 6, esg 4
   const alri = Math.min(100,
-    ((hallucinationLiability - 1) / 4) * 22 +
-    ((deepfakeFraud - 1) / 4) * 18 +
-    ((promptInjection - 1) / 4) * 16 +
-    ((modelDrift - 1) / 4) * 18 +
-    ((algorithmicBias - 1) / 4) * 14 +
+    ((hallucinationLiability - 1) / 4) * 20 +
+    ((deepfakeFraud - 1) / 4) * 16 +
+    ((promptInjection - 1) / 4) * 14 +
+    ((modelDrift - 1) / 4) * 16 +
+    ((algorithmicBias - 1) / 4) * 12 +
     ((shadowAI - 1) / 4) * 7 +
-    ((explainabilityGap - 1) / 4) * 5
+    ((explainabilityGap - 1) / 4) * 5 +
+    ((dataIntegrity - 1) / 4) * 6 +
+    ((esgLiability - 1) / 4) * 4
   );
   return Math.round(alri);
 }
 
 function computeSCRI(inputs: ExposureInputs): number {
   const { cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion } = inputs;
-  const concentrationScore = (
-    (6 - cloudConcentration) +
-    (6 - modelConcentration) +
-    (6 - gpuConcentration) +
-    (6 - crossVendorContagion)
-  ) / 4;
-  const depFactor = inputs.providers.length > 0
-    ? Math.min(1.5, 1 + (inputs.providers.length - 1) * 0.1)
-    : 1;
-  const scri = Math.min(100, (concentrationScore / 5) * 100 * depFactor);
-  return Math.round(scri);
+  // SCRI is inverse: low diversity = high systemic risk. Weights: cloud 30, model 25, gpu 25, xcon 20
+  const scri = Math.round(Math.min(100,
+    ((5 - cloudConcentration) / 4) * 30 +
+    ((5 - modelConcentration) / 4) * 25 +
+    ((5 - gpuConcentration) / 4) * 25 +
+    ((5 - crossVendorContagion) / 4) * 20
+  ));
+  return scri;
 }
 
 function computeCompositeRiskIndex(afi: number, alri: number, agri: number): number {
