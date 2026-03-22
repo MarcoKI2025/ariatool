@@ -770,7 +770,7 @@ export function CompanyView() {
       </div>
 
       {/* ACTION PLAN */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Recommended Action Plan</div>
           <div className="text-xl font-bold text-foreground">What To Do Next</div>
