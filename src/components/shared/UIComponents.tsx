@@ -180,7 +180,7 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
 
   return (
     <div className="py-5 border-b border-border last:border-none last:pb-0">
-      <div className="flex items-center gap-[6px] mb-[6px]">
+      <div className="flex items-center gap-2 mb-2">
         <span className="flex-1 text-[13px] font-medium text-foreground">
           {label}
           {tooltip && (
