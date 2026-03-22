@@ -65,12 +65,26 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO SCORE + ECI ═══ */}
-      <div className="grid grid-cols-[1fr_300px] gap-4 mb-4">
+      <div className="grid grid-cols-[1fr_300px] gap-4 mb-0">
         <div className="bg-card border border-border rounded-xl p-6">
           <div className="flex items-end gap-6">
             <div>
-              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Structural Exposure Score<InfoTip text={TOOLTIPS.afi} /></div>
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">
+                Structural Exposure Score<InfoTip text={TOOLTIPS.afi} />
+                <span className="ml-2 text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ Governance Signal</span>
+              </div>
               <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
+              <div className="text-[11px] text-muted-foreground mt-1">
+                {band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}
+              </div>
+              <div className="text-[9px] text-muted-foreground mt-[5px]">
+                Signal confidence: <span className="text-sensitive font-semibold">Medium — self-attested inputs</span>
+              </div>
+              <div className={`text-[10px] font-semibold mt-[3px] ${bandColor}`}>
+                {band === 'Fragile' ? 'Interpretation: High structural dependency with limited reversibility' :
+                 band === 'Sensitive' ? 'Interpretation: Elevated dependency — governance improvements required' :
+                 'Interpretation: Structural exposure within manageable bounds'}
+              </div>
             </div>
             <div className="flex-1">
               <div className="relative w-[140px] h-[70px] mx-auto">
@@ -98,6 +112,9 @@ export function DecisionIntelligence() {
                'Below tolerance threshold — standard terms'}
             </span>
           </div>
+          <div className="text-[11px] text-secondary-foreground mt-3 leading-[1.5]">
+            Use this panel as the board-level diagnosis anchor. If this section cannot justify a pricing or governance decision on its own, the model is not yet decision-grade.
+          </div>
         </div>
 
         {/* Quick metrics */}
@@ -113,6 +130,52 @@ export function DecisionIntelligence() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* ═══ KEY STRUCTURAL SIGNALS ═══ */}
+      <div className={`px-6 py-3 rounded-b-xl mb-4 border-t ${
+        band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' :
+        band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' :
+        'bg-stable-bg border-stable-border'
+      }`}>
+        <div className={`text-[9px] font-bold tracking-wider uppercase mb-2 ${bandColor}`}>Key Structural Signals</div>
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            'System persists without explicit re-authorisation',
+            'Dependency cannot be reversed without operational disruption',
+            'Shared model infrastructure creates correlated portfolio exposure',
+          ].map((sig, i) => (
+            <div key={i} className={`flex items-start gap-2 p-2 rounded-md border ${
+              band === 'Fragile' ? 'border-fragile-border' : band === 'Sensitive' ? 'border-sensitive-border' : 'border-stable-border'
+            }`}>
+              <div className={`w-[5px] h-[5px] rounded-full flex-shrink-0 mt-[5px] ${
+                band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
+              }`} />
+              <span className={`text-[10px] font-medium ${bandColor}`}>{sig}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ HERO ACTIONS — Required Action pills + navigation ═══ */}
+      <div className="flex items-center justify-between mb-4 p-3 bg-card border border-border rounded-xl">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-[9px] text-muted-foreground font-bold tracking-[0.08em] uppercase mr-1">Required Action:</span>
+          <span className={`px-3 py-1 rounded text-[10px] font-bold text-white ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>
+            {band === 'Fragile' ? 'Insurable with Premium Loading' : band === 'Sensitive' ? 'Conditional Coverage' : 'Standard Terms'}
+          </span>
+          {band !== 'Stable' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-white">Structural Remediation Required</span>}
+          {band === 'Fragile' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-white">Dependency Diversification Required</span>}
+        </div>
+        <div className="flex gap-2">
+          <button onClick={() => setActiveStep(4)} className="px-3 py-[6px] bg-secondary text-foreground border border-border rounded-lg text-[11px] font-semibold hover:bg-muted transition-colors">Insurance View →</button>
+          <button onClick={() => setActiveStep(5)} className="px-3 py-[6px] bg-primary text-primary-foreground rounded-lg text-[11px] font-semibold hover:bg-primary/90 transition-colors">Generate Report</button>
+        </div>
+      </div>
+
+      {/* ═══ GLOBAL INSIGHT ═══ */}
+      <div className="bg-card border border-border rounded-xl p-4 mb-4 text-[12px] text-secondary-foreground leading-[1.6]">
+        <strong className="text-foreground">Standard compliance frameworks cannot detect, price, or reserve for this exposure.</strong> Continuation risk accumulates without a triggering incident. Responsibility is distributed without a named owner. Dependency deepens until exit becomes operationally impossible. This assessment quantifies what happens in the governance gap.
       </div>
 
       {/* ═══ AFI COMPONENT CHIPS ═══ */}
