@@ -1,4 +1,4 @@
-import { Band, DecisionClass, AFIComponents, AnalysisResults, ExposureInputs } from './types';
+import { Band, DecisionClass, AFIComponents, AnalysisResults, ExposureInputs, FrameDriftAlert } from './types';
 import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS } from './constants';
 
 export function calcAFI(dr: number, jd: number, rc: number, cd: number, na: number): number {
