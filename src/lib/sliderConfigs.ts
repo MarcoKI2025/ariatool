@@ -200,7 +200,8 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     category: 'Liability Risk',
     name: 'Hallucination Exposure',
     description: 'Risk that AI outputs are presented as factual without verification',
-    tooltip: 'Risk of AI generating false information presented as fact. Realized losses: Air Canada chatbot (refund obligation from hallucinated policy), Wolf River Electric (defamation from AI-generated false legal claims), Google AI Overviews lawsuits. 1 = Outputs verified before customer-facing use. 3 = Some verification, but gaps exist. 5 = Customer-facing outputs without systematic verification, direct E&O liability. At 4-5: creates direct professional liability exposure.',
+    tooltip: 'Risk of AI generating false information presented as fact. 1 = Outputs verified before customer-facing use. 3 = Some verification, but gaps exist. 5 = Customer-facing outputs without systematic verification, direct E&O liability.',
+    explainText: 'Hallucination liability is the fastest-growing AI claims category in 2025. AIG and W.R. Berkley are seeking regulatory approval to exclude "any actual or alleged use of AI" from standard corporate policies. If your AI outputs are customer-facing, legally relevant, or used in decisions — without human review before delivery — you carry unpriced E&O exposure that standard cyber policies do not cover.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Fully Verified', 2: 'Mostly Verified', 3: 'Partial Verification', 4: 'Minimal Verification', 5: 'Unverified Output' }
   },
@@ -210,7 +211,8 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     category: 'Liability Risk',
     name: 'Deepfake / Synthetic Media Risk',
     description: 'Exposure to AI-generated video, audio, or image fraud',
-    tooltip: 'Risk from AI-generated synthetic media used for fraud or impersonation. 1 = No generative media capabilities. 3 = Internal use only, controlled distribution. 5 = Public-facing synthetic media without robust authentication. Deepfake fraud losses exceeded $25M in 2024 (FBI IC3 Report). Banking, insurance, legal sectors particularly exposed.',
+    tooltip: 'Risk from AI-generated synthetic media used for fraud or impersonation. 1 = No generative media capabilities. 5 = Public-facing synthetic media without robust authentication.',
+    explainText: 'Deepfakes require only 10 seconds of public footage of a corporate leader to enable voice/video impersonation. Standard social engineering coverage may not respond to deepfake-specific losses unless explicitly endorsed. Coalition\'s December 2025 endorsement is the first market-standard response — most policies still have no explicit deepfake trigger.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Not Applicable', 2: 'Internal Only', 3: 'Controlled Use', 4: 'Limited Public', 5: 'Public-Facing' }
   },
@@ -220,7 +222,8 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     category: 'Liability Risk',
     name: 'Prompt Injection Risk',
     description: 'Vulnerability to adversarial prompt manipulation',
-    tooltip: 'Risk that external users can manipulate AI behavior via crafted prompts. 1 = No user-facing prompts, fully controlled inputs. 3 = User prompts accepted but filtered/sanitized. 5 = Direct user prompt access, minimal input validation. Prompt injection can bypass guardrails, leak data, execute unauthorized actions. OWASP Top 10 for LLM Applications: Prompt Injection is #1 risk.',
+    tooltip: 'Risk that external users can manipulate AI behavior via crafted prompts. 1 = No user-facing prompts. 5 = Direct user prompt access, minimal input validation.',
+    explainText: 'Prompt injection is qualitatively different from traditional cyber attack: a legitimate-looking email or document can redirect an AI agent\'s behaviour without triggering any traditional security alert. Traditional cybersecurity controls are insufficient — CGI\'s 2026 research calls this "architectural" risk requiring specific AI governance controls, not just security tooling.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'No User Prompts', 2: 'Heavily Filtered', 3: 'Moderate Filtering', 4: 'Light Filtering', 5: 'Direct Access' }
   },
@@ -230,7 +233,8 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     category: 'Liability Risk',
     name: 'Model Drift / Behavioral Shift',
     description: 'Risk of AI behavior changing unexpectedly over time',
-    tooltip: 'Risk that AI behavior changes without explicit updates. Sources: Provider model updates (GPT-4 → GPT-4 Turbo), fine-tuning drift, prompt/context evolution, external API changes. 1 = Locked model version, comprehensive testing before updates. 3 = Rolling updates with post-deployment monitoring. 5 = Continuous model updates, no version control or drift detection. Model drift can silently degrade performance or introduce bias.',
+    tooltip: 'Risk that AI behavior changes without explicit updates. 1 = Locked model version. 5 = Continuous model updates, no version control or drift detection.',
+    explainText: 'Model drift is the primary mechanism behind systemic AI liability. The Cigna case shows how a production model can silently accumulate discriminatory decisions — creating class-action exposure that only becomes visible at regulatory intervention. NAIC\'s 2026 AI Systems Evaluation Tool explicitly requires "assessments of model drift, repeatability and auditability." Absence of drift monitoring is now a direct underwriting flag.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Version Locked', 2: 'Controlled Updates', 3: 'Monitored Rolling', 4: 'Auto-Updates', 5: 'Uncontrolled Drift' }
   },
@@ -240,7 +244,8 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     category: 'Liability Risk',
     name: 'Algorithmic Bias Risk',
     description: 'Risk of discriminatory or unfair AI outputs',
-    tooltip: 'Risk of AI producing biased or discriminatory outcomes. Regulatory exposure: EU AI Act Art. 10 (bias testing for high-risk systems), US EEOC enforcement on hiring algorithms, UK FCA on creditworthiness. 1 = Comprehensive bias testing, diverse training data, ongoing monitoring. 3 = Periodic bias audits, reactive mitigation. 5 = No bias testing, decisions affect protected groups without validation. High-risk use cases: hiring, lending, insurance underwriting.',
+    tooltip: 'Risk of AI producing biased or discriminatory outcomes. 1 = Comprehensive bias testing. 5 = No bias testing, decisions affect protected groups without validation.',
+    explainText: 'Colorado\'s 2025 AI Act requires insurers to follow governance and testing procedures to prevent unfair discrimination. 50 US states introduced AI legislation in 2025. The EU AI Act classifies AI used in employment, credit, insurance and healthcare as high-risk (Annex III), requiring fundamental rights impact assessments. Absence of bias documentation is moving from reputational risk to regulatory liability.',
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Tested & Monitored', 2: 'Periodic Audits', 3: 'Reactive Mitigation', 4: 'Minimal Testing', 5: 'Untested' }
   },
