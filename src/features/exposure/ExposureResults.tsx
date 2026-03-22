@@ -16,6 +16,10 @@ export function ExposureResults() {
   const [adjustments, setAdjustments] = useState({ dr: 0, jd: 0, rc: 0, cd: 0, na: 0, ses: 0 });
   const hasAdjustments = Object.values(adjustments).some(v => v !== 0);
 
+  if (!results) return null;
+
+  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, alri, scri, amplificationFactor, decisionClass } = results;
+
   const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
   const bandBg = band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
 
