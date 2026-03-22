@@ -725,7 +725,7 @@ export function CompanyView() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {levers.map(l => (
-            <div key={l.rank} className="bg-card border border-border rounded-2xl shadow-sm p-7 relative overflow-hidden flex flex-col gap-4">
+            <div key={l.rank} className="bg-card border border-border rounded-2xl shadow-sm p-4 sm:p-7 relative overflow-hidden flex flex-col gap-4">
               <div className="absolute top-0 left-0 w-1 bottom-0 bg-stable rounded-l-2xl" />
               <div className="w-8 h-8 rounded-full bg-stable-bg border border-stable-border flex items-center justify-center text-[11px] font-bold text-stable">{l.rank}</div>
               <div className="text-[15px] font-bold text-foreground leading-snug">{l.title}</div>
