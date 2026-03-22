@@ -603,19 +603,19 @@ export function CompanyView() {
       </div>
 
       {/* HERO SECTION */}
-      <div ref={heroRef} className="px-10 pt-10 pb-8">
+      <div ref={heroRef} className="px-4 sm:px-10 pt-6 sm:pt-10 pb-6 sm:pb-8">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full" style={{ background: bandColor, animation: 'pulse-dot 2s infinite' }} />
           Company View · AI Risk Executive Summary · {now}
         </div>
-        <div className="flex items-start justify-between gap-6 mb-2">
-          <div className="text-[36px] font-bold tracking-tight text-foreground">{companyName}</div>
+        <div className="flex items-start justify-between gap-4 sm:gap-6 mb-2">
+          <div className="text-[22px] sm:text-[36px] font-bold tracking-tight text-foreground">{companyName}</div>
           <div className="flex-shrink-0 text-center pt-1">
             <CvAfiGauge afi={afi} band={band} />
             <div className="text-[10px] text-muted-foreground mt-1 tracking-[0.06em] uppercase">Fragility Score</div>
           </div>
         </div>
-        <div className="text-sm text-secondary-foreground mb-10">{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
+        <div className="text-sm text-secondary-foreground mb-6 sm:mb-10">{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Premium card */}
