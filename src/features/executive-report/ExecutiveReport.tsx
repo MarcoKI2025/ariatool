@@ -358,21 +358,15 @@ export function ExecutiveReport() {
       <div className="bg-card border border-border rounded-[10px] p-5">
         <div className="text-[13px] font-bold text-foreground mb-[3px]">Export & Share</div>
         <div className="text-[11px] text-secondary-foreground mb-[14px]">Generate structured output for risk committee, board, or reinsurer review.</div>
-        <div className="flex gap-2 flex-wrap">
-          <button onClick={copyReport} className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
+        <div className="flex gap-3 flex-wrap">
+          <button onClick={() => setShowOnePager(true)} className="px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-[13px] font-semibold hover:bg-primary/90 transition-colors">
             📄 One-Pager PDF Preview
           </button>
-          <button onClick={copyReport} className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
+          <button onClick={() => setShowOverlay(true)} className="px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-[13px] font-semibold hover:bg-primary/90 transition-colors">
             📋 Board Executive Summary
           </button>
-          <button onClick={() => exportORSA(results, inputs)} className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
+          <button onClick={() => exportORSA(results, inputs)} className="px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-[13px] font-semibold hover:bg-primary/90 transition-colors">
             📄 Export ORSA Section
-          </button>
-          <button onClick={copyReport} className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
-            ✍ Copy Plain Text
-          </button>
-          <button onClick={() => setShowOverlay(true)} className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
-            🖨️ Print Full Report
           </button>
         </div>
       </div>
