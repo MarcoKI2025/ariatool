@@ -168,7 +168,7 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Two-column layout */}
-      <div className="grid grid-cols-[1fr_280px] gap-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-5 items-start">
         {/* Left: form */}
         <div>
           {/* Company Profile */}
