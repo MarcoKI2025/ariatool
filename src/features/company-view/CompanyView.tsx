@@ -295,7 +295,7 @@ function StrategicInterpretation({ band, components }: { band: string; component
           </div>
           
           {/* Structural signals strip */}
-          <div className="flex items-center gap-3 pt-5 border-t border-border flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-3 pt-4 sm:pt-5 border-t border-border flex-wrap">
             <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Structural Signals:</span>
             {[
               `Delegation Density: ${components.dr > 0.6 ? 'High' : components.dr > 0.4 ? 'Moderate' : 'Low'} (${Math.round(components.dr * 100)})`,
