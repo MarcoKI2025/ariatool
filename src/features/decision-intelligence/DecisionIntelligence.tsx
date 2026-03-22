@@ -159,7 +159,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO ACTIONS — Required Action pills + navigation ═══ */}
-      <div className="flex items-center justify-between mb-4 p-3 bg-card border border-border rounded-xl">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 p-3 bg-card border border-border rounded-xl gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[9px] text-muted-foreground font-bold tracking-[0.08em] uppercase mr-1">Required Action:</span>
           <span className={`px-3 py-1 rounded text-[10px] font-bold text-foreground ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>
