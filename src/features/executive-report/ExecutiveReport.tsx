@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge } from '@/components/shared/UIComponents';
 import { buildExecutiveReport, buildORSAExport } from '@/lib/reportBuilder';
+import { exportORSA } from '@/lib/orsaExport';
 import { formatDate, formatCurrency } from '@/lib/formatters';
 import { toast } from 'sonner';
 
@@ -232,6 +233,9 @@ export function ExecutiveReport() {
           </button>
           <button onClick={copyReport} className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
             📋 Board Executive Summary
+          </button>
+          <button onClick={() => exportORSA(results, inputs)} className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
+            📄 Export ORSA Section
           </button>
           <button onClick={copyReport} className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
             ✍ Copy Plain Text
