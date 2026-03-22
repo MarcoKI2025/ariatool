@@ -12,11 +12,10 @@ export function AppSidebar() {
       {/* Brand */}
       <div className="px-4 lg:px-[18px] pt-4 lg:pt-[22px] pb-3 lg:pb-[18px] border-b border-chrome-border relative">
         <div className="flex items-center gap-[10px] mb-0 lg:mb-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-light flex items-center justify-center text-sm flex-shrink-0 text-white font-bold">⚡</div>
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-light flex items-center justify-center text-[14px] flex-shrink-0 text-white font-bold">AI</div>
           <div>
             <div className="text-[13px] font-semibold text-chrome-fg-bright tracking-tight">AI Governance Engine</div>
           </div>
-          {/* Mobile nav toggle */}
           <button
             onClick={() => setMobileNavOpen(!mobileNavOpen)}
             className="lg:hidden ml-auto text-chrome-fg-bright text-xl p-1"
@@ -43,13 +42,24 @@ export function AppSidebar() {
         </div>
       </div>
 
-      {/* Nav steps — hidden on mobile unless toggled */}
+      {/* Nav steps */}
       <nav className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-[10px] py-3 flex-1 overflow-y-auto`}>
         <div className="text-[9px] font-semibold tracking-[0.1em] uppercase text-[#585650] px-2 pb-[10px]">Workflow</div>
+        
+        {/* Company View notice */}
+        {perspective === 'company' && (
+          <div className="mx-2 mb-3 px-[10px] py-2 rounded-[7px] border text-[9px] font-semibold leading-[1.5]" style={{ background: '#0e1a0e', borderColor: '#1a4028', color: '#60d090' }}>
+            ◈ Company View active
+            <br/>
+            <span style={{ color: '#4a9060', fontWeight: 400 }}>Switch to Underwriter View to navigate analysis steps</span>
+          </div>
+        )}
+
         {NAV_STEPS.map((step) => {
           const isActive = activeStep === step.id && perspective === 'underwriter';
           const isDone = analysisComplete && step.id === 1;
-          const isLocked = !analysisComplete && step.id > 1;
+          // Step 6 (Model Governance) is never locked
+          const isLocked = !analysisComplete && step.id > 1 && step.id < 6;
           const isDisabled = perspective === 'company';
 
           return (
@@ -92,7 +102,7 @@ export function AppSidebar() {
         })}
       </nav>
 
-      {/* Perspective switcher — hidden on mobile unless toggled */}
+      {/* Perspective switcher */}
       <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-[10px] py-3 border-t border-[#1e1d14]`}>
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#484642] px-0 pb-[6px]">Switch perspective</div>
         <div className="flex flex-col gap-1">
@@ -104,7 +114,7 @@ export function AppSidebar() {
                 : 'border-[#2a2820] text-[#686460] hover:bg-[#1e1d14] hover:border-[#3a3828] hover:text-[#b0aca0]'
             }`}
           >
-            <span className="text-[16px] w-6 text-center flex-shrink-0">⊕</span>
+            <span className="text-[16px] w-6 text-center flex-shrink-0">📊</span>
             <span className="flex-1">
               <span className="block text-[11px] font-bold">Underwriter View</span>
               <span className={`hidden lg:block text-[9px] mt-[2px] ${perspective === 'underwriter' ? 'text-[#8880d0]' : 'text-[#484642]'}`}>Full structural analysis · AFI · Loss envelope · Committee signals</span>
@@ -118,7 +128,7 @@ export function AppSidebar() {
                 : 'border-[#2a2820] text-[#686460] hover:bg-[#1e1d14] hover:border-[#3a3828] hover:text-[#b0aca0]'
             }`}
           >
-            <span className="text-[16px] w-6 text-center flex-shrink-0">◈</span>
+            <span className="text-[16px] w-6 text-center flex-shrink-0">◆</span>
             <span className="flex-1">
               <span className="block text-[11px] font-bold">Company View</span>
               <span className={`hidden lg:block text-[9px] mt-[2px] ${perspective === 'company' ? 'text-[#4a9060]' : 'text-[#484642]'}`}>Executive summary · Insurance cost · Premium reduction levers</span>
@@ -127,25 +137,42 @@ export function AppSidebar() {
         </div>
       </div>
 
-      {/* Footer actions — hidden on mobile unless toggled */}
+      {/* Demo shortcuts */}
       <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-[10px] py-3 border-t border-[#1e1d14]`}>
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] px-2 pb-[6px]">Demo Shortcuts</div>
         <button
           onClick={() => { document.dispatchEvent(new CustomEvent('open-demo-pitch')); setMobileNavOpen(false); }}
-          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-[#a0a09a] text-[12px] transition-colors"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[#c0bca8] hover:text-[#e8e4d8] hover:bg-[#201e14] hover:translate-x-[2px] text-[11px] font-medium transition-all border border-[#2e2c22] bg-[#1a1910] mb-[6px]"
         >
-          <span className="text-primary">▶</span> Demo Mode · 3-Min Pitch
+          <span className="text-[9px] text-primary flex-shrink-0">▶</span> Demo Mode · 3-Min Pitch
         </button>
         <button
           onClick={() => { document.dispatchEvent(new CustomEvent('open-company-demo')); setMobileNavOpen(false); }}
-          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md mt-1 text-[#4ab854] hover:text-[#60d870] text-[11px] font-semibold transition-colors bg-gradient-to-r from-[#0d1a0a] to-[#0a1f0a] border border-[#1a4a1a] rounded-[7px]"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[#c0bca8] hover:text-[#e8e4d8] hover:bg-[#201e14] hover:translate-x-[2px] text-[11px] font-medium transition-all border border-[#2e2c22] bg-[#1a1910]"
         >
-          <span>▶</span> Company Demo · 3 Scenarios
+          <span className="text-[9px] text-primary flex-shrink-0">▶</span> Company Demo · 3 Scenarios
+        </button>
+      </div>
+
+      {/* Footer */}
+      <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-[10px] py-3 border-t border-[#1e1d14]`}>
+        <button
+          onClick={() => { setPerspective('underwriter'); setActiveStep(6); setMobileNavOpen(false); }}
+          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-[#a0a09a] hover:bg-[#1a1910] text-[12px] transition-colors"
+        >
+          <span className="text-[11px] flex-shrink-0">◈</span> Methodology
         </button>
         <button
-          onClick={resetAnalysis}
-          className="w-full flex items-center gap-2 px-[10px] py-[7px] mt-2 rounded-md text-[#686460] hover:text-fragile text-[11px] border border-[#2a2820] hover:border-fragile/30 transition-all"
+          onClick={() => { setPerspective('underwriter'); setActiveStep(6); setMobileNavOpen(false); }}
+          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-[#a0a09a] hover:bg-[#1a1910] text-[12px] transition-colors"
         >
-          <span className="text-[12px]">↺</span> <span>Reset Analysis</span>
+          <span className="text-[11px] flex-shrink-0">⚙</span> Assumptions
+        </button>
+        <button
+          onClick={() => { if (confirm('Reset analysis? All progress will be lost.')) { resetAnalysis(); setMobileNavOpen(false); } }}
+          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-fragile hover:bg-[#1a1910] text-[11px] border border-[#2a2820] hover:border-fragile/30 transition-all mt-1"
+        >
+          <span className="text-[12px]">↺</span> Reset Analysis
         </button>
       </div>
     </aside>
