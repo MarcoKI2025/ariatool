@@ -611,79 +611,83 @@ export function CompanyView() {
       </div>
 
       {/* HERO SECTION */}
-      {/* HERO SECTION */}
-      <div ref={heroRef} style={{ padding: '36px 36px 32px' }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 7 }}>
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: bandColor, animation: 'pulse-dot 2s infinite' }} />
+      <div ref={heroRef} className="px-10 pt-10 pb-8">
+        <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3 flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: bandColor, animation: 'pulse-dot 2s infinite' }} />
           Company View · AI Risk Executive Summary · {now}
         </div>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20, marginBottom: 6 }}>
-          <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', color: 'hsl(var(--tx))' }}>{companyName}</div>
-          {/* AFI Mini Gauge */}
-          <div style={{ flexShrink: 0, textAlign: 'center', paddingTop: 4 }}>
+        <div className="flex items-start justify-between gap-6 mb-2">
+          <div className="text-[36px] font-bold tracking-tight text-foreground">{companyName}</div>
+          <div className="flex-shrink-0 text-center pt-1">
             <CvAfiGauge afi={afi} band={band} />
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', marginTop: 2, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Fragility Score</div>
+            <div className="text-[10px] text-muted-foreground mt-1 tracking-[0.06em] uppercase">Fragility Score</div>
           </div>
         </div>
-        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', marginBottom: 32 }}>{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
+        <div className="text-sm text-secondary-foreground mb-10">{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Premium card */}
-          <div className="card" style={{ borderTop: `4px solid hsl(var(--pur))`, padding: '24px 24px 20px', borderRadius: 14 }}>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Estimated Annual AI Insurance Premium</div>
-            <div style={{ fontSize: 28, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))', marginTop: 8, marginBottom: 10 }}>{fmtK(sim.lo)} – {fmtK(sim.hi)}</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, marginBottom: 8 }}>Based on structural governance assessment. Indicative range for committee orientation.</div>
-            <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))' }}>
-              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>After governance improvements →</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{fmtK(sim.mid)}</span>
-                <span style={{ fontSize: 14, color: 'hsl(var(--t3))' }}>→</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--grn))' }}>{fmtK(Math.round(sim.mid * 0.55 / 10) * 10)}</span>
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', background: 'hsl(var(--gb))', color: 'hsl(var(--grn))', border: '1px solid hsl(var(--gbr))', borderRadius: 4 }}>Save ~45%</span>
+          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid hsl(var(--pur))` }}>
+            <div className="p-7">
+              <div className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-muted-foreground">Estimated Annual AI Insurance Premium</div>
+              <div className="text-[30px] font-bold font-mono text-primary mt-3 mb-3">{fmtK(sim.lo)} – {fmtK(sim.hi)}</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed mb-4">Based on structural governance assessment. Indicative range for committee orientation.</div>
+              <div className="pt-5 border-t border-border">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-[0.08em] mb-3">After governance improvements →</div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[15px] font-bold font-mono text-fragile">{fmtK(sim.mid)}</span>
+                  <span className="text-[15px] text-muted-foreground">→</span>
+                  <span className="text-[15px] font-bold font-mono text-stable">{fmtK(Math.round(sim.mid * 0.55 / 10) * 10)}</span>
+                  <span className="text-[10px] font-bold py-1 px-2.5 bg-stable-bg text-stable border border-stable-border rounded">Save ~45%</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Risk card */}
-          <div className="card" style={{ borderTop: `4px solid ${bandColor}`, padding: '24px 24px 20px', borderRadius: 14 }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Overall AI Risk</div>
-            <div style={{ fontSize: 22, fontWeight: 700, color: bandColor, marginTop: 8, marginBottom: 10 }}>{band} — Score {structuralScore}/100</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>
-              {band === 'Fragile' ? 'Above underwriting tolerance. Structural remediation required before standard coverage.' :
-               band === 'Sensitive' ? 'Approaching threshold. Conditional review process with 90-day improvement plan.' :
-               'Within tolerance. Standard coverage terms apply.'}
-            </div>
-            <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))', display: 'flex', gap: 10 }}>
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>AFI</div>
-                <div style={{ fontSize: 17, fontWeight: 700, fontFamily: 'var(--font-mono)', color: bandColor }}>{afi.toFixed(2)}</div>
+          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid ${bandColor}` }}>
+            <div className="p-7">
+              <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Overall AI Risk</div>
+              <div className="text-[24px] font-bold mt-3 mb-3" style={{ color: bandColor }}>{band} — Score {structuralScore}/100</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed">
+                {band === 'Fragile' ? 'Above underwriting tolerance. Structural remediation required before standard coverage.' :
+                 band === 'Sensitive' ? 'Approaching threshold. Conditional review process with 90-day improvement plan.' :
+                 'Within tolerance. Standard coverage terms apply.'}
               </div>
-              <div style={{ width: 1, background: 'hsl(var(--bd))' }} />
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>ECI</div>
-                <div style={{ fontSize: 17, fontWeight: 700, fontFamily: 'var(--font-mono)', color: bandColor }}>ECI-{eciTier}</div>
-              </div>
-              <div style={{ width: 1, background: 'hsl(var(--bd))' }} />
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>Band</div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: bandColor }}>{band}</div>
+              <div className="mt-5 pt-5 border-t border-border flex gap-4">
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">AFI</div>
+                  <div className="text-lg font-bold font-mono" style={{ color: bandColor }}>{afi.toFixed(2)}</div>
+                </div>
+                <div className="w-px bg-border" />
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">ECI</div>
+                  <div className="text-lg font-bold font-mono" style={{ color: bandColor }}>ECI-{eciTier}</div>
+                </div>
+                <div className="w-px bg-border" />
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">Band</div>
+                  <div className="text-sm font-bold" style={{ color: bandColor }}>{band}</div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Regulatory card */}
-          <div className="card" style={{ borderTop: '4px solid hsl(var(--amb))', padding: '24px 24px 20px', borderRadius: 14 }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Regulatory Exposure</div>
-            <div style={{ fontSize: 22, fontWeight: 700, color: 'hsl(var(--amb))', marginTop: 8, marginBottom: 10 }}>High-Risk (Annex III)</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.</div>
-            <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))' }}>
-              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Compliance window</div>
-              <div style={{ background: 'hsl(var(--s2))', borderRadius: 6, overflow: 'hidden', height: 6 }}>
-                <div style={{ height: '100%', background: 'linear-gradient(90deg, #146030, #208040)', width: '40%' }} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Today</span>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Aug 2026</span>
+          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: '4px solid hsl(var(--amb))' }}>
+            <div className="p-7">
+              <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Regulatory Exposure</div>
+              <div className="text-[24px] font-bold text-sensitive mt-3 mb-3">High-Risk (Annex III)</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed">EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.</div>
+              <div className="mt-5 pt-5 border-t border-border">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-[0.08em] mb-3">Compliance window</div>
+                <div className="bg-secondary rounded-md overflow-hidden h-2">
+                  <div className="h-full rounded-md" style={{ background: 'linear-gradient(90deg, #146030, #208040)', width: '40%' }} />
+                </div>
+                <div className="flex justify-between mt-2">
+                  <span className="text-[10px] text-muted-foreground">Today</span>
+                  <span className="text-[10px] text-muted-foreground">Aug 2026</span>
+                </div>
               </div>
             </div>
           </div>
