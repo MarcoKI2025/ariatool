@@ -473,7 +473,7 @@ function Slide8({ onClose }: { onClose: () => void }) {
 // SLIDE 9: COMPANY VIEW
 // ═══════════════════════════════════════════════════════════════════
 
-function Slide9() {
+function Slide9({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#60d090">Company View · Financial Decision Engine</Eyebrow>
