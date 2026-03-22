@@ -476,7 +476,7 @@ export function CompanyView() {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_340px] gap-0 px-4 sm:px-7 py-5">
           {/* LEFT: Input controls */}
           <div className="pr-0 md:pr-6 md:border-r border-b md:border-b-0 border-border pb-5 md:pb-0 flex flex-col gap-4">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-[14px]">
               {/* Autonomy */}
               <div>
                 <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
@@ -502,7 +502,7 @@ export function CompanyView() {
                 </div>
               </div>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-[14px]">
               {/* Criticality */}
               <div>
                 <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
