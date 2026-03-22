@@ -96,7 +96,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
   return (
-    <div style={{ margin: 0, background: 'hsl(var(--chrome-bg))', borderBottom: '1px solid hsl(var(--chrome-border))' }}>
+    <div style={{ margin: 0, background: 'hsl(220 16% 13%)', borderBottom: '1px solid hsl(220 10% 24%)' }}>
       <div style={{ padding: '0 28px' }}>
         {/* Row 1: Risk Index + Loss Exposure + Industry Comparison */}
         <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(var(--chrome-border))' }}>
