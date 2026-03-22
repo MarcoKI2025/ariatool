@@ -366,19 +366,71 @@ export function ExecutiveReport() {
         </div>
       </div>
 
-      {/* Print overlay */}
+      {/* Board Executive Summary Overlay */}
       {showOverlay && (
-        <div className="fixed inset-0 bg-black/50 z-[3000] flex items-start justify-center p-6 overflow-y-auto" onClick={() => setShowOverlay(false)}>
-          <div className="bg-white w-[820px] max-w-full rounded shadow-2xl" onClick={e => e.stopPropagation()}>
-            <div className="sticky top-0 bg-background border-b border-border px-4 py-[10px] flex items-center justify-between rounded-t z-10">
-              <span className="text-[11px] font-bold text-foreground tracking-[0.04em]">Executive Report — Print Preview</span>
+        <div className="fixed inset-0 bg-black/70 z-[3000] flex items-start justify-center p-6 overflow-y-auto" onClick={() => setShowOverlay(false)}>
+          <div className="bg-card w-[860px] max-w-full rounded-xl shadow-2xl border border-border" onClick={e => e.stopPropagation()}>
+            <div className="sticky top-0 bg-card border-b border-border px-6 py-3 flex items-center justify-between rounded-t-xl z-10">
+              <div>
+                <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[2px]">◈ Board Executive Summary</div>
+                <div className="text-[13px] font-bold text-foreground">AI Governance Assessment — Decision Brief</div>
+              </div>
               <div className="flex gap-2">
-                <button onClick={() => window.print()} className="px-3 py-1 bg-primary text-primary-foreground rounded text-[11px] font-semibold">Print</button>
-                <button onClick={() => setShowOverlay(false)} className="px-3 py-1 border border-border rounded text-[11px] text-muted-foreground">Close</button>
+                <button onClick={() => { navigator.clipboard.writeText(buildExecutiveReport(inputs, results)); toast.success('Copied to clipboard'); }} className="px-3 py-1 bg-secondary text-foreground border border-border rounded text-[11px] font-semibold hover:bg-muted">📋 Copy</button>
+                <button onClick={() => window.print()} className="px-3 py-1 bg-primary text-primary-foreground rounded text-[11px] font-semibold">🖨️ Print</button>
+                <button onClick={() => setShowOverlay(false)} className="px-3 py-1 border border-border rounded text-[11px] text-muted-foreground hover:bg-secondary">✕ Close</button>
               </div>
             </div>
-            <div className="p-[52px] px-[60px] text-[11px] text-foreground leading-relaxed font-sans">
-              <pre className="whitespace-pre-wrap font-sans text-[11px]">{buildExecutiveReport(inputs, results)}</pre>
+            <div className="p-8">
+              {/* Header */}
+              <div className="text-center mb-6 pb-6 border-b border-border">
+                <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">CONFIDENTIAL — AI Governance Infrastructure Layer</div>
+                <div className="text-[22px] font-extrabold text-foreground mb-1">AI Systemic Risk Assessment</div>
+                <div className="text-[13px] text-muted-foreground">{inputs.companyName || 'Entity'} · {inputs.industry || 'Industry'} · {formatDate()}</div>
+              </div>
+              {/* Verdict */}
+              <div className={`rounded-xl p-5 mb-5 border-2 ${band === 'Fragile' ? 'bg-fragile-bg border-fragile' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' : 'bg-stable-bg border-stable'}`}>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className={`text-[18px] font-extrabold ${bandColor}`}>{band.toUpperCase()} — AFI {afi.toFixed(2)}</div>
+                    <div className="text-[12px] text-muted-foreground mt-1">{decisionClass}</div>
+                  </div>
+                  <div className={`text-[48px] font-extrabold font-mono ${bandColor}`}>{afi.toFixed(2)}</div>
+                </div>
+              </div>
+              {/* Key metrics */}
+              <div className="grid grid-cols-4 gap-3 mb-5">
+                {[
+                  { l: 'Expected Loss', v: formatCurrency(lossEnvelope.expected) },
+                  { l: 'Stress Scenario', v: `€${lossEnvelope.stress.toFixed(1)}M` },
+                  { l: 'Tail Risk (99th)', v: `€${lossEnvelope.tail.toFixed(1)}M` },
+                  { l: 'Portfolio Aggregate', v: `€${Math.round(lossEnvelope.portfolio)}M` },
+                ].map((m, i) => (
+                  <div key={i} className="bg-secondary border border-border rounded-lg p-3 text-center">
+                    <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.l}</div>
+                    <div className="text-[18px] font-bold font-mono text-foreground">{m.v}</div>
+                  </div>
+                ))}
+              </div>
+              {/* Required Actions */}
+              <div className="mb-5">
+                <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Required Underwriting Actions</div>
+                <div className="space-y-2">
+                  {['Apply mandatory premium loading (150–180%)', 'Require dependency diversification within 90 days', 'Enforce quarterly governance re-authorisation', 'Limit coverage to operational layers'].map((a, i) => (
+                    <div key={i} className="flex items-start gap-2 text-[12px] text-foreground">
+                      <span className="text-fragile font-bold">{i + 1}.</span> {a}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Epistemic note */}
+              <div className="p-4 bg-secondary border border-border rounded-lg text-[11px] text-muted-foreground leading-[1.6]">
+                <strong className="text-foreground">Epistemic Status:</strong> This assessment is a structural governance signal — not actuarially certified. All loss figures are market-calibrated proxies. Use with actuarial validation for binding decisions. This document constitutes a formal governance assessment intended for risk committee, board, and reinsurer review only.
+              </div>
+              {/* Footer */}
+              <div className="mt-6 pt-4 border-t border-border text-center text-[9px] text-muted-foreground">
+                AI Governance Engine v3.0 · AGAF Framework · Generated {formatDate()} · CONFIDENTIAL
+              </div>
             </div>
           </div>
         </div>

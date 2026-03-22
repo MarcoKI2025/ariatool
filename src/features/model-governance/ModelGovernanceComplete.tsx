@@ -39,6 +39,9 @@ export function ModelGovernanceComplete() {
       <FrameworkAssumptions />
       <NonGoals />
       <MeaningDriftRegister />
+      <RFSIPanel />
+      <FDAPanel />
+      <EvaluationLimitsPanel />
       <MethodologyWhitePaper />
       <EpistemicLimitations />
       <RegulatoryAlignment />
