@@ -57,15 +57,15 @@ export function AppHeader() {
       </header>
 
       {/* Governance Intelligence Layer Banner */}
-      <div className="hidden md:flex items-center gap-[10px] px-4 lg:px-[30px] py-[10px] flex-shrink-0 border-b" style={{ background: '#1a1910', borderColor: '#3a3828' }}>
-        <span className="text-[14px] flex-shrink-0" style={{ color: '#a8a49c' }}>◈</span>
-        <span className="text-[11px] leading-[1.5] flex-1" style={{ color: '#a8a49c' }}>
-          <strong style={{ color: '#c0bcdc', fontWeight: 600 }}>Governance Intelligence Layer — Not a standalone underwriting or pricing engine.</strong>{' '}
+      <div className="hidden md:flex items-center gap-[10px] px-4 lg:px-[30px] py-[10px] flex-shrink-0 border-b border-chrome-border bg-chrome">
+        <span className="text-[14px] flex-shrink-0 text-chrome-fg-muted">◈</span>
+        <span className="text-[11px] leading-[1.5] flex-1 text-chrome-fg-muted">
+          <strong className="text-chrome-fg-bright font-semibold">Governance Intelligence Layer — Not a standalone underwriting or pricing engine.</strong>{' '}
           Outputs are structural governance signals and directional estimates for committee review.
           Loss figures are market-calibrated proxies, not actuarially certified.
           Self-attested inputs. No backtesting. Use with actuarial validation for binding decisions.
         </span>
-        <div className="hidden lg:inline-flex items-center gap-[5px] px-[9px] py-[3px] rounded text-[9px] font-bold tracking-[0.07em] uppercase flex-shrink-0 whitespace-nowrap" style={{ background: '#4038b8', color: '#fff', borderRadius: '4px' }}>
+        <div className="hidden lg:inline-flex items-center gap-[5px] px-[9px] py-[3px] rounded text-[9px] font-bold tracking-[0.07em] uppercase flex-shrink-0 whitespace-nowrap bg-primary text-primary-foreground">
           ◈ Decision Support · Not Decision Making
         </div>
       </div>

@@ -56,14 +56,14 @@
     --radius: 0.5rem;
 
     /* Dark chrome (sidebar + dark cards) */
-    --nav: 48 20% 6%;      /* #141410 */
-    --chrome-bg: 48 20% 6%;
-    --chrome-bg-hover: 42 12% 10%;
-    --chrome-bg-active: 42 12% 12%;
-    --chrome-fg: 40 4% 75%;     /* #c0bcb0 — good readable body on dark */
-    --chrome-fg-bright: 40 6% 93%; /* #eeeadc — bright headings on dark */
-    --chrome-fg-muted: 40 4% 62%; /* #9e9a90 — readable labels on dark */
-    --chrome-border: 42 12% 20%;   /* #363220 — visible borders */
+    --nav: 48 20% 6%;      /* #141410 — sidebar stays dark */
+    --chrome-bg: 220 10% 18%;    /* #282c32 — dark slate, readable */
+    --chrome-bg-hover: 220 8% 22%;
+    --chrome-bg-active: 220 8% 25%;
+    --chrome-fg: 40 4% 80%;     /* #cdc9c0 — good readable body on dark */
+    --chrome-fg-bright: 40 6% 95%; /* #f2eee2 — bright headings on dark */
+    --chrome-fg-muted: 40 4% 65%; /* #a8a4a0 — readable labels on dark */
+    --chrome-border: 220 8% 28%;   /* #424850 — visible borders */
     --chrome-accent: 245 52% 58%;
 
     /* Semantic status */
