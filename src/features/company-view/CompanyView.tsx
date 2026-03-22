@@ -694,7 +694,7 @@ export function CompanyView() {
       <FinancialDecisionEngine afi={afi} band={band} sim={sim} inputs={inputs} />
 
       {/* ══ STRATEGIC INTERPRETATION ══ */}
-      <StrategicInterpretation band={band} />
+      <StrategicInterpretation band={band} components={components} />
 
       {/* COST DRIVERS */}
       <div style={{ padding: '28px 36px 0' }}>
