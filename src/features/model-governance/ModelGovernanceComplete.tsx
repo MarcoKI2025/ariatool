@@ -71,7 +71,7 @@ function ModelGovernanceRegister() {
       <div className="p-[16px_22px] border-b border-border flex items-center justify-between">
         <div>
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Model Governance Register · AGAF v3.0 · Required for audit trail</div>
-          <div className="text-[15px] font-bold text-white">Model Governance & Validation Status</div>
+          <div className="text-[15px] font-bold text-foreground">Model Governance & Validation Status</div>
         </div>
         <div className="text-right">
           <div className="text-[9px] text-secondary-foreground mb-1">Validation Status</div>
@@ -90,7 +90,7 @@ function ModelGovernanceRegister() {
         ].map((item, i) => (
           <div key={i} className={`p-[14px_18px] ${i < 2 ? 'border-r border-border' : ''}`}>
             <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-[5px]">{item.label}</div>
-            <div className="text-[13px] font-bold text-white mb-[3px]">{item.title}</div>
+            <div className="text-[13px] font-bold text-foreground mb-[3px]">{item.title}</div>
             <div className="text-[10px] text-secondary-foreground leading-[1.4]">{item.desc}</div>
           </div>
         ))}
@@ -170,7 +170,7 @@ function FrameworkAssumptions() {
     { status: 'lim' as const, title: 'Alignment claims are verifiable', desc: 'The AFI does not — and cannot — verify that the assessed system is "aligned" in any strong sense. There is no external ground truth for AI governance fragility. The score is a structural signal, not a safety certification.', degrade: 'This limitation is permanent and structural, not a gap to be closed by future calibration. "What Are We Aligning To?" (AGAF, Jan 2026) establishes this boundary formally.' },
   ];
 
-  const iconMap = { holds: { icon: '✓', cls: 'bg-stable text-white' }, cond: { icon: '~', cls: 'bg-sensitive text-white' }, lim: { icon: '✗', cls: 'bg-fragile text-white' } };
+  const iconMap = { holds: { icon: '✓', cls: 'bg-stable text-foreground' }, cond: { icon: '~', cls: 'bg-sensitive text-foreground' }, lim: { icon: '✗', cls: 'bg-fragile text-foreground' } };
 
   return (
     <div className="bg-card border border-border rounded-xl p-5 mb-5">
@@ -265,7 +265,7 @@ function MeaningDriftRegister() {
       <div className="bg-card border border-border rounded-lg p-4 mb-4">
         <div className="text-[9px] font-bold tracking-wider uppercase text-primary mb-2">§8 · Consequence Externalization — Root Cause of Drift</div>
         <div className="text-[11px] text-secondary-foreground leading-[1.55] mb-[6px]">
-          AGAF §8 identifies consequence externalization as the structural root beneath behavioral alignment decay: when the costs of reinterpretation are fully absorbed by rollback, retraining, and governance intervention, <em className="text-white">interpretation becomes cheap</em>. The system has no internal incentive to preserve stable governance alignment.
+          AGAF §8 identifies consequence externalization as the structural root beneath behavioral alignment decay: when the costs of reinterpretation are fully absorbed by rollback, retraining, and governance intervention, <em className="text-foreground">interpretation becomes cheap</em>. The system has no internal incentive to preserve stable governance alignment.
         </div>
         <div className="grid grid-cols-2 gap-2 mt-2">
           <div className="bg-secondary border border-border rounded-md p-[9px_11px]">
@@ -435,7 +435,7 @@ function CalibrationParameters() {
         ].map((p, i) => (
           <div key={i} className="bg-secondary border border-border rounded-lg p-3 text-center">
             <div className="text-[10px] font-mono font-bold text-primary mb-1">{p.label}</div>
-            <div className="text-[18px] font-bold font-mono text-white">{p.value}</div>
+            <div className="text-[18px] font-bold font-mono text-foreground">{p.value}</div>
             <div className="text-[9px] text-secondary-foreground mt-1 leading-[1.3]">{p.sub}</div>
           </div>
         ))}
@@ -443,7 +443,7 @@ function CalibrationParameters() {
       <div className="flex items-start gap-3 p-3 bg-secondary border border-border rounded-lg">
         <span className="text-primary text-[14px] mt-0.5">⚙</span>
         <div>
-          <div className="text-[11px] font-bold text-white mb-1">For Portfolio-Specific Calibration</div>
+          <div className="text-[11px] font-bold text-foreground mb-1">For Portfolio-Specific Calibration</div>
           <div className="text-[10px] text-secondary-foreground leading-[1.6]">Replace default multipliers with your own actuarial assumptions by modifying the four constants: <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">ANCHOR</code>, <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">STRESS_MULT</code>, <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">TAIL_MULT</code>, <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">PORT_FACTOR</code>. The governance signal (AFI, RFS, MDR) is independent of the loss calibration.</div>
         </div>
       </div>
@@ -538,7 +538,7 @@ function FDAPanel() {
                   alert.sev === 'critical' ? 'bg-fragile-bg' : alert.sev === 'high' ? 'bg-sensitive-bg' : 'bg-secondary'
                 }`}>
                   <span className={`text-[9px] font-bold tracking-wider uppercase px-[7px] py-[2px] rounded ${
-                    alert.sev === 'critical' ? 'bg-fragile text-white' : alert.sev === 'high' ? 'bg-sensitive text-white' : 'bg-muted text-muted-foreground'
+                    alert.sev === 'critical' ? 'bg-fragile text-foreground' : alert.sev === 'high' ? 'bg-sensitive text-foreground' : 'bg-muted text-muted-foreground'
                   }`}>{alert.sev}</span>
                   <span className="text-[12px] font-bold text-foreground">{alert.title}</span>
                 </div>
@@ -604,7 +604,7 @@ function EpistemicLimitations() {
     <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
       <div className="p-6">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-2">◈ Epistemic Status · What This Assessment Cannot Guarantee</div>
-        <div className="text-[18px] font-bold text-white mb-3">You Cannot Rely on This Evaluation</div>
+        <div className="text-[18px] font-bold text-foreground mb-3">You Cannot Rely on This Evaluation</div>
         <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-5 max-w-[700px]">
           This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment.
         </div>
