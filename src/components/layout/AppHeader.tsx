@@ -56,6 +56,14 @@ export function AppHeader() {
         </div>
       </header>
 
+      {/* Use Restriction Banner */}
+      <div className="flex items-center gap-[8px] px-4 lg:px-[30px] py-[7px] flex-shrink-0 border-b bg-fragile-bg border-fragile-border">
+        <span className="text-[10px] text-fragile font-bold flex-shrink-0">⚠</span>
+        <span className="text-[10px] text-fragile font-semibold tracking-[0.02em]">
+          FOR DEMONSTRATION, EVALUATION & INTERNAL STRUCTURING PURPOSES ONLY — Not for binding underwriting, regulatory submission, or capital allocation decisions.
+        </span>
+      </div>
+
       {/* Governance Intelligence Layer Banner */}
       <div className="hidden md:flex items-center gap-[10px] px-4 lg:px-[30px] py-[10px] flex-shrink-0 border-b" style={{ background: '#1a1910', borderColor: '#3a3828' }}>
         <span className="text-[14px] flex-shrink-0" style={{ color: '#a8a49c' }}>◈</span>
