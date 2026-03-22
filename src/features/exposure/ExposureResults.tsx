@@ -442,7 +442,7 @@ export function ExposureResults() {
 
       {/* ═══ SCENARIO ROBUSTNESS ═══ */}
       <SectionCard title="Scenario Robustness Check" icon="🔬" subtitle="How stable is the current classification under parameter perturbation?">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { scenario: 'Oversight +1 Level', result: inputs.oversightLevel < 5 ? 'Potential band improvement' : 'Already at maximum', change: inputs.oversightLevel < 5 ? '↓ AFI' : '—', color: 'text-stable' },
             { scenario: 'Execution Authority +1', result: 'Likely band deterioration', change: '↑ AFI', color: 'text-fragile' },
