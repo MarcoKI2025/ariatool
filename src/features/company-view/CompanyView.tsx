@@ -187,7 +187,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
 
         {/* Exposure Trajectory */}
-        <div className="p-8 md:border-r border-border">
+        <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Exposure Trajectory · 12 Months</div>
           <div className="flex flex-col gap-3 mb-5">
             <div className="flex justify-between items-end">
