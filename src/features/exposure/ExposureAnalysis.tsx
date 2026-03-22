@@ -327,17 +327,17 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Bottom action bar */}
-      <div className="fixed bottom-0 left-[236px] right-0 flex flex-col items-center gap-2 px-10 py-5 z-10 bg-background">
+      <div className="fixed bottom-0 left-0 lg:left-[260px] right-0 flex flex-col items-center gap-2 px-4 sm:px-10 py-4 sm:py-5 z-10 bg-background">
         <button
           onClick={handleRunAnalysis}
-          className="w-full max-w-4xl bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white text-[15px] font-semibold rounded-xl py-4 px-8 border-none cursor-pointer tracking-[0.01em] shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+          className="w-full max-w-4xl bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white text-[13px] sm:text-[15px] font-semibold rounded-xl py-3.5 sm:py-4 px-6 sm:px-8 border-none cursor-pointer tracking-[0.01em] shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
         >
-          <span className="text-[16px]">▶</span>
+          <span className="text-[14px] sm:text-[16px]">▶</span>
           Generate AI Risk Assessment
           <span className="ml-1">→</span>
         </button>
-        <div className="text-[11px] text-muted-foreground tracking-[0.03em]">
-          Computes Risk Score · Insurance Cost Range · Regulatory Signal · Board-Ready Report · Takes ~10 seconds
+        <div className="text-[10px] sm:text-[11px] text-muted-foreground tracking-[0.03em] text-center">
+          Computes Risk Score · Insurance Cost Range · Regulatory Signal · Board-Ready Report
         </div>
       </div>
 
