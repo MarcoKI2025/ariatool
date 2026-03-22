@@ -39,7 +39,7 @@ export function InsuranceDecision() {
         <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-muted-foreground mb-3">
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
-        <div className={`text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
+        <div className={`text-[24px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
           {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
            decisionClass === 'Conditional Review' ? 'Conditional Review' :
            'Standard Coverage'}
@@ -51,7 +51,7 @@ export function InsuranceDecision() {
             ? 'Elevated structural signals require conditional review. Coverage available with mandatory improvement timeline.'
             : 'Structural exposure within manageable bounds. Standard underwriting process applies.'}
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Decision Class</div>
             <div className="text-[14px] font-bold text-foreground">{decisionClass}</div>
@@ -113,7 +113,7 @@ export function InsuranceDecision() {
         <div className="text-[11px] text-muted-foreground leading-[1.55] mb-4">
           AFI {afi.toFixed(2)} exceeds standard underwriting threshold. Structural risk requires committee-level review before coverage terms can be offered.
         </div>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
@@ -180,7 +180,7 @@ export function InsuranceDecision() {
 
       {/* ═══ 7. FINANCIAL EXPOSURE — LOSS ENVELOPE ═══ */}
       <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope" icon="📊" subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Expected scenario · median market outcome', color: 'text-foreground', highlight: false },
             { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', color: 'text-sensitive', highlight: false },
@@ -240,7 +240,7 @@ export function InsuranceDecision() {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },
@@ -270,7 +270,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 9. RISK POSITION + REQUIRED ACTIONS ═══ */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <SectionCard title="Risk Position" icon="📋">
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
             <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
@@ -311,7 +311,7 @@ export function InsuranceDecision() {
           'Governance cadence must be maintained. Structural changes require re-assessment.';
 
         return (
-          <div className={`rounded-none -mx-4 md:-mx-5 lg:-mx-7 mb-6 relative overflow-hidden ${bgMap[statusCls]}`}>
+          <div className={`rounded-none -mx-2 sm:-mx-4 md:-mx-5 lg:-mx-7 mb-6 relative overflow-hidden ${bgMap[statusCls]}`}>
             <div className="absolute top-0 left-0 right-0 h-[5px]" style={{ background: topBarMap[statusCls] }} />
             <div className="p-[28px_30px_24px]">
               <div className={`text-[9px] font-bold tracking-[0.12em] uppercase mb-2 flex items-center gap-[6px] ${eyebrowColorMap[statusCls]}`}>
@@ -319,7 +319,7 @@ export function InsuranceDecision() {
                 Governance Assessment Signal · AI Governance Engine · {inputs.companyName || '—'}
                 <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded ml-1">◈ Committee-Grade</span>
               </div>
-              <div className={`text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
+              <div className={`text-[24px] sm:text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
                 {statusText}
               </div>
               <div className={`text-[13px] leading-[1.55] mb-4 max-w-[700px] ${rationaleColorMap[statusCls]}`}>
@@ -329,7 +329,7 @@ export function InsuranceDecision() {
                 <span className="text-[18px] flex-shrink-0">{consIcon}</span>
                 <div className={`text-[11px] leading-[1.55] ${rationaleColorMap[statusCls]}`}>{consTxt}</div>
               </div>
-              <div className="grid grid-cols-4 gap-4 text-[10px]">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[10px]">
                 {[
                   { label: 'Decision Basis:', value: `AFI ${afi.toFixed(2)} · ${band} · ${afi >= 1.35 ? 'Above tolerance' : afi >= 0.85 ? 'Approaching threshold' : 'Within tolerance'}` },
                   { label: 'Valid Until:', value: band === 'Fragile' ? 'Next structural re-assessment' : 'Until next renewal or material change' },
@@ -358,7 +358,7 @@ export function InsuranceDecision() {
         }`}>
           ⊘ If This Decision Is Ignored — Structural Consequences
         </div>
-        <div className="grid grid-cols-3 gap-[10px]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-[10px]">
           {(band === 'Fragile' ? [
             { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading understates required reserves by 3–5×. Expected loss: ${formatCurrency(lossEnvelope.expected)}. Tail risk: ${formatCurrency(lossEnvelope.tail)}+.` },
             { ic: '⚖', title: 'Regulatory Penalty Exposure', body: 'Active Art. 26 §2 and Art. 72 obligations create immediate Art. 99 §4 exposure of up to €15M or 3% global turnover — independent of any loss event.' },
@@ -392,7 +392,7 @@ export function InsuranceDecision() {
       {/* ═══ 10. PREMIUM ESTIMATE ROW ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Premium Estimate & Structural Factors</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AFI Score</div>
             <div className={`text-[28px] font-bold font-mono leading-none ${bandColor}`}>{afi.toFixed(2)}</div>
@@ -451,7 +451,7 @@ export function InsuranceDecision() {
       </SectionCard>
 
       {/* ═══ 13. REINSURANCE TREATY IMPLICATIONS ═══ */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Excess-of-Loss XL Treaty</div>
           <div className="text-[13px] font-bold text-foreground mb-2">Reinsurance Layer Implications</div>
@@ -483,7 +483,7 @@ export function InsuranceDecision() {
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Existing Insurance applicable in Reinsurance</div>
         <div className="text-[14px] font-bold text-foreground mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: 'Cyber / Tech E&O', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
             { label: 'Professional Indemnity', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
@@ -532,7 +532,7 @@ export function InsuranceDecision() {
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-[6px]">What the Market Sees — AI Risk in Context</div>
           <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">How this framework positions relative to market</div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[14px] pb-[10px] border-b-2 border-border">Emerging AI Market Consensus</div>
             {[
@@ -565,7 +565,7 @@ export function InsuranceDecision() {
       {/* ═══ 18. WHAT THE INSURER PORTFOLIO SEES (dark) ═══ */}
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-2">◆ What the insurer portfolio sees</div>
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { label: 'Direct Entity Loss', value: formatCurrency(lossEnvelope.expected), color: 'text-sensitive' },
             { label: 'Correlated Cluster', value: formatCurrency(lossEnvelope.stress), color: 'text-fragile' },
@@ -602,7 +602,7 @@ export function InsuranceDecision() {
         <div className="text-[13px] text-foreground font-medium mb-3">
           If 8–15 entities share similar AI infrastructure, <strong className="text-fragile font-mono">systemic correlation risk emerges</strong> <span className="text-[10px] text-muted-foreground font-normal">— Swiss Re sigma 01/2026: Provider concentration creates accumulation risk</span>
         </div>
-        <div className="grid grid-cols-3 gap-3 mb-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
           <div className="bg-card border border-border rounded-lg p-3">
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Correlation Factor</div>
             <div className="text-[22px] font-bold font-mono text-foreground">{correlationFactor.toFixed(2)}</div>
@@ -642,7 +642,7 @@ export function InsuranceDecision() {
             {(inputs.providers?.length || 0) <= 1 ? 'Critical' : (inputs.providers?.length || 0) <= 2 ? 'Elevated' : 'Diversified'}
           </span>
         </div>
-        <div className="flex items-center justify-center gap-0 my-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-0 my-4">
           <div className="flex flex-col gap-2">
             {(inputs.providers?.length ? inputs.providers : ['No provider selected']).map((p, i) => (
               <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${inputs.providers?.length ? 'bg-fragile-bg border-fragile-border' : 'bg-secondary border-border opacity-40'}`}>
@@ -739,7 +739,7 @@ export function InsuranceDecision() {
       <div className="bg-purple-bg border border-purple-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-2">◈ Note for Insurer Buyers — Your Own AI Governance Exposure</div>
         <div className="text-[12px] font-semibold text-foreground mb-2">This tool assesses client deployments — but the same structural risks apply to the insurer's own AI systems.</div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             { title: 'Solvency II — ORSA Integration', desc: 'EU insurers must integrate AI governance risk into the Own Risk and Solvency Assessment (ORSA) under Solvency II Art. 45. AFI scores from your own AI deployments are directly relevant ORSA inputs.' },
             { title: 'Solvency II Art. 44/46 — Internal Control & Audit', desc: 'Art. 44 requires an effective internal control system — which must cover AI-assisted decision-making. Art. 46 requires internal audit independence.' },
@@ -768,7 +768,7 @@ export function InsuranceDecision() {
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-fragile mb-[6px]">⚖ EU AI Act — Art. 99 Regulatory Penalty Exposure</div>
           <div className="text-[13px] font-bold text-foreground mb-1">Statutory fine ceilings applicable to this deployment</div>
           <div className="text-[11px] text-secondary-foreground leading-[1.5] mb-[14px]">Penalties apply independently of AFI score or insurance status. A system within underwriting tolerance can still incur maximum fines.</div>
-          <div className="grid grid-cols-3 gap-3 mb-[14px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-[14px]">
             <div className="bg-fragile-bg border border-fragile-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-fragile mb-[6px]">Art. 99 §3 · Prohibited Practices</div>
               <div className="text-[24px] font-bold font-mono text-fragile leading-none mb-1">€35M</div>
@@ -853,7 +853,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* View nav footer */}
-      <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(3)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Scenario Simulation</button>
         <span className="text-[10px] text-muted-foreground italic">Step 4 of 6 · Insurance & financial exposure</span>
         <button onClick={() => setActiveStep(5)} className="view-nav-next">Executive Report →</button>

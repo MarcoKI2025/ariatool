@@ -68,19 +68,19 @@ export function ExposureResults() {
       </div>
 
       {/* Entity info */}
-      <div className="mb-5 flex items-center gap-3">
-        <h1 className="text-2xl font-bold text-foreground tracking-tight">{inputs.companyName || 'Assessment'}</h1>
+      <div className="mb-5 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">{inputs.companyName || 'Assessment'}</h1>
         <span className="text-[11px] text-secondary-foreground">{inputs.industry} · Analysis run {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-        <button onClick={showEditForm} className="ml-auto text-[11px] font-semibold text-primary hover:underline cursor-pointer bg-transparent border-none">✎ Edit Profile</button>
+        <button onClick={showEditForm} className="sm:ml-auto text-[11px] font-semibold text-primary hover:underline cursor-pointer bg-transparent border-none self-start">✎ Edit Profile</button>
       </div>
 
       {/* ═══ HERO SECTION ═══ */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="p-6 pb-4">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0<InfoTip text={TOOLTIPS.afi} /></div>
-          <div className="flex items-start gap-8">
+          <div className="flex flex-col md:flex-row items-start gap-4 md:gap-8">
             <div>
-              <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
+              <div className={`text-[48px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
               <div className="text-[11px] text-muted-foreground mt-1">{band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}</div>
             </div>
             <div className="flex-1">
@@ -140,7 +140,7 @@ export function ExposureResults() {
 
         <SectionCard title="AFI Component Breakdown" subtitle="Structural Dimensions">
           <AFIRadar dr={components.dr} jd={components.jd} rc={components.rc} cd={components.cd} na={components.na} />
-          <div className="grid grid-cols-5 gap-2 mt-3 text-center">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-3 text-center">
             {[
               { key: 'DR', val: components.dr, label: 'Delegation' },
               { key: 'JD', val: components.jd, label: 'Justification' },
@@ -170,7 +170,7 @@ export function ExposureResults() {
         <div className={`text-[17px] font-extrabold tracking-[0.01em] mb-[14px] ${bandColor}`}>
           {band === 'Fragile' ? 'COMMITTEE REVIEW REQUIRED' : band === 'Sensitive' ? 'CONDITIONAL REVIEW PROCESS' : 'STANDARD UNDERWRITING PROCESS'}
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Risk Status</div><div className="text-[12px] text-foreground leading-[1.55]">{band === 'Fragile' ? 'Committee review required' : band === 'Sensitive' ? 'Conditional review process' : 'Standard underwriting process'}</div></div>
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Required Action</div><div className="text-[12px] text-foreground leading-[1.55]">{band === 'Fragile' ? 'Apply 150–180% premium loading immediately. Structural change required within 90 days.' : band === 'Sensitive' ? 'Apply precautionary loading 80–120%. Governance review required.' : 'Standard terms. Maintain governance cadence.'}</div></div>
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Financial Consequence</div><div className="text-[12px] text-foreground leading-[1.55]">Exposure creates non-linear risk amplification. Tail scenarios materially elevated under correlated failure.</div></div>
@@ -261,7 +261,7 @@ export function ExposureResults() {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },
@@ -310,7 +310,7 @@ export function ExposureResults() {
         <div className="p-5">
           <div className="text-[13px] font-bold text-foreground mb-1">Indicative Risk Exposure Bands</div>
           <div className="text-[11px] text-muted-foreground mb-4">Qualitative risk characterization based on structural governance factors.</div>
-          <div className="grid grid-cols-3 gap-0 border border-border rounded-lg overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border border-border rounded-lg overflow-hidden">
             {[
               { label: 'Base Risk Band', value: lossEnvelope.expected < 2 ? 'Low' : lossEnvelope.expected < 5 ? 'Medium' : 'High', sub: 'Structural baseline', color: 'text-stable', conf: 'Directional' },
               { label: 'Elevated Risk Band', value: lossEnvelope.stress < 5 ? 'Medium' : lossEnvelope.stress < 12 ? 'High' : 'Critical', sub: 'Provider concentration factors', color: 'text-sensitive', conf: 'Committee-Grade' },
@@ -336,7 +336,7 @@ export function ExposureResults() {
       </div>
 
       {/* Calculation Snapshot Bar */}
-      <div className="flex items-center gap-4 px-4 py-[8px] bg-secondary border border-border rounded-lg mb-4 text-[9px] font-mono text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4 px-3 sm:px-4 py-[8px] bg-secondary border border-border rounded-lg mb-4 text-[9px] font-mono text-muted-foreground">
         <span className="font-bold tracking-wider uppercase text-foreground">Calc Snapshot</span>
         <span>Model: <strong className="text-foreground">GEE-v3.0</strong></span>
         <span>Run: <strong className="text-foreground">{new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</strong></span>
@@ -354,7 +354,7 @@ export function ExposureResults() {
       </div>
 
       {/* ═══ AGRI / ALRI / SCRI Panels ═══ */}
-      <div className="grid grid-cols-3 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         {[
           { icon: '⚡', label: 'AGRI — Agentic Risk', score: agri, tier: agriTier, color: agriColor, desc: 'Multi-agent orchestration · Tool-call authority · Persistent memory' },
           { icon: '⚠', label: 'ALRI — Liability Risk', score: alri, tier: alriTier, color: alriColor, desc: 'Hallucination · Deepfake · Prompt injection · Model drift · Bias' },
@@ -377,7 +377,7 @@ export function ExposureResults() {
 
       {/* ═══ REAL-TIME ADJUSTMENT SLIDERS ═══ */}
       <SectionCard title="Real-Time Adjustment Controls" icon="🎛️" subtitle="Adjust AFI component weights to explore sensitivity. Changes are exploratory — they do not modify the underlying assessment.">
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {[
             { key: 'dr', label: 'DR Adjustment', desc: 'Delegation Ratio modifier' },
             { key: 'jd', label: 'JD Adjustment', desc: 'Justificatory Density modifier' },
@@ -442,7 +442,7 @@ export function ExposureResults() {
 
       {/* ═══ SCENARIO ROBUSTNESS ═══ */}
       <SectionCard title="Scenario Robustness Check" icon="🔬" subtitle="How stable is the current classification under parameter perturbation?">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { scenario: 'Oversight +1 Level', result: inputs.oversightLevel < 5 ? 'Potential band improvement' : 'Already at maximum', change: inputs.oversightLevel < 5 ? '↓ AFI' : '—', color: 'text-stable' },
             { scenario: 'Execution Authority +1', result: 'Likely band deterioration', change: '↑ AFI', color: 'text-fragile' },
@@ -462,7 +462,7 @@ export function ExposureResults() {
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px] px-[18px]">
           <div className="text-[9px] tracking-wider uppercase text-muted-foreground font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
-          <div className="grid grid-cols-3 gap-[14px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-[14px]">
             <div>
               <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper I · EU AI Act Blind Spots</div>
               <div className="text-[10px] text-secondary-foreground leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-foreground">continuation</em>. Systems persist without re-authorisation.</div>
@@ -487,7 +487,7 @@ export function ExposureResults() {
           <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">What this engine measures — and others cannot</div>
           <div className="text-[13px] text-secondary-foreground max-w-[560px] leading-[1.6]">This is not a compliance tool. It is a structural risk detection layer that reveals exposure invisible to traditional underwriting models.</div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[14px] pb-[10px] border-b-2 border-border">Traditional Underwriting Models</div>
             {['Evaluate AI systems individually — systemic network effects remain invisible',

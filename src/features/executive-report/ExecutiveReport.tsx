@@ -42,7 +42,7 @@ function ResponsibilityOwnershipPanel({ results, inputs }: { results: AnalysisRe
           <div className="text-[10px] text-fragile/80 leading-[1.5]">The structural profile does not indicate a single identifiable actor with both authority and accountability. High delegation + low justificatory density + multi-provider dependency = responsibility vacuum — where consequences are distributed but authority is diffuse.</div>
         </div>
       )}
-      <div className="grid grid-cols-3 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         {[
           { label: 'Responsibility Fragmentation Score', val: fragScore, sub: 'Accountability distributed across multiple actors without clear assignment' },
           { label: 'Stewardship Clarity Index', val: stewScore, sub: 'No identifiable steward with authority to govern continuation' },

@@ -64,14 +64,14 @@ export function ExposureAnalysis() {
     <div>
       {/* Welcome banner */}
       {!dismissedWelcome && !analysisComplete && (
-        <div className="flex items-start gap-4 p-[18px] rounded-xl mb-5 border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--card)))' }}>
+        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-4 sm:p-[18px] rounded-xl mb-5 border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--card)))' }}>
           <div className="w-9 h-9 rounded-[9px] bg-primary flex items-center justify-center text-[16px] flex-shrink-0 text-white font-bold">⊕</div>
           <div className="flex-1">
             <div className="text-[15px] font-bold text-foreground mb-1 tracking-tight">Assess your AI risk exposure in 3 minutes</div>
             <div className="text-[12px] text-secondary-foreground leading-[1.6] mb-[10px]">
               Configure your AI deployment profile below — receive an executive risk score, estimated insurance cost range, and regulatory exposure signal ready for committee review.
             </div>
-            <div className="flex gap-5 flex-wrap">
+            <div className="flex gap-3 sm:gap-5 flex-wrap">
               {['Fill in your AI profile', 'Generate risk assessment', 'Review results & export to board'].map((txt, i) => (
                 <div key={i} className="flex items-center gap-[6px] text-[11px] text-secondary-foreground">
                   <span className="w-[18px] h-[18px] rounded-full bg-primary text-white inline-flex items-center justify-center text-[9px] font-bold flex-shrink-0">{i + 1}</span>
@@ -115,7 +115,7 @@ export function ExposureAnalysis() {
             <div className="text-[10px] text-secondary-foreground mt-[3px]">Click any scenario below to pre-fill all inputs instantly — then click "Generate AI Risk Assessment" to see the full analysis. Takes 10 seconds.</div>
           </div>
         </div>
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {DEMO_PROFILES.map((p, i) => (
             <button
               key={i}
@@ -153,7 +153,7 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Progress bar */}
-      <div className="flex items-center gap-0 mb-5">
+      <div className="hidden sm:flex items-center gap-0 mb-5">
         {PROGRESS_STEPS.map((step, i) => (
           <React.Fragment key={i}>
             <div className={`flex items-center gap-[6px] text-[10px] font-medium ${i <= progressIdx ? 'text-primary' : 'text-muted-foreground'}`}>
@@ -168,12 +168,12 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Two-column layout */}
-      <div className="grid grid-cols-[1fr_280px] gap-5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-5 items-start">
         {/* Left: form */}
         <div>
           {/* Company Profile */}
           <SectionCard title="Company Profile" icon="🏢" subtitle="Establish the entity and its AI deployment context for structural risk classification.">
-            <div className="grid grid-cols-2 gap-[14px] mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-3">
               <div>
                 <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Company Name</label>
                 <input
@@ -196,7 +196,7 @@ export function ExposureAnalysis() {
                 </select>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-[14px] mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-3">
               <div>
                 <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Company Size</label>
                 <select
@@ -266,7 +266,7 @@ export function ExposureAnalysis() {
         </div>
 
         {/* Right: Live interpretation panel */}
-        <div className="bg-card border border-border rounded-[10px] p-4 sticky top-2">
+        <div className="bg-card border border-border rounded-[10px] p-4 lg:sticky lg:top-2">
           <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-secondary-foreground mb-3">Real-time Risk Signal</div>
           <div className="flex items-end gap-3 mb-3">
             <span className={`text-[40px] font-bold font-mono leading-none ${
@@ -327,17 +327,17 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Bottom action bar */}
-      <div className="fixed bottom-0 left-[236px] right-0 flex flex-col items-center gap-2 px-10 py-5 z-10 bg-background">
+      <div className="fixed bottom-0 left-0 lg:left-[260px] right-0 flex flex-col items-center gap-2 px-4 sm:px-10 py-4 sm:py-5 z-10 bg-background">
         <button
           onClick={handleRunAnalysis}
-          className="w-full max-w-4xl bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white text-[15px] font-semibold rounded-xl py-4 px-8 border-none cursor-pointer tracking-[0.01em] shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+          className="w-full max-w-4xl bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white text-[13px] sm:text-[15px] font-semibold rounded-xl py-3.5 sm:py-4 px-6 sm:px-8 border-none cursor-pointer tracking-[0.01em] shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
         >
-          <span className="text-[16px]">▶</span>
+          <span className="text-[14px] sm:text-[16px]">▶</span>
           Generate AI Risk Assessment
           <span className="ml-1">→</span>
         </button>
-        <div className="text-[11px] text-muted-foreground tracking-[0.03em]">
-          Computes Risk Score · Insurance Cost Range · Regulatory Signal · Board-Ready Report · Takes ~10 seconds
+        <div className="text-[10px] sm:text-[11px] text-muted-foreground tracking-[0.03em] text-center">
+          Computes Risk Score · Insurance Cost Range · Regulatory Signal · Board-Ready Report
         </div>
       </div>
 

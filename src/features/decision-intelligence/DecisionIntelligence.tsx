@@ -66,7 +66,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO SCORE + ECI ═══ */}
-      <div className="grid grid-cols-[1fr_300px] gap-4 mb-0">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 mb-0">
         <div className="bg-card border border-border rounded-xl p-6">
           <div className="flex items-end gap-6">
             <div>
@@ -74,7 +74,7 @@ export function DecisionIntelligence() {
                 Structural Exposure Score<InfoTip text={TOOLTIPS.afi} />
                 <span className="ml-2 text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ Governance Signal</span>
               </div>
-              <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
+              <div className={`text-[48px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
               <div className="text-[11px] text-muted-foreground mt-1">
                 {band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}
               </div>
@@ -140,7 +140,7 @@ export function DecisionIntelligence() {
         'bg-stable-bg border-stable-border'
       }`}>
         <div className={`text-[9px] font-bold tracking-wider uppercase mb-2 ${bandColor}`}>Key Structural Signals</div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
             'System persists without explicit re-authorisation',
             'Dependency cannot be reversed without operational disruption',
@@ -159,7 +159,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO ACTIONS — Required Action pills + navigation ═══ */}
-      <div className="flex items-center justify-between mb-4 p-3 bg-card border border-border rounded-xl">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 p-3 bg-card border border-border rounded-xl gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[9px] text-muted-foreground font-bold tracking-[0.08em] uppercase mr-1">Required Action:</span>
           <span className={`px-3 py-1 rounded text-[10px] font-bold text-foreground ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>
@@ -264,7 +264,7 @@ export function DecisionIntelligence() {
         <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: 'linear-gradient(to right, #b53020, #c0392b, #4038b8)' }} />
         
         {/* Top section: judgment + classification badge */}
-        <div className="p-[22px_28px_18px] grid grid-cols-[1fr_auto] gap-6 items-start">
+        <div className="p-[18px_20px_18px] sm:p-[22px_28px_18px] grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-4 sm:gap-6 items-start">
           <div>
             <div className="text-[9px] font-bold tracking-[0.13em] uppercase text-primary mb-2 flex items-center gap-[6px]">
               <div className="w-1 h-1 rounded-full bg-[#7068e0]" />
@@ -322,7 +322,7 @@ export function DecisionIntelligence() {
         </div>
         
         {/* Bottom pills bar */}
-        <div className="px-7 py-3 border-t border-border bg-secondary flex items-center gap-4">
+        <div className="px-4 sm:px-7 py-3 border-t border-border bg-secondary flex flex-wrap items-center gap-2 sm:gap-4">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground flex-shrink-0">Structural Signals:</div>
           {(() => {
             const drPct = Math.round(components.dr * 100);
@@ -348,7 +348,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ AGRI / ALRI SUB-SCORE GRIDS ═══ */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">⚡ AGRI Sub-Scores</div>
           <div className="grid grid-cols-2 gap-2">
@@ -396,7 +396,7 @@ export function DecisionIntelligence() {
         <div className={`text-[18px] font-extrabold tracking-wider uppercase mb-3 ${bandColor}`}>
           {band === 'Fragile' ? 'Committee Review Required' : band === 'Sensitive' ? 'Conditional Review Process' : 'Standard Underwriting Process'}
         </div>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
@@ -425,8 +425,8 @@ export function DecisionIntelligence() {
             ? (pct < 40 ? 'bg-fragile' : pct < 60 ? 'bg-sensitive' : 'bg-stable')
             : (pct > 70 ? 'bg-fragile' : pct > 50 ? 'bg-sensitive' : 'bg-stable');
           return (
-            <div key={i} className="flex items-center gap-3 py-[9px] border-b border-border last:border-none">
-              <div className="w-[200px]">
+            <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 py-[9px] border-b border-border last:border-none">
+              <div className="w-full sm:w-[200px]">
                 <span className="text-[12px] text-foreground font-medium">{item.label}</span>
                 {item.tooltip && <InfoTip text={item.tooltip} />}
                 <div className="text-[9px] text-muted-foreground">{item.desc}</div>
@@ -442,7 +442,7 @@ export function DecisionIntelligence() {
 
       {/* ═══ FINANCIAL EXPOSURE ═══ */}
       <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope" icon="📊" subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Expected scenario · median market outcome', highlight: false, color: 'text-foreground' },
             { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', highlight: false, color: 'text-sensitive' },
@@ -482,7 +482,7 @@ export function DecisionIntelligence() {
       </SectionCard>
 
       {/* ═══ CONTINUATION / DEPENDENCY / PORTFOLIO ═══ */}
-      <div className="grid grid-cols-3 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         <div className="bg-card border border-border rounded-[10px] p-4">
           <div className="text-[11px] font-bold text-foreground mb-2">Continuation Risk</div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
@@ -517,7 +517,7 @@ export function DecisionIntelligence() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
           {[
             { label: 'Responsibility Fragmentation Score', value: respFragmentation, desc: 'Accountability is partially assigned — gaps exist at provider boundaries and cascade events.' },
             { label: 'Stewardship Clarity Index', value: stewardshipClarity, desc: 'Partial stewardship — oversight assignment exists but authority to sunset the system is unclear.' },
@@ -570,7 +570,7 @@ export function DecisionIntelligence() {
             <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-2">
               <div className={`h-full rounded-[3px] ${scri >= 65 ? 'bg-fragile' : scri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${scri}%` }} />
             </div>
-            <div className="grid grid-cols-4 gap-2 mt-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
               {[
                 { label: 'Cloud', value: inputs.cloudConcentration },
                 { label: 'Model', value: inputs.modelConcentration },
@@ -598,7 +598,7 @@ export function DecisionIntelligence() {
             <div className="h-[8px] bg-border rounded overflow-hidden mb-3">
               <div className="h-full rounded gradient-bar" style={{ width: `${compositeRiskIndex}%` }} />
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="text-center">
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AFI Component (50%)</div>
                 <div className="text-[18px] font-bold font-mono text-foreground">{Math.min(100, Math.round((afi / 3.0) * 100))}</div>
@@ -629,7 +629,7 @@ export function DecisionIntelligence() {
             <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-3">
               <div className={`h-full rounded-[3px] ${mdrTier === 'critical' ? 'bg-fragile' : mdrTier === 'high' ? 'bg-sensitive' : mdrTier === 'moderate' ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${mdr}%` }} />
             </div>
-            <div className="grid grid-cols-3 gap-3 mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
               {[
                 { label: 'Optimization Pressure', value: Math.round(((inputs.automation + inputs.actionDensity + inputs.executionAuthority) / 15) * 100) },
                 { label: 'Consequence Insulation', value: Math.round((1 - ((inputs.oversightLevel + inputs.reviewCadence) / 10)) * 100) },
@@ -668,7 +668,7 @@ export function DecisionIntelligence() {
           </div>
         </div>
         <div className="p-4">
-          <div className="grid grid-cols-4 gap-[10px] mb-[14px]">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-[10px] mb-[14px]">
             {[
               { label: 'Deployment Context Shift', value: rfsiDrivers.contextVariability, desc: 'Deployment context drift from alignment baseline' },
               { label: 'Behavioral Drift Risk', value: rfsiDrivers.semanticDriftRisk, desc: 'MDR-derived interpretive instability' },

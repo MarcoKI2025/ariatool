@@ -257,7 +257,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Score cards */}
-      <div className="grid grid-cols-5 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
         {[
           { label: 'Executive Risk', value: s.executiveRisk, sub: s.executiveLabel },
           { label: 'Continuation', value: s.continuation, sub: s.continuationLabel },
@@ -274,7 +274,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Recovery + Downtime */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-xl p-5 flex items-center gap-4">
           <div className="text-2xl">⏱</div>
           <div>
@@ -332,7 +332,7 @@ export function ScenarioSimulation() {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
           {s.cascadeLayers.map((node, i) => (
             <div key={i} className="text-center px-2 py-3 relative">
               {i < 4 && <span className="absolute right-[-11px] top-[38%] text-muted-foreground text-sm z-[1]">→</span>}
@@ -358,7 +358,7 @@ export function ScenarioSimulation() {
       {/* ═══ What Changes Under This Scenario ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">What Changes Under This Scenario</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-primary mb-2">Governance Impact</div>
             <div className="text-[11px] text-secondary-foreground leading-[1.55]">{s.whatChanges.governance}</div>
@@ -380,7 +380,7 @@ export function ScenarioSimulation() {
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Loss Envelope Shift Under Scenario</div>
           <div className="text-[11px] text-secondary-foreground mt-[2px]">How the loss bands change compared to baseline exposure</div>
         </div>
-        <div className="grid grid-cols-3 gap-0">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-0">
           {[
             { label: 'Expected Loss', baseline: lossEnvelope.expected, shifted: s.lossShift.expected, color: 'text-stable' },
             { label: 'Stress Loss', baseline: lossEnvelope.stress, shifted: s.lossShift.stress, color: 'text-sensitive' },
@@ -414,7 +414,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Implications */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border-l-4 border-l-fragile border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Underwriting Implication</div>
           <div className="text-[12px] text-muted-foreground leading-[1.55]">{s.underwritingImplication}</div>
@@ -472,9 +472,9 @@ export function ScenarioSimulation() {
       </div>
 
       {/* View nav footer */}
-      <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(2)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Decision Intelligence</button>
-        <span className="text-[10px] text-muted-foreground italic">Step 3 of 6 · Scenario stress testing</span>
+        <span className="text-[10px] text-muted-foreground italic hidden sm:inline">Step 3 of 6 · Scenario stress testing</span>
         <button onClick={() => setActiveStep(4)} className="view-nav-next">Insurance Decision →</button>
       </div>
     </div>
