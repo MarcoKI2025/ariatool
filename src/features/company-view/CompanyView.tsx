@@ -652,8 +652,6 @@ export function CompanyView() {
 
       {/* ══ STRATEGIC INTERPRETATION ══ */}
       <StrategicInterpretation band={band} />
-        </div>
-      </div>
 
       {/* COST DRIVERS */}
       <div style={{ padding: '28px 36px 0' }}>
