@@ -417,20 +417,17 @@ export function CompanyView() {
   return (
     <div style={{ position: 'relative' }}>
       {/* Sticky mini header */}
-      <div style={{
-        position: 'sticky', top: 0, zIndex: 10,
-        background: 'hsl(var(--sf))', borderBottom: '1px solid hsl(var(--bd))',
-        padding: '10px 36px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+      <div className="sticky top-0 z-10 bg-card border-b border-border px-3 sm:px-9 py-2.5 flex items-center justify-between gap-3" style={{
         opacity: showSticky ? 1 : 0, transform: showSticky ? 'none' : 'translateY(-4px)',
         transition: 'opacity .2s, transform .2s', pointerEvents: showSticky ? 'auto' : 'none',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: 'hsl(var(--tx))' }}>{companyName}</span>
+        <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
+          <span className="text-[12px] sm:text-[13px] font-bold text-foreground truncate">{companyName}</span>
           <span className={band === 'Fragile' ? 'badge-fragile' : band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'} style={{ fontSize: 10, padding: '4px 10px', borderRadius: 5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{band}</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          <span style={{ fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{fmtK(sim.lo)} – {fmtK(sim.hi)} / yr</span>
-          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-p" style={{ padding: '6px 14px', fontSize: 11 }}>Load Demo</button>
+        <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
+          <span className="text-[11px] sm:text-[12px] font-bold font-mono text-primary">{fmtK(sim.lo)} – {fmtK(sim.hi)} / yr</span>
+          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-p hidden sm:inline-flex" style={{ padding: '6px 14px', fontSize: 11 }}>Load Demo</button>
         </div>
       </div>
 
