@@ -252,8 +252,8 @@ function Slide2() {
           </div>
         ))}
       </div>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Structural Exposure Accumulation Over Time — Without Governance (indexed, 100 = deployment)
         </div>
         <DriftChart />
