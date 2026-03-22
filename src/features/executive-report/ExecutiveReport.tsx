@@ -256,6 +256,28 @@ export function ExecutiveReport() {
         </div>
       </div>
 
+      {/* Required Underwriting Actions */}
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Required Underwriting Actions</div>
+        <div className="text-[14px] font-bold text-foreground mb-4">Mandatory conditions before standard coverage terms apply</div>
+        <div className="space-y-3">
+          {[
+            { num: 1, title: 'Apply mandatory premium loading (150–180%)', desc: 'Structural risk exceeds standard pricing assumptions. AFI-derived loading must be applied before any coverage is offered.' },
+            { num: 2, title: 'Require dependency diversification within 90 days', desc: 'Single-provider concentration creates uninsurable systemic risk. Minimum 3 independent providers across model, compute, and orchestration layers.' },
+            { num: 3, title: 'Enforce quarterly re-authorisation cadence', desc: 'Condition of coverage — each deployed AI system must undergo formal re-authorisation at least quarterly with explicit sign-off from named oversight actor.' },
+            { num: 4, title: 'Limit coverage scope to operational layers', desc: 'Full-stack coverage is uneconomic at current structural lock-in levels. Recommended to limit coverage to operational impact layers only.' },
+          ].map((action, i) => (
+            <div key={i} className="flex items-start gap-3 p-4 bg-secondary border border-border rounded-lg">
+              <div className="w-[24px] h-[24px] rounded-full bg-fragile text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px]">{action.num}</div>
+              <div>
+                <div className="text-[12px] font-semibold text-foreground">{action.title}</div>
+                <div className="text-[11px] text-muted-foreground leading-[1.55] mt-[2px]">{action.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Responsibility & Ownership Structure */}
       <ResponsibilityOwnershipPanel results={results} inputs={inputs} />
 

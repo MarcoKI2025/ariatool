@@ -184,6 +184,85 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
+      {/* ═══ EXECUTIVE DECISION LAYER (dark panel with signal pills) ═══ */}
+      <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Executive Decision Layer</div>
+        <div className="text-[20px] font-extrabold text-white mb-4 tracking-tight">
+          {band === 'Fragile' ? 'This System Cannot Be Insured at Standard Terms' :
+           band === 'Sensitive' ? 'Conditional Coverage — Structural Improvements Required' :
+           'Standard Terms Apply — Maintain Governance Cadence'}
+        </div>
+        <div className="flex items-center gap-2 flex-wrap mb-4">
+          {[
+            { label: `AFI ${afi.toFixed(2)}`, color: band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable' },
+            { label: `ECI-${eciTier}`, color: 'bg-primary' },
+            { label: band, color: band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable' },
+            { label: `AGRI ${agri}`, color: agri >= 60 ? 'bg-fragile' : agri >= 35 ? 'bg-sensitive' : 'bg-stable' },
+            { label: `ALRI ${alri}`, color: alri >= 60 ? 'bg-fragile' : alri >= 35 ? 'bg-sensitive' : 'bg-stable' },
+          ].map((pill, i) => (
+            <span key={i} className={`px-3 py-[4px] rounded-[5px] text-[10px] font-bold text-white ${pill.color}`}>{pill.label}</span>
+          ))}
+        </div>
+        <div className="grid grid-cols-4 gap-4">
+          {[
+            { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
+            { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
+            { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
+            { label: 'Amplification', value: amplificationFactor, sub: 'Munich Re loss multiplier' },
+          ].map((m, i) => (
+            <div key={i}>
+              <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">{m.label}</div>
+              <div className="text-[16px] font-bold font-mono text-white">{m.value}</div>
+              <div className="text-[9px] text-chrome-fg">{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ AGRI / ALRI SUB-SCORE GRIDS ═══ */}
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">⚡ AGRI Sub-Scores</div>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { label: 'Multi-Agent', value: inputs.multiAgent, max: 5 },
+              { label: 'Tool-Call Auth', value: inputs.toolCallAuthority, max: 5 },
+              { label: 'Persistent Memory', value: inputs.persistentMemory, max: 5 },
+              { label: 'Human Checkpoints', value: inputs.humanCheckpoints, max: 5, inverted: true },
+            ].map((s, i) => (
+              <div key={i} className="bg-secondary border border-border rounded-md p-2">
+                <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{s.label}</div>
+                <div className={`text-[16px] font-bold font-mono ${
+                  s.inverted ? (s.value <= 2 ? 'text-fragile' : s.value <= 3 ? 'text-sensitive' : 'text-stable') :
+                  (s.value >= 4 ? 'text-fragile' : s.value >= 3 ? 'text-sensitive' : 'text-stable')
+                }`}>{s.value}/{s.max}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">⚠ ALRI Sub-Scores</div>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { label: 'Hallucination', value: inputs.hallucinationLiability },
+              { label: 'Deepfake', value: inputs.deepfakeFraud },
+              { label: 'Prompt Inject', value: inputs.promptInjection },
+              { label: 'Model Drift', value: inputs.modelDrift },
+              { label: 'Algo Bias', value: inputs.algorithmicBias },
+              { label: 'Shadow AI', value: inputs.shadowAI },
+              { label: 'Explainability', value: inputs.explainabilityGap },
+              { label: 'Data Integrity', value: inputs.dataIntegrity },
+              { label: 'ESG Liability', value: inputs.esgLiability },
+            ].map((s, i) => (
+              <div key={i} className="bg-secondary border border-border rounded-md p-2">
+                <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{s.label}</div>
+                <div className={`text-[14px] font-bold font-mono ${s.value >= 4 ? 'text-fragile' : s.value >= 3 ? 'text-sensitive' : 'text-stable'}`}>{s.value}/5</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* ═══ COMMITTEE REVIEW / DECISION PANEL ═══ */}
       <div className={`rounded-xl p-5 mb-4 border-2 ${bandBg}`}>
         <div className={`text-[18px] font-extrabold tracking-wider uppercase mb-3 ${bandColor}`}>
