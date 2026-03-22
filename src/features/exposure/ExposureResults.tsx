@@ -462,7 +462,7 @@ export function ExposureResults() {
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px] px-[18px]">
           <div className="text-[9px] tracking-wider uppercase text-muted-foreground font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
-          <div className="grid grid-cols-3 gap-[14px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-[14px]">
             <div>
               <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper I · EU AI Act Blind Spots</div>
               <div className="text-[10px] text-secondary-foreground leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-foreground">continuation</em>. Systems persist without re-authorisation.</div>
