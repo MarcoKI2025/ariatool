@@ -565,7 +565,7 @@ function EvaluationLimitsPanel() {
       <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[4px]">◈ Evaluation Limits · The Boundaries of What Can Be Known</div>
       <div className="text-[16px] font-bold text-foreground mb-[6px]">What This Assessment Cannot Tell You</div>
       <div className="text-[11px] text-muted-foreground leading-[1.6] mb-4 max-w-[600px]">Every evaluation is a snapshot under constrained conditions. This panel makes the epistemic limits of this assessment explicit — not as a disclaimer, but as a first-class governance signal.</div>
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         {[
           { t: 'No External Ground Truth', s: 'There is no external reference against which AI governance fragility can be absolutely verified. AFI scores are structurally valid within their calibration context — not universally certified.' },
           { t: 'Metrics Are Proxies', s: 'Delegation Ratio, Reversibility Cost, and Correlation Density are structural proxies — not direct measurements of risk. They correlate with failure conditions; they do not cause or predict them with certainty.' },
