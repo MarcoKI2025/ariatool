@@ -642,7 +642,7 @@ export function InsuranceDecision() {
             {(inputs.providers?.length || 0) <= 1 ? 'Critical' : (inputs.providers?.length || 0) <= 2 ? 'Elevated' : 'Diversified'}
           </span>
         </div>
-        <div className="flex items-center justify-center gap-0 my-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-0 my-4">
           <div className="flex flex-col gap-2">
             {(inputs.providers?.length ? inputs.providers : ['No provider selected']).map((p, i) => (
               <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${inputs.providers?.length ? 'bg-fragile-bg border-fragile-border' : 'bg-secondary border-border opacity-40'}`}>
