@@ -451,7 +451,7 @@ export function InsuranceDecision() {
       </SectionCard>
 
       {/* ═══ 13. REINSURANCE TREATY IMPLICATIONS ═══ */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Excess-of-Loss XL Treaty</div>
           <div className="text-[13px] font-bold text-foreground mb-2">Reinsurance Layer Implications</div>
