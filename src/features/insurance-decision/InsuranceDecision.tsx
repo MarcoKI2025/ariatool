@@ -483,7 +483,7 @@ export function InsuranceDecision() {
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Existing Insurance applicable in Reinsurance</div>
         <div className="text-[14px] font-bold text-foreground mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: 'Cyber / Tech E&O', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
             { label: 'Professional Indemnity', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
