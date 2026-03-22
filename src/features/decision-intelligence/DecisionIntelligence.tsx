@@ -34,6 +34,16 @@ export function DecisionIntelligence() {
         </p>
       </div>
 
+      {/* ═══ HERO BOARD STATEMENT ═══ */}
+      <div className="bg-dark-section rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">
+        <div className="w-1 h-1 rounded-full bg-fragile flex-shrink-0 mt-[7px] opacity-70" />
+        <div className="text-[13px] font-semibold text-white leading-[1.45]">
+          {band === 'Fragile' ? 'This system creates structural AI risk that is not captured by compliance frameworks, point-in-time audits, or standard underwriting models — and that accumulates without a triggering incident.' :
+           band === 'Sensitive' ? 'This system introduces moderate structural risk approaching underwriting tolerance. Conditional coverage available with mandatory governance improvement timeline.' :
+           'This system operates within current governance tolerance. Standard monitoring cadence applies.'}
+        </div>
+      </div>
+
       {/* ═══ HERO DIAGNOSIS ═══ */}
       <div className={`rounded-xl p-6 mb-4 border-2 ${bandBg}`}>
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
