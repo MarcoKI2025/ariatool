@@ -115,7 +115,7 @@ export function ExposureAnalysis() {
             <div className="text-[10px] text-secondary-foreground mt-[3px]">Click any scenario below to pre-fill all inputs instantly — then click "Generate AI Risk Assessment" to see the full analysis. Takes 10 seconds.</div>
           </div>
         </div>
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {DEMO_PROFILES.map((p, i) => (
             <button
               key={i}
