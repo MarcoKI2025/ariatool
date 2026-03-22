@@ -88,7 +88,7 @@ function ModelGovernanceRegister() {
           { label: 'Data Basis', title: 'Qualitative · Market-Derived', desc: 'Inputs: self-attested operator assessment (12 parameters). Loss anchors: published market guidance (Lloyd\'s CRI 2024, EIOPA 2024). No proprietary claims database. No system-derived inputs.' },
           { label: 'Last Calibration', title: 'Q4 2025 Market Data', desc: 'Multipliers anchored to Q4 2025 market guidance. Formula thresholds (AFI 0.85 / 1.35) internally calibrated. Annual recalibration recommended. Next trigger: EIOPA Opinion implementation 2026–2027.' },
         ].map((item, i) => (
-          <div key={i} className={`p-[14px_18px] ${i < 2 ? 'border-r border-border' : ''}`}>
+          <div key={i} className={`p-[14px_18px] ${i < 2 ? 'sm:border-r border-b sm:border-b-0 border-border' : ''}`}>
             <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-[5px]">{item.label}</div>
             <div className="text-[13px] font-bold text-foreground mb-[3px]">{item.title}</div>
             <div className="text-[10px] text-secondary-foreground leading-[1.4]">{item.desc}</div>
