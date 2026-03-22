@@ -274,7 +274,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Recovery + Downtime */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-xl p-5 flex items-center gap-4">
           <div className="text-2xl">⏱</div>
           <div>
