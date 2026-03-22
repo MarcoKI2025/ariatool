@@ -222,7 +222,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
 
         {/* What If You Do Nothing */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">If Nothing Changes · 12 Month Impact</div>
           <div className="flex flex-col gap-5">
             {[
