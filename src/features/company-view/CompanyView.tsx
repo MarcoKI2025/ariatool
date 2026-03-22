@@ -255,28 +255,28 @@ function StrategicInterpretation({ band, components }: { band: string; component
   };
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', background: 'hsl(var(--sf))', borderRadius: '12px', marginLeft: 28, marginRight: 28, marginTop: 16, border: '1px solid hsl(var(--bd))' }}>
+    <div className="mx-8 mt-6 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(to right, #b53020, #c0392b, #e09000, #4038b8, #6058d8)' }} />
-      <div style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: 16, padding: '28px 36px 24px' }}>
-        <div style={{ fontSize: 28, color: 'hsl(var(--pur))', textAlign: 'center', paddingTop: 4 }}>◈</div>
+      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
+      <div className="grid grid-cols-[56px_1fr] gap-5 p-10 pt-8">
+        <div className="text-3xl text-primary text-center pt-1">◈</div>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))' }}>Governance Assessment · Structured Risk Signal for Committee Review</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', padding: '4px 10px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 5, color: 'hsl(var(--pur))' }}>◆ Governance Signal</span>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Risk Classification</div>
-                <div style={{ fontSize: 18, fontWeight: 800, fontFamily: 'var(--font-mono)', color: band === 'Fragile' ? '#c9392a' : band === 'Sensitive' ? '#b87400' : '#227a44', marginTop: 2 }}>{band === 'Fragile' ? 'HIGH' : band === 'Sensitive' ? 'MODERATE' : 'LOW'}</div>
-                <div style={{ fontSize: 8, color: 'hsl(var(--t3))', marginTop: 1 }}>{band === 'Fragile' ? 'Above tolerance' : band === 'Sensitive' ? 'Approaching threshold' : 'Within tolerance'}</div>
+          <div className="flex items-center justify-between mb-5">
+            <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-primary">Governance Assessment · Structured Risk Signal for Committee Review</div>
+            <div className="flex items-center gap-4">
+              <span className="text-[9px] font-bold tracking-[0.07em] uppercase py-1.5 px-3 bg-purple-bg border border-purple-border rounded text-primary">◆ Governance Signal</span>
+              <div className="text-right">
+                <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Risk Classification</div>
+                <div className="text-xl font-extrabold font-mono mt-1" style={{ color: band === 'Fragile' ? '#c9392a' : band === 'Sensitive' ? '#b87400' : '#227a44' }}>{band === 'Fragile' ? 'HIGH' : band === 'Sensitive' ? 'MODERATE' : 'LOW'}</div>
+                <div className="text-[9px] text-muted-foreground mt-0.5">{band === 'Fragile' ? 'Above tolerance' : band === 'Sensitive' ? 'Approaching threshold' : 'Within tolerance'}</div>
               </div>
             </div>
           </div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.35, marginBottom: 14 }} dangerouslySetInnerHTML={{ __html: interp[band]?.split('.').slice(0, 2).join('.') + '.' || '' }} />
-          <p style={{ fontSize: 12, color: 'hsl(220 6% 58%)', lineHeight: 1.75, margin: 0, marginBottom: 16 }} dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
+          <div className="text-lg font-bold text-foreground leading-snug mb-4" dangerouslySetInnerHTML={{ __html: interp[band]?.split('.').slice(0, 2).join('.') + '.' || '' }} />
+          <p className="text-[13px] text-secondary-foreground leading-[1.8] mb-6" dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
           
           {/* Action items */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+          <div className="flex flex-col gap-3 mb-6">
             {(band === 'Fragile' ? [
               { tag: 'REMEDIATE', tagCol: '#c9392a', tagBg: 'hsl(var(--rb))', title: 'Reduce execution authority and implement quarterly re-authorisation', sub: 'Current autonomy level exceeds governance capacity. Structural change required.' },
               { tag: 'ESCALATE', tagCol: '#b87400', tagBg: 'hsl(var(--ab))', title: 'Engage insurance broker with this assessment', sub: 'Premium loading likely without documented governance improvement plan.' },
@@ -284,25 +284,25 @@ function StrategicInterpretation({ band, components }: { band: string; component
               { tag: 'MAINTAIN', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Continue governance cadence — re-assess annually', sub: 'Current profile is within tolerance. Structural changes require re-assessment.' },
               { tag: 'MONITOR', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Monitor delegation density and dependency concentration', sub: 'Key drift vectors to watch — both tend to increase silently over time.' },
             ]).map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 8 }}>
-                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
+              <div key={i} className="flex items-center gap-4 p-5 bg-secondary border border-border rounded-xl">
+                <span className="text-[10px] font-bold tracking-[0.06em] uppercase py-1 px-3 rounded-md" style={{ color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: 'hsl(var(--tx))' }}>{item.title}</div>
-                  <div style={{ fontSize: 10, color: 'hsl(var(--t3))', marginTop: 2 }}>{item.sub}</div>
+                  <div className="text-[13px] font-bold text-foreground">{item.title}</div>
+                  <div className="text-[11px] text-muted-foreground mt-1">{item.sub}</div>
                 </div>
               </div>
             ))}
           </div>
           
           {/* Structural signals strip */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid hsl(var(--bd))' }}>
-            <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Structural Signals:</span>
+          <div className="flex items-center gap-3 pt-5 border-t border-border flex-wrap">
+            <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Structural Signals:</span>
             {[
               `Delegation Density: ${components.dr > 0.6 ? 'High' : components.dr > 0.4 ? 'Moderate' : 'Low'} (${Math.round(components.dr * 100)})`,
               `Reversibility: ${components.rc > 0.6 ? 'Locked' : components.rc > 0.4 ? 'Constrained' : 'Flexible'} (${Math.round(components.rc * 100)})`,
               `Continuation: ${components.cd > 0.6 ? 'Ungoverned' : components.cd > 0.4 ? 'Monitored' : 'Governed'}`,
             ].map((signal, i) => (
-              <span key={i} style={{ fontSize: 10, fontWeight: 600, padding: '5px 12px', border: '1px solid hsl(var(--bd))', borderRadius: 6, color: 'hsl(var(--tx))', background: 'transparent' }}>{signal}</span>
+              <span key={i} className="text-[11px] font-semibold py-1.5 px-4 border border-border rounded-lg text-foreground">{signal}</span>
             ))}
           </div>
         </div>
