@@ -290,23 +290,101 @@ export function InsuranceDecision() {
         </SectionCard>
       </div>
 
-      {/* ═══ OPERATIONAL DECISION PANEL ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Operational Decision</div>
-        <div className="text-[13px] text-muted-foreground mb-4">Select underwriting action based on structural risk assessment.</div>
-        <div className="flex gap-3">
-          {[
-            { label: 'Approved', desc: 'Standard terms', active: decisionClass === 'Approved', color: 'bg-stable hover:bg-stable/90 text-white' },
-            { label: 'Conditional Review', desc: 'Loaded terms + conditions', active: decisionClass === 'Conditional Review', color: 'bg-sensitive hover:bg-sensitive/90 text-white' },
-            { label: 'Escalate to Committee', desc: 'Committee required', active: decisionClass === 'Escalate to Committee', color: 'bg-fragile hover:bg-fragile/90 text-white' },
-            { label: 'Not Approved', desc: 'Decline coverage', active: decisionClass === 'Not Approved', color: 'bg-[#7b0e0e] hover:bg-[#5a0a0a] text-white' },
-          ].map((btn, i) => (
-            <button key={i} className={`flex-1 py-3 px-4 rounded-lg text-center transition-all ${
-              btn.active ? `${btn.color} ring-2 ring-offset-2 ring-primary shadow-lg` : 'bg-secondary text-muted-foreground border border-border hover:bg-muted'
+      {/* ═══ OPERATIONAL DECISION PANEL (full-width dark ops-decision block) ═══ */}
+      {(() => {
+        const statusCls = decisionClass === 'Approved' ? 'approved' : decisionClass === 'Conditional Review' ? 'conditional' : decisionClass === 'Escalate to Committee' ? 'escalate' : 'not-approved';
+        const bgMap: Record<string, string> = { approved: 'bg-[#071a0e] border-b border-[#1a4a28]', conditional: 'bg-[#1a1200] border-b border-[#4a3400]', escalate: 'bg-[#12103a] border-b border-[#2a2870]', 'not-approved': 'bg-[#1a0606] border-b border-[#680808]' };
+        const topBarMap: Record<string, string> = { approved: '#146030', conditional: '#9c6200', escalate: '#4038b8', 'not-approved': '#b53020' };
+        const eyebrowColorMap: Record<string, string> = { approved: 'text-[#60d090]', conditional: 'text-[#ffc040]', escalate: 'text-[#9088e0]', 'not-approved': 'text-[#ff6b5b]' };
+        const statusColorMap: Record<string, string> = { approved: 'text-[#60d090]', conditional: 'text-[#ffc040]', escalate: 'text-[#9088e0]', 'not-approved': 'text-[#ff4040]' };
+        const rationaleColorMap: Record<string, string> = { approved: 'text-[#c0e0c8]', conditional: 'text-[#ffd080]', escalate: 'text-[#c0b8f8]', 'not-approved': 'text-[#ffb0a0]' };
+        const consBgMap: Record<string, string> = { approved: 'bg-[#0e2a18] border-[#1a4a28]', conditional: 'bg-[#1a1000] border-[#5a3800]', escalate: 'bg-[#0e0e2a] border-[#2a2870]', 'not-approved': 'bg-[#1a0606] border-[#5a1010]' };
+        const dotBgMap: Record<string, string> = { approved: 'bg-[#60d090]', conditional: 'bg-[#ffc040]', escalate: 'bg-[#9088e0]', 'not-approved': 'bg-[#ff6b5b]' };
+
+        const statusText = decisionClass === 'Approved' ? 'APPROVED — STANDARD TERMS' : decisionClass === 'Conditional Review' ? 'CONDITIONAL REVIEW' : decisionClass === 'Escalate to Committee' ? 'ESCALATE TO COMMITTEE' : 'NOT APPROVED';
+        const rationale = band === 'Fragile' ? 'Standard coverage terms cannot be issued at current structural exposure levels. The deployment profile exceeds underwriting tolerance — conditional re-entry requires documented structural remediation.' :
+          band === 'Sensitive' ? 'Conditional coverage with mandatory governance improvements within 90 days. Failure to meet conditions results in escalation to NOT APPROVED.' :
+          'Structural exposure within manageable bounds. Standard coverage terms with routine monitoring apply.';
+        const consIcon = band === 'Fragile' ? '⊘' : band === 'Sensitive' ? '↗' : '✓';
+        const consTxt = band === 'Fragile' ? `Issuing standard coverage at current AFI would understate required reserves by a factor of 3–5×. Premium loading is mandatory. Dependency diversification and governance re-authorisation are conditions of any coverage offer.` :
+          band === 'Sensitive' ? 'Without governance improvements within 90 days, this profile escalates to NOT APPROVED at next assessment.' :
+          'Governance cadence must be maintained. Structural changes require re-assessment.';
+
+        return (
+          <div className={`rounded-none -mx-4 md:-mx-5 lg:-mx-7 mb-6 relative overflow-hidden ${bgMap[statusCls]}`}>
+            <div className="absolute top-0 left-0 right-0 h-[5px]" style={{ background: topBarMap[statusCls] }} />
+            <div className="p-[28px_30px_24px]">
+              <div className={`text-[9px] font-bold tracking-[0.12em] uppercase mb-2 flex items-center gap-[6px] ${eyebrowColorMap[statusCls]}`}>
+                <div className={`w-[5px] h-[5px] rounded-full animate-pulse ${dotBgMap[statusCls]}`} />
+                Governance Assessment Signal · AI Governance Engine · {inputs.companyName || '—'}
+                <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded ml-1">◈ Committee-Grade</span>
+              </div>
+              <div className={`text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
+                {statusText}
+              </div>
+              <div className={`text-[13px] leading-[1.55] mb-4 max-w-[700px] ${rationaleColorMap[statusCls]}`}>
+                {rationale}
+              </div>
+              <div className={`rounded-lg p-4 border flex items-start gap-3 mb-4 ${consBgMap[statusCls]}`}>
+                <span className="text-[18px] flex-shrink-0">{consIcon}</span>
+                <div className={`text-[11px] leading-[1.55] ${rationaleColorMap[statusCls]}`}>{consTxt}</div>
+              </div>
+              <div className="grid grid-cols-4 gap-4 text-[10px]">
+                {[
+                  { label: 'Decision Basis:', value: `AFI ${afi.toFixed(2)} · ${band} · ${afi >= 1.35 ? 'Above tolerance' : afi >= 0.85 ? 'Approaching threshold' : 'Within tolerance'}` },
+                  { label: 'Valid Until:', value: band === 'Fragile' ? 'Next structural re-assessment' : 'Until next renewal or material change' },
+                  { label: 'Escalation Required:', value: band === 'Fragile' ? 'Risk Committee Review' : band === 'Sensitive' ? 'Senior Underwriter' : 'Standard Monitoring' },
+                  { label: 'Generated:', value: formatDate() },
+                ].map((meta, i) => (
+                  <div key={i} className="text-chrome-fg-muted">
+                    <span className="font-bold">{meta.label}</span>
+                    <span className="text-white ml-1">{meta.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* ═══ CONSEQUENCE LAYER ═══ */}
+      <div className={`rounded-xl p-[16px_20px] mb-4 border ${
+        band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' :
+        band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' :
+        'bg-secondary border-border'
+      }`}>
+        <div className={`text-[9px] font-bold tracking-[0.12em] uppercase mb-[10px] ${
+          band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-muted-foreground'
+        }`}>
+          ⊘ If This Decision Is Ignored — Structural Consequences
+        </div>
+        <div className="grid grid-cols-3 gap-[10px]">
+          {(band === 'Fragile' ? [
+            { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading understates required reserves by 3–5×. Expected loss: ${formatCurrency(lossEnvelope.expected)}. Tail risk: ${formatCurrency(lossEnvelope.tail)}+.` },
+            { ic: '⚖', title: 'Regulatory Penalty Exposure', body: 'Active Art. 26 §2 and Art. 72 obligations create immediate Art. 99 §4 exposure of up to €15M or 3% global turnover — independent of any loss event.' },
+            { ic: '🌐', title: `Portfolio Contagion: ${formatCurrency(lossEnvelope.portfolio)}+`, body: `Correlated dependency structures amplify individual loss ${amplificationFactor} across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure.` },
+          ] : band === 'Sensitive' ? [
+            { ic: '↗', title: 'Trajectory to NOT APPROVED', body: 'Without structural intervention within 90 days, this profile escalates to NOT APPROVED at next assessment cycle. Governance gaps compound non-linearly.' },
+            { ic: '€', title: 'Conditional Reserve Gap', body: `Current structural exposure of ${formatCurrency(lossEnvelope.expected)} is priced under conditional terms. If governance improvements are not delivered, the reserve basis is invalidated.` },
+            { ic: '⚖', title: 'Compliance Window Closing', body: 'EU AI Act Art. 26 and Art. 72 obligations are enforceable now. Without documented human oversight assignment, this entity is in active statutory violation.' },
+          ] : [
+            { ic: '📋', title: 'Governance Cadence Is Mandatory', body: 'Standard coverage is conditional on maintained governance cadence. Any increase in delegation depth without re-assessment constitutes a material structural change.' },
+            { ic: '↗', title: 'Structural Drift Is Non-Linear', body: 'Dependency and delegation tend to increase over time. Current within-tolerance status does not project forward — re-assessment at each renewal is structural, not formal.' },
+            { ic: '⊘', title: 'Unreviewed Operation Accumulates Liability', body: 'Every month of operation without formal re-authorisation is an unreviewed period. Assessment age risk increases continuously.' },
+          ]).map((c, i) => (
+            <div key={i} className={`rounded-[7px] p-[11px_13px] border ${
+              band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' :
+              band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' :
+              'bg-secondary border-border'
             }`}>
-              <div className="text-[12px] font-bold">{btn.label}</div>
-              <div className="text-[9px] opacity-80 mt-[2px]">{btn.desc}</div>
-            </button>
+              <div className="text-[16px] mb-[6px]">{c.ic}</div>
+              <div className={`text-[11px] font-bold mb-1 ${
+                band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-foreground'
+              }`}>{c.title}</div>
+              <div className={`text-[10px] leading-[1.5] ${
+                band === 'Fragile' ? 'text-[#c05040]' : band === 'Sensitive' ? 'text-[#8a5000]' : 'text-muted-foreground'
+              }`}>{c.body}</div>
+            </div>
           ))}
         </div>
       </div>

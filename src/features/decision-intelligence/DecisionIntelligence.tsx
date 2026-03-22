@@ -34,6 +34,16 @@ export function DecisionIntelligence() {
         </p>
       </div>
 
+      {/* ═══ HERO BOARD STATEMENT ═══ */}
+      <div className="bg-dark-section rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">
+        <div className="w-1 h-1 rounded-full bg-fragile flex-shrink-0 mt-[7px] opacity-70" />
+        <div className="text-[13px] font-semibold text-white leading-[1.45]">
+          {band === 'Fragile' ? 'This system creates structural AI risk that is not captured by compliance frameworks, point-in-time audits, or standard underwriting models — and that accumulates without a triggering incident.' :
+           band === 'Sensitive' ? 'This system introduces moderate structural risk approaching underwriting tolerance. Conditional coverage available with mandatory governance improvement timeline.' :
+           'This system operates within current governance tolerance. Standard monitoring cadence applies.'}
+        </div>
+      </div>
+
       {/* ═══ HERO DIAGNOSIS ═══ */}
       <div className={`rounded-xl p-6 mb-4 border-2 ${bandBg}`}>
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
@@ -184,38 +194,92 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      {/* ═══ EXECUTIVE DECISION LAYER (dark panel with signal pills) ═══ */}
-      <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Executive Decision Layer</div>
-        <div className="text-[20px] font-extrabold text-white mb-4 tracking-tight">
-          {band === 'Fragile' ? 'This System Cannot Be Insured at Standard Terms' :
-           band === 'Sensitive' ? 'Conditional Coverage — Structural Improvements Required' :
-           'Standard Terms Apply — Maintain Governance Cadence'}
-        </div>
-        <div className="flex items-center gap-2 flex-wrap mb-4">
-          {[
-            { label: `AFI ${afi.toFixed(2)}`, color: band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable' },
-            { label: `ECI-${eciTier}`, color: 'bg-primary' },
-            { label: band, color: band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable' },
-            { label: `AGRI ${agri}`, color: agri >= 60 ? 'bg-fragile' : agri >= 35 ? 'bg-sensitive' : 'bg-stable' },
-            { label: `ALRI ${alri}`, color: alri >= 60 ? 'bg-fragile' : alri >= 35 ? 'bg-sensitive' : 'bg-stable' },
-          ].map((pill, i) => (
-            <span key={i} className={`px-3 py-[4px] rounded-[5px] text-[10px] font-bold text-white ${pill.color}`}>{pill.label}</span>
-          ))}
-        </div>
-        <div className="grid grid-cols-4 gap-4">
-          {[
-            { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
-            { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
-            { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
-            { label: 'Amplification', value: amplificationFactor, sub: 'Munich Re loss multiplier' },
-          ].map((m, i) => (
-            <div key={i}>
-              <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">{m.label}</div>
-              <div className="text-[16px] font-bold font-mono text-white">{m.value}</div>
-              <div className="text-[9px] text-chrome-fg">{m.sub}</div>
+      {/* ═══ EXECUTIVE DECISION LAYER (gradient-top-bar, actions, classification badge, bottom pills) ═══ */}
+      <div className="bg-dark-section border border-dark-section-border rounded-xl mb-4 relative overflow-hidden">
+        {/* Gradient top bar */}
+        <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: 'linear-gradient(to right, #b53020, #c0392b, #4038b8)' }} />
+        
+        {/* Top section: judgment + classification badge */}
+        <div className="p-[22px_28px_18px] grid grid-cols-[1fr_auto] gap-6 items-start">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.13em] uppercase text-[#7068e0] mb-2 flex items-center gap-[6px]">
+              <div className="w-1 h-1 rounded-full bg-[#7068e0]" />
+              Governance Assessment · Structured Risk Signal for Committee Review
+              <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ Governance Signal</span>
             </div>
-          ))}
+            <div className="text-[16px] font-bold text-[#e8e4d8] leading-[1.35] mb-[10px] max-w-[560px]">
+              {band === 'Fragile' ? <>This deployment exceeds underwriting tolerance — <span className="text-fragile">structural remediation is required</span> before standard coverage terms can apply.</> :
+               band === 'Sensitive' ? <>This deployment approaches tolerance threshold — <span className="text-sensitive">conditional governance improvements required</span> within 90 days.</> :
+               <>This deployment is within tolerance — <span className="text-stable">maintain current governance cadence</span> and re-assess at renewal.</>}
+            </div>
+            <div className="text-[11px] text-[#a8a49c] leading-[1.6] max-w-[520px] mb-[14px]">
+              The Authority Fragility Index exceeds the threshold above which continuation risk, delegation density, and dependency lock-in create non-linear financial exposure. A system can be fully compliant with the EU AI Act and still create this exposure. Compliance measures intent — this model measures <strong className="text-[#c8c4b8]">structural cost</strong>.
+            </div>
+            {/* Action items */}
+            <div className="flex flex-col gap-[7px]">
+              {(band === 'Fragile' ? [
+                { cls: 'bg-[#1a0808] border-[#5a1810]', badge: 'Critical', badgeCls: 'bg-[#3a1010] text-[#ff8878] border border-[#5a2018]', t: 'Apply mandatory premium loading (150–180%)', s: 'Below this loading, reserves are structurally understated by 3–5×.' },
+                { cls: 'bg-[#1a0808] border-[#5a1810]', badge: 'Critical', badgeCls: 'bg-[#3a1010] text-[#ff8878] border border-[#5a2018]', t: 'Require dependency diversification within 90 days', s: `Current provider concentration creates single points of failure — correlated exposure ${amplificationFactor}.` },
+                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Condition', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Institute quarterly governance re-authorisation', s: 'Without re-authorisation cadence, structural risk accumulates without upper bound.' },
+                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Required', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Commission exit feasibility assessment', s: `ECI tier indicates institutional dependency — exit path must be documented before next renewal.` },
+                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Recommended', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Initiate cross-system cascade impact study', s: `Amplification factor ${amplificationFactor} suggests non-linear portfolio exposure. Reinsurance treaty review warranted.` },
+              ] : band === 'Sensitive' ? [
+                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Required', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Increase governance review cadence to quarterly', s: 'Current oversight level is insufficient given dependency concentration trajectory.' },
+                { cls: 'bg-[#1a1200] border-[#4a3400]', badge: 'Required', badgeCls: 'bg-[#3a2800] text-[#ffc040] border border-[#5a4000]', t: 'Document and test dependency exit paths', s: 'Reversibility cost is elevated — exit capability must be verified before it becomes operationally infeasible.' },
+                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Recommended', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Apply precautionary premium loading (80–120%)', s: 'Below Fragile threshold, but trajectory warrants proactive pricing adjustment.' },
+              ] : [
+                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Maintain', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Continue governance cadence — re-assess annually', s: 'Current profile is within tolerance. Structural changes require re-assessment.' },
+                { cls: 'bg-[#0e1a28] border-[#1a3a58]', badge: 'Monitor', badgeCls: 'bg-[#0e1a38] text-[#7068e0] border border-[#2a2870]', t: 'Monitor delegation density and dependency concentration', s: 'Key drift vectors to watch — both tend to increase silently over time.' },
+              ]).map((ac, i) => (
+                <div key={i} className={`flex items-start gap-[10px] p-[9px_12px] rounded-[7px] border ${ac.cls}`}>
+                  <span className={`text-[8px] font-bold tracking-[0.07em] uppercase px-[7px] py-[2px] rounded-[3px] flex-shrink-0 mt-[1px] ${ac.badgeCls}`}>{ac.badge}</span>
+                  <div>
+                    <div className="text-[11px] font-semibold text-[#c8c4b8] leading-[1.4]">{ac.t}</div>
+                    <div className="text-[10px] text-[#888478] mt-[2px] leading-[1.4]">{ac.s}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Risk Classification Badge */}
+          <div className="text-right">
+            <div className="text-[8px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-[6px]">Risk Classification</div>
+            <div className={`text-[22px] font-extrabold font-mono leading-none p-[10px_16px] rounded-lg inline-block tracking-tight border ${
+              band === 'Fragile' ? 'bg-[#1a0808] text-[#ff6b5b] border-[#5a1810]' :
+              band === 'Sensitive' ? 'bg-[#1a1200] text-[#ffc040] border-[#4a3400]' :
+              'bg-[#0e1e14] text-[#60d090] border-[#1a4a28]'
+            }`}>
+              {band === 'Fragile' ? 'CRITICAL' : band === 'Sensitive' ? 'MODERATE' : 'LOW'}
+            </div>
+            <div className="text-[9px] text-[#a8a49c] mt-[5px]">
+              {band === 'Fragile' ? 'Above tolerance' : band === 'Sensitive' ? 'Approaching threshold' : 'Within tolerance'}
+            </div>
+          </div>
+        </div>
+        
+        {/* Bottom pills bar */}
+        <div className="px-7 py-3 border-t border-[#222018] bg-[#0e0d09] flex items-center gap-4">
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#484640] flex-shrink-0">Structural Signals:</div>
+          {(() => {
+            const drPct = Math.round(components.dr * 100);
+            const rcPct = Math.round(components.rc * 100);
+            const drColor = drPct > 65 ? 'bg-fragile/20 text-fragile border-fragile/30' : drPct > 40 ? 'bg-sensitive/20 text-sensitive border-sensitive/30' : 'bg-stable/20 text-stable border-stable/30';
+            const rcColor = rcPct > 65 ? 'bg-fragile/20 text-fragile border-fragile/30' : rcPct > 40 ? 'bg-sensitive/20 text-sensitive border-sensitive/30' : 'bg-stable/20 text-stable border-stable/30';
+            const contColor = band === 'Fragile' ? 'bg-fragile/20 text-fragile border-fragile/30' : band === 'Sensitive' ? 'bg-sensitive/20 text-sensitive border-sensitive/30' : 'bg-stable/20 text-stable border-stable/30';
+            return (
+              <>
+                <span className={`px-[10px] py-[3px] rounded-[4px] text-[10px] font-semibold border ${drColor}`}>
+                  Delegation Density: {drPct > 65 ? 'High' : drPct > 40 ? 'Moderate' : 'Low'} ({drPct})
+                </span>
+                <span className={`px-[10px] py-[3px] rounded-[4px] text-[10px] font-semibold border ${rcColor}`}>
+                  Reversibility: {rcPct > 65 ? 'Locked' : rcPct > 40 ? 'Constrained' : 'Available'} ({rcPct})
+                </span>
+                <span className={`px-[10px] py-[3px] rounded-[4px] text-[10px] font-semibold border ${contColor}`}>
+                  Continuation: {band === 'Fragile' ? 'Unmanaged' : band === 'Sensitive' ? 'At Risk' : 'Governed'}
+                </span>
+              </>
+            );
+          })()}
         </div>
       </div>
 
