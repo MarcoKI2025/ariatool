@@ -107,7 +107,8 @@ export function DemoPitchOverlay() {
       setInputs(applyDemoProfile(meridian));
       setTimeout(() => {
         runAnalysis();
-        setPerspective('company');
+        setPerspective('underwriter');
+        setActiveStep(1);
       }, 100);
     };
     document.addEventListener('load-demo-meridian', handler);
