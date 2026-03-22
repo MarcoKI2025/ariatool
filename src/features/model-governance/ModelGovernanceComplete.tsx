@@ -574,13 +574,13 @@ function EvaluationLimitsPanel() {
           { t: 'Self-Assessment Bias', s: 'This assessment relies on operator-reported inputs. Systematic under-reporting of delegation depth or oversight gaps will produce optimistic scores.' },
           { t: 'Behavioral Drift Is Not Auditable', s: 'Gradual shifts in what a system effectively prioritizes — while remaining behaviorally compliant — are not detectable by standard audits.' },
         ].map((item, i) => (
-          <div key={i} className="p-3 bg-secondary/30 rounded-lg text-[10px] text-muted-foreground leading-[1.5]">
+          <div key={i} className="p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground leading-[1.5]">
             <span className="text-fragile mr-1">⊘</span>
             <strong className="text-foreground">{item.t}</strong> — {item.s}
           </div>
         ))}
       </div>
-      <div className="p-3 border border-sensitive/30 rounded-lg bg-sensitive/5 text-[11px] text-muted-foreground leading-[1.6] italic">
+      <div className="p-3 border border-sensitive rounded-lg bg-sensitive-bg text-[11px] text-foreground leading-[1.6] italic">
         "Alignment is conditional, context-dependent, and frame-dependent. A system aligned under one set of conditions may not be aligned under another — and standard evaluation cannot establish when the boundary has been crossed." — AI Governance Architecture Framework (AGAF)
       </div>
     </div>
