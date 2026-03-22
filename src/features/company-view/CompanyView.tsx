@@ -3,6 +3,9 @@ import { useApp } from '@/hooks/useAppState';
 import { SECTOR_MULTIPLIERS } from '@/lib/constants';
 import { formatCurrency } from '@/lib/formatters';
 import { getBand, calcAFI } from '@/lib/scoring';
+import { Chart, ArcElement, DoughnutController } from 'chart.js';
+
+Chart.register(ArcElement, DoughnutController);
 
 const SIM_BASE = 120;
 const SIM_AUTO_M = [0, 1.0, 1.2, 1.5, 1.9, 2.5];
