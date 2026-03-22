@@ -383,7 +383,7 @@ function Slide6() {
             { label: 'Correlated Cascade', value: '21–60 days', color: '#ff4040' },
           ].map((s, i) => (
             <div key={i} className="text-center">
-              <div className="text-[8px] text-[#585650] uppercase tracking-[0.05em]">{s.label}</div>
+              <div className="text-[8px] text-[#a8a49c] uppercase tracking-[0.05em]">{s.label}</div>
               <div className="text-[11px] font-bold font-mono" style={{ color: s.color }}>{s.value}</div>
             </div>
           ))}
