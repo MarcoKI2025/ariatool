@@ -96,6 +96,7 @@ export function ExecutiveReport() {
   }
 
   const { band, afi, decisionClass, lossEnvelope, eciTier, eciName, components, premium, amplificationFactor, correlationFactor } = results;
+  const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
 
   const copyReport = () => {
     const text = buildExecutiveReport(inputs, results);
