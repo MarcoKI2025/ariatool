@@ -509,7 +509,7 @@ function Slide9({ onClose }: { onClose: () => void }) {
           <div className="text-[#ff6b5b] font-bold font-mono">74 · Critical</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#686460] mb-1 font-bold text-[8px] uppercase">SCRI — Systemic</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">SCRI — Systemic</div>
           <div className="text-[#ff6b5b] font-bold font-mono">68 · Critical</div>
         </div>
       </div>
