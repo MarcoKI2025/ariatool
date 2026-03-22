@@ -201,7 +201,7 @@ export function DecisionIntelligence() {
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚡ AI Governance Readiness Index (AGRI)<InfoTip text="Multi-agent orchestration, tool-call authority, persistent memory, human checkpoints" /></div>
-            <div className={`text-[48px] font-bold font-mono leading-none ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</div>
+            <div className={`text-[32px] sm:text-[48px] font-bold font-mono leading-none ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</div>
             <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>
               {agri >= 60 ? 'Critical — Autonomous Governance Required' : agri >= 35 ? 'Elevated — Governance Gaps Emerging' : agri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Standard Governance Adequate'}
             </div>
