@@ -377,7 +377,7 @@ export function ExposureResults() {
 
       {/* ═══ REAL-TIME ADJUSTMENT SLIDERS ═══ */}
       <SectionCard title="Real-Time Adjustment Controls" icon="🎛️" subtitle="Adjust AFI component weights to explore sensitivity. Changes are exploratory — they do not modify the underlying assessment.">
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {[
             { key: 'dr', label: 'DR Adjustment', desc: 'Delegation Ratio modifier' },
             { key: 'jd', label: 'JD Adjustment', desc: 'Justificatory Density modifier' },
