@@ -24,6 +24,7 @@ export const CORE_AFI_SLIDERS: SliderConfig[] = [
     name: 'Autonomy Level',
     description: 'Degree of autonomous decision-making without human confirmation',
     tooltip: 'Level of autonomous execution authority. 1 = Human confirms every action. 3 = AI executes routine decisions autonomously, human approves high-stakes. 5 = AI executes all decisions including high-stakes without confirmation. Higher autonomy increases Delegation Ratio (DR) in AFI calculation.',
+    explainText: 'Automation level determines how often the AI system acts without waiting for human sign-off. At level 4–5, the system can initiate decisions, execute transactions, or trigger workflows independently — creating exposure that accumulates between review cycles.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Human-in-Loop', 2: 'Assisted', 3: 'Supervised', 4: 'Autonomous', 5: 'Fully Autonomous' }
   },
@@ -34,6 +35,7 @@ export const CORE_AFI_SLIDERS: SliderConfig[] = [
     name: 'Execution Authority',
     description: 'Can AI commit binding actions (transactions, contracts, communications)?',
     tooltip: 'Authority to execute consequential actions. 1 = AI only recommends, human executes. 3 = AI executes non-financial actions autonomously. 5 = AI commits financial transactions, signs contracts, sends legal communications. Higher execution authority increases Delegation Ratio (DR).',
+    explainText: 'Execution authority is the primary driver of the Delegation Ratio (DR). A system with full execution authority can commit to decisions — financial, operational, or regulatory — that are difficult or impossible to reverse without significant disruption.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Recommend Only', 2: 'Low-Stakes Execute', 3: 'Medium-Stakes', 4: 'High-Stakes', 5: 'Binding Authority' }
   },
@@ -94,6 +96,7 @@ export const CORE_AFI_SLIDERS: SliderConfig[] = [
     name: 'Integration Depth',
     description: 'How deeply is AI embedded in core business processes?',
     tooltip: 'Depth of AI integration into operational workflows. 1 = Peripheral tool, easily bypassed. 3 = Integrated into several key workflows, but workarounds exist. 5 = Core business logic depends on AI, no manual alternative. Higher integration increases Continuation Density (CD), increasing AFI.',
+    explainText: 'Integration depth measures how many other systems, workflows, and processes depend on this AI system. Deep integration creates structural lock-in — the system cannot be modified, replaced, or shut down without cascading disruption across connected processes.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Peripheral', 2: 'Supporting', 3: 'Integrated', 4: 'Core', 5: 'Mission-Critical' }
   },
@@ -118,7 +121,6 @@ export const CORE_AFI_SLIDERS: SliderConfig[] = [
     labels: { 1: '1 Use Case', 2: '2-3 Use Cases', 3: '4-6 Use Cases', 4: '7-10 Use Cases', 5: '10+ Use Cases' }
   },
 ];
-
 // ══════════════════════════════════════════════════════════
 // CATEGORY 2: CRITICALITY & RISK PROFILE (1 Slider)
 // ══════════════════════════════════════════════════════════
