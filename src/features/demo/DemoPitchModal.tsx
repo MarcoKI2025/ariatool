@@ -455,10 +455,10 @@ function Slide8() {
         <ActionCard num={4} numColor="#9c6200" title="Risk & Governance Consulting" desc="The first client conversation that ends with a binding operational verdict — NOT APPROVED — is a conversation that redefines the engagement scope immediately." />
       </div>
       <div className="flex gap-[10px] justify-center mt-5 flex-wrap">
-        <button className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
+        <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
           ▶ Run Live Analysis — Meridian Financial
         </button>
-        <button className="px-5 py-3 border border-[#2e2c22] text-[#888478] rounded-md text-[13px] font-semibold hover:text-[#e8e4d8] hover:border-[#4a4642] transition-colors">
+        <button onClick={onClose} className="px-5 py-3 border border-[#2e2c22] text-[#888478] rounded-md text-[13px] font-semibold hover:text-[#e8e4d8] hover:border-[#4a4642] transition-colors">
           Explore the System →
         </button>
       </div>
