@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { SectionCard, LockedState, BandBadge } from '@/components/shared/UIComponents';
+import { LockedState } from '@/components/shared/UIComponents';
+import { formatCurrency } from '@/lib/formatters';
 
 interface ScenarioData {
   id: string;
@@ -21,6 +22,10 @@ interface ScenarioData {
   narrative: string;
   underwritingImplication: string;
   operationalImplication: string;
+  stressMultipliers: { metric: string; best: number; expected: number; stress: number }[];
+  cascadeLayers: { icon: string; name: string; value: string; layer: string }[];
+  whatChanges: { governance: string; financial: string; operational: string };
+  lossShift: { expected: number; stress: number; tail: number };
 }
 
 export function ScenarioSimulation() {
@@ -32,7 +37,7 @@ export function ScenarioSimulation() {
     return <LockedState title="Scenario Simulation Locked" description="Complete the Exposure Analysis to run scenario stress tests against your AI deployment profile." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, structuralScore, components } = results;
+  const { band, afi, structuralScore, components, lossEnvelope } = results;
 
   const scenarios: ScenarioData[] = [
     {
@@ -51,9 +56,33 @@ export function ScenarioSimulation() {
       aggregationLabel: afi >= 1.35 ? 'High' : afi >= 0.85 ? 'Moderate' : 'Low',
       recovery: '1–4 weeks',
       downtimeProfile: 'Partial degradation with manual workaround capacity',
-      narrative: `System collapse creates significant operational disruption. Manual fallback absorbs partial load, but efficiency losses compound daily. Re-authorisation backlog creates secondary governance failure.`,
+      narrative: 'System collapse creates significant operational disruption. Manual fallback absorbs partial load, but efficiency losses compound daily. Re-authorisation backlog creates secondary governance failure.',
       underwritingImplication: 'Loss falls within standard business interruption parameters. Standard BI clause applies with current loading.',
       operationalImplication: 'Failure is containable within the system perimeter with adequate incident response and manual override capacity.',
+      stressMultipliers: [
+        { metric: 'Executive Risk', best: Math.round(structuralScore * 0.6), expected: structuralScore, stress: Math.min(99, Math.round(structuralScore * 1.3)) },
+        { metric: 'Continuation', best: Math.round(components.cd * 60), expected: Math.round(components.cd * 100 + 10), stress: Math.min(99, Math.round(components.cd * 140)) },
+        { metric: 'Dependency', best: Math.round(components.rc * 60), expected: Math.round(components.rc * 100 + 5), stress: Math.min(99, Math.round(components.rc * 130)) },
+        { metric: 'Agentic', best: Math.round(results.agri * 0.5), expected: results.agri, stress: Math.min(99, Math.round(results.agri * 1.4)) },
+        { metric: 'Aggregation', best: Math.round(afi * 30), expected: Math.round(afi * 55), stress: Math.min(99, Math.round(afi * 80)) },
+      ],
+      cascadeLayers: [
+        { icon: '⚡', name: 'System Failure', value: 'Origin', layer: 'Layer 0' },
+        { icon: '🔧', name: 'Workflow Halt', value: '+30%', layer: 'Layer 1' },
+        { icon: '⚖', name: 'Decision Backlog', value: '+80%', layer: 'Layer 2' },
+        { icon: '📉', name: 'Revenue Loss', value: '+150%', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Reputation', value: '+220%', layer: 'Layer 4' },
+      ],
+      whatChanges: {
+        governance: 'Manual fallback activated. Re-authorisation backlog accumulates. Oversight capacity degrades under volume.',
+        financial: 'BI clause triggered. Daily efficiency losses compound. Recovery costs scale non-linearly with downtime duration.',
+        operational: 'Partial operations continue via manual workaround. Staff redeployment required. SLA breaches likely after day 3.',
+      },
+      lossShift: {
+        expected: lossEnvelope.expected * 1.2,
+        stress: lossEnvelope.stress * 1.4,
+        tail: lossEnvelope.tail * 1.6,
+      },
     },
     {
       id: 'dependency',
@@ -71,9 +100,33 @@ export function ScenarioSimulation() {
       aggregationLabel: afi >= 1.0 ? 'High' : 'Moderate',
       recovery: '3–8 days',
       downtimeProfile: 'Service interruption — no immediate failover pathway',
-      narrative: `External provider failure exposes single-point dependency. Full AI stack unavailability until failover or provider recovery. Business continuity plan effectiveness depends on pre-existing diversification.`,
+      narrative: 'External provider failure exposes single-point dependency. Full AI stack unavailability until failover or provider recovery. Business continuity plan effectiveness depends on pre-existing diversification.',
       underwritingImplication: 'Dependency failure triggers tech E&O and business interruption clauses simultaneously. Aggregate exposure depends on portfolio-level provider concentration.',
       operationalImplication: 'No immediate workaround available. Recovery timeline depends entirely on provider resolution. Manual processes may absorb partial load.',
+      stressMultipliers: [
+        { metric: 'Executive Risk', best: Math.round(components.rc * 60), expected: Math.round(components.rc * 110), stress: Math.min(99, Math.round(components.rc * 150)) },
+        { metric: 'Continuation', best: Math.round((components.cd + components.rc) * 30), expected: Math.round((components.cd + components.rc) * 55), stress: Math.min(99, Math.round((components.cd + components.rc) * 80)) },
+        { metric: 'Dependency', best: 75, expected: 99, stress: 99 },
+        { metric: 'Agentic', best: Math.round(results.agri * 0.4), expected: Math.round(results.agri * 0.8), stress: Math.min(99, Math.round(results.agri * 1.2)) },
+        { metric: 'Aggregation', best: Math.round(afi * 35), expected: Math.round(afi * 65), stress: Math.min(99, Math.round(afi * 90)) },
+      ],
+      cascadeLayers: [
+        { icon: '🔗', name: 'Provider Down', value: 'Origin', layer: 'Layer 0' },
+        { icon: '⚡', name: 'API Failure', value: '+50%', layer: 'Layer 1' },
+        { icon: '🔧', name: 'Stack Unavailable', value: '+120%', layer: 'Layer 2' },
+        { icon: '📉', name: 'Business Halt', value: '+250%', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Portfolio Impact', value: '+380%', layer: 'Layer 4' },
+      ],
+      whatChanges: {
+        governance: 'No governance action possible — dependency is external. Waiting state with no mitigation lever.',
+        financial: 'Tech E&O and BI triggered simultaneously. Multi-clause activation. Reserve adequacy questioned.',
+        operational: 'Complete AI stack unavailable. No failover. Manual processes absorb partial load at degraded efficiency.',
+      },
+      lossShift: {
+        expected: lossEnvelope.expected * 1.5,
+        stress: lossEnvelope.stress * 1.8,
+        tail: lossEnvelope.tail * 2.2,
+      },
     },
     {
       id: 'shutdown',
@@ -91,9 +144,33 @@ export function ScenarioSimulation() {
       aggregationLabel: 'High',
       recovery: '14–30 days',
       downtimeProfile: 'Full operational halt — enforcement action or governance failure',
-      narrative: `Regulatory enforcement or internal governance failure forces complete operational shutdown. No AI-dependent process can continue. Recovery requires full governance remediation and re-authorisation.`,
+      narrative: 'Regulatory enforcement or internal governance failure forces complete operational shutdown. No AI-dependent process can continue. Recovery requires full governance remediation and re-authorisation.',
       underwritingImplication: 'Regulatory halt creates maximum disruption with extended recovery. D&O and regulatory penalty clauses are triggered. Coverage gap likely.',
       operationalImplication: 'Complete operational halt with no workaround. All AI-dependent processes must revert to manual or cease entirely.',
+      stressMultipliers: [
+        { metric: 'Executive Risk', best: Math.round(afi * 45), expected: Math.round(afi * 75), stress: Math.min(99, Math.round(afi * 95)) },
+        { metric: 'Continuation', best: 70, expected: 99, stress: 99 },
+        { metric: 'Dependency', best: Math.round(components.rc * 50), expected: Math.round(components.rc * 85), stress: Math.min(99, Math.round(components.rc * 110)) },
+        { metric: 'Agentic', best: Math.round(results.agri * 0.6), expected: Math.round(results.agri * 1.1), stress: Math.min(99, Math.round(results.agri * 1.5)) },
+        { metric: 'Aggregation', best: Math.round(afi * 40), expected: Math.round(afi * 70), stress: Math.min(99, Math.round(afi * 95)) },
+      ],
+      cascadeLayers: [
+        { icon: '🏛', name: 'Enforcement', value: 'Origin', layer: 'Layer 0' },
+        { icon: '⛔', name: 'Full Halt', value: '+60%', layer: 'Layer 1' },
+        { icon: '⚖', name: 'Legal Exposure', value: '+140%', layer: 'Layer 2' },
+        { icon: '📉', name: 'Revenue Collapse', value: '+280%', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Market Signal', value: '+400%', layer: 'Layer 4' },
+      ],
+      whatChanges: {
+        governance: 'Full governance remediation required. Re-authorisation cycle: 14–30 days minimum. Board-level intervention mandatory.',
+        financial: 'D&O triggered. Regulatory penalties (Art. 99: up to €35M or 7% revenue). Coverage gap for regulatory shutdown.',
+        operational: 'All AI-dependent processes cease. Manual reversion or complete halt. Staff capacity insufficient for full manual operation.',
+      },
+      lossShift: {
+        expected: lossEnvelope.expected * 2.0,
+        stress: lossEnvelope.stress * 2.5,
+        tail: lossEnvelope.tail * 3.0,
+      },
     },
     {
       id: 'cascade',
@@ -111,13 +188,40 @@ export function ScenarioSimulation() {
       aggregationLabel: 'Critical',
       recovery: '21–60 days',
       downtimeProfile: 'Systemic failure across multiple entities and portfolio layers',
-      narrative: `Shared dependency structures create simultaneous multi-entity failure. Cascade propagates through correlated AI infrastructure. Portfolio-level loss amplification renders individual entity recovery irrelevant until systemic stabilisation.`,
+      narrative: 'Shared dependency structures create simultaneous multi-entity failure. Cascade propagates through correlated AI infrastructure. Portfolio-level loss amplification renders individual entity recovery irrelevant until systemic stabilisation.',
       underwritingImplication: 'Portfolio-level loss event. Treaty limits likely breached. Aggregate exposure exceeds individual entity reserves. Reinsurance cascade triggered.',
       operationalImplication: 'Cross-entity cascade means individual recovery plans are insufficient. Systemic stabilisation required before entity-level remediation.',
+      stressMultipliers: [
+        { metric: 'Executive Risk', best: Math.round(afi * 50), expected: Math.round(afi * 80), stress: 99 },
+        { metric: 'Continuation', best: Math.round((components.cd + afi) * 25), expected: Math.round((components.cd + afi) * 45), stress: Math.min(99, Math.round((components.cd + afi) * 70)) },
+        { metric: 'Dependency', best: Math.round(components.rc * 60), expected: Math.min(99, Math.round(components.rc * 95 + 5)), stress: 99 },
+        { metric: 'Agentic', best: Math.round(results.agri * 0.7), expected: Math.round(results.agri * 1.2), stress: Math.min(99, Math.round(results.agri * 1.6)) },
+        { metric: 'Aggregation', best: Math.round(afi * 55), expected: 99, stress: 99 },
+      ],
+      cascadeLayers: [
+        { icon: '🌐', name: 'Shared Infra Fail', value: 'Origin', layer: 'Layer 0' },
+        { icon: '⚡', name: 'Multi-Entity Hit', value: '+70%', layer: 'Layer 1' },
+        { icon: '📉', name: 'Portfolio Loss', value: '+180%', layer: 'Layer 2' },
+        { icon: '🔗', name: 'Treaty Breach', value: '+340%', layer: 'Layer 3' },
+        { icon: '💥', name: 'Systemic Event', value: '+560%', layer: 'Layer 4' },
+      ],
+      whatChanges: {
+        governance: 'Individual entity governance irrelevant — systemic stabilisation required first. Cross-entity coordination mandatory.',
+        financial: 'Treaty limits breached. Aggregate exposure exceeds reserves. Reinsurance cascade. Portfolio-level repricing required.',
+        operational: 'Individual recovery plans insufficient. Systemic stabilisation precedes entity remediation. Industry-wide coordination needed.',
+      },
+      lossShift: {
+        expected: lossEnvelope.expected * 3.0,
+        stress: lossEnvelope.stress * 4.0,
+        tail: lossEnvelope.tail * 5.6,
+      },
     },
   ];
 
   const s = scenarios[activeScenario];
+
+  const tierColor = (v: number) => v >= 70 ? 'text-fragile' : v >= 40 ? 'text-sensitive' : 'text-stable';
+  const tierBg = (v: number) => v >= 70 ? 'bg-fragile' : v >= 40 ? 'bg-sensitive' : 'bg-stable';
 
   return (
     <div>
@@ -163,9 +267,7 @@ export function ScenarioSimulation() {
         ].map((m, i) => (
           <div key={i} className="bg-card border border-border rounded-xl p-4 text-center">
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{m.label}</div>
-            <div className={`text-[36px] font-bold font-mono leading-none ${
-              m.value >= 70 ? 'text-fragile' : m.value >= 40 ? 'text-sensitive' : 'text-stable'
-            }`}>{m.value}</div>
+            <div className={`text-[36px] font-bold font-mono leading-none ${tierColor(m.value)}`}>{m.value}</div>
             <div className="text-[10px] text-muted-foreground mt-1">{m.sub}</div>
           </div>
         ))}
@@ -191,6 +293,119 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
+      {/* ═══ Stress Multiplier Table ═══ */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="px-5 py-3 border-b border-border">
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Stress Multiplier Table</div>
+          <div className="text-[11px] text-secondary-foreground mt-[2px]">How each metric shifts under Best Case, Expected, and Stress conditions</div>
+        </div>
+        <table className="w-full text-[11px]">
+          <thead>
+            <tr className="border-b border-border bg-secondary/30">
+              <th className="text-left py-2 px-5 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Metric</th>
+              <th className="text-center py-2 px-3 text-[9px] font-bold tracking-wider uppercase text-stable">Best Case</th>
+              <th className="text-center py-2 px-3 text-[9px] font-bold tracking-wider uppercase text-sensitive">Expected</th>
+              <th className="text-center py-2 px-3 text-[9px] font-bold tracking-wider uppercase text-fragile">Stress</th>
+            </tr>
+          </thead>
+          <tbody>
+            {s.stressMultipliers.map((row, i) => (
+              <tr key={i} className="border-b border-border last:border-none">
+                <td className="py-2 px-5 font-medium text-foreground">{row.metric}</td>
+                <td className="py-2 px-3 text-center font-mono font-bold text-stable">{row.best}</td>
+                <td className="py-2 px-3 text-center font-mono font-bold text-sensitive">{row.expected}</td>
+                <td className="py-2 px-3 text-center font-mono font-bold text-fragile">{Math.min(99, row.stress)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* ═══ Cascade Propagation Circles ═══ */}
+      <div className="bg-card border-2 border-border rounded-xl p-6 mb-4 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, hsl(var(--sensitive)), hsl(var(--fragile)), #7b0e0e)' }} />
+        <div className="flex items-start justify-between mb-5">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-fragile">Cascade Propagation — {s.name}</div>
+            <div className="text-[16px] font-bold text-foreground mt-[3px] mb-[3px]">How failure travels across systems — and amplifies at each layer</div>
+            <div className="text-[12px] text-secondary-foreground">Each operational layer amplifies the preceding disruption.</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-5 gap-0 mb-4">
+          {s.cascadeLayers.map((node, i) => (
+            <div key={i} className="text-center px-2 py-3 relative">
+              {i < 4 && <span className="absolute right-[-11px] top-[38%] text-muted-foreground text-sm z-[1]">→</span>}
+              <div className={`w-[44px] h-[44px] rounded-full border-2 flex items-center justify-center mx-auto mb-2 text-[16px] ${
+                i >= 3 ? 'bg-fragile-bg border-fragile-border' : i >= 1 ? 'bg-sensitive-bg border-sensitive-border' : 'bg-fragile-bg border-fragile-border'
+              }`}>{node.icon}</div>
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground leading-[1.3] mb-1">{node.name}</div>
+              <div className={`text-[14px] font-bold font-mono ${i >= 3 ? 'text-fragile' : i >= 1 ? 'text-sensitive' : 'text-fragile'}`}>{node.value}</div>
+              <div className="text-[9px] text-muted-foreground">{node.layer}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="bg-chrome rounded-lg p-[14px] flex items-start gap-[10px]">
+          <span className="text-fragile text-sm flex-shrink-0 mt-[1px]">⚠</span>
+          <div>
+            <div className="text-[12px] font-semibold text-white leading-[1.4]">This level of propagation is not captured in traditional risk models.</div>
+            <div className="text-[11px] text-chrome-fg mt-[3px]">Each layer amplifies the preceding disruption, creating non-linear risk escalation that exceeds standard BI assumptions.</div>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ What Changes Under This Scenario ═══ */}
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">What Changes Under This Scenario</div>
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <div className="text-[10px] font-bold tracking-wider uppercase text-primary mb-2">Governance Impact</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.55]">{s.whatChanges.governance}</div>
+          </div>
+          <div>
+            <div className="text-[10px] font-bold tracking-wider uppercase text-sensitive mb-2">Financial Impact</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.55]">{s.whatChanges.financial}</div>
+          </div>
+          <div>
+            <div className="text-[10px] font-bold tracking-wider uppercase text-fragile mb-2">Operational Impact</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.55]">{s.whatChanges.operational}</div>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ Loss Envelope Shift ═══ */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="px-5 py-3 border-b border-border">
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Loss Envelope Shift Under Scenario</div>
+          <div className="text-[11px] text-secondary-foreground mt-[2px]">How the loss bands change compared to baseline exposure</div>
+        </div>
+        <div className="grid grid-cols-3 gap-0">
+          {[
+            { label: 'Expected Loss', baseline: lossEnvelope.expected, shifted: s.lossShift.expected, color: 'text-stable' },
+            { label: 'Stress Loss', baseline: lossEnvelope.stress, shifted: s.lossShift.stress, color: 'text-sensitive' },
+            { label: 'Tail Loss', baseline: lossEnvelope.tail, shifted: s.lossShift.tail, color: 'text-fragile' },
+          ].map((cell, i) => {
+            const pctChange = Math.round(((cell.shifted - cell.baseline) / cell.baseline) * 100);
+            return (
+              <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''}`}>
+                <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
+                <div className="flex items-end gap-2 mb-1">
+                  <span className={`text-[28px] font-bold font-mono leading-none ${cell.color}`}>{formatCurrency(cell.shifted)}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-muted-foreground line-through">{formatCurrency(cell.baseline)}</span>
+                  <span className="text-[10px] font-bold text-fragile">+{pctChange}%</span>
+                </div>
+                <div className="mt-2 h-[5px] bg-secondary rounded overflow-hidden">
+                  <div className={`h-full rounded ${i === 2 ? 'bg-fragile' : i === 1 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.min(100, (cell.shifted / (lossEnvelope.tail * 2)) * 100)}%` }} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Impact narrative */}
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="text-[12px] text-foreground leading-[1.65]">
@@ -207,6 +422,52 @@ export function ScenarioSimulation() {
         <div className="bg-card border-l-4 border-l-sensitive border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-sensitive mb-2">Operational Risk Implication</div>
           <div className="text-[12px] text-muted-foreground leading-[1.55]">{s.operationalImplication}</div>
+        </div>
+      </div>
+
+      {/* ═══ Scenario Comparison Matrix ═══ */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="px-5 py-3 border-b border-border">
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Scenario Comparison Matrix</div>
+          <div className="text-[11px] text-secondary-foreground mt-[2px]">All four scenarios side-by-side — expected values</div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-[11px]">
+            <thead>
+              <tr className="border-b border-border bg-secondary/30">
+                <th className="text-left py-2 px-4 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Metric</th>
+                {scenarios.map(sc => (
+                  <th key={sc.id} className={`text-center py-2 px-3 text-[9px] font-bold tracking-wider uppercase ${sc.id === s.id ? 'text-primary' : 'text-muted-foreground'}`}>
+                    {sc.icon} {sc.name.split(' ')[0]}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {['Executive Risk', 'Continuation', 'Dependency', 'Agentic', 'Aggregation'].map((metric, mi) => (
+                <tr key={metric} className="border-b border-border last:border-none">
+                  <td className="py-2 px-4 font-medium text-foreground">{metric}</td>
+                  {scenarios.map(sc => {
+                    const vals = [sc.executiveRisk, sc.continuation, sc.dependency, sc.agentic, sc.aggregation];
+                    const v = vals[mi];
+                    return (
+                      <td key={sc.id} className={`py-2 px-3 text-center font-mono font-bold ${tierColor(v)} ${sc.id === s.id ? 'bg-primary/5' : ''}`}>
+                        {v}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+              <tr className="border-t-2 border-border">
+                <td className="py-2 px-4 font-medium text-foreground">Recovery</td>
+                {scenarios.map(sc => (
+                  <td key={sc.id} className={`py-2 px-3 text-center text-[10px] font-semibold text-foreground ${sc.id === s.id ? 'bg-primary/5' : ''}`}>
+                    {sc.recovery}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
