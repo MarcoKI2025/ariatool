@@ -75,7 +75,7 @@ function ModelGovernanceRegister() {
         </div>
         <div className="text-right">
           <div className="text-[9px] text-secondary-foreground mb-1">Validation Status</div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-[5px] bg-[#1a1200] border border-[#5a3800] rounded-md">
+          <div className="inline-flex items-center gap-1.5 px-3 py-[5px] bg-sensitive-bg border border-sensitive-border rounded-md">
             <div className="w-[7px] h-[7px] rounded-full bg-sensitive animate-pulse flex-shrink-0" />
             <span className="text-[11px] font-bold text-sensitive tracking-wide uppercase">Internally Reviewed · Not Independently Validated</span>
           </div>
@@ -108,8 +108,8 @@ function ModelGovernanceRegister() {
               { done: false, text: 'Regulatory acknowledgement (BaFin/FCA) — pending' },
             ].map((v, i) => (
               <div key={i} className="flex items-center gap-[7px]">
-                <div className={`w-[7px] h-[7px] rounded-full flex-shrink-0 ${v.done ? 'bg-[#60d090]' : 'bg-[#5a3800]'}`} />
-                <span className={`text-[10px] ${v.done ? 'text-secondary-foreground' : 'text-secondary-foreground/60'}`}>{v.text}</span>
+                <div className={`w-[7px] h-[7px] rounded-full flex-shrink-0 ${v.done ? 'bg-stable' : 'bg-sensitive'}`} />
+                <span className={`text-[10px] ${v.done ? 'text-foreground' : 'text-muted-foreground'}`}>{v.text}</span>
               </div>
             ))}
           </div>
@@ -123,7 +123,7 @@ function ModelGovernanceRegister() {
               'Cross-entity correlation unmodelled (independence assumed)',
               'Non-EU jurisdictions require separate calibration',
             ].map((f, i) => (
-              <div key={i} className="text-[10px] text-secondary-foreground px-2 py-1 bg-[#1a0606] rounded border-l-2 border-fragile">{f}</div>
+              <div key={i} className="text-[10px] text-foreground px-2 py-1.5 bg-fragile-bg rounded border-l-2 border-fragile">{f}</div>
             ))}
           </div>
         </div>
@@ -138,7 +138,7 @@ function ModelGovernanceRegister() {
               { ok: false, text: 'Standalone pricing / reserving' },
               { ok: false, text: 'Treaty structuring without actuarial validation' },
             ].map((u, i) => (
-              <div key={i} className={`text-[10px] px-[7px] py-[3px] rounded ${u.ok ? 'text-[#60d090] bg-[#0e2a18]' : 'text-[#ff6b5b] bg-[#1a0606]'}`}>
+              <div key={i} className={`text-[10px] px-[7px] py-[3px] rounded ${u.ok ? 'text-stable bg-stable-bg' : 'text-fragile bg-fragile-bg'}`}>
                 {u.ok ? '✓' : '✗'} {u.text}
               </div>
             ))}
@@ -148,9 +148,9 @@ function ModelGovernanceRegister() {
 
       <div className="px-[18px] py-3 flex items-center gap-[10px]">
         <div className="text-[10px] text-secondary-foreground">Model ID: <span className="font-mono text-primary">AGAF-v3.0-AFI-2026Q1</span></div>
-        <div className="w-px h-3 bg-dark-section-border" />
+        <div className="w-px h-3 bg-border" />
         <div className="text-[10px] text-secondary-foreground">Formula: <span className="font-mono text-secondary-foreground/80">AFI = (DR × RC × CD) / (JD × NA + 0.001)</span></div>
-        <div className="w-px h-3 bg-dark-section-border" />
+        <div className="w-px h-3 bg-border" />
         <div className="text-[10px] text-secondary-foreground">Thresholds: <span className="font-mono text-secondary-foreground/80">Stable &lt;0.85 · Sensitive 0.85–1.35 · Fragile &gt;1.35</span></div>
       </div>
     </div>
@@ -636,7 +636,7 @@ function RegulatoryAlignment() {
           { icon: 'US', color: 'bg-stable/20 border-stable/40 text-stable', title: 'NIST AI RMF 1.0', sub: 'Risk Management Framework', items: ['GOVERN: Governance structures', 'MAP: Context establishment', 'MEASURE: Assessment & benchmarking', 'MANAGE: Risk response actions'] },
           { icon: 'SR', color: 'bg-fragile/20 border-fragile/40 text-fragile', title: 'Swiss Re sigma 01/2026', sub: 'AI Insurance Market Guidance', quote: '"AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."' },
         ].map((r, i) => (
-          <div key={i} className="bg-secondary border border-chrome-border rounded-lg p-4">
+          <div key={i} className="bg-secondary border border-border rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <div className={`w-8 h-8 rounded-full border flex items-center justify-center text-xs font-bold ${r.color}`}>{r.icon}</div>
               <div>
@@ -769,27 +769,27 @@ function APIIntegrationReference() {
         </div>
         <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/30">Integration-Ready</span>
       </div>
-      <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
-        <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
-          <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0d2a1a] text-stable rounded font-mono">POST</span>
+      <div className="mx-5 mb-3 bg-secondary border border-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-secondary border-b border-border flex items-center gap-[10px]">
+          <span className="text-[10px] font-bold px-2 py-[3px] bg-stable-bg text-stable rounded font-mono">POST</span>
           <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/assessment</code>
           <span className="text-[9px] text-muted-foreground ml-auto">Run full governance assessment</span>
         </div>
         <div className="p-[14px_16px]">
           <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">Request Body</div>
-          <pre className="text-[10px] text-stable bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto mb-3 leading-[1.6] font-mono">{postRequest}</pre>
+          <pre className="text-[10px] text-stable bg-secondary border border-border rounded-md p-3 overflow-x-auto mb-3 leading-[1.6] font-mono">{postRequest}</pre>
           <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">Response (200 OK)</div>
-          <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{postResponse}</pre>
+          <pre className="text-[10px] text-primary bg-secondary border border-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{postResponse}</pre>
         </div>
       </div>
-      <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
-        <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
-          <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0a1e2e] text-[#5090d0] rounded font-mono">GET</span>
+      <div className="mx-5 mb-3 bg-secondary border border-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-secondary border-b border-border flex items-center gap-[10px]">
+          <span className="text-[10px] font-bold px-2 py-[3px] bg-purple-bg text-primary rounded font-mono">GET</span>
           <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/portfolio/concentration</code>
           <span className="text-[9px] text-muted-foreground ml-auto">Returns correlated exposure</span>
         </div>
         <div className="p-[14px_16px]">
-          <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
+          <pre className="text-[10px] text-primary bg-secondary border border-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-[10px] mx-5 mb-4">

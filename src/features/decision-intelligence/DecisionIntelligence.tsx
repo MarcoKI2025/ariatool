@@ -309,7 +309,7 @@ export function DecisionIntelligence() {
           <div className="text-right">
             <div className="text-[8px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-[6px]">Risk Classification</div>
             <div className={`text-[22px] font-extrabold font-mono leading-none p-[10px_16px] rounded-lg inline-block tracking-tight border ${
-              band === 'Fragile' ? 'bg-fragile-bg text-[#ff6b5b] border-fragile-border' :
+              band === 'Fragile' ? 'bg-fragile-bg text-fragile border-fragile-border' :
               band === 'Sensitive' ? 'bg-sensitive-bg text-sensitive border-sensitive-border' :
               'bg-stable-bg text-stable border-stable-border'
             }`}>
@@ -692,7 +692,7 @@ export function DecisionIntelligence() {
              'This assessment is no longer structurally valid. Governance findings from prior evaluations should not be assumed to hold. Re-evaluation is required immediately.'}
           </div>
           {rfsiTier === 'limited' && (
-            <div className="mt-[10px] p-[10px_14px] bg-fragile-bg border border-fragile-border rounded-md text-[11px] text-[#d08070] leading-[1.5]">
+            <div className="mt-[10px] p-[10px_14px] bg-fragile-bg border border-fragile-border rounded-md text-[11px] text-fragile leading-[1.5]">
               ⚠ <strong>This governance assessment may no longer be valid under current operational conditions.</strong> The deployment context has shifted significantly from the conditions under which this system was assessed.
             </div>
           )}

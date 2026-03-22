@@ -346,11 +346,11 @@ export function ScenarioSimulation() {
           ))}
         </div>
 
-        <div className="bg-chrome rounded-lg p-[14px] flex items-start gap-[10px]">
+        <div className="bg-secondary border border-border rounded-lg p-[14px] flex items-start gap-[10px]">
           <span className="text-fragile text-sm flex-shrink-0 mt-[1px]">⚠</span>
           <div>
-            <div className="text-[12px] font-semibold text-white leading-[1.4]">This level of propagation is not captured in traditional risk models.</div>
-            <div className="text-[11px] text-chrome-fg mt-[3px]">Each layer amplifies the preceding disruption, creating non-linear risk escalation that exceeds standard BI assumptions.</div>
+            <div className="text-[12px] font-semibold text-foreground leading-[1.4]">This level of propagation is not captured in traditional risk models.</div>
+            <div className="text-[11px] text-secondary-foreground mt-[3px]">Each layer amplifies the preceding disruption, creating non-linear risk escalation that exceeds standard BI assumptions.</div>
           </div>
         </div>
       </div>
