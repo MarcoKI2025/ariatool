@@ -352,7 +352,89 @@ export function ExposureResults() {
         ))}
       </div>
 
-      {/* Research Foundation */}
+      {/* ═══ REAL-TIME ADJUSTMENT SLIDERS ═══ */}
+      <SectionCard title="Real-Time Adjustment Controls" icon="🎛️" subtitle="Adjust AFI component weights to explore sensitivity. Changes are exploratory — they do not modify the underlying assessment.">
+        <div className="grid grid-cols-3 gap-4 mb-4">
+          {[
+            { key: 'dr', label: 'DR Adjustment', desc: 'Delegation Ratio modifier' },
+            { key: 'jd', label: 'JD Adjustment', desc: 'Justificatory Density modifier' },
+            { key: 'rc', label: 'RC Adjustment', desc: 'Reversibility Cost modifier' },
+            { key: 'cd', label: 'CD Adjustment', desc: 'Continuation Density modifier' },
+            { key: 'na', label: 'NA Adjustment', desc: 'Network Amplification modifier' },
+            { key: 'ses', label: 'SES Adjustment', desc: 'Structural Exposure modifier' },
+          ].map((s) => (
+            <div key={s.key} className="py-2">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] font-medium text-foreground">{s.label}</span>
+                <span className="text-[10px] font-mono font-bold text-primary">{adjustments[s.key as keyof typeof adjustments] > 0 ? '+' : ''}{adjustments[s.key as keyof typeof adjustments]}%</span>
+              </div>
+              <div className="text-[9px] text-muted-foreground mb-1">{s.desc}</div>
+              <input type="range" min={-50} max={50} step={5} value={adjustments[s.key as keyof typeof adjustments]}
+                onChange={(e) => setAdjustments(prev => ({ ...prev, [s.key]: parseInt(e.target.value) }))}
+                className="w-full my-1" />
+            </div>
+          ))}
+        </div>
+        {hasAdjustments && (
+          <button onClick={() => setAdjustments({ dr: 0, jd: 0, rc: 0, cd: 0, na: 0, ses: 0 })}
+            className="text-[10px] text-primary hover:underline font-medium">Reset all adjustments</button>
+        )}
+      </SectionCard>
+
+      {/* ═══ SENSITIVITY TABLE — Variable Impact Ranking ═══ */}
+      <SectionCard title="Sensitivity Analysis — Variable Impact Ranking" icon="📊" subtitle="Which input variables have the largest marginal impact on AFI?">
+        <div className="overflow-x-auto">
+          <table className="w-full text-[11px]">
+            <thead>
+              <tr className="border-b-2 border-border">
+                {['Rank', 'Variable', 'Current', 'AFI Impact', 'Direction', 'Sensitivity'].map(h => (
+                  <th key={h} className="text-left py-2 pr-4 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { rank: 1, variable: 'Execution Authority', current: `${inputs.executionAuthority}/5`, impact: 'High', direction: '↑ AFI', sensitivity: 'Primary DR driver' },
+                { rank: 2, variable: 'Oversight Quality', current: `${inputs.oversightLevel}/5`, impact: 'High', direction: '↓ AFI', sensitivity: 'Primary JD driver (protective)' },
+                { rank: 3, variable: 'Integration Depth', current: `${inputs.integrationDepth}/5`, impact: 'Medium–High', direction: '↑ AFI', sensitivity: 'CD amplifier' },
+                { rank: 4, variable: 'Switching Cost', current: `${inputs.switchingCost}/5`, impact: 'Medium', direction: '↑ AFI', sensitivity: 'RC driver' },
+                { rank: 5, variable: 'Multi-Agent Orchestration', current: `${inputs.multiAgent}/5`, impact: 'Medium', direction: '↑ AFI', sensitivity: 'AGRI amplifier' },
+                { rank: 6, variable: 'Review Cadence', current: `${inputs.reviewCadence}/5`, impact: 'Medium', direction: '↓ AFI', sensitivity: 'JD contributor' },
+                { rank: 7, variable: 'Cloud Concentration', current: `${inputs.cloudConcentration}/5`, impact: 'Low–Medium', direction: '↑ SCRI', sensitivity: 'Portfolio correlation' },
+                { rank: 8, variable: 'Hallucination Exposure', current: `${inputs.hallucinationLiability}/5`, impact: 'Low–Medium', direction: '↑ ALRI', sensitivity: 'Liability vector' },
+              ].map((row) => (
+                <tr key={row.rank} className="border-b border-border">
+                  <td className="py-2 pr-4 font-bold text-primary">{row.rank}</td>
+                  <td className="py-2 pr-4 font-medium text-foreground">{row.variable}</td>
+                  <td className="py-2 pr-4 font-mono text-foreground">{row.current}</td>
+                  <td className="py-2 pr-4"><span className={`px-2 py-[1px] rounded text-[9px] font-bold ${row.impact.includes('High') ? 'bg-fragile-bg text-fragile border border-fragile-border' : 'bg-sensitive-bg text-sensitive border border-sensitive-border'}`}>{row.impact}</span></td>
+                  <td className="py-2 pr-4 font-mono text-muted-foreground">{row.direction}</td>
+                  <td className="py-2 text-muted-foreground">{row.sensitivity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </SectionCard>
+
+      {/* ═══ SCENARIO ROBUSTNESS ═══ */}
+      <SectionCard title="Scenario Robustness Check" icon="🔬" subtitle="How stable is the current classification under parameter perturbation?">
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            { scenario: 'Oversight +1 Level', result: inputs.oversightLevel < 5 ? 'Potential band improvement' : 'Already at maximum', change: inputs.oversightLevel < 5 ? '↓ AFI' : '—', color: 'text-stable' },
+            { scenario: 'Execution Authority +1', result: 'Likely band deterioration', change: '↑ AFI', color: 'text-fragile' },
+            { scenario: 'Add 1 Provider', result: 'Moderate SCRI improvement', change: '↓ SCRI', color: 'text-stable' },
+          ].map((s, i) => (
+            <div key={i} className="bg-secondary border border-border rounded-lg p-4">
+              <div className="text-[10px] font-bold text-foreground mb-1">{s.scenario}</div>
+              <div className="text-[11px] text-muted-foreground mb-2">{s.result}</div>
+              <div className={`text-[12px] font-bold font-mono ${s.color}`}>{s.change}</div>
+            </div>
+          ))}
+        </div>
+      </SectionCard>
+
+
       <div className="flex items-stretch bg-chrome rounded-[10px] overflow-hidden mb-5">
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px] px-[18px]">
