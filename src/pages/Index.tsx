@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AppProvider, useApp } from '@/hooks/useAppState';
 import { AppSidebar } from '@/components/layout/AppSidebar';
 import { AppHeader } from '@/components/layout/AppHeader';
@@ -14,6 +14,12 @@ import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverla
 function AppContent() {
   const { state } = useApp();
   const { perspective, activeStep } = state;
+  const mainRef = useRef<HTMLElement>(null);
+
+  // Scroll to top whenever step or perspective changes
+  useEffect(() => {
+    mainRef.current?.scrollTo(0, 0);
+  }, [activeStep, perspective]);
 
   const renderStep = () => {
     if (perspective === 'company') return <CompanyView />;
@@ -33,7 +39,7 @@ function AppContent() {
       <AppSidebar />
       <div className="app-main flex-1 flex flex-col overflow-hidden min-w-0">
         <AppHeader />
-        <main className="app-content flex-1 overflow-y-auto p-4 pb-16 md:p-5 md:pb-18 lg:p-7 lg:pb-20">
+        <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-4 pb-16 md:p-5 md:pb-18 lg:p-7 lg:pb-20">
           {renderStep()}
         </main>
       </div>
