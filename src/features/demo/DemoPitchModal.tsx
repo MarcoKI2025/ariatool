@@ -304,8 +304,8 @@ function Slide4() {
         <LossCell label="Critical Risk Band" value="High" src="Provider concentration · Continuation risk" color="#b53020" />
         <LossCell label="Systemic Exposure" value="Critical" src="Correlated dependency · Multi-entity cluster" color="#f87070" />
       </div>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Meridian Financial — Loss Envelope vs. Standard Actuarial Pricing (€M)
         </div>
         <MeridianChart />
