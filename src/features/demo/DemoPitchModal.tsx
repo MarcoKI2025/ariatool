@@ -439,7 +439,7 @@ function Slide7() {
 // SLIDE 8: THE DECISION / CTA
 // ═══════════════════════════════════════════════════════════════════
 
-function Slide8() {
+function Slide8({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow>The Value Proposition · Why AGAF is Acquisition-Ready Infrastructure</Eyebrow>
