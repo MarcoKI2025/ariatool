@@ -143,12 +143,6 @@ export function AppSidebar() {
         >
           <span className="text-[9px] text-primary flex-shrink-0">▶</span> Demo Mode · 3-Min Pitch
         </button>
-        <button
-          onClick={() => { document.dispatchEvent(new CustomEvent('open-company-demo')); setMobileNavOpen(false); }}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-chrome-fg hover:text-chrome-fg-bright hover:bg-chrome-active hover:translate-x-[2px] text-[11px] font-medium transition-all border border-chrome-border bg-chrome-hover"
-        >
-          <span className="text-[9px] text-primary flex-shrink-0">▶</span> Company Demo · 3 Scenarios
-        </button>
       </div>
 
       {/* Footer */}
