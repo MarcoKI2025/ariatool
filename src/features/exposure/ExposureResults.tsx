@@ -336,7 +336,7 @@ export function ExposureResults() {
       </div>
 
       {/* Calculation Snapshot Bar */}
-      <div className="flex items-center gap-4 px-4 py-[8px] bg-secondary border border-border rounded-lg mb-4 text-[9px] font-mono text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4 px-3 sm:px-4 py-[8px] bg-secondary border border-border rounded-lg mb-4 text-[9px] font-mono text-muted-foreground">
         <span className="font-bold tracking-wider uppercase text-foreground">Calc Snapshot</span>
         <span>Model: <strong className="text-foreground">GEE-v3.0</strong></span>
         <span>Run: <strong className="text-foreground">{new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</strong></span>
