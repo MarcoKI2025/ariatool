@@ -420,7 +420,7 @@ export function CompanyView() {
       </div>
 
       {/* LIVE PRICING SIMULATOR */}
-      <div style={{ background: '#f8f7f4', borderBottom: '1px solid hsl(var(--bd))' }}>
+      <div style={{ background: 'hsl(var(--s2))', borderBottom: '1px solid hsl(var(--bd))' }}>
         <div style={{ padding: '20px 28px 0', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20 }}>
           <div>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>◈ AI Insurance Pricing Simulator · Live Calculation</div>
@@ -511,7 +511,7 @@ export function CompanyView() {
           {/* RIGHT: Live Price Panel */}
           <div style={{ paddingLeft: 24, display: 'flex', flexDirection: 'column', gap: 0 }}>
             {/* Main price */}
-            <div style={{ padding: '18px 20px', background: 'linear-gradient(135deg, hsl(var(--pb)), #f0eeff)', border: '1px solid hsl(var(--pbr))', borderRadius: 12, marginBottom: 12, position: 'relative', overflow: 'hidden' }}>
+            <div style={{ padding: '18px 20px', background: 'linear-gradient(135deg, hsl(var(--pb)), hsl(var(--s2)))', border: '1px solid hsl(var(--pbr))', borderRadius: 12, marginBottom: 12, position: 'relative', overflow: 'hidden' }}>
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 8 }}>Estimated Annual AI Liability Premium</div>
               <div style={{ fontSize: 32, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--tx))', letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: 3, transition: 'all .3s' }}>{fmtK(sim.mid)}</div>
               <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginBottom: 14 }}>Range: {fmtK(sim.lo)} – {fmtK(sim.hi)} / year</div>
@@ -533,7 +533,7 @@ export function CompanyView() {
                 { icon: '🔗', cls: simDep >= 4 ? 'red' : simDep >= 3 ? 'amber' : 'green', action: 'Provider Dependency', sub: `${SIM_DEP_LABELS[simDep]} · Level ${simDep}/5`, neg: simDep >= 3 },
               ].map((r, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', background: 'hsl(var(--sf))', border: '1px solid hsl(var(--bd))', borderRadius: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0, background: r.cls === 'red' ? '#fde4e0' : r.cls === 'amber' ? '#fef5e6' : '#eaf6ee' }}>{r.icon}</div>
+                  <div style={{ width: 28, height: 28, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0, background: r.cls === 'red' ? 'hsl(var(--rb))' : r.cls === 'amber' ? 'hsl(var(--ab))' : 'hsl(var(--gb))' }}>{r.icon}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: 11, fontWeight: 600, color: 'hsl(var(--tx))' }}>{r.action}</div>
                     <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>{r.sub}</div>
