@@ -51,7 +51,7 @@ export function InsuranceDecision() {
             ? 'Elevated structural signals require conditional review. Coverage available with mandatory improvement timeline.'
             : 'Structural exposure within manageable bounds. Standard underwriting process applies.'}
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Decision Class</div>
             <div className="text-[14px] font-bold text-foreground">{decisionClass}</div>
