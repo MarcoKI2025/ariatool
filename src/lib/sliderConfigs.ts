@@ -351,17 +351,6 @@ export const SYSTEMIC_SLIDERS: SliderConfig[] = [
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Isolated Stacks', 2: 'Mostly Isolated', 3: 'Some Overlap', 4: 'Significant Overlap', 5: 'Fully Correlated' }
   },
-  {
-    id: 'esgAlignment',
-    fieldKey: 'esgLiability',
-    category: 'Systemic Risk',
-    name: 'ESG / Climate Risk Alignment',
-    description: 'Exposure to climate-related AI infrastructure risks',
-    tooltip: 'Vulnerability to climate/ESG risks in AI supply chain. Water usage, energy grid stress, physical location risks.',
-    explainText: 'AI data centres consume enormous energy and water resources. A single GPT-4 training run consumes as much electricity as 120 US homes use in a year. Water-cooled data centres in water-stressed regions create physical climate risk. Regulatory ESG disclosure requirements (CSRD, SFDR) increasingly cover AI infrastructure dependencies.',
-    min: 1, max: 5, defaultValue: 2,
-    labels: { 1: 'Low ESG Risk', 2: 'Moderate ESG Risk', 3: 'Some ESG Exposure', 4: 'High ESG Risk', 5: 'Critical ESG Risk' }
-  },
 ];
 
 // All slider categories for rendering
