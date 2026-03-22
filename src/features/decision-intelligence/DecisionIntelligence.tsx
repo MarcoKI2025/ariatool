@@ -47,7 +47,7 @@ export function DecisionIntelligence() {
       {/* ═══ HERO DIAGNOSIS ═══ */}
       <div className={`rounded-xl p-4 sm:p-6 mb-4 border-2 ${bandBg}`}>
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
-        <div className={`text-[28px] font-extrabold tracking-tight leading-[1.1] mb-3 uppercase ${bandColor}`}>
+        <div className={`text-[18px] sm:text-[28px] font-extrabold tracking-tight leading-[1.1] mb-3 uppercase ${bandColor}`}>
           {band === 'Fragile' ? 'Structural Exposure Detected' :
            band === 'Sensitive' ? 'Elevated Structural Signals' :
            'Governance Signals Within Range'}
