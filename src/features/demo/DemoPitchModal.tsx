@@ -77,8 +77,8 @@ export function DemoPitchModal({ open, onClose }: DemoPitchModalProps) {
           {currentSlide === 5 && <Slide5 />}
           {currentSlide === 6 && <Slide6 />}
           {currentSlide === 7 && <Slide7 />}
-          {currentSlide === 8 && <Slide8 />}
-          {currentSlide === 9 && <Slide9 />}
+          {currentSlide === 8 && <Slide8 onClose={onClose} />}
+          {currentSlide === 9 && <Slide9 onClose={onClose} />}
         </div>
 
         {/* Footer */}
