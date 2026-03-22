@@ -268,7 +268,7 @@ export function CompanyView() {
   const { results, inputs, analysisComplete } = state;
   const heroRef = useRef<HTMLDivElement>(null);
   const [showSticky, setShowSticky] = useState(false);
-  const [summaryGenerated, setSummaryGenerated] = useState(false);
+  
 
   // Simulator state
   const [simAuto, setSimAuto] = useState(4);
