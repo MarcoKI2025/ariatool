@@ -570,7 +570,7 @@ export function DecisionIntelligence() {
             <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-2">
               <div className={`h-full rounded-[3px] ${scri >= 65 ? 'bg-fragile' : scri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${scri}%` }} />
             </div>
-            <div className="grid grid-cols-4 gap-2 mt-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
               {[
                 { label: 'Cloud', value: inputs.cloudConcentration },
                 { label: 'Model', value: inputs.modelConcentration },
