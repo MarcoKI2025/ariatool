@@ -403,7 +403,7 @@ export const SLIDER_CATEGORIES = [
     title: 'Systemic & Concentration Risk',
     icon: '🌐',
     subtitle: 'Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk." Lower diversity scores indicate higher concentration risk.',
-    badge: '5 inputs · Swiss Re sigma 01/2026',
+    badge: '4 inputs · Swiss Re sigma 01/2026',
     sliders: SYSTEMIC_SLIDERS,
   },
 ];
