@@ -38,6 +38,9 @@ export function ModelGovernanceComplete() {
         </div>
       </div>
 
+      <AGAFMethodologyStatement />
+      <AssessmentScopeDeclaration />
+      <CalibrationParameters />
       <ModelGovernanceRegister />
       <MethodologyDeepDive />
       <EpistemicLimitations />
