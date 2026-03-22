@@ -34,14 +34,18 @@ export function getBandClass(band: Band): string {
 export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
   const { automation, executionAuthority, oversightLevel, reviewCadence,
     sunsetPolicy, switchingCost, portability, integrationDepth, actionDensity,
-    workflowBreadth, toolCallScope, multiAgent, humanCheckpoints, persistentMemory } = inputs;
+    workflowBreadth, toolCallScope, multiAgent, humanCheckpoints, persistentMemory,
+    cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion } = inputs;
 
   const agentDrFactor = 1 + (multiAgent - 1) * 0.12 - (humanCheckpoints - 1) * 0.06;
   const dr = Math.min(1, (((automation + executionAuthority) / 2) / 5) * agentDrFactor);
   const jd = ((oversightLevel + reviewCadence) / 2) / 5;
   const sunAdj = switchingCost * (1 + (5 - sunsetPolicy) * 0.08);
   const pmemAdj = persistentMemory * 0.15;
-  const rc = Math.min(1, ((sunAdj + portability) / 2) / 5 + pmemAdj / 5);
+  // Concentration adds to reversibility: concentrated infra is harder to exit (from HTML)
+  const concScore = ((cloudConcentration + modelConcentration + gpuConcentration + crossVendorContagion) / 4 - 1) / 4;
+  const concRcAdd = (1 - concScore) * 0.20;
+  const rc = Math.min(1, ((sunAdj + portability) / 2) / 5 + pmemAdj / 5 + concRcAdd);
   const cd = Math.min(1, ((integrationDepth + actionDensity + workflowBreadth * 0.3 + toolCallScope * 0.2 + inputs.toolCallAuthority * 0.25) / 2.75) / 5);
   const na = 0.5;
 
