@@ -319,7 +319,7 @@ export function InsuranceDecision() {
                 Governance Assessment Signal · AI Governance Engine · {inputs.companyName || '—'}
                 <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded ml-1">◈ Committee-Grade</span>
               </div>
-              <div className={`text-[24px] sm:text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
+              <div className={`text-[18px] sm:text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
                 {statusText}
               </div>
               <div className={`text-[13px] leading-[1.55] mb-4 max-w-[700px] ${rationaleColorMap[statusCls]}`}>
