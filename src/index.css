@@ -739,28 +739,28 @@ select.fi-in {
 }
 
 /* ═══ PAGE HEADER ═══ */
-.ph { margin-bottom: 28px; }
+.ph { margin-bottom: 36px; }
 .ph-ey {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: hsl(var(--t3));
-  margin-bottom: 6px;
-  font-weight: 700;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 .ph h1 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   color: hsl(var(--tx));
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   letter-spacing: -0.025em;
   line-height: 1.15;
 }
 .ph-sub {
-  font-size: 13px;
+  font-size: 14px;
   color: hsl(var(--t2));
-  max-width: 580px;
-  line-height: 1.65;
+  max-width: 620px;
+  line-height: 1.7;
 }
 
 /* ═══ VIEW NAV FOOTER ═══ */
