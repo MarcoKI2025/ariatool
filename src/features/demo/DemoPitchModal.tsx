@@ -138,7 +138,7 @@ function Legend({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-[5px]">
       <div className="w-[10px] h-[10px] rounded-sm" style={{ backgroundColor: color }} />
-      <span className="text-[10px] text-[#686458]">{label}</span>
+      <span className="text-[10px] text-[#b0aca0]">{label}</span>
     </div>
   );
 }
