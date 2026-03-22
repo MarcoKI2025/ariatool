@@ -209,8 +209,8 @@ function Slide1() {
         <StatBox value="Provider" valueColor="#b53020" label="Concentration Risk" sublabel="Systemic & accumulation exposure" />
         <StatBox value="Governance" valueColor="#ffc040" label="Gap Dimensions" sublabel="Continuation · Responsibility · Drift" />
       </div>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Risk Characterization Gap — Traditional Models vs. Structural Governance Assessment
         </div>
         <GapChart />
