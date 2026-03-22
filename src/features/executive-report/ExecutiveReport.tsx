@@ -153,9 +153,9 @@ export function ExecutiveReport() {
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-3">AI Systemic Risk Assessment · Governance Exposure Engine v3.0</div>
         <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
-          <div className="flex-1">
-            <div className="text-[22px] font-extrabold text-foreground leading-[1.25] mb-3 max-w-[580px]">
-              Structural AI dependency creates underwriting exposure that current models do not price, reserve for, or capture — this profile exceeds standard tolerance thresholds.
+            <div className="flex-1">
+            <div className="text-[16px] sm:text-[22px] font-extrabold text-foreground leading-[1.25] mb-3 max-w-[580px]">
+              Structural AI dependency creates underwriting exposure that current models do not price, reserve for, or capture.
             </div>
             <div className={`inline-block px-3 py-[6px] rounded-lg text-[12px] font-bold ${
               band === 'Fragile' ? 'bg-fragile text-foreground' :
