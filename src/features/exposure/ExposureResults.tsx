@@ -280,7 +280,7 @@ export function ExposureResults() {
           <span className="text-fragile text-sm flex-shrink-0 mt-[1px]">⚠</span>
           <div>
             <div className="text-[12px] font-semibold text-white leading-[1.4]">Traditional models stop at system failure. This level of propagation is not captured in traditional risk models.</div>
-            <div className="text-[11px] text-[#c0bca8] mt-[3px]">This model extends into cross-system propagation — each layer amplifies the preceding disruption, creating non-linear risk escalation.</div>
+            <div className="text-[11px] text-chrome-fg mt-[3px]">This model extends into cross-system propagation — each layer amplifies the preceding disruption, creating non-linear risk escalation.</div>
           </div>
         </div>
       </div>
@@ -294,9 +294,9 @@ export function ExposureResults() {
 
       {/* Continuation Paradox callout */}
       <div className="p-4 px-5 bg-chrome rounded-[10px] mb-4 border-l-4 border-l-primary">
-        <div className="text-[9px] tracking-wider uppercase text-[#a8a49c] font-bold mb-[6px]">The Continuation Paradox — Why This Risk Is Invisible</div>
-        <div className="text-[13px] font-semibold text-white leading-[1.4] mb-[5px] italic">"Agentic AI works often enough to be trusted — the Autopilot Effect quietly reduces oversight — and makes manual intervention feel like unnecessary friction."</div>
-        <div className="text-[10px] text-[#c8c4b8] leading-[1.5]">The more reliable a system becomes, the harder it is to question its continued existence. Performance-based legitimacy erodes governance leverage. <span className="text-[#a8a49c]">— AGAF, 2026</span></div>
+        <div className="text-[9px] tracking-wider uppercase text-chrome-fg-muted font-bold mb-[6px]">The Continuation Paradox — Why This Risk Is Invisible</div>
+        <div className="text-[13px] font-semibold text-chrome-fg-bright leading-[1.4] mb-[5px] italic">"Agentic AI works often enough to be trusted — the Autopilot Effect quietly reduces oversight — and makes manual intervention feel like unnecessary friction."</div>
+        <div className="text-[10px] text-chrome-fg leading-[1.5]">The more reliable a system becomes, the harder it is to question its continued existence. Performance-based legitimacy erodes governance leverage. <span className="text-chrome-fg-muted">— AGAF, 2026</span></div>
       </div>
 
       {/* Loss envelope */}
@@ -350,22 +350,22 @@ export function ExposureResults() {
       <div className="flex items-stretch bg-chrome rounded-[10px] overflow-hidden mb-5">
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px] px-[18px]">
-          <div className="text-[9px] tracking-wider uppercase text-[#a8a49c] font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
+          <div className="text-[9px] tracking-wider uppercase text-chrome-fg-muted font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
           <div className="grid grid-cols-3 gap-[14px]">
             <div>
-              <div className="text-[10px] font-semibold text-[#9490a8] mb-[3px]">Paper I · EU AI Act Blind Spots</div>
-              <div className="text-[10px] text-[#b0aca8] leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-[#c8c4c0]">continuation</em>. Systems persist without re-authorisation.</div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper I · EU AI Act Blind Spots</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-chrome-fg-bright">continuation</em>. Systems persist without re-authorisation.</div>
             </div>
             <div>
-              <div className="text-[10px] font-semibold text-[#9490a8] mb-[3px]">Paper II · Price of Convenience</div>
-              <div className="text-[10px] text-[#b0aca8] leading-[1.5]">Agentic AI erodes oversight without malice — through <em className="text-[#c8c4c0]">delegation density</em> and oversight decay.</div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper II · Price of Convenience</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Agentic AI erodes oversight without malice — through <em className="text-chrome-fg-bright">delegation density</em> and oversight decay.</div>
             </div>
             <div>
-              <div className="text-[10px] font-semibold text-[#9490a8] mb-[3px]">Paper III · Governing Continuation</div>
-              <div className="text-[10px] text-[#b0aca8] leading-[1.5]">Evaluation cannot authorise existence. Once ECI-2 is reached, <em className="text-[#c8c4c0]">performance ≠ permission</em>.</div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper III · Governing Continuation</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Evaluation cannot authorise existence. Once ECI-2 is reached, <em className="text-chrome-fg-bright">performance ≠ permission</em>.</div>
             </div>
           </div>
-          <div className="mt-[10px] pt-2 border-t border-[#252318] text-[10px] text-[#a8a49c]">AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. <span className="text-[#c8c4b8]">Buyers who adopt this framework now are 3 years ahead of enforcement.</span></div>
+          <div className="mt-[10px] pt-2 border-t border-chrome-border text-[10px] text-chrome-fg-muted">AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. <span className="text-chrome-fg">Buyers who adopt this framework now are 3 years ahead of enforcement.</span></div>
         </div>
       </div>
 

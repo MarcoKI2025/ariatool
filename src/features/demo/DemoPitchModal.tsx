@@ -37,22 +37,22 @@ export function DemoPitchModal({ open, onClose }: DemoPitchModalProps) {
     <div className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-8">
       <div className="w-full max-w-[1400px] h-full max-h-[900px] bg-[#0e0d09] rounded-xl overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[#2e2c22]">
+        <div className="flex items-center justify-between p-6 border-b border-[#3a3828]">
           <div className="flex items-center gap-4">
-            <div className="text-[11px] font-bold tracking-[0.08em] uppercase text-[#585650]">
+            <div className="text-[11px] font-bold tracking-[0.08em] uppercase text-[#a8a49c]">
               AI Governance Engine · Infrastructure Layer Demo
             </div>
-            <div className="text-[11px] font-mono text-[#888478]">
+            <div className="text-[11px] font-mono text-[#b8b4a8]">
               Slide {currentSlide} of {totalSlides}
             </div>
           </div>
           <div className="flex items-center gap-2">
             {currentSlide > 1 && (
-              <button onClick={() => setCurrentSlide(s => Math.max(s - 1, 1))} className="px-4 py-2 text-[11px] font-semibold text-[#888478] hover:text-[#e8e4d8] transition-colors rounded-md border border-[#2e2c22] hover:border-[#4a4642]">
+              <button onClick={() => setCurrentSlide(s => Math.max(s - 1, 1))} className="px-4 py-2 text-[11px] font-semibold text-[#b8b4a8] hover:text-[#eeeadc] transition-colors rounded-md border border-[#3a3828] hover:border-[#5a5648]">
                 ← Back
               </button>
             )}
-            <button onClick={onClose} className="px-4 py-2 text-[11px] font-semibold text-[#888478] hover:text-[#e8e4d8] transition-colors rounded-md border border-[#2e2c22] hover:border-[#4a4642] flex items-center gap-1.5">
+            <button onClick={onClose} className="px-4 py-2 text-[11px] font-semibold text-[#b8b4a8] hover:text-[#eeeadc] transition-colors rounded-md border border-[#3a3828] hover:border-[#5a5648] flex items-center gap-1.5">
               <X className="w-3 h-3" /> Exit Demo
             </button>
             {currentSlide < totalSlides && (
@@ -82,8 +82,8 @@ export function DemoPitchModal({ open, onClose }: DemoPitchModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-[#1e1d14]">
-          <div className="text-[10px] text-[#807c70]">Press → or click Next to continue</div>
+        <div className="flex items-center justify-between px-6 py-4 border-t border-[#3a3828]">
+          <div className="text-[10px] text-[#9e9a90]">Press → or click Next to continue</div>
           <div className="flex items-center gap-6">
             <div className="flex gap-[6px]">
               {Array.from({ length: totalSlides }).map((_, i) => (
@@ -111,25 +111,25 @@ function Eyebrow({ children, dotColor = '#4038b8' }: { children: React.ReactNode
   return (
     <div className="flex items-center gap-2 mb-4">
       <div className="w-[5px] h-[5px] rounded-full" style={{ backgroundColor: dotColor }} />
-      <span className="text-[10px] font-bold tracking-[0.12em] uppercase text-[#585650]">{children}</span>
+      <span className="text-[10px] font-bold tracking-[0.12em] uppercase text-[#a8a49c]">{children}</span>
     </div>
   );
 }
 
 function DmH1({ children }: { children: React.ReactNode }) {
-  return <h1 className="text-[36px] font-bold text-[#e8e4d8] mb-4 leading-[1.1] tracking-tight">{children}</h1>;
+  return <h1 className="text-[36px] font-bold text-[#eeeadc] mb-4 leading-[1.1] tracking-tight">{children}</h1>;
 }
 
 function BodyText({ children }: { children: React.ReactNode }) {
-  return <p className="text-[15px] text-[#888478] leading-[1.65] mb-7 max-w-[640px]">{children}</p>;
+  return <p className="text-[15px] text-[#b8b4a8] leading-[1.65] mb-7 max-w-[640px]">{children}</p>;
 }
 
 function StatBox({ value, valueColor, label, sublabel }: { value: string; valueColor: string; label: string; sublabel: string }) {
   return (
-    <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-4 min-w-[160px]">
+    <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4 min-w-[160px]">
       <div className="text-[32px] font-bold font-mono leading-none mb-1" style={{ color: valueColor }}>{value}</div>
-      <div className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[#585650]">{label}</div>
-      <div className="text-[10px] text-[#807c70] mt-1">{sublabel}</div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[#a8a49c]">{label}</div>
+      <div className="text-[10px] text-[#9e9a90] mt-1">{sublabel}</div>
     </div>
   );
 }
@@ -138,7 +138,7 @@ function Legend({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-[5px]">
       <div className="w-[10px] h-[10px] rounded-sm" style={{ backgroundColor: color }} />
-      <span className="text-[10px] text-[#686458]">{label}</span>
+      <span className="text-[10px] text-[#b0aca0]">{label}</span>
     </div>
   );
 }
@@ -161,30 +161,30 @@ function InsightBox({ color, title, text }: { color: string; title: string; text
 function ConstructBox({ code, name, desc }: { code: string; name: string; desc: string }) {
   return (
     <div className="bg-[#111108] border border-[#3830a8] rounded-[10px] p-4">
-      <div className="text-[10px] font-bold text-[#7068e0] uppercase tracking-[0.07em] mb-1">{code}</div>
-      <div className="text-[12px] font-bold text-[#e8e4d8] mb-1">{name}</div>
-      <div className="text-[10px] text-[#686458] leading-[1.5]">{desc}</div>
+      <div className="text-[10px] font-bold text-[#9088e0] uppercase tracking-[0.07em] mb-1">{code}</div>
+      <div className="text-[12px] font-bold text-[#eeeadc] mb-1">{name}</div>
+      <div className="text-[10px] text-[#b0aca0] leading-[1.5]">{desc}</div>
     </div>
   );
 }
 
 function LossCell({ label, value, src, color }: { label: string; value: string; src: string; color: string }) {
   return (
-    <div className="bg-[#111108] border border-[#2e2c22] rounded-lg p-4 text-center">
-      <div className="text-[9px] uppercase tracking-[0.07em] text-[#585650] mb-[6px] font-bold">{label}</div>
+    <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-4 text-center">
+      <div className="text-[9px] uppercase tracking-[0.07em] text-[#a8a49c] mb-[6px] font-bold">{label}</div>
       <div className="text-[22px] font-bold font-mono leading-none" style={{ color }}>{value}</div>
-      <div className="text-[9px] text-[#807c70] mt-[5px]">{src}</div>
+      <div className="text-[9px] text-[#9e9a90] mt-[5px]">{src}</div>
     </div>
   );
 }
 
 function ActionCard({ num, numColor, title, desc }: { num: number; numColor: string; title: string; desc: string }) {
   return (
-    <div className="bg-[#111108] border border-[#2e2c22] rounded-lg p-4 flex gap-[10px] items-start">
+    <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-4 flex gap-[10px] items-start">
       <div className="w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center flex-shrink-0 text-white" style={{ backgroundColor: numColor }}>{num}</div>
       <div>
-        <div className="text-[11px] font-bold text-[#e8e4d8] mb-1">{title}</div>
-        <div className="text-[10px] text-[#686458]">{desc}</div>
+        <div className="text-[11px] font-bold text-[#eeeadc] mb-1">{title}</div>
+        <div className="text-[10px] text-[#b0aca0]">{desc}</div>
       </div>
     </div>
   );
@@ -209,8 +209,8 @@ function Slide1() {
         <StatBox value="Provider" valueColor="#b53020" label="Concentration Risk" sublabel="Systemic & accumulation exposure" />
         <StatBox value="Governance" valueColor="#ffc040" label="Gap Dimensions" sublabel="Continuation · Responsibility · Drift" />
       </div>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Risk Characterization Gap — Traditional Models vs. Structural Governance Assessment
         </div>
         <GapChart />
@@ -243,17 +243,17 @@ function Slide2() {
           { icon: '⟲', title: 'Behavioral Drift', color: '#9c6200', desc: 'The system shifts what it optimizes for — silently. Detectable by audit: No. Detectable by this engine: Yes.', metric: 'Silent', metricDesc: 'undetectable by standard audit' },
           { icon: '⊗', title: 'Responsibility Collapse', color: '#780840', desc: 'Deployer → provider → regulator. No single actor owns full accountability.', metric: 'Structural', metricDesc: 'accountability gap in AI liability' },
         ].map((r, i) => (
-          <div key={i} className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-4 flex flex-col">
+          <div key={i} className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4 flex flex-col">
             <div className="text-[22px] mb-2">{r.icon}</div>
             <div className="text-[11px] font-bold uppercase tracking-[0.06em] mb-[5px]" style={{ color: r.color }}>{r.title}</div>
-            <div className="text-[10px] text-[#686458] leading-[1.55] flex-1 mb-[10px]">{r.desc}</div>
+            <div className="text-[10px] text-[#b0aca0] leading-[1.55] flex-1 mb-[10px]">{r.desc}</div>
             <div className="font-mono text-[24px] font-bold" style={{ color: r.color }}>{r.metric}</div>
-            <div className="text-[9px] text-[#585650]">{r.metricDesc}</div>
+            <div className="text-[9px] text-[#a8a49c]">{r.metricDesc}</div>
           </div>
         ))}
       </div>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Structural Exposure Accumulation Over Time — Without Governance (indexed, 100 = deployment)
         </div>
         <DriftChart />
@@ -297,15 +297,15 @@ function Slide4() {
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#b53020">Live Case · Meridian Financial Group · Financial Services · Autonomous Trading AI</Eyebrow>
       <DmH1><span className="text-[#ff4040]">ESCALATE TO COMMITTEE</span></DmH1>
-      <p className="text-[18px] text-[#888478] font-medium mb-7">AFI 2.23 · ECI-3 · No clear owner · Governance signals above normal parameters</p>
+      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI 2.23 · ECI-3 · No clear owner · Governance signals above normal parameters</p>
       <div className="grid grid-cols-4 gap-3 mb-5">
         <LossCell label="Assessment Signal" value="ESCALATE" src="Committee review required" color="#ff4040" />
         <LossCell label="Base Risk" value="Elevated" src="Structural governance exposure" color="#9c6200" />
         <LossCell label="Critical Risk Band" value="High" src="Provider concentration · Continuation risk" color="#b53020" />
         <LossCell label="Systemic Exposure" value="Critical" src="Correlated dependency · Multi-entity cluster" color="#f87070" />
       </div>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Meridian Financial — Loss Envelope vs. Standard Actuarial Pricing (€M)
         </div>
         <MeridianChart />
@@ -340,15 +340,15 @@ function Slide5() {
       <div className="grid grid-cols-6 gap-0 mb-5">
         {steps.map((s, i) => (
           <div key={i} className="text-center px-1 relative py-3">
-            {i < steps.length - 1 && <span className="absolute right-[-8px] top-[38%] text-[#6a6858] text-[13px]">→</span>}
+            {i < steps.length - 1 && <span className="absolute right-[-8px] top-[38%] text-[#9e9a90] text-[13px]">→</span>}
             <div className="w-8 h-8 rounded-full flex items-center justify-center text-[12px] mx-auto mb-[7px] border-2" style={{ background: s.bg, borderColor: s.border, color: s.color }}>{s.num}</div>
-            <div className="text-[8px] font-bold uppercase tracking-[0.03em] text-[#888478] leading-[1.3] mb-1">{s.label}</div>
+            <div className="text-[8px] font-bold uppercase tracking-[0.03em] text-[#b8b4a8] leading-[1.3] mb-1">{s.label}</div>
             <div className="text-[10px] font-bold font-mono" style={{ color: s.color }}>{s.value}</div>
           </div>
         ))}
       </div>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Output Depth vs. Competing Solutions — Governance Dimensions Covered (max 10)
         </div>
         <CompareChart />
@@ -370,8 +370,8 @@ function Slide6() {
         When an AI system fails, the loss does not stop at the system boundary. It propagates through workflows, decisions,
         revenue, and portfolio — amplifying at each layer.
       </BodyText>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Loss Envelope by Scenario — Meridian Financial (€M) · AFI 2.23 · Standard vs. Structural Model
         </div>
         <ScenariosChart />
@@ -383,7 +383,7 @@ function Slide6() {
             { label: 'Correlated Cascade', value: '21–60 days', color: '#ff4040' },
           ].map((s, i) => (
             <div key={i} className="text-center">
-              <div className="text-[8px] text-[#585650] uppercase tracking-[0.05em]">{s.label}</div>
+              <div className="text-[8px] text-[#a8a49c] uppercase tracking-[0.05em]">{s.label}</div>
               <div className="text-[11px] font-bold font-mono" style={{ color: s.color }}>{s.value}</div>
             </div>
           ))}
@@ -407,8 +407,8 @@ function Slide7() {
         The EU AI Act is already partially in force. Art. 5 penalties (up to €35M / 7% turnover) apply since February 2025.
         Art. 26 deployer obligations apply from August 2026. The compliance window is closing.
       </BodyText>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           EU AI Act Enforcement Timeline — Active Obligations & Penalty Exposure
         </div>
         <EUAIAChart />
@@ -417,17 +417,17 @@ function Slide7() {
         <div className="bg-[#1a0808] border border-[#5a2018] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#b53020] uppercase tracking-[0.08em] mb-1">Art. 99 §3 · In Force Feb 2025</div>
           <div className="font-mono text-[20px] font-bold text-[#ff4040] mb-1">€35M</div>
-          <div className="text-[9px] text-[#686458] leading-[1.5]">Prohibited AI practices (Art. 5). Up to 7% global turnover. Applies now.</div>
+          <div className="text-[9px] text-[#b0aca0] leading-[1.5]">Prohibited AI practices (Art. 5). Up to 7% global turnover. Applies now.</div>
         </div>
         <div className="bg-[#1a0c00] border border-[#5a3000] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#9c6200] uppercase tracking-[0.08em] mb-1">Art. 99 §4 · Applies Aug 2026</div>
           <div className="font-mono text-[20px] font-bold text-[#ffc040] mb-1">€15M</div>
-          <div className="text-[9px] text-[#686458] leading-[1.5]">High-risk AI deployer obligations. Up to 3% global turnover.</div>
+          <div className="text-[9px] text-[#b0aca0] leading-[1.5]">High-risk AI deployer obligations. Up to 3% global turnover.</div>
         </div>
         <div className="bg-[#0e1a28] border border-[#1a3858] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#4888c0] uppercase tracking-[0.08em] mb-1">Art. 113(3) · Aug 2025</div>
           <div className="font-mono text-[20px] font-bold text-[#80b8e0] mb-1">Full</div>
-          <div className="text-[9px] text-[#686458] leading-[1.5]">Standardisation phase begins. Governance frameworks become regulatory baseline.</div>
+          <div className="text-[9px] text-[#b0aca0] leading-[1.5]">Standardisation phase begins. Governance frameworks become regulatory baseline.</div>
         </div>
       </div>
       <InsightBox color="red" title="The Engine Connects Structure to Statutory Exposure" text="This is the only tool that maps structural fragility (AFI, RFS, IAT criteria) directly to EU AI Act penalty tiers. A Fragile classification with IAT criteria 6+7 triggered means active Art. 27 + Art. 72 violations — up to €15M, today, without a triggering incident." />
@@ -458,11 +458,11 @@ function Slide8({ onClose }: { onClose: () => void }) {
         <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
           ▶ Run Live Analysis — Meridian Financial
         </button>
-        <button onClick={onClose} className="px-5 py-3 border border-[#2e2c22] text-[#888478] rounded-md text-[13px] font-semibold hover:text-[#e8e4d8] hover:border-[#4a4642] transition-colors">
+        <button onClick={onClose} className="px-5 py-3 border border-[#3a3828] text-[#b8b4a8] rounded-md text-[13px] font-semibold hover:text-[#eeeadc] hover:border-[#5a5648] transition-colors">
           Explore the System →
         </button>
       </div>
-      <div className="text-center text-[10px] text-[#585650] mt-2">
+      <div className="text-center text-[10px] text-[#a8a49c] mt-2">
         Loads the full NOT APPROVED scenario · Real-time structural analysis · All 6 outputs computed live
       </div>
     </div>
@@ -486,30 +486,30 @@ function Slide9({ onClose }: { onClose: () => void }) {
         <div className="p-3 bg-[#0a1a0a] border border-[#1a4028] rounded-[9px] text-center">
           <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">AI Risk Index</div>
           <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">72 / 100</div>
-          <div className="text-[9px] text-[#686460] mt-[2px]">High Risk · Meridian Financial</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">High Risk · Meridian Financial</div>
         </div>
         <div className="p-3 bg-[#1a0a06] border border-[#5a1810] rounded-[9px] text-center">
           <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">Annual Loss Exposure</div>
           <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">€4.2M</div>
-          <div className="text-[9px] text-[#686460] mt-[2px]">Tail risk: €14.3M</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Tail risk: €14.3M</div>
         </div>
         <div className="p-3 bg-[#0e100e] border border-[#2a2820] rounded-[9px] text-center">
           <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">12-Month Growth</div>
           <div className="text-[22px] font-bold font-mono text-[#ffc040]">+35%</div>
-          <div className="text-[9px] text-[#686460] mt-[2px]">If nothing changes</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">If nothing changes</div>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4 text-[9px]">
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#686460] mb-1 font-bold text-[8px] uppercase">AGRI — Agentic</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">AGRI — Agentic</div>
           <div className="text-[#ffc040] font-bold font-mono">61 · Elevated</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#686460] mb-1 font-bold text-[8px] uppercase">ALRI — Liability</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">ALRI — Liability</div>
           <div className="text-[#ff6b5b] font-bold font-mono">74 · Critical</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#686460] mb-1 font-bold text-[8px] uppercase">SCRI — Systemic</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">SCRI — Systemic</div>
           <div className="text-[#ff6b5b] font-bold font-mono">68 · Critical</div>
         </div>
       </div>
@@ -517,7 +517,7 @@ function Slide9({ onClose }: { onClose: () => void }) {
         <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-5 py-[9px] text-[12px] font-semibold rounded-md text-[#90e8a0] border border-[#2a9050] bg-gradient-to-br from-[#1a6030] to-[#228040] hover:shadow-lg transition-all">
           ◈ Open Company View — Meridian Financial
         </button>
-        <button onClick={onClose} className="px-[18px] py-[9px] text-[12px] border border-[#2e2c22] text-[#888478] rounded-md font-medium hover:text-[#e8e4d8] transition-colors">
+        <button onClick={onClose} className="px-[18px] py-[9px] text-[12px] border border-[#3a3828] text-[#b8b4a8] rounded-md font-medium hover:text-[#eeeadc] transition-colors">
           Explore Company View →
         </button>
       </div>
