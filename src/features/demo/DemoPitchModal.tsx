@@ -407,8 +407,8 @@ function Slide7() {
         The EU AI Act is already partially in force. Art. 5 penalties (up to €35M / 7% turnover) apply since February 2025.
         Art. 26 deployer obligations apply from August 2026. The compliance window is closing.
       </BodyText>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           EU AI Act Enforcement Timeline — Active Obligations & Penalty Exposure
         </div>
         <EUAIAChart />
