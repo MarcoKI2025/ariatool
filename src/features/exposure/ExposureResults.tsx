@@ -68,10 +68,10 @@ export function ExposureResults() {
       </div>
 
       {/* Entity info */}
-      <div className="mb-5 flex items-center gap-3">
-        <h1 className="text-2xl font-bold text-foreground tracking-tight">{inputs.companyName || 'Assessment'}</h1>
+      <div className="mb-5 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">{inputs.companyName || 'Assessment'}</h1>
         <span className="text-[11px] text-secondary-foreground">{inputs.industry} · Analysis run {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-        <button onClick={showEditForm} className="ml-auto text-[11px] font-semibold text-primary hover:underline cursor-pointer bg-transparent border-none">✎ Edit Profile</button>
+        <button onClick={showEditForm} className="sm:ml-auto text-[11px] font-semibold text-primary hover:underline cursor-pointer bg-transparent border-none self-start">✎ Edit Profile</button>
       </div>
 
       {/* ═══ HERO SECTION ═══ */}
