@@ -386,7 +386,7 @@ export const SLIDER_CATEGORIES = [
     title: 'AI-Specific Liability Exposure',
     icon: '⚠',
     subtitle: 'These dimensions reflect actual AI liability claim patterns emerging in 2025–2026. Each maps to a realized or imminent loss vector with documented precedent.',
-    badge: '5 inputs · 2025–26 Claim Vectors',
+    badge: '7 inputs · 2025–26 Claim Vectors',
     confidenceBadge: '2025–2026 Claim Patterns',
     sliders: LIABILITY_SLIDERS,
   },
