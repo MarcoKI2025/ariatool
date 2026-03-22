@@ -718,7 +718,7 @@ export function CompanyView() {
       </div>
 
       {/* PREMIUM REDUCTION LEVERS */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Premium Reduction Levers</div>
           <div className="text-xl font-bold text-foreground">Three Actions to Reduce Your AI Insurance Cost</div>
