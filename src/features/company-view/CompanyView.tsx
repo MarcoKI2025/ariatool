@@ -756,7 +756,7 @@ export function CompanyView() {
             { name: 'Deployer Obligation Readiness', level: components.dr < 0.4 ? 'green' : components.dr < 0.6 ? 'yellow' : 'red', label: components.dr < 0.4 ? 'On Track' : components.dr < 0.6 ? 'Gaps Identified' : 'Not Ready', body: 'Readiness for Art. 26 deployer obligations (Aug 2026). Includes FRIA, incident reporting, post-market monitoring.', why: 'Non-compliance: up to €15M / 3% global turnover' },
             { name: 'Post-Market Monitoring', level: 'yellow', label: 'Under Development', body: 'Art. 72 requires continuous monitoring systems. Most deployments currently lack structured AI-specific monitoring.', why: 'Required for all high-risk AI from Aug 2026' },
           ].map((r, i) => (
-            <div key={i} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-3">
+            <div key={i} className="bg-card border border-border rounded-2xl shadow-sm p-4 sm:p-7 flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full" style={{ background: r.level === 'green' ? '#18a050' : r.level === 'yellow' ? '#e09000' : '#c03020', animation: r.level !== 'green' ? 'pulse-dot 2s infinite' : undefined }} />
                 <span className="text-[13px] font-bold" style={{ color: r.level === 'green' ? 'hsl(var(--grn))' : r.level === 'yellow' ? 'hsl(var(--amb))' : 'hsl(var(--red))' }}>{r.label}</span>
