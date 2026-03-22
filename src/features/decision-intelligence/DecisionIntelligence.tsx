@@ -309,7 +309,7 @@ export function DecisionIntelligence() {
           <div className="text-right">
             <div className="text-[8px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-[6px]">Risk Classification</div>
             <div className={`text-[22px] font-extrabold font-mono leading-none p-[10px_16px] rounded-lg inline-block tracking-tight border ${
-              band === 'Fragile' ? 'bg-fragile-bg text-[#ff6b5b] border-fragile-border' :
+              band === 'Fragile' ? 'bg-fragile-bg text-fragile border-fragile-border' :
               band === 'Sensitive' ? 'bg-sensitive-bg text-sensitive border-sensitive-border' :
               'bg-stable-bg text-stable border-stable-border'
             }`}>
