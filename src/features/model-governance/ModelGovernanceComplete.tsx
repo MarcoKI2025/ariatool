@@ -146,7 +146,7 @@ function ModelGovernanceRegister() {
         </div>
       </div>
 
-      <div className="px-[18px] py-3 flex items-center gap-[10px]">
+      <div className="px-[14px] sm:px-[18px] py-3 flex flex-wrap items-center gap-[10px]">
         <div className="text-[10px] text-secondary-foreground">Model ID: <span className="font-mono text-primary">AGAF-v3.0-AFI-2026Q1</span></div>
         <div className="w-px h-3 bg-border" />
         <div className="text-[10px] text-secondary-foreground">Formula: <span className="font-mono text-secondary-foreground/80">AFI = (DR × RC × CD) / (JD × NA + 0.001)</span></div>
