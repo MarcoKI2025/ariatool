@@ -382,7 +382,7 @@ export function InsuranceDecision() {
                 band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-foreground'
               }`}>{c.title}</div>
               <div className={`text-[10px] leading-[1.5] ${
-                band === 'Fragile' ? 'text-[#c05040]' : band === 'Sensitive' ? 'text-[#8a5000]' : 'text-muted-foreground'
+                band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-muted-foreground'
               }`}>{c.body}</div>
             </div>
           ))}

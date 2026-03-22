@@ -692,7 +692,7 @@ export function DecisionIntelligence() {
              'This assessment is no longer structurally valid. Governance findings from prior evaluations should not be assumed to hold. Re-evaluation is required immediately.'}
           </div>
           {rfsiTier === 'limited' && (
-            <div className="mt-[10px] p-[10px_14px] bg-fragile-bg border border-fragile-border rounded-md text-[11px] text-[#d08070] leading-[1.5]">
+            <div className="mt-[10px] p-[10px_14px] bg-fragile-bg border border-fragile-border rounded-md text-[11px] text-fragile leading-[1.5]">
               ⚠ <strong>This governance assessment may no longer be valid under current operational conditions.</strong> The deployment context has shifted significantly from the conditions under which this system was assessed.
             </div>
           )}

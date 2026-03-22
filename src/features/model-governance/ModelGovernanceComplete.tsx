@@ -789,7 +789,7 @@ function APIIntegrationReference() {
           <span className="text-[9px] text-muted-foreground ml-auto">Returns correlated exposure</span>
         </div>
         <div className="p-[14px_16px]">
-          <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
+          <pre className="text-[10px] text-primary bg-secondary border border-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-[10px] mx-5 mb-4">
