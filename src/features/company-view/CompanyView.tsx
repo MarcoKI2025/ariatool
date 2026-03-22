@@ -325,9 +325,8 @@ export function CompanyView() {
 
   const sliderFill = (val: number, min: number, max: number) => `${((val - min) / (max - min)) * 100}%`;
 
-  const generateSummary = useCallback(() => {
-    setSummaryGenerated(true);
-  }, []);
+
+
 
   // Locked state
   if (!analysisComplete || !results) {
