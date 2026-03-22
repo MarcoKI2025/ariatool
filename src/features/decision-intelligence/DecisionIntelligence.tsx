@@ -629,7 +629,7 @@ export function DecisionIntelligence() {
             <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-3">
               <div className={`h-full rounded-[3px] ${mdrTier === 'critical' ? 'bg-fragile' : mdrTier === 'high' ? 'bg-sensitive' : mdrTier === 'moderate' ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${mdr}%` }} />
             </div>
-            <div className="grid grid-cols-3 gap-3 mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
               {[
                 { label: 'Optimization Pressure', value: Math.round(((inputs.automation + inputs.actionDensity + inputs.executionAuthority) / 15) * 100) },
                 { label: 'Consequence Insulation', value: Math.round((1 - ((inputs.oversightLevel + inputs.reviewCadence) / 10)) * 100) },
