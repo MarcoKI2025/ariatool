@@ -482,7 +482,7 @@ export function DecisionIntelligence() {
       </SectionCard>
 
       {/* ═══ CONTINUATION / DEPENDENCY / PORTFOLIO ═══ */}
-      <div className="grid grid-cols-3 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         <div className="bg-card border border-border rounded-[10px] p-4">
           <div className="text-[11px] font-bold text-foreground mb-2">Continuation Risk</div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
