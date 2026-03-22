@@ -417,7 +417,7 @@ function Slide7() {
         <div className="bg-[#1a0808] border border-[#5a2018] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#b53020] uppercase tracking-[0.08em] mb-1">Art. 99 §3 · In Force Feb 2025</div>
           <div className="font-mono text-[20px] font-bold text-[#ff4040] mb-1">€35M</div>
-          <div className="text-[9px] text-[#686458] leading-[1.5]">Prohibited AI practices (Art. 5). Up to 7% global turnover. Applies now.</div>
+          <div className="text-[9px] text-[#b0aca0] leading-[1.5]">Prohibited AI practices (Art. 5). Up to 7% global turnover. Applies now.</div>
         </div>
         <div className="bg-[#1a0c00] border border-[#5a3000] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#9c6200] uppercase tracking-[0.08em] mb-1">Art. 99 §4 · Applies Aug 2026</div>
