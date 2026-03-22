@@ -226,7 +226,7 @@ export function ExecutiveReport() {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-border">
-          <div className="p-5 border-r border-border">
+          <div className="p-4 sm:p-5 sm:border-r border-b sm:border-b-0 border-border">
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Systemic Signals</div>
             <div className="space-y-[10px]">
               {[
