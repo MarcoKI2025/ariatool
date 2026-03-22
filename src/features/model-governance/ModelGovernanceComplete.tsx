@@ -636,8 +636,7 @@ function ProductRoadmap() {
       </div>
       <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-5 max-w-[700px]">
         Items intentionally deferred from the current build. These require either empirical data,
-        live API integrations, or regulatory clarity that does not yet exist. Target: enterprise
-        SaaS version Q4 2026 – Q2 2027.
+        live API integrations, or regulatory clarity that does not yet exist.
       </div>
       <div className="grid grid-cols-3 gap-4">
         <div className="p-4 bg-secondary border border-border rounded-lg border-t-[3px] border-t-primary">
@@ -655,10 +654,7 @@ function ProductRoadmap() {
       </div>
       <div className="mt-4 p-3 bg-card border border-border rounded-lg text-[10px] text-secondary-foreground leading-[1.6]">
         <strong className="text-foreground">Exit context:</strong> The current tool is positioned as a
-        governance-heuristic PoC and sales/advisory instrument (est. value €1.5–2.0M as-is). Completion of
-        Q3–Q4 2026 infrastructure items would move it into enterprise SaaS territory (€2.5–3.5M). Full Q1–Q2
-        2027 intelligence layer with empirical backtesting addresses the primary actuarial validation critique
-        and supports a €3.5–5.0M exit thesis.
+        governance-heuristic PoC and sales/advisory instrument (est. value €1.5–2.0M as-is).
       </div>
     </div>
   );
@@ -669,6 +665,187 @@ function RoadmapItem({ title, desc }: { title: string; desc: string }) {
     <div className="p-2.5 bg-card border border-border rounded">
       <div className="text-[11px] font-semibold text-foreground mb-1">{title}</div>
       <div className="text-[9px] text-secondary-foreground leading-[1.4]">{desc}</div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// API INTEGRATION REFERENCE
+// ═══════════════════════════════════════════════════════════════════
+
+function APIIntegrationReference() {
+  const postRequest = `{
+  "entity": {
+    "name": "Meridian Financial Group",
+    "industry": "financial_services",
+    "jurisdiction": "EU"
+  },
+  "parameters": {
+    "automation_level": 4,
+    "execution_authority": 4,
+    "human_oversight": 2,
+    "review_cadence": 2,
+    "switching_cost": 4,
+    "provider_concentration": 4,
+    "integration_depth": 4,
+    "correlation_density": 3
+  },
+  "providers": ["OpenAI", "Azure"],
+  "calibration": {
+    "anchor_override": null,
+    "stress_mult_override": null,
+    "tail_mult_override": null
+  },
+  "model_version": "AGAF-v3.0"
+}`;
+
+  const postResponse = `{
+  "assessment_id": "AGAF-2026-03-20-MFG-001",
+  "model_version": "AGAF-v3.0",
+  "timestamp": "2026-03-20T14:23:11Z",
+  "entity": "Meridian Financial Group",
+  "scores": {
+    "afi": 2.23,
+    "afi_band": "Fragile",
+    "structural_exposure_score": 98,
+    "eci_tier": 3,
+    "eci_label": "Critical Coordination Infrastructure"
+  },
+  "committee_signal": "ESCALATE_TO_COMMITTEE",
+  "confidence": "low_medium",
+  "loss_envelope": {
+    "expected": 11.2,
+    "stress": 38.2,
+    "tail_99pct": 121.3,
+    "portfolio_aggregate": 752,
+    "currency": "EUR",
+    "unit": "million",
+    "confidence": "directional_estimate"
+  },
+  "governance_flags": [
+    "no_clear_system_owner",
+    "iat_trigger_level_3",
+    "mdr_high",
+    "rfsi_degraded"
+  ],
+  "recommended_actions": [
+    "actuarial_review_required",
+    "dependency_diversification_90d",
+    "governance_reauthorisation_quarterly"
+  ]
+}`;
+
+  const getResponse = `{
+  "portfolio_summary": {
+    "entities_assessed": 12,
+    "fragile_count": 4,
+    "sensitive_count": 5,
+    "stable_count": 3
+  },
+  "concentration_risk": {
+    "primary_provider": "OpenAI",
+    "entities_exposed": 9,
+    "correlated_tail_exposure": 752,
+    "cluster_correlation_factor": 0.61,
+    "treaty_adequacy": "REVIEW_REQUIRED"
+  },
+  "accumulation_alert": true,
+  "recommended_treaty_action": "mandatory_sublimit_review"
+}`;
+
+  return (
+    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+      <div className="p-5 pb-4 flex items-start justify-between">
+        <div>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Integration · API Specification</div>
+          <div className="text-[15px] font-bold text-foreground">AGAF Engine — API Integration Reference</div>
+          <div className="text-[11px] text-muted-foreground mt-1 leading-[1.5] max-w-[560px]">Simulated API specification showing how AGAF governance signals can be consumed by underwriting platforms (Guidewire PolicyCenter, SAP Fioneer), GRC tools (ServiceNow, LogicGate), and internal risk systems.</div>
+        </div>
+        <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/30">Integration-Ready</span>
+      </div>
+
+      {/* POST endpoint */}
+      <div className="mx-5 mb-3 bg-chrome border border-chrome-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-chrome border-b border-chrome-border flex items-center gap-[10px]">
+          <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0d2a1a] text-stable rounded font-mono">POST</span>
+          <code className="text-[11px] text-chrome-fg font-mono">/v1/agaf/assessment</code>
+          <span className="text-[9px] text-chrome-fg-muted ml-auto">Run full governance assessment</span>
+        </div>
+        <div className="p-[14px_16px]">
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-chrome-fg-muted mb-2">Request Body</div>
+          <pre className="text-[10px] text-stable bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto mb-3 leading-[1.6] font-mono">{postRequest}</pre>
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-chrome-fg-muted mb-2">Response (200 OK)</div>
+          <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{postResponse}</pre>
+        </div>
+      </div>
+
+      {/* GET endpoint */}
+      <div className="mx-5 mb-3 bg-chrome border border-chrome-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-chrome border-b border-chrome-border flex items-center gap-[10px]">
+          <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0a1e2e] text-[#5090d0] rounded font-mono">GET</span>
+          <code className="text-[11px] text-chrome-fg font-mono">/v1/agaf/portfolio/concentration</code>
+          <span className="text-[9px] text-chrome-fg-muted ml-auto">Returns correlated exposure across portfolio</span>
+        </div>
+        <div className="p-[14px_16px]">
+          <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
+        </div>
+      </div>
+
+      {/* Integration targets */}
+      <div className="grid grid-cols-3 gap-[10px] mx-5 mb-4">
+        {[
+          { name: 'Guidewire PolicyCenter', desc: 'POST /v1/agaf/assessment → parse committee_signal + loss_envelope → populate AI Risk Assessment field in policy intake workflow.' },
+          { name: 'SAP Fioneer / Insurance', desc: 'AGAF JSON export → SAP BTP integration via REST adapter. AFI score + governance_flags → Risk Management module.' },
+          { name: 'ServiceNow GRC', desc: 'AGAF assessment_id + governance_flags → ServiceNow IRM risk record. committee_signal triggers workflow.' },
+        ].map((t, i) => (
+          <div key={i} className="bg-secondary border border-border rounded-lg p-3">
+            <div className="text-[10px] font-bold text-foreground mb-[5px]">{t.name}</div>
+            <div className="text-[10px] text-muted-foreground leading-[1.5]">{t.desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mx-5 mb-5 p-[10px_14px] bg-chrome rounded-[7px] text-[10px] text-chrome-fg-muted leading-[1.5]">
+        <strong className="text-chrome-fg">Production requirements:</strong> Python/FastAPI or Node.js backend · PostgreSQL audit log · OAuth 2.0 / API key auth · Multi-tenant isolation · SOC 2 Type II scope · Rate limiting. Estimated: 8–12 weeks for SaaS MVP.
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FRAMEWORK REVISION SCHEDULE
+// ═══════════════════════════════════════════════════════════════════
+
+function FrameworkRevisionSchedule() {
+  const revisions = [
+    { when: 'Annually', what: 'Loss anchor recalibration against Lloyd\'s, Munich Re, EIOPA annual publications', why: 'Market conditions shift. Current anchors are calibrated to 2024–25 data — annual update ensures loss figures remain defensible.' },
+    { when: 'On deployment event', what: 'Re-assess any profile where system autonomy, integration depth, or provider structure has materially changed', why: 'AFI is a point-in-time structural signal. Material operational changes invalidate prior assessments.' },
+    { when: '2027', what: 'EU AI Act harmonised standards integration — update AFI thresholds if GPAI governance standards define formal continuation metrics', why: 'Standards bodies (CEN/CENELEC, ISO/IEC) are developing AI management standards.' },
+    { when: '2027 (Aug)', what: 'Full framework review aligned with EU AI Act Art. 113(3) application date — harmonised standards publication expected', why: 'Art. 113(3) sets 2 August 2027 as the application date. CEN/CENELEC standardisation phase is the primary window for formal continuation governance threshold-setting.' },
+    { when: 'On major loss event', what: 'Emergency recalibration if AI-specific insurance loss event exceeds €500M industry aggregate', why: 'Current loss anchors are based on projected, not realised, claims. A major loss event would fundamentally change the calibration basis.' },
+  ];
+
+  return (
+    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+      <div className="p-5 pb-4 flex items-start justify-between">
+        <div>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">§9.4 · Ongoing Negotiation</div>
+          <div className="text-[15px] font-bold text-foreground">Framework Revision & Reauthorisation Schedule</div>
+          <div className="text-[11px] text-muted-foreground mt-1 leading-[1.5] max-w-[560px]">Governance assessment validity is an ongoing condition — not a static certification. This schedule defines when the framework itself should be reviewed.</div>
+        </div>
+        <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/30">Versioned</span>
+      </div>
+      <div className="divide-y divide-border">
+        {revisions.map((r, i) => (
+          <div key={i} className="px-5 py-3 flex items-start gap-4">
+            <div className="w-[120px] flex-shrink-0 text-[11px] font-bold text-primary">{r.when}</div>
+            <div className="flex-1">
+              <div className="text-[11px] font-semibold text-foreground mb-[3px]">{r.what}</div>
+              <div className="text-[10px] text-muted-foreground leading-[1.5]">{r.why}</div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
