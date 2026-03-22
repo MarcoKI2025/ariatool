@@ -88,7 +88,7 @@ export function DecisionIntelligence() {
               </div>
             </div>
             <div className="flex-1">
-              <div className="relative w-[140px] h-[70px] mx-auto">
+              <div className="relative w-[120px] sm:w-[140px] h-[60px] sm:h-[70px] mx-auto">
                 <svg viewBox="0 0 140 70" className="w-full h-full">
                   <path d="M 10 65 A 60 60 0 0 1 130 65" fill="none" stroke="hsl(var(--border))" strokeWidth="8" strokeLinecap="round" />
                   <path d="M 10 65 A 60 60 0 0 1 130 65" fill="none" 
