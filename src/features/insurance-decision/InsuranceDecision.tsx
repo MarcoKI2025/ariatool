@@ -313,7 +313,7 @@ export function InsuranceDecision() {
         return (
           <div className={`rounded-none -mx-2 sm:-mx-4 md:-mx-5 lg:-mx-7 mb-6 relative overflow-hidden ${bgMap[statusCls]}`}>
             <div className="absolute top-0 left-0 right-0 h-[5px]" style={{ background: topBarMap[statusCls] }} />
-            <div className="p-[28px_30px_24px]">
+            <div className="p-[16px_16px_16px] sm:p-[28px_30px_24px]">
               <div className={`text-[9px] font-bold tracking-[0.12em] uppercase mb-2 flex items-center gap-[6px] ${eyebrowColorMap[statusCls]}`}>
                 <div className={`w-[5px] h-[5px] rounded-full animate-pulse ${dotBgMap[statusCls]}`} />
                 Governance Assessment Signal · AI Governance Engine · {inputs.companyName || '—'}
