@@ -121,8 +121,8 @@ export function AppSidebar() {
             onClick={() => { setPerspective('company'); setMobileNavOpen(false); }}
             className={`w-full text-left px-3.5 py-2.5 rounded-lg transition-all border flex items-center gap-3 ${
               perspective === 'company'
-                ? 'bg-stable-bg border-stable-border text-stable'
-                : 'border-border text-muted-foreground hover:bg-secondary hover:text-foreground'
+                ? 'bg-stable-bg border-stable/15 text-stable shadow-sm'
+                : 'border-transparent text-muted-foreground hover:bg-secondary hover:text-foreground'
             }`}
           >
             <span className="text-[15px] w-5 text-center flex-shrink-0">◆</span>
