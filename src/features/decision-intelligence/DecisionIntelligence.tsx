@@ -264,7 +264,7 @@ export function DecisionIntelligence() {
         <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: 'linear-gradient(to right, #b53020, #c0392b, #4038b8)' }} />
         
         {/* Top section: judgment + classification badge */}
-        <div className="p-[22px_28px_18px] grid grid-cols-[1fr_auto] gap-6 items-start">
+        <div className="p-[18px_20px_18px] sm:p-[22px_28px_18px] grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-4 sm:gap-6 items-start">
           <div>
             <div className="text-[9px] font-bold tracking-[0.13em] uppercase text-primary mb-2 flex items-center gap-[6px]">
               <div className="w-1 h-1 rounded-full bg-[#7068e0]" />
