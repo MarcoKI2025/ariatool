@@ -608,7 +608,7 @@ function EpistemicLimitations() {
         <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-5 max-w-[700px]">
           This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment.
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {limitations.map((lim, i) => (
             <div key={i} className="p-3 bg-muted border border-border rounded-lg">
               <div className="text-[11px] font-semibold text-sensitive/70 mb-1">{lim.title}</div>
