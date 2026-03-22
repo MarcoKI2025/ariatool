@@ -167,7 +167,7 @@ export function ExecutiveReport() {
                 'Standard coverage terms apply.'}
             </div>
           </div>
-          <div className="text-right flex-shrink-0 ml-6">
+          <div className="text-right flex-shrink-0">
             <div className={`text-[48px] font-extrabold font-mono leading-none ${
               band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
             }`}>{afi.toFixed(2)}</div>
