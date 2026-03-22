@@ -693,7 +693,7 @@ export function CompanyView() {
       <StrategicInterpretation band={band} components={components} />
 
       {/* COST DRIVERS */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Cost Drivers</div>
           <div className="text-xl font-bold text-foreground">What's Driving Your Insurance Cost</div>
@@ -701,7 +701,7 @@ export function CompanyView() {
         </div>
         <div className="flex flex-col gap-3">
           {drivers.map((d, i) => (
-            <div key={i} className="grid grid-cols-[240px_1fr_120px] gap-6 p-6 bg-card border border-border rounded-2xl items-center shadow-sm">
+            <div key={i} className="flex flex-col sm:grid sm:grid-cols-[240px_1fr_120px] gap-3 sm:gap-6 p-4 sm:p-6 bg-card border border-border rounded-2xl sm:items-center shadow-sm">
               <div>
                 <div className="text-sm font-bold text-foreground mb-1.5">{d.label}</div>
                 <div className="text-[12px] text-secondary-foreground leading-relaxed">{d.sub}</div>
@@ -711,7 +711,7 @@ export function CompanyView() {
                   <div className="h-full rounded-md" style={{ width: `${d.pct}%`, background: d.level === 'high' ? 'linear-gradient(90deg, hsl(var(--red)), #d85040)' : d.level === 'medium' ? 'linear-gradient(90deg, hsl(var(--amb)), #c88000)' : 'linear-gradient(90deg, hsl(var(--grn)), #208040)' }} />
                 </div>
               </div>
-              <div className="text-right text-[13px] font-bold font-mono" style={{ color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
+              <div className="text-left sm:text-right text-[13px] font-bold font-mono" style={{ color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
             </div>
           ))}
         </div>
