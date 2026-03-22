@@ -266,7 +266,7 @@ export function ExposureAnalysis() {
         </div>
 
         {/* Right: Live interpretation panel */}
-        <div className="bg-card border border-border rounded-[10px] p-4 sticky top-2">
+        <div className="bg-card border border-border rounded-[10px] p-4 lg:sticky lg:top-2">
           <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-secondary-foreground mb-3">Real-time Risk Signal</div>
           <div className="flex items-end gap-3 mb-3">
             <span className={`text-[40px] font-bold font-mono leading-none ${
