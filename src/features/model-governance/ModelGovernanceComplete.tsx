@@ -75,7 +75,7 @@ function ModelGovernanceRegister() {
         </div>
         <div className="text-right">
           <div className="text-[9px] text-secondary-foreground mb-1">Validation Status</div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-[5px] bg-[#1a1200] border border-[#5a3800] rounded-md">
+          <div className="inline-flex items-center gap-1.5 px-3 py-[5px] bg-sensitive-bg border border-sensitive-border rounded-md">
             <div className="w-[7px] h-[7px] rounded-full bg-sensitive animate-pulse flex-shrink-0" />
             <span className="text-[11px] font-bold text-sensitive tracking-wide uppercase">Internally Reviewed · Not Independently Validated</span>
           </div>
