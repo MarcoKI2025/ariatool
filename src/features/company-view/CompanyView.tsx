@@ -460,16 +460,16 @@ export function CompanyView() {
 
       {/* LIVE PRICING SIMULATOR */}
       <div style={{ background: 'hsl(var(--s2))', borderBottom: '1px solid hsl(var(--bd))' }}>
-        <div style={{ padding: '20px 28px 0', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20 }}>
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-4 px-4 sm:px-7 pt-5">
           <div>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>◈ AI Insurance Pricing Simulator · Live Calculation</div>
-            <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', letterSpacing: '-0.01em' }}>What does your AI profile cost to insure?</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 3, lineHeight: 1.5 }}>Adjust the parameters below — the premium estimate updates in real time. All figures are indicative ranges for governance committee orientation.</div>
+            <div className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight">What does your AI profile cost to insure?</div>
+            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 3, lineHeight: 1.5 }}>Adjust the parameters below — the premium estimate updates in real time.</div>
           </div>
-          <div style={{ flexShrink: 0, padding: '8px 14px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 8, textAlign: 'center', minWidth: 120 }}>
+          <div className="flex-shrink-0 py-2 px-3.5 bg-purple-bg border border-purple-border rounded-lg text-center min-w-[100px]">
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>Live Estimate</div>
-            <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{fmtK(sim.mid)}</div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>per year</div>
+            <div className="text-[18px] sm:text-[20px] font-bold font-mono text-primary">{fmtK(sim.mid)}</div>
+            <div className="text-[9px] text-muted-foreground">per year</div>
           </div>
         </div>
 
