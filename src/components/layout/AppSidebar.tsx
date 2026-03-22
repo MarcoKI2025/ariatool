@@ -58,8 +58,8 @@ export function AppSidebar() {
         {NAV_STEPS.map((step) => {
           const isActive = activeStep === step.id && perspective === 'underwriter';
           const isDone = analysisComplete && step.id === 1;
-          // Step 6 (Model Governance) is never locked
-          const isLocked = !analysisComplete && step.id > 1 && step.id < 6;
+          // All steps except Step 1 are locked until analysis completes
+          const isLocked = !analysisComplete && step.id > 1;
           const isDisabled = perspective === 'company';
 
           return (

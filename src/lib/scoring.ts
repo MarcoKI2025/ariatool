@@ -173,10 +173,13 @@ export function computeLivePreview(inputs: ExposureInputs) {
   if (inputs.executionAuthority >= 4) signals.push({ text: 'Elevated execution authority — autonomous decision scope', color: 'fragile' });
   if (inputs.oversightLevel <= 2) signals.push({ text: 'Low oversight density — governance gaps accumulating', color: 'sensitive' });
   if (inputs.providers.length <= 1) signals.push({ text: 'Single provider dependency — concentration risk', color: 'fragile' });
+  if (inputs.providers.length >= 4) signals.push({ text: 'Multi-provider diversification — reduced concentration', color: 'stable' });
   if (inputs.switchingCost >= 4) signals.push({ text: 'High switching cost — structural lock-in', color: 'sensitive' });
   if (inputs.integrationDepth >= 4) signals.push({ text: 'Deep integration — exit complexity elevated', color: 'sensitive' });
   if (inputs.hallucinationLiability >= 3) signals.push({ text: 'Hallucination liability exposure — unverified AI outputs', color: 'fragile' });
   if (inputs.shadowAI >= 3) signals.push({ text: 'Shadow AI risk — uncontrolled AI deployments', color: 'sensitive' });
+  if (inputs.useCases.includes('Autonomous Operations')) signals.push({ text: 'Autonomous operations selected — elevated delegation risk', color: 'fragile' });
+  if (inputs.useCases.length >= 5) signals.push({ text: 'Broad AI use case portfolio — increased attack surface', color: 'sensitive' });
   if (signals.length === 0) signals.push({ text: 'Governance signals within normal range', color: 'stable' });
 
   return { afi, band, score, signals, components };
