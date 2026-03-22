@@ -170,7 +170,7 @@ export function ExposureResults() {
         <div className={`text-[17px] font-extrabold tracking-[0.01em] mb-[14px] ${bandColor}`}>
           {band === 'Fragile' ? 'COMMITTEE REVIEW REQUIRED' : band === 'Sensitive' ? 'CONDITIONAL REVIEW PROCESS' : 'STANDARD UNDERWRITING PROCESS'}
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Risk Status</div><div className="text-[12px] text-foreground leading-[1.55]">{band === 'Fragile' ? 'Committee review required' : band === 'Sensitive' ? 'Conditional review process' : 'Standard underwriting process'}</div></div>
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Required Action</div><div className="text-[12px] text-foreground leading-[1.55]">{band === 'Fragile' ? 'Apply 150–180% premium loading immediately. Structural change required within 90 days.' : band === 'Sensitive' ? 'Apply precautionary loading 80–120%. Governance review required.' : 'Standard terms. Maintain governance cadence.'}</div></div>
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Financial Consequence</div><div className="text-[12px] text-foreground leading-[1.55]">Exposure creates non-linear risk amplification. Tail scenarios materially elevated under correlated failure.</div></div>
