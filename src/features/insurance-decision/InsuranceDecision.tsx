@@ -739,7 +739,7 @@ export function InsuranceDecision() {
       <div className="bg-purple-bg border border-purple-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-2">◈ Note for Insurer Buyers — Your Own AI Governance Exposure</div>
         <div className="text-[12px] font-semibold text-foreground mb-2">This tool assesses client deployments — but the same structural risks apply to the insurer's own AI systems.</div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             { title: 'Solvency II — ORSA Integration', desc: 'EU insurers must integrate AI governance risk into the Own Risk and Solvency Assessment (ORSA) under Solvency II Art. 45. AFI scores from your own AI deployments are directly relevant ORSA inputs.' },
             { title: 'Solvency II Art. 44/46 — Internal Control & Audit', desc: 'Art. 44 requires an effective internal control system — which must cover AI-assisted decision-making. Art. 46 requires internal audit independence.' },
