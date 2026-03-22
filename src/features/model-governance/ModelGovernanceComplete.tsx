@@ -629,7 +629,7 @@ function RegulatoryAlignment() {
   return (
     <div className="bg-card border border-border rounded-xl p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Regulatory Alignment Map · Framework Grounding</div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
           { icon: 'EU', color: 'bg-primary/20 border-primary/40 text-primary', title: 'EU AI Act 2024/1689', sub: 'Enforcement begins 2026–2027', content: [{ article: 'Art. 26', text: 'High-risk AI system obligations' }, { article: 'Art. 27', text: 'Fundamental Rights Impact Assessment (FRIA)' }, { article: 'Art. 72', text: 'Post-market monitoring requirements' }, { article: 'Art. 99', text: 'Penalty framework (€35M or 7% global revenue)' }] },
           { icon: 'EP', color: 'bg-sensitive/20 border-sensitive/40 text-sensitive', title: 'EIOPA Opinion August 2025', sub: 'AI in Insurance Supervision', quote: '"Proportionality principle requires risk-based governance approach tailored to AI system characteristics."' },
