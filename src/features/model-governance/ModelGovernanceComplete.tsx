@@ -771,7 +771,7 @@ function APIIntegrationReference() {
       </div>
       <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
         <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
-          <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0d2a1a] text-stable rounded font-mono">POST</span>
+          <span className="text-[10px] font-bold px-2 py-[3px] bg-stable-bg text-stable rounded font-mono">POST</span>
           <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/assessment</code>
           <span className="text-[9px] text-muted-foreground ml-auto">Run full governance assessment</span>
         </div>
