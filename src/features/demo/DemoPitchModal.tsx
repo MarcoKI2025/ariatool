@@ -501,7 +501,7 @@ function Slide9({ onClose }: { onClose: () => void }) {
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4 text-[9px]">
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#686460] mb-1 font-bold text-[8px] uppercase">AGRI — Agentic</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">AGRI — Agentic</div>
           <div className="text-[#ffc040] font-bold font-mono">61 · Elevated</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
