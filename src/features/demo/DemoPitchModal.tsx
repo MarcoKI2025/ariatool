@@ -514,10 +514,10 @@ function Slide9() {
         </div>
       </div>
       <div className="flex gap-[9px] flex-wrap">
-        <button className="px-5 py-[9px] text-[12px] font-semibold rounded-md text-[#90e8a0] border border-[#2a9050] bg-gradient-to-br from-[#1a6030] to-[#228040] hover:shadow-lg transition-all">
+        <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-5 py-[9px] text-[12px] font-semibold rounded-md text-[#90e8a0] border border-[#2a9050] bg-gradient-to-br from-[#1a6030] to-[#228040] hover:shadow-lg transition-all">
           ◈ Open Company View — Meridian Financial
         </button>
-        <button className="px-[18px] py-[9px] text-[12px] border border-[#2e2c22] text-[#888478] rounded-md font-medium hover:text-[#e8e4d8] transition-colors">
+        <button onClick={onClose} className="px-[18px] py-[9px] text-[12px] border border-[#2e2c22] text-[#888478] rounded-md font-medium hover:text-[#e8e4d8] transition-colors">
           Explore Company View →
         </button>
       </div>
