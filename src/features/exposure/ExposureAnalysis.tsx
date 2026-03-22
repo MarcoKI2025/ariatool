@@ -326,13 +326,18 @@ export function ExposureAnalysis() {
         </div>
       </div>
 
-      {/* Bottom action bar - PURPLE like HTML */}
-      <div className="fixed bottom-0 left-[236px] right-0 bg-primary flex items-center justify-center flex-col gap-1 px-[28px] py-[14px] z-10 border-t border-white/10">
-        <button onClick={handleRunAnalysis} className="text-white text-[14px] font-semibold bg-transparent border-none cursor-pointer tracking-[0.01em]">
-          ⊕ Generate AI Risk Assessment
+      {/* Bottom action bar */}
+      <div className="fixed bottom-0 left-[236px] right-0 flex flex-col items-center gap-2 px-10 py-5 z-10 bg-background">
+        <button
+          onClick={handleRunAnalysis}
+          className="w-full max-w-4xl bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white text-[15px] font-semibold rounded-xl py-4 px-8 border-none cursor-pointer tracking-[0.01em] shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+        >
+          <span className="text-[16px]">▶</span>
+          Generate AI Risk Assessment
+          <span className="ml-1">→</span>
         </button>
-        <div className="text-[10px] text-white/40 tracking-[0.04em]">
-          {inputs.companyName ? `${inputs.companyName} · ` : ''}AFI {preview.afi.toFixed(2)} · {preview.band} · 28 inputs
+        <div className="text-[11px] text-muted-foreground tracking-[0.03em]">
+          Computes Risk Score · Insurance Cost Range · Regulatory Signal · Board-Ready Report · Takes ~10 seconds
         </div>
       </div>
 
