@@ -426,7 +426,7 @@ function CalibrationParameters() {
       <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-4">
         Loss estimates are anchored to published market data — not proprietary claims databases. These multipliers can be replaced with portfolio-specific actuarial assumptions without changing the governance signal layer.
       </div>
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         {[
           { label: 'ANCHOR', value: '€2.8M', sub: 'Lloyd\'s CRI 2024 median AI operational loss' },
           { label: 'STRESS_MULT', value: '3.4×', sub: 'Lloyd\'s correlated loss stress multiplier' },
