@@ -254,6 +254,7 @@ export function ExposureAnalysis() {
                   max={slider.max}
                   description={slider.description}
                   tooltip={slider.tooltip}
+                  explainText={slider.explainText}
                   scaleLabels={slider.labels}
                 />
               ))}
