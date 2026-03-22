@@ -293,13 +293,13 @@ export function InsuranceDecision() {
       {/* ═══ OPERATIONAL DECISION PANEL (full-width dark ops-decision block) ═══ */}
       {(() => {
         const statusCls = decisionClass === 'Approved' ? 'approved' : decisionClass === 'Conditional Review' ? 'conditional' : decisionClass === 'Escalate to Committee' ? 'escalate' : 'not-approved';
-        const bgMap: Record<string, string> = { approved: 'bg-[#071a0e] border-b border-[#1a4a28]', conditional: 'bg-[#1a1200] border-b border-[#4a3400]', escalate: 'bg-[#12103a] border-b border-[#2a2870]', 'not-approved': 'bg-[#1a0606] border-b border-[#680808]' };
-        const topBarMap: Record<string, string> = { approved: '#146030', conditional: '#9c6200', escalate: '#4038b8', 'not-approved': '#b53020' };
-        const eyebrowColorMap: Record<string, string> = { approved: 'text-[#60d090]', conditional: 'text-[#ffc040]', escalate: 'text-[#9088e0]', 'not-approved': 'text-[#ff6b5b]' };
-        const statusColorMap: Record<string, string> = { approved: 'text-[#60d090]', conditional: 'text-[#ffc040]', escalate: 'text-[#9088e0]', 'not-approved': 'text-[#ff4040]' };
-        const rationaleColorMap: Record<string, string> = { approved: 'text-[#c0e0c8]', conditional: 'text-[#ffd080]', escalate: 'text-[#c0b8f8]', 'not-approved': 'text-[#ffb0a0]' };
-        const consBgMap: Record<string, string> = { approved: 'bg-[#0e2a18] border-[#1a4a28]', conditional: 'bg-[#1a1000] border-[#5a3800]', escalate: 'bg-[#0e0e2a] border-[#2a2870]', 'not-approved': 'bg-[#1a0606] border-[#5a1010]' };
-        const dotBgMap: Record<string, string> = { approved: 'bg-[#60d090]', conditional: 'bg-[#ffc040]', escalate: 'bg-[#9088e0]', 'not-approved': 'bg-[#ff6b5b]' };
+        const bgMap: Record<string, string> = { approved: 'bg-chrome border-b border-stable/40', conditional: 'bg-chrome border-b border-sensitive/40', escalate: 'bg-chrome border-b border-primary/50', 'not-approved': 'bg-chrome border-b border-fragile/40' };
+        const topBarMap: Record<string, string> = { approved: 'hsl(var(--stable))', conditional: 'hsl(var(--sensitive))', escalate: 'hsl(var(--primary))', 'not-approved': 'hsl(var(--fragile))' };
+        const eyebrowColorMap: Record<string, string> = { approved: 'text-stable', conditional: 'text-sensitive', escalate: 'text-primary', 'not-approved': 'text-fragile' };
+        const statusColorMap: Record<string, string> = { approved: 'text-stable', conditional: 'text-sensitive', escalate: 'text-primary', 'not-approved': 'text-fragile' };
+        const rationaleColorMap: Record<string, string> = { approved: 'text-chrome-fg', conditional: 'text-chrome-fg', escalate: 'text-chrome-fg-bright', 'not-approved': 'text-chrome-fg' };
+        const consBgMap: Record<string, string> = { approved: 'bg-chrome-hover border-stable/40', conditional: 'bg-chrome-hover border-sensitive/40', escalate: 'bg-chrome-hover border-primary/40', 'not-approved': 'bg-chrome-hover border-fragile/40' };
+        const dotBgMap: Record<string, string> = { approved: 'bg-stable', conditional: 'bg-sensitive', escalate: 'bg-primary', 'not-approved': 'bg-fragile' };
 
         const statusText = decisionClass === 'Approved' ? 'APPROVED — STANDARD TERMS' : decisionClass === 'Conditional Review' ? 'CONDITIONAL REVIEW' : decisionClass === 'Escalate to Committee' ? 'ESCALATE TO COMMITTEE' : 'NOT APPROVED';
         const rationale = band === 'Fragile' ? 'Standard coverage terms cannot be issued at current structural exposure levels. The deployment profile exceeds underwriting tolerance — conditional re-entry requires documented structural remediation.' :
