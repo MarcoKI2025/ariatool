@@ -1,24 +1,33 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 
+const VIEW_TITLES: Record<string, string> = {
+  '1': 'Decision Intelligence System · Structural AI Risk Operating Layer',
+  '2': 'Decision Intelligence System · Structural AI Risk Operating Layer',
+  '3': 'Scenario Simulation · Stress Testing Framework',
+  '4': 'Insurance Decision · Loss Envelope Analysis',
+  '5': 'Executive Report · Board-Level Findings',
+  '6': 'Model Governance · Methodology & Assumptions',
+  company: 'Company View · AI Risk Executive Summary',
+};
+
 export function AppHeader() {
   const { state, toggleDarkMode } = useApp();
-  const { perspective, analysisComplete, darkMode } = state;
+  const { perspective, activeStep, analysisComplete, darkMode } = state;
 
-  const isCompany = perspective === 'company';
-  const title = isCompany
-    ? 'Company View · AI Risk Executive Summary'
-    : 'Governance Assessment Framework · Structured AI Risk Signal for Committee Review';
+  const title = perspective === 'company'
+    ? VIEW_TITLES.company
+    : VIEW_TITLES[String(activeStep)] || VIEW_TITLES['1'];
 
   return (
     <>
-      {/* Main header - WHITE background like HTML */}
-      <header className="app-header h-11 md:h-12 lg:h-[52px] bg-card border-b border-border px-4 md:px-5 lg:px-[30px] flex items-center justify-between flex-shrink-0">
+      {/* Main header */}
+      <header className="h-[52px] bg-card border-b border-border px-4 lg:px-[30px] flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-[14px] min-w-0">
           <span className="hidden md:inline text-[10px] tracking-[0.08em] uppercase text-muted-foreground border-r border-border pr-[14px] font-semibold flex-shrink-0">
             AI Governance Infrastructure Layer
           </span>
-          <span className="text-[11px] md:text-[12px] font-semibold text-foreground truncate">{title}</span>
+          <span className="text-[12px] font-semibold text-foreground truncate">{title}</span>
         </div>
         <div className="flex items-center gap-[10px] flex-shrink-0">
           <div className={`hidden sm:inline-flex items-center gap-[6px] px-[10px] py-1 rounded-md border text-[10px] font-semibold tracking-[0.04em] uppercase ${
@@ -42,23 +51,21 @@ export function AppHeader() {
             {darkMode ? '☀' : '🌙'}
           </button>
           <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-purple-light flex items-center justify-center text-[10px] font-bold text-white">
-            AJ
+            AI
           </div>
         </div>
       </header>
 
-      {/* Use Restriction Banner - DARK */}
-      <div className="use-restriction-banner bg-chrome hidden md:flex items-center justify-between gap-4 px-4 lg:px-[30px] py-2 flex-shrink-0 border-b border-chrome-border">
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] text-chrome-accent flex-shrink-0">⊕</span>
-          <span className="text-[10px] text-chrome-fg leading-[1.4]">
-            <strong className="text-chrome-fg-bright font-semibold">Governance Intelligence Layer — Not a standalone underwriting or pricing engine.</strong>{' '}
-            Outputs are structural governance signals and directional estimates for committee review.
-            Loss figures are market-calibrated proxies, not actuarially certified.
-            Self-attested inputs. No backtesting. Use with actuarial validation for binding decisions.
-          </span>
-        </div>
-        <div className="hidden lg:inline-flex items-center gap-[5px] px-[9px] py-[3px] bg-chrome-hover border border-chrome-accent/50 rounded text-[9px] font-bold tracking-[0.07em] uppercase text-chrome-accent flex-shrink-0 whitespace-nowrap">
+      {/* Governance Intelligence Layer Banner */}
+      <div className="hidden md:flex items-center gap-[10px] px-4 lg:px-[30px] py-[10px] flex-shrink-0 border-b" style={{ background: '#1a1910', borderColor: '#3a3828' }}>
+        <span className="text-[14px] flex-shrink-0" style={{ color: '#a8a49c' }}>◈</span>
+        <span className="text-[11px] leading-[1.5] flex-1" style={{ color: '#a8a49c' }}>
+          <strong style={{ color: '#c0bcdc', fontWeight: 600 }}>Governance Intelligence Layer — Not a standalone underwriting or pricing engine.</strong>{' '}
+          Outputs are structural governance signals and directional estimates for committee review.
+          Loss figures are market-calibrated proxies, not actuarially certified.
+          Self-attested inputs. No backtesting. Use with actuarial validation for binding decisions.
+        </span>
+        <div className="hidden lg:inline-flex items-center gap-[5px] px-[9px] py-[3px] rounded text-[9px] font-bold tracking-[0.07em] uppercase flex-shrink-0 whitespace-nowrap" style={{ background: '#4038b8', color: '#fff', borderRadius: '4px' }}>
           ◈ Decision Support · Not Decision Making
         </div>
       </div>
