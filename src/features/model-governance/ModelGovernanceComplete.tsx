@@ -114,7 +114,7 @@ function ModelGovernanceRegister() {
             ))}
           </div>
         </div>
-        <div className="p-[14px_18px] border-r border-border">
+        <div className="p-[14px_18px] sm:border-r border-b sm:border-b-0 border-border">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-[5px]">Known Failure Modes</div>
           <div className="flex flex-col gap-[5px]">
             {[
