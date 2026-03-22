@@ -140,7 +140,7 @@ export function DecisionIntelligence() {
         'bg-stable-bg border-stable-border'
       }`}>
         <div className={`text-[9px] font-bold tracking-wider uppercase mb-2 ${bandColor}`}>Key Structural Signals</div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[
             'System persists without explicit re-authorisation',
             'Dependency cannot be reversed without operational disruption',
