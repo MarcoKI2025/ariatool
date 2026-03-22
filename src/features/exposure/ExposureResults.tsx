@@ -140,7 +140,7 @@ export function ExposureResults() {
 
         <SectionCard title="AFI Component Breakdown" subtitle="Structural Dimensions">
           <AFIRadar dr={components.dr} jd={components.jd} rc={components.rc} cd={components.cd} na={components.na} />
-          <div className="grid grid-cols-5 gap-2 mt-3 text-center">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-3 text-center">
             {[
               { key: 'DR', val: components.dr, label: 'Delegation' },
               { key: 'JD', val: components.jd, label: 'Justification' },
