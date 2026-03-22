@@ -322,7 +322,7 @@ export function DecisionIntelligence() {
         </div>
         
         {/* Bottom pills bar */}
-        <div className="px-7 py-3 border-t border-border bg-secondary flex items-center gap-4">
+        <div className="px-4 sm:px-7 py-3 border-t border-border bg-secondary flex flex-wrap items-center gap-2 sm:gap-4">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground flex-shrink-0">Structural Signals:</div>
           {(() => {
             const drPct = Math.round(components.dr * 100);
