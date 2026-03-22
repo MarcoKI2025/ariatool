@@ -247,7 +247,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
 }
 
 /* ── Strategic Interpretation Block ──────────────────────── */
-function StrategicInterpretation({ band }: { band: string }) {
+function StrategicInterpretation({ band, components }: { band: string; components: { dr: number; jd: number; rc: number; cd: number } }) {
   const interp: Record<string, string> = {
     Fragile: 'Your current AI deployment creates <strong>significant structural exposure</strong> due to high execution authority, deep process integration, and insufficient governance oversight. This fragility profile is not primarily a compliance issue — it is a <strong>governance architecture issue</strong> that insurers price as non-standard, typically requiring premium loading of 40–80% above baseline. The exposure is real but addressable through targeted improvements to oversight cadence, execution authority limits, and dependency diversification.',
     Sensitive: 'Your current AI deployment creates <strong>meaningful structural exposure</strong> due to elevated autonomy, process relevance, and moderate governance gaps. Insurers apply conditional terms here — coverage is available, but with governance requirements and likely premium loading. <strong>Three targeted improvements</strong> could move you to standard coverage terms within 60–90 days, representing a meaningful reduction in annual insurance cost.',
