@@ -13,7 +13,7 @@ export function DecisionIntelligence() {
     return <LockedState title="Decision Intelligence Locked" description="Complete the Exposure Analysis to unlock AFI scoring, governance exposure, and structural risk signals." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor } = results;
+  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor, alri, scri, compositeRiskIndex, mdr, mdrTier, mdrLabel } = results;
 
   // Responsibility scores
   const respFragmentation = Math.round(Math.min(99, (1 - components.jd) * 100 + components.dr * 20));
@@ -414,6 +414,123 @@ export function DecisionIntelligence() {
 
         <div className="mt-4 p-3 bg-secondary border border-border rounded-lg text-[11px] text-muted-foreground leading-[1.55]">
           <strong className="text-foreground">Underwriting Implication:</strong> Fragmented responsibility directly affects loss attribution, subrogation rights, and recovery pathways. Where no clear owner exists, insurers absorb residual liability by default. The Responsibility Fragmentation Score is a direct input to coverage scope decisions — not a secondary governance signal.
+        </div>
+      </SectionCard>
+
+      {/* ═══ ALRI — AI Liability Risk Index ═══ */}
+      <SectionCard title="AI Liability Risk Index (ALRI)" icon="⚡" subtitle="Compound score from 9 liability dimensions — weighted by claims frequency and severity.">
+        <div className="flex items-start gap-6 mb-4">
+          <div>
+            <div className={`text-[48px] font-bold font-mono leading-none ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{alri}</div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mt-1">
+              {alri >= 60 ? 'Critical — Multiple Active Claim Vectors' : alri >= 35 ? 'Elevated — Emerging Claim Exposure' : alri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Controlled Liability Profile'}
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-2">
+              <div className={`h-full rounded-[3px] ${alri >= 60 ? 'bg-fragile' : alri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${alri}%` }} />
+            </div>
+            <div className="text-[11px] text-muted-foreground leading-[1.55]">
+              Premium loading from ALRI: <strong className="text-foreground">+{Math.round(alri * 0.8)}%</strong> above base premium. Based on hallucination, deepfake, prompt injection, model drift, algorithmic bias, shadow AI, explainability, data integrity, and ESG liability dimensions.
+            </div>
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* ═══ SCRI — Systemic Concentration Risk Index ═══ */}
+      <SectionCard title="Systemic Concentration Risk Index (SCRI)" icon="🌐" subtitle="Infrastructure concentration creates correlated portfolio-level exposure.">
+        <div className="flex items-start gap-6 mb-4">
+          <div>
+            <div className={`text-[48px] font-bold font-mono leading-none ${scri >= 65 ? 'text-fragile' : scri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{scri}</div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mt-1">
+              {scri >= 65 ? 'Critical Concentration' : scri >= 35 ? 'Elevated Concentration' : 'Diversified'}
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-2">
+              <div className={`h-full rounded-[3px] ${scri >= 65 ? 'bg-fragile' : scri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${scri}%` }} />
+            </div>
+            <div className="grid grid-cols-4 gap-2 mt-3">
+              {[
+                { label: 'Cloud', value: inputs.cloudConcentration },
+                { label: 'Model', value: inputs.modelConcentration },
+                { label: 'GPU/Compute', value: inputs.gpuConcentration },
+                { label: 'Cross-Vendor', value: inputs.crossVendorContagion },
+              ].map((d, i) => (
+                <div key={i} className="bg-secondary border border-border rounded-md p-2 text-center">
+                  <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{d.label}</div>
+                  <div className={`text-[16px] font-bold font-mono ${d.value <= 2 ? 'text-fragile' : d.value <= 3 ? 'text-sensitive' : 'text-stable'}`}>{d.value}/5</div>
+                  <div className="text-[8px] text-muted-foreground">{d.value <= 2 ? 'Concentrated' : d.value <= 3 ? 'Moderate' : 'Diversified'}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* ═══ Composite Risk Index ═══ */}
+      <SectionCard title="Composite Risk Index" icon="📊" subtitle="Weighted blend: AFI (50%) + ALRI (30%) + AGRI (20%).">
+        <div className="flex items-center gap-6">
+          <div className={`text-[64px] font-bold font-mono leading-none ${compositeRiskIndex >= 60 ? 'text-fragile' : compositeRiskIndex >= 35 ? 'text-sensitive' : 'text-stable'}`}>
+            {compositeRiskIndex}
+          </div>
+          <div className="flex-1">
+            <div className="h-[8px] bg-border rounded overflow-hidden mb-3">
+              <div className="h-full rounded gradient-bar" style={{ width: `${compositeRiskIndex}%` }} />
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="text-center">
+                <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AFI Component (50%)</div>
+                <div className="text-[18px] font-bold font-mono text-foreground">{Math.min(100, Math.round((afi / 3.0) * 100))}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">ALRI Component (30%)</div>
+                <div className="text-[18px] font-bold font-mono text-foreground">{alri}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AGRI Component (20%)</div>
+                <div className="text-[18px] font-bold font-mono text-foreground">{agri}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SectionCard>
+
+      {/* ═══ MDR — Meaning Drift Risk ═══ */}
+      <SectionCard title="Meaning Drift Risk (MDR)" icon="🔄" subtitle="Behavioral alignment decay risk — from Kindermann (2026), Semantic Drift and Temporal Coherence in Long-Horizon AI Systems.">
+        <div className="flex items-start gap-6 mb-4">
+          <div>
+            <div className={`text-[48px] font-bold font-mono leading-none ${mdrTier === 'critical' ? 'text-fragile' : mdrTier === 'high' ? 'text-sensitive' : mdrTier === 'moderate' ? 'text-sensitive' : 'text-stable'}`}>{mdr}</div>
+            <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${mdrTier === 'critical' ? 'text-fragile' : mdrTier === 'high' ? 'text-sensitive' : mdrTier === 'moderate' ? 'text-sensitive' : 'text-stable'}`}>
+              {mdrLabel}
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-3">
+              <div className={`h-full rounded-[3px] ${mdrTier === 'critical' ? 'bg-fragile' : mdrTier === 'high' ? 'bg-sensitive' : mdrTier === 'moderate' ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${mdr}%` }} />
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-3">
+              {[
+                { label: 'Optimization Pressure', value: Math.round(((inputs.automation + inputs.actionDensity + inputs.executionAuthority) / 15) * 100) },
+                { label: 'Consequence Insulation', value: Math.round((1 - ((inputs.oversightLevel + inputs.reviewCadence) / 10)) * 100) },
+                { label: 'Temporal Extension', value: Math.round(((Math.min(1, (inputs.switchingCost / 5 + inputs.integrationDepth / 5) / 2) + inputs.automation / 5) / 2) * 100) },
+              ].map((d, i) => (
+                <div key={i} className="bg-secondary border border-border rounded-md p-2">
+                  <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{d.label}</div>
+                  <div className={`text-[16px] font-bold font-mono ${d.value > 65 ? 'text-fragile' : d.value > 40 ? 'text-sensitive' : 'text-stable'}`}>{d.value}%</div>
+                </div>
+              ))}
+            </div>
+            <div className="text-[11px] text-muted-foreground leading-[1.55]">
+              {mdrTier === 'critical' 
+                ? 'Full structural conditions for behavioral alignment decay are present. Standard underwriting frameworks cannot detect or price this risk.'
+                : mdrTier === 'high' 
+                ? 'This system\'s structural conditions strongly favour behavioral alignment decay. High autonomous execution pressure combined with low consequence-bearing feedback.'
+                : mdrTier === 'moderate'
+                ? 'Conditions are emerging for gradual behavioral alignment decay. Autonomous execution outpaces evaluation cadence.'
+                : 'Structural conditions do not strongly favour behavioral alignment decay. Autonomous execution pressure is bounded by adequate oversight.'}
+            </div>
+          </div>
         </div>
       </SectionCard>
 

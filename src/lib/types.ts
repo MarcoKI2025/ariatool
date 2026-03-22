@@ -86,6 +86,9 @@ export interface AnalysisResults {
   scri: number;
   compositeRiskIndex: number;
   premium: { lo: number; mid: number; hi: number };
+  mdr: number;
+  mdrTier: string;
+  mdrLabel: string;
 }
 
 export type IATState = Record<number, boolean>;
