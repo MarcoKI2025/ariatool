@@ -93,12 +93,26 @@ export function CompanyDemoOverlay() {
 
 export function DemoPitchOverlay() {
   const [open, setOpen] = useState(false);
+  const { setInputs, runAnalysis, setPerspective } = useApp();
 
   useEffect(() => {
     const handler = () => setOpen(true);
     document.addEventListener('open-demo-pitch', handler);
     return () => document.removeEventListener('open-demo-pitch', handler);
   }, []);
+
+  useEffect(() => {
+    const handler = () => {
+      const meridian = DEMO_PROFILES[0];
+      setInputs(applyDemoProfile(meridian));
+      setTimeout(() => {
+        runAnalysis();
+        setPerspective('company');
+      }, 100);
+    };
+    document.addEventListener('load-demo-meridian', handler);
+    return () => document.removeEventListener('load-demo-meridian', handler);
+  }, [setInputs, runAnalysis, setPerspective]);
 
   return <DemoPitchModal open={open} onClose={() => setOpen(false)} />;
 }
