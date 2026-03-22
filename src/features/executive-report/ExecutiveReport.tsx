@@ -90,24 +90,34 @@ export function ExecutiveReport() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showOnePager, setShowOnePager] = useState(false);
 
   if (!analysisComplete || !results) {
     return <LockedState title="Executive Report Locked" description="Complete the Exposure Analysis to generate a board-level executive report suitable for risk committees and reinsurers." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, decisionClass, lossEnvelope, eciTier, eciName, components, premium, amplificationFactor, correlationFactor } = results;
+  const { band, afi, decisionClass, lossEnvelope, eciTier, eciName, components, premium, amplificationFactor, correlationFactor, structuralScore } = results;
   const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
+  const score = Math.min(99, Math.round(afi * 60));
+  const dateStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const entity = inputs.companyName || 'Entity';
+  const industry = inputs.industry || '—';
+  const dr100 = Math.round(components.dr * 100);
+  const jd100 = Math.round(components.jd * 100);
+  const rc100 = Math.round(components.rc * 100);
+  const cd100 = Math.round(components.cd * 100);
+
+  const opsStatus = band === 'Fragile' ? 'ESCALATE TO COMMITTEE' : band === 'Sensitive' ? 'CONDITIONAL REVIEW' : 'STANDARD PROCESS';
+  const opsRationale = band === 'Fragile'
+    ? 'Standard coverage terms cannot be issued. Structural exposure exceeds underwriting tolerance — mandatory remediation required before any coverage offer.'
+    : band === 'Sensitive'
+    ? 'Conditional coverage available. Structural improvements required within 90 days — failure to deliver documented improvements warrants escalation to full committee review.'
+    : 'Structural governance signals within normal parameters. Standard underwriting process applies.';
 
   const copyReport = () => {
     const text = buildExecutiveReport(inputs, results);
     navigator.clipboard.writeText(text);
     toast.success('Executive summary copied to clipboard');
-  };
-
-  const copyORSA = () => {
-    const text = buildORSAExport(inputs, results);
-    navigator.clipboard.writeText(text);
-    toast.success('ORSA-style export copied to clipboard');
   };
 
   return (
