@@ -74,5 +74,5 @@ export function GapChart() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} height={120} />;
+  return <div style={{ position: 'relative', height: '200px', width: '100%' }}><canvas ref={canvasRef} /></div>;
 }

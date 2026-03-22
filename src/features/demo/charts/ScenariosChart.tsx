@@ -67,5 +67,5 @@ export function ScenariosChart() {
     return () => { if (chartRef.current) chartRef.current.destroy(); };
   }, []);
 
-  return <canvas ref={canvasRef} height={130} />;
+  return <div style={{ position: 'relative', height: '200px', width: '100%' }}><canvas ref={canvasRef} /></div>;
 }
