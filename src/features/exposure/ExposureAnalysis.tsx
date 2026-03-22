@@ -71,7 +71,7 @@ export function ExposureAnalysis() {
             <div className="text-[12px] text-secondary-foreground leading-[1.6] mb-[10px]">
               Configure your AI deployment profile below — receive an executive risk score, estimated insurance cost range, and regulatory exposure signal ready for committee review.
             </div>
-            <div className="flex gap-5 flex-wrap">
+            <div className="flex gap-3 sm:gap-5 flex-wrap">
               {['Fill in your AI profile', 'Generate risk assessment', 'Review results & export to board'].map((txt, i) => (
                 <div key={i} className="flex items-center gap-[6px] text-[11px] text-secondary-foreground">
                   <span className="w-[18px] h-[18px] rounded-full bg-primary text-white inline-flex items-center justify-center text-[9px] font-bold flex-shrink-0">{i + 1}</span>
