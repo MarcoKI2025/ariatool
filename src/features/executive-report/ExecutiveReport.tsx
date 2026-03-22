@@ -5,6 +5,86 @@ import { buildExecutiveReport, buildORSAExport } from '@/lib/reportBuilder';
 import { exportORSA } from '@/lib/orsaExport';
 import { formatDate, formatCurrency } from '@/lib/formatters';
 import { toast } from 'sonner';
+import { AnalysisResults, ExposureInputs } from '@/lib/types';
+
+// ═══════════════════════════════════════════════════════════════
+// RESPONSIBILITY & OWNERSHIP STRUCTURE PANEL
+// ═══════════════════════════════════════════════════════════════
+
+function ResponsibilityOwnershipPanel({ results, inputs }: { results: AnalysisResults; inputs: ExposureInputs }) {
+  const { components } = results;
+  const providerCount = inputs.providers?.length || 0;
+  const fragScore = Math.min(99, Math.round((components.dr * 0.3 + (1 - components.jd) * 0.3 + Math.min(1, providerCount / 3) * 0.2 + components.rc * 0.2) * 100));
+  const stewScore = Math.min(99, Math.round((1 - (inputs.oversightLevel / 5) * 0.4 - (inputs.humanCheckpoints / 5) * 0.3 - components.jd * 0.3) * 100));
+  const attribScore = Math.min(99, Math.round((components.dr * 0.5 + (1 - components.jd) * 0.3 + (inputs.executionAuthority / 5) * 0.2) * 100));
+  const overallStatus = fragScore >= 60 ? 'Fragmented' : fragScore >= 35 ? 'Partial' : 'Clear';
+  const statusColor = fragScore >= 60 ? 'text-fragile' : fragScore >= 35 ? 'text-sensitive' : 'text-stable';
+  const showNoOwner = fragScore >= 50;
+  const deployerIcon = components.jd >= 0.5 ? '✓' : '?';
+  const oversightIcon = inputs.oversightLevel >= 4 ? '✓' : '?';
+
+  return (
+    <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="flex items-start justify-between mb-4">
+        <div>
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Responsibility & Ownership Structure</div>
+          <div className="text-[15px] font-bold text-foreground">Who Is Responsible? — And Can They Be Held Accountable?</div>
+          <div className="text-[11px] text-secondary-foreground mt-1 leading-[1.5] max-w-[560px]">This panel makes the responsibility structure explicit. Diffuse responsibility is not a neutral fact — it is a governance failure that creates unpriced liability. When no clear owner is identifiable, the system is effectively unownable.</div>
+        </div>
+        <div className="text-right flex-shrink-0 ml-4">
+          <div className={`text-[32px] font-bold font-mono ${statusColor}`}>{fragScore}</div>
+          <div className={`text-[10px] font-bold ${statusColor}`}>{overallStatus}</div>
+        </div>
+      </div>
+      {showNoOwner && (
+        <div className="p-3 bg-fragile-bg border border-fragile-border rounded-lg mb-4">
+          <div className="text-[11px] font-bold text-fragile mb-1">⊘ No Clear System Owner Detected</div>
+          <div className="text-[10px] text-fragile/80 leading-[1.5]">The structural profile does not indicate a single identifiable actor with both authority and accountability. High delegation + low justificatory density + multi-provider dependency = responsibility vacuum — where consequences are distributed but authority is diffuse.</div>
+        </div>
+      )}
+      <div className="grid grid-cols-3 gap-3 mb-4">
+        {[
+          { label: 'Responsibility Fragmentation Score', val: fragScore, sub: 'Accountability distributed across multiple actors without clear assignment' },
+          { label: 'Stewardship Clarity Index', val: stewScore, sub: 'No identifiable steward with authority to govern continuation' },
+          { label: 'Decision Attribution Gap', val: attribScore, sub: 'AI decisions not fully attributable to identifiable human judgment' },
+        ].map((m, i) => (
+          <div key={i} className="p-3 bg-secondary border border-border rounded-lg">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+            <div className={`text-[22px] font-bold font-mono ${m.val >= 60 ? 'text-fragile' : m.val >= 35 ? 'text-sensitive' : 'text-stable'}`}>{m.val}</div>
+            <div className="text-[9px] text-muted-foreground mt-1">{m.sub}</div>
+          </div>
+        ))}
+      </div>
+      <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Responsibility Structure — Actor-by-Actor</div>
+      <div className="space-y-2 mb-4">
+        {[
+          { icon: deployerIcon, status: deployerIcon === '✓' ? 'ok' : 'gap', title: 'Deployer Accountability', body: 'Deployer is responsible for use, oversight assignment, and log retention (Art. 26) — but cannot control model behavior, provider availability, or upstream system changes. Accountability is real but structurally bounded.' },
+          { icon: '~', status: 'partial', title: 'Provider Accountability', body: 'External AI providers bear technical responsibility for model behavior but face no operational accountability for consequences at deployment sites. Provider terms typically disclaim downstream liability.' },
+          { icon: oversightIcon, status: oversightIcon === '✓' ? 'ok' : 'gap', title: 'Oversight Actor — Named Human with Stop Authority', body: 'The system requires a named, empowered individual with both authority to suspend and operational knowledge to do so safely. Without this actor, continuation is structurally ungoverned.' },
+          { icon: '✗', status: 'gap', title: 'Cross-System Liability — Cascade Accountability', body: 'When failure propagates across correlated infrastructure, cascade responsibility is entirely unresolved. No actor is accountable for aggregate portfolio impact.' },
+        ].map((a, i) => {
+          const bgMap: Record<string, string> = { ok: 'bg-stable text-white', partial: 'bg-sensitive text-white', gap: 'bg-fragile text-white' };
+          return (
+            <div key={i} className="flex items-start gap-3 p-3 bg-card border border-border rounded-lg">
+              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0 ${bgMap[a.status]}`}>{a.icon}</div>
+              <div>
+                <div className="text-[12px] font-semibold text-foreground">{a.title}</div>
+                <div className="text-[10px] text-muted-foreground mt-[2px] leading-[1.5]">{a.body}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="p-3 bg-secondary border border-border rounded-lg text-[11px] text-secondary-foreground leading-[1.55]">
+        <strong className="text-foreground">Underwriting Implication:</strong> Fragmented responsibility directly affects loss attribution, subrogation rights, and recovery pathways. Where no clear owner exists, insurers absorb residual liability by default.
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// EXECUTIVE REPORT
+// ═══════════════════════════════════════════════════════════════
 
 export function ExecutiveReport() {
   const { state, setActiveStep } = useApp();
@@ -89,56 +169,91 @@ export function ExecutiveReport() {
           Decision-oriented summary · Not a compliance report · Generated {formatDate()}
         </div>
         <div className="mt-2 text-[10px] text-muted-foreground leading-[1.5]">
-          Risk characterization based on structural governance factors: AFI score, delegation depth, provider concentration, continuation risk, justificatory density. Swiss Re sigma insights 01/2026. EU AI Act Art. 99 penalty exposure shown separately. Framework ≠ guarantee.
+          Risk characterization based on structural governance factors: AFI score, delegation depth, provider concentration, continuation cost. Swiss Re sigma insights 01/2026: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries." Framework is governance-oriented, not actuarially certified.
         </div>
       </div>
 
       {/* Risk Position + Financial Exposure */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <SectionCard title="Risk Position" icon="📋">
-          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
-            <div>• <strong className="text-foreground">Above underwriting tolerance</strong></div>
-            <div>• AFI {afi.toFixed(2)} — exceeds tolerance. Standard rates not applicable</div>
-            <div>• <strong className="text-foreground">Standard coverage not justified</strong></div>
-            <div>• Structural change required before standard rates apply</div>
-            <div>• <strong className="text-foreground">Premium loading mandatory</strong></div>
-            <div>• 150–180% above standard · mandatory pricing adjustment</div>
-            <div>• <strong className="text-foreground">Critical risk band: €{lossEnvelope.tail.toFixed(1)}M</strong></div>
-            <div>• Provider concentration and automation factors</div>
-            <div>• <strong className="text-foreground">Systemic exposure: €{Math.round(lossEnvelope.portfolio)}M</strong></div>
-            <div>• If 5 entities share similar AI infrastructure</div>
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="grid grid-cols-2 gap-0">
+          <div className="p-5 border-r border-border">
+            <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Risk Position</div>
+            <div className="space-y-[10px]">
+              {[
+                { color: 'bg-fragile', title: `Above underwriting tolerance`, sub: `AFI ${afi.toFixed(2)} — exceeds Fragile threshold (1.35)` },
+                { color: 'bg-fragile', title: 'Standard coverage not justified', sub: 'Structural change required before standard rates apply' },
+                { color: 'bg-sensitive', title: 'Premium loading mandatory', sub: '150–180% above standard — mandatory pricing adjustment' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-[10px]">
+                  <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
+                  <div>
+                    <div className="text-[11px] font-semibold text-foreground">{item.title}</div>
+                    <div className="text-[10px] text-muted-foreground">{item.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </SectionCard>
-        <SectionCard title="Financial Exposure" icon="📊">
-          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
-            <div>• <strong className="text-foreground">Base risk band: {formatCurrency(lossEnvelope.expected)}</strong></div>
-            <div>• Structural baseline → AI-derived characteristic</div>
-            <div>• <strong className="text-foreground">Elevated risk band: €{lossEnvelope.stress.toFixed(1)}M</strong></div>
-            <div>• Provider concentration and adoption factors</div>
-            <div>• <strong className="text-foreground">Critical risk band: €{lossEnvelope.tail.toFixed(1)}M</strong></div>
-            <div>• Systemic exposure: €{Math.round(lossEnvelope.portfolio)}M</div>
+          <div className="p-5">
+            <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Financial Exposure</div>
+            <div className="space-y-[10px]">
+              {[
+                { color: 'bg-stable', title: `Base risk band: ${formatCurrency(lossEnvelope.expected)}`, sub: 'Structural baseline — AFI-derived characterization' },
+                { color: 'bg-sensitive', title: `Elevated risk band: €${lossEnvelope.stress.toFixed(1)}M`, sub: 'Provider concentration and delegation factors' },
+                { color: 'bg-fragile', title: `Critical risk band: €${lossEnvelope.tail.toFixed(1)}M`, sub: 'Tail exposure — correlated dependency structures' },
+                { color: 'bg-fragile', title: `Systemic exposure: €${Math.round(lossEnvelope.portfolio)}M`, sub: 'If 8–15 entities share similar AI infrastructure' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-[10px]">
+                  <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
+                  <div>
+                    <div className="text-[11px] font-semibold text-foreground">{item.title}</div>
+                    <div className="text-[10px] text-muted-foreground">{item.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </SectionCard>
-      </div>
-
-      {/* Systemic Signals + Required Actions */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <SectionCard title="Systemic Signals" icon="⚡">
-          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
-            <div>• <strong className="text-foreground">Continuation risk</strong> — System persists without explicit re-authorisation — accumulating liability</div>
-            <div>• <strong className="text-foreground">Dependency concentration</strong> — External provider reliance creates single points of failure</div>
-            <div>• <strong className="text-foreground">Aggregation exposure</strong> — Shared AI creates portfolio-level correlated risk</div>
-            <div>• <strong className="text-foreground">Non-linear loss amplification</strong> — Cascade propagation across 5 layers · {amplificationFactor} amplification</div>
+        </div>
+        <div className="grid grid-cols-2 gap-0 border-t border-border">
+          <div className="p-5 border-r border-border">
+            <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Systemic Signals</div>
+            <div className="space-y-[10px]">
+              {[
+                { color: 'bg-fragile', title: 'Continuation risk', sub: 'System persists without explicit re-authorisation — accumulating liability' },
+                { color: 'bg-fragile', title: 'Dependency concentration', sub: 'External provider reliance creates single points of failure' },
+                { color: 'bg-sensitive', title: 'Aggregation exposure', sub: 'Shared infrastructure creates portfolio-level correlated risk' },
+                { color: 'bg-primary', title: 'Non-linear loss amplification', sub: `Cascade propagation across 5 layers — ${amplificationFactor} amplification` },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-[10px]">
+                  <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
+                  <div>
+                    <div className="text-[11px] font-semibold text-foreground">{item.title}</div>
+                    <div className="text-[10px] text-muted-foreground">{item.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </SectionCard>
-        <SectionCard title="Required Actions" icon="⚠">
-          <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
-            <div>• <strong className="text-foreground">Apply premium loading (150–180%)</strong> — Mandatory · structural risk exceeds standard pricing</div>
-            <div>• <strong className="text-foreground">Require dependency diversification</strong> — Mandatory within 90 days · minimum 3 providers</div>
-            <div>• <strong className="text-foreground">Enforce governance cadence</strong> — Condition of coverage · quarterly re-authorisation</div>
-            <div>• <strong className="text-foreground">Limit coverage to operational layers</strong> — Recommended · full-stack coverage uneconomic</div>
+          <div className="p-5">
+            <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Required Action</div>
+            <div className="space-y-[10px]">
+              {[
+                { color: 'bg-fragile', title: 'Apply premium loading (150–180%)', sub: 'Mandatory — structural risk exceeds standard pricing' },
+                { color: 'bg-fragile', title: 'Require dependency diversification', sub: 'Mandatory within 90 days — minimum 3 providers' },
+                { color: 'bg-sensitive', title: 'Enforce governance cadence', sub: 'Condition of coverage — quarterly re-authorisation minimum' },
+                { color: 'bg-sensitive', title: 'Limit coverage to operational layers', sub: 'Recommended — full-stack coverage uneconomic at current lock-in' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-[10px]">
+                  <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
+                  <div>
+                    <div className="text-[11px] font-semibold text-foreground">{item.title}</div>
+                    <div className="text-[10px] text-muted-foreground">{item.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </SectionCard>
+        </div>
       </div>
 
       {/* Responsibility & Ownership Structure */}
