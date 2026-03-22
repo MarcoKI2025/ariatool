@@ -196,7 +196,7 @@ export function ExposureAnalysis() {
                 </select>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-[14px] mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-3">
               <div>
                 <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Company Size</label>
                 <select
