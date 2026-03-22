@@ -82,10 +82,30 @@ function computeSCRI(inputs: ExposureInputs): number {
   return scri;
 }
 
-function computeCompositeRiskIndex(afi: number, alri: number, agri: number): number {
-  const afiNorm = Math.min(100, Math.round((afi / 3.0) * 100));
-  const composite = Math.round(afiNorm * 0.50 + alri * 0.30 + agri * 0.20);
-  return Math.min(100, composite);
+function computeMDR(inputs: ExposureInputs): { mdr: number; mdrTier: string; mdrLabel: string } {
+  const auto = inputs.automation / 5;
+  const dens = inputs.actionDensity / 5;
+  const ovst = inputs.oversightLevel / 5;
+  const rev = inputs.reviewCadence / 5;
+  const exec = inputs.executionAuthority / 5;
+  const intg = inputs.integrationDepth / 5;
+  const swit = inputs.switchingCost / 5;
+  const durationProxy = Math.min(1, (swit + intg) / 2);
+
+  const optPressure = (auto + dens + exec) / 3;
+  const consequenceInsul = 1 - ((ovst + rev) / 2);
+  const temporalExtension = (durationProxy + auto) / 2;
+
+  const mdr = Math.pow(optPressure * consequenceInsul * temporalExtension, 1 / 3);
+  const mdrPct = Math.round(mdr * 100);
+
+  let tier: string, label: string;
+  if (mdr < 0.35) { tier = 'low'; label = 'Low Drift Risk'; }
+  else if (mdr < 0.55) { tier = 'moderate'; label = 'Moderate Drift Risk'; }
+  else if (mdr < 0.75) { tier = 'high'; label = '⚠ High Drift Risk'; }
+  else { tier = 'critical'; label = '⚠ Critical — Semantic Stability Compromised'; }
+
+  return { mdr: mdrPct, mdrTier: tier, mdrLabel: label };
 }
 
 export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
@@ -131,6 +151,9 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   // Composite Risk Index
   const compositeRiskIndex = computeCompositeRiskIndex(afi, alri, agri);
 
+  // MDR — Meaning Drift Risk (from HTML)
+  const { mdr, mdrTier, mdrLabel } = computeMDR(inputs);
+
   // Premium estimate
   const basePrem = 180 * sectorMult;
   const autoMult = [0, 0.5, 0.75, 1.0, 1.5, 2.2][inputs.automation] || 1;
@@ -163,6 +186,9 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
       mid: Math.round(midPrem / 10) * 10,
       hi: Math.round(midPrem * (1 + bandPct) / 10) * 10,
     },
+    mdr,
+    mdrTier,
+    mdrLabel,
   };
 }
 
