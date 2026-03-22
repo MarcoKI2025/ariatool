@@ -56,15 +56,15 @@ export function MetricCard({ label, value, sublabel, band, icon }: MetricCardPro
   const colorClass = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : band === 'Stable' ? 'text-stable' : 'text-foreground';
 
   return (
-    <div className="bg-card border border-border rounded-[10px] p-4">
-      <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-[6px] flex items-center gap-1">
+    <div className="bg-card border border-border rounded-xl p-6">
+      <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2 flex items-center gap-1.5">
         {icon && <span>{icon}</span>}
         {label}
       </div>
       <div className={`text-[26px] font-bold leading-[1.1] font-mono ${colorClass}`}>
         {value}
       </div>
-      {sublabel && <div className="text-[11px] text-secondary-foreground mt-1">{sublabel}</div>}
+      {sublabel && <div className="text-[11px] text-secondary-foreground mt-2">{sublabel}</div>}
     </div>
   );
 }
@@ -96,8 +96,8 @@ interface SectionCardProps {
 
 export function SectionCard({ title, subtitle, children, highlight, icon, badgeText, confidenceBadge }: SectionCardProps) {
   return (
-    <div className={`bg-card border rounded-[10px] p-5 mb-[14px] ${highlight ? 'border-purple-border bg-purple-bg' : 'border-border'}`}>
-      <div className="flex items-start justify-between mb-2">
+    <div className={`bg-card border rounded-xl p-7 mb-5 ${highlight ? 'border-purple-border bg-purple-bg' : 'border-border'}`}>
+      <div className="flex items-start justify-between mb-3">
         <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-secondary-foreground flex items-center gap-[6px]">
           {icon && <span>{icon}</span>}
           {title}
@@ -111,7 +111,7 @@ export function SectionCard({ title, subtitle, children, highlight, icon, badgeT
           )}
         </div>
       </div>
-      {subtitle && <div className="text-[11px] text-muted-foreground mt-[3px] mb-[10px] leading-[1.5]" dangerouslySetInnerHTML={{ __html: subtitle }} />}
+      {subtitle && <div className="text-[11px] text-muted-foreground mt-1 mb-4 leading-[1.6]" dangerouslySetInnerHTML={{ __html: subtitle }} />}
       {children}
     </div>
   );
@@ -132,11 +132,11 @@ export function Banner({ band, title, children }: BannerProps) {
   const titleColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
 
   return (
-    <div className={`rounded-[10px] border p-5 mb-4 ${cls}`}>
+    <div className={`rounded-xl border p-7 mb-6 ${cls}`}>
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[5px]">
         Executive Signal
       </div>
-      <div className={`text-[18px] font-extrabold tracking-[0.01em] mb-[14px] ${titleColor}`}>
+      <div className={`text-[18px] font-extrabold tracking-[0.01em] mb-5 ${titleColor}`}>
         {title}
       </div>
       {children}
@@ -179,8 +179,8 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
   }, [showTooltip]);
 
   return (
-    <div className="py-[14px] border-b border-border last:border-none last:pb-0">
-      <div className="flex items-center gap-[6px] mb-[6px]">
+    <div className="py-5 border-b border-border last:border-none last:pb-0">
+      <div className="flex items-center gap-2 mb-2">
         <span className="flex-1 text-[13px] font-medium text-foreground">
           {label}
           {tooltip && (
@@ -207,7 +207,7 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
           {value}
         </span>
       </div>
-      <div className="text-[11px] text-muted-foreground mb-[6px]">{description}</div>
+      <div className="text-[11px] text-muted-foreground mb-2">{description}</div>
       <input
         type="range"
         min={min}
