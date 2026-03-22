@@ -74,7 +74,7 @@ export function DecisionIntelligence() {
                 Structural Exposure Score<InfoTip text={TOOLTIPS.afi} />
                 <span className="ml-2 text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ Governance Signal</span>
               </div>
-              <div className={`text-[48px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
+              <div className={`text-[36px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
               <div className="text-[11px] text-muted-foreground mt-1">
                 {band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}
               </div>
