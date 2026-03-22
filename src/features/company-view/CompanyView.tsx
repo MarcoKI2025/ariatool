@@ -96,8 +96,10 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
   return (
-    <div style={{ margin: 0, background: 'hsl(220 16% 13%)', borderBottom: '1px solid hsl(220 10% 24%)' }}>
-      <div style={{ padding: '0 28px' }}>
+    <div style={{ margin: 0, background: 'hsl(220 16% 13%)', borderBottom: '1px solid hsl(220 10% 24%)', position: 'relative', overflow: 'hidden', borderRadius: '12px', marginLeft: 28, marginRight: 28 }}>
+      {/* Gradient top bar */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(to right, #b53020, #c0392b, #e09000, #4038b8, #6058d8)' }} />
+      <div style={{ padding: '0 28px', paddingTop: 4 }}>
         {/* Row 1: Risk Index + Loss Exposure + Industry Comparison */}
         <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(220 10% 24%)' }}>
           {/* AI Risk Index */}
@@ -245,7 +247,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
 }
 
 /* ── Strategic Interpretation Block ──────────────────────── */
-function StrategicInterpretation({ band }: { band: string }) {
+function StrategicInterpretation({ band, components }: { band: string; components: { dr: number; jd: number; rc: number; cd: number } }) {
   const interp: Record<string, string> = {
     Fragile: 'Your current AI deployment creates <strong>significant structural exposure</strong> due to high execution authority, deep process integration, and insufficient governance oversight. This fragility profile is not primarily a compliance issue — it is a <strong>governance architecture issue</strong> that insurers price as non-standard, typically requiring premium loading of 40–80% above baseline. The exposure is real but addressable through targeted improvements to oversight cadence, execution authority limits, and dependency diversification.',
     Sensitive: 'Your current AI deployment creates <strong>meaningful structural exposure</strong> due to elevated autonomy, process relevance, and moderate governance gaps. Insurers apply conditional terms here — coverage is available, but with governance requirements and likely premium loading. <strong>Three targeted improvements</strong> could move you to standard coverage terms within 60–90 days, representing a meaningful reduction in annual insurance cost.',
@@ -253,11 +255,57 @@ function StrategicInterpretation({ band }: { band: string }) {
   };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: 16, padding: '24px 36px', background: 'hsl(var(--pb))', borderBottom: '1px solid hsl(var(--pbr))' }}>
-      <div style={{ fontSize: 28, color: 'hsl(var(--pur))', textAlign: 'center', paddingTop: 4 }}>◈</div>
-      <div>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 8 }}>Strategic Interpretation · Plain Business English</div>
-        <p style={{ fontSize: 13, color: 'hsl(var(--t2))', lineHeight: 1.75, margin: 0 }} dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
+    <div style={{ position: 'relative', overflow: 'hidden', background: 'hsl(220 16% 13%)', borderRadius: '12px', marginLeft: 28, marginRight: 28, marginTop: 16, border: '1px solid hsl(220 10% 24%)' }}>
+      {/* Gradient top bar */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(to right, #b53020, #c0392b, #e09000, #4038b8, #6058d8)' }} />
+      <div style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: 16, padding: '28px 36px 24px' }}>
+        <div style={{ fontSize: 28, color: 'hsl(225 60% 65%)', textAlign: 'center', paddingTop: 4 }}>◈</div>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(225 60% 65%)' }}>Governance Assessment · Structured Risk Signal for Committee Review</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', padding: '4px 10px', background: 'hsl(225 25% 20%)', border: '1px solid hsl(225 30% 35%)', borderRadius: 5, color: 'hsl(225 60% 72%)' }}>◆ Governance Signal</span>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)' }}>Risk Classification</div>
+                <div style={{ fontSize: 18, fontWeight: 800, fontFamily: 'var(--font-mono)', color: band === 'Fragile' ? '#c9392a' : band === 'Sensitive' ? '#b87400' : '#227a44', marginTop: 2 }}>{band === 'Fragile' ? 'HIGH' : band === 'Sensitive' ? 'MODERATE' : 'LOW'}</div>
+                <div style={{ fontSize: 8, color: 'hsl(220 6% 52%)', marginTop: 1 }}>{band === 'Fragile' ? 'Above tolerance' : band === 'Sensitive' ? 'Approaching threshold' : 'Within tolerance'}</div>
+              </div>
+            </div>
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(220 10% 92%)', lineHeight: 1.35, marginBottom: 14 }} dangerouslySetInnerHTML={{ __html: interp[band]?.split('.').slice(0, 2).join('.') + '.' || '' }} />
+          <p style={{ fontSize: 12, color: 'hsl(220 6% 58%)', lineHeight: 1.75, margin: 0, marginBottom: 16 }} dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
+          
+          {/* Action items */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+            {(band === 'Fragile' ? [
+              { tag: 'REMEDIATE', tagCol: '#c9392a', tagBg: 'hsl(4 35% 18%)', title: 'Reduce execution authority and implement quarterly re-authorisation', sub: 'Current autonomy level exceeds governance capacity. Structural change required.' },
+              { tag: 'ESCALATE', tagCol: '#b87400', tagBg: 'hsl(38 30% 18%)', title: 'Engage insurance broker with this assessment', sub: 'Premium loading likely without documented governance improvement plan.' },
+            ] : [
+              { tag: 'MAINTAIN', tagCol: '#227a44', tagBg: 'hsl(150 25% 16%)', title: 'Continue governance cadence — re-assess annually', sub: 'Current profile is within tolerance. Structural changes require re-assessment.' },
+              { tag: 'MONITOR', tagCol: '#227a44', tagBg: 'hsl(150 25% 16%)', title: 'Monitor delegation density and dependency concentration', sub: 'Key drift vectors to watch — both tend to increase silently over time.' },
+            ]).map((item, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: 'hsl(220 12% 17%)', border: '1px solid hsl(220 10% 24%)', borderRadius: 8 }}>
+                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: 'hsl(220 10% 92%)' }}>{item.title}</div>
+                  <div style={{ fontSize: 10, color: 'hsl(220 6% 52%)', marginTop: 2 }}>{item.sub}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Structural signals strip */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid hsl(220 10% 24%)' }}>
+            <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)' }}>Structural Signals:</span>
+            {[
+              `Delegation Density: ${components.dr > 0.6 ? 'High' : components.dr > 0.4 ? 'Moderate' : 'Low'} (${Math.round(components.dr * 100)})`,
+              `Reversibility: ${components.rc > 0.6 ? 'Locked' : components.rc > 0.4 ? 'Constrained' : 'Flexible'} (${Math.round(components.rc * 100)})`,
+              `Continuation: ${components.cd > 0.6 ? 'Ungoverned' : components.cd > 0.4 ? 'Monitored' : 'Governed'}`,
+            ].map((signal, i) => (
+              <span key={i} style={{ fontSize: 10, fontWeight: 600, padding: '5px 12px', border: '1px solid hsl(220 10% 30%)', borderRadius: 6, color: 'hsl(220 10% 85%)', background: 'transparent' }}>{signal}</span>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -268,7 +316,7 @@ export function CompanyView() {
   const { results, inputs, analysisComplete } = state;
   const heroRef = useRef<HTMLDivElement>(null);
   const [showSticky, setShowSticky] = useState(false);
-  const [summaryGenerated, setSummaryGenerated] = useState(false);
+  
 
   // Simulator state
   const [simAuto, setSimAuto] = useState(4);
@@ -325,9 +373,8 @@ export function CompanyView() {
 
   const sliderFill = (val: number, min: number, max: number) => `${((val - min) / (max - min)) * 100}%`;
 
-  const generateSummary = useCallback(() => {
-    setSummaryGenerated(true);
-  }, []);
+
+
 
   // Locked state
   if (!analysisComplete || !results) {
@@ -557,12 +604,8 @@ export function CompanyView() {
               </div>
             </div>
 
-            {/* Generate Summary button */}
-            <button onClick={generateSummary} style={{ width: '100%', marginTop: 10, padding: '13px 16px', background: 'linear-gradient(135deg, hsl(var(--pur)), #6058d8)', border: 'none', borderRadius: 9, color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 4px 16px rgba(64,56,184,0.3)' }}>
-              <span>⊕</span>
-              <span>Generate Executive Summary →</span>
-            </button>
-            <div style={{ textAlign: 'center', marginTop: 7, fontSize: 10, color: 'hsl(var(--t3))' }}>Results appear below · Adjust inputs and click again to update</div>
+
+
           </div>
         </div>
       </div>
@@ -651,7 +694,7 @@ export function CompanyView() {
       <FinancialDecisionEngine afi={afi} band={band} sim={sim} inputs={inputs} />
 
       {/* ══ STRATEGIC INTERPRETATION ══ */}
-      <StrategicInterpretation band={band} />
+      <StrategicInterpretation band={band} components={components} />
 
       {/* COST DRIVERS */}
       <div style={{ padding: '28px 36px 0' }}>
