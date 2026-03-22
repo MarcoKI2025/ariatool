@@ -853,7 +853,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* View nav footer */}
-      <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(3)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Scenario Simulation</button>
         <span className="text-[10px] text-muted-foreground italic">Step 4 of 6 · Insurance & financial exposure</span>
         <button onClick={() => setActiveStep(5)} className="view-nav-next">Executive Report →</button>
