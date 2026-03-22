@@ -5,9 +5,6 @@ import { BandBadge, SectionCard, InfoTip } from '@/components/shared/UIComponent
 import { TOOLTIPS } from '@/lib/tooltips';
 import { AFIGauge } from '@/components/charts/AFIGauge';
 import { AFIRadar } from '@/components/charts/AFIRadar';
-import { formatCurrency } from '@/lib/formatters';
-import { BandBadge, SectionCard, InfoTip } from '@/components/shared/UIComponents';
-import { TOOLTIPS } from '@/lib/tooltips';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
