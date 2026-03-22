@@ -414,7 +414,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Implications */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border-l-4 border-l-fragile border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Underwriting Implication</div>
           <div className="text-[12px] text-muted-foreground leading-[1.55]">{s.underwritingImplication}</div>
