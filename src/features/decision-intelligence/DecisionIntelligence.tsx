@@ -396,7 +396,7 @@ export function DecisionIntelligence() {
         <div className={`text-[18px] font-extrabold tracking-wider uppercase mb-3 ${bandColor}`}>
           {band === 'Fragile' ? 'Committee Review Required' : band === 'Sensitive' ? 'Conditional Review Process' : 'Standard Underwriting Process'}
         </div>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
