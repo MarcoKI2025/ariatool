@@ -6,33 +6,32 @@
 
 @layer base {
   :root {
-    /* ═══ MCKINSEY-GRADE DESIGN TOKENS ═══ */
-    /* Refined neutral palette — warmer, more sophisticated */
-    --bg: 42 8% 96%;         /* #f6f5f2 — warm paper */
-    --sf: 0 0% 100%;         /* #ffffff — cards */
-    --s2: 40 6% 94%;         /* #f0eeea — subtle bg */
-    --s3: 40 6% 90%;         /* #e8e5de — muted bg */
-    --bd: 40 5% 88%;         /* #e0ddd6 — refined border */
-    --bd2: 40 5% 78%;        /* #c8c5be */
-    --tx: 220 14% 12%;       /* #191d24 — near-black, blue-tinted */
-    --t2: 220 6% 40%;        /* #5e6268 — secondary text */
-    --t3: 220 4% 56%;        /* #8a8d92 — tertiary text */
+    /* ═══ CLEAN WHITE DASHBOARD TOKENS ═══ */
+    --bg: 220 14% 96%;        /* #f4f5f7 — cool light grey */
+    --sf: 0 0% 100%;           /* #ffffff — pure white cards */
+    --s2: 220 10% 95%;         /* #f1f2f4 — subtle bg */
+    --s3: 220 8% 91%;          /* #e6e8eb — muted bg */
+    --bd: 220 9% 89%;          /* #e1e4e8 — light border */
+    --bd2: 220 7% 80%;         /* #c8ccd2 */
+    --tx: 220 20% 16%;         /* #1e2430 — deep text */
+    --t2: 220 8% 46%;          /* #6b7280 — secondary text */
+    --t3: 220 6% 60%;          /* #93969e — tertiary text */
 
     /* Strategic semantic colors */
-    --red: 4 72% 40%;        /* #af2d1a — authoritative red */
-    --rb: 4 60% 97%;         /* #fef2f0 */
-    --rbr: 4 40% 82%;        /* #e4b5ad */
-    --amb: 32 100% 32%;      /* #a36600 — warm amber */
-    --ab: 38 80% 96%;        /* #fef7ea */
-    --abr: 38 55% 72%;       /* #dfc078 */
-    --grn: 152 60% 24%;      /* #186838 — confident green */
-    --gb: 150 35% 95%;       /* #ecf6f0 */
-    --gbr: 150 30% 72%;      /* #94cca8 */
-    --blu: 210 60% 28%;      /* #1c4a70 */
-    --bb: 210 45% 95%;       /* #eaf0f7 */
-    --pur: 243 48% 44%;      /* #3b34a8 — deeper, richer purple */
-    --pb: 243 55% 97%;       /* #ededff */
-    --pbr: 243 35% 80%;      /* #b2ade0 */
+    --red: 4 72% 46%;          /* #c9392a */
+    --rb: 4 50% 97%;           /* #fef3f1 */
+    --rbr: 4 35% 86%;          /* #edc4bd */
+    --amb: 32 90% 38%;         /* #b87400 */
+    --ab: 38 70% 97%;          /* #fef9ee */
+    --abr: 38 45% 78%;         /* #dfc98e */
+    --grn: 152 55% 30%;        /* #227a44 */
+    --gb: 150 30% 96%;         /* #eff7f2 */
+    --gbr: 150 25% 78%;        /* #a8d2b8 */
+    --blu: 210 55% 34%;        /* #275a85 */
+    --bb: 210 40% 96%;         /* #edf2f8 */
+    --pur: 225 60% 50%;        /* #3366cc — professional blue */
+    --pb: 225 50% 97%;         /* #eef2fb */
+    --pbr: 225 30% 82%;        /* #b3c0da */
 
     /* Mapped to Tailwind tokens */
     --background: var(--bg);
@@ -54,18 +53,18 @@
     --border: var(--bd);
     --input: var(--bd2);
     --ring: var(--pur);
-    --radius: 0.625rem;
+    --radius: 0.5rem;
 
-    /* Premium dark chrome — sidebar + dark sections */
-    --nav: 222 16% 12%;        /* #181c24 — deep navy-charcoal */
-    --chrome-bg: 222 14% 17%;  /* #232830 — premium dark */
-    --chrome-bg-hover: 222 12% 21%;
-    --chrome-bg-active: 222 12% 25%;
-    --chrome-fg: 220 8% 82%;   /* #cdd0d5 — clear body on dark */
-    --chrome-fg-bright: 220 10% 96%; /* #f2f3f6 — crisp headings */
-    --chrome-fg-muted: 220 6% 62%;   /* #979ba2 — readable labels */
-    --chrome-border: 222 10% 30%;    /* #454b56 — visible borders */
-    --chrome-accent: 243 48% 58%;
+    /* Light chrome — sidebar + header */
+    --nav: 0 0% 100%;             /* white sidebar */
+    --chrome-bg: 0 0% 100%;       /* white */
+    --chrome-bg-hover: 220 14% 96%;
+    --chrome-bg-active: 225 40% 96%;
+    --chrome-fg: 220 8% 46%;      /* #6b7280 — body text */
+    --chrome-fg-bright: 220 20% 16%; /* #1e2430 — headings */
+    --chrome-fg-muted: 220 6% 60%;   /* #93969e — labels */
+    --chrome-border: 220 9% 89%;     /* light border */
+    --chrome-accent: 225 60% 50%;
 
     /* Status tokens */
     --stable: var(--grn);
@@ -78,9 +77,9 @@
     --fragile-bg: var(--rb);
     --fragile-border: var(--rbr);
 
-    /* Purple accent */
+    /* Accent */
     --purple: var(--pur);
-    --purple-light: 243 48% 60%;
+    --purple-light: 225 55% 58%;
     --purple-bg: var(--pb);
     --purple-border: var(--pbr);
 
@@ -88,16 +87,16 @@
     --font-mono: 'IBM Plex Mono', monospace;
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    /* Premium shadows */
-    --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
-    --shadow-card-hover: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.05);
-    --shadow-elevated: 0 4px 16px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.06);
-    --shadow-chrome: 0 1px 4px rgba(0,0,0,0.2), 0 6px 20px rgba(0,0,0,0.15);
+    /* Clean shadows */
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.06);
+    --shadow-elevated: 0 8px 30px rgba(0,0,0,0.08);
+    --shadow-chrome: 0 1px 3px rgba(0,0,0,0.04);
 
     /* Sidebar */
     --sidebar-background: var(--nav);
     --sidebar-foreground: var(--chrome-fg);
-    --sidebar-primary: 243 48% 56%;
+    --sidebar-primary: 225 60% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: var(--chrome-bg-active);
     --sidebar-accent-foreground: var(--chrome-fg-bright);
@@ -107,12 +106,12 @@
 
   /* Dark mode */
   body.dark {
-    --bg: 222 16% 5%;
-    --sf: 222 14% 8%;
-    --s2: 222 12% 11%;
-    --s3: 222 10% 14%;
-    --bd: 222 10% 18%;
-    --bd2: 222 8% 22%;
+    --bg: 220 16% 8%;
+    --sf: 220 14% 11%;
+    --s2: 220 12% 14%;
+    --s3: 220 10% 18%;
+    --bd: 220 10% 22%;
+    --bd2: 220 8% 28%;
     --tx: 220 10% 92%;
     --t2: 220 6% 58%;
     --t3: 220 4% 42%;
@@ -123,8 +122,18 @@
     --abr: 38 35% 25%;
     --gb: 150 25% 10%;
     --gbr: 150 25% 25%;
-    --pb: 243 25% 14%;
-    --pbr: 243 25% 30%;
+    --pb: 225 25% 14%;
+    --pbr: 225 25% 30%;
+
+    --nav: 220 16% 10%;
+    --chrome-bg: 220 14% 12%;
+    --chrome-bg-hover: 220 12% 16%;
+    --chrome-bg-active: 220 12% 20%;
+    --chrome-fg: 220 8% 75%;
+    --chrome-fg-bright: 220 10% 92%;
+    --chrome-fg-muted: 220 6% 52%;
+    --chrome-border: 220 10% 24%;
+    --chrome-accent: 225 50% 58%;
   }
 }
 
@@ -374,13 +383,13 @@ select.fi-in {
   -webkit-appearance: none;
 }
 
-/* ═══ SECTION CARD — premium ═══ */
+/* ═══ SECTION CARD — clean white ═══ */
 .sc {
   background: hsl(var(--sf));
   border: 1px solid hsl(var(--bd));
-  border-radius: 12px;
-  padding: 22px;
-  margin-bottom: 16px;
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 20px;
   box-shadow: var(--shadow-card);
   transition: box-shadow .2s ease;
 }
@@ -395,12 +404,12 @@ select.fi-in {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 .sc-t {
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.09em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: hsl(var(--t2));
   display: flex;
@@ -408,11 +417,11 @@ select.fi-in {
   gap: 6px;
 }
 .sc-sub {
-  font-size: 11px;
+  font-size: 12px;
   color: hsl(var(--t3));
-  margin-top: 3px;
-  margin-bottom: 10px;
-  line-height: 1.55;
+  margin-top: 4px;
+  margin-bottom: 14px;
+  line-height: 1.6;
 }
 
 /* ═══ SLIDER ROW — refined ═══ */
@@ -457,7 +466,7 @@ select.fi-in {
 }
 
 /* ═══ CARD GRIDS ═══ */
-.cg { display: grid; gap: 14px; margin-bottom: 16px; }
+.cg { display: grid; gap: 18px; margin-bottom: 20px; }
 .c2 { grid-template-columns: 1fr 1fr; }
 .c3 { grid-template-columns: 1fr 1fr 1fr; }
 .c4 { grid-template-columns: repeat(4, 1fr); }
@@ -730,28 +739,28 @@ select.fi-in {
 }
 
 /* ═══ PAGE HEADER ═══ */
-.ph { margin-bottom: 28px; }
+.ph { margin-bottom: 36px; }
 .ph-ey {
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: hsl(var(--t3));
-  margin-bottom: 6px;
-  font-weight: 700;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 .ph h1 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
   color: hsl(var(--tx));
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   letter-spacing: -0.025em;
   line-height: 1.15;
 }
 .ph-sub {
-  font-size: 13px;
+  font-size: 14px;
   color: hsl(var(--t2));
-  max-width: 580px;
-  line-height: 1.65;
+  max-width: 620px;
+  line-height: 1.7;
 }
 
 /* ═══ VIEW NAV FOOTER ═══ */
