@@ -380,7 +380,7 @@ export function ScenarioSimulation() {
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Loss Envelope Shift Under Scenario</div>
           <div className="text-[11px] text-secondary-foreground mt-[2px]">How the loss bands change compared to baseline exposure</div>
         </div>
-        <div className="grid grid-cols-3 gap-0">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-0">
           {[
             { label: 'Expected Loss', baseline: lossEnvelope.expected, shifted: s.lossShift.expected, color: 'text-stable' },
             { label: 'Stress Loss', baseline: lossEnvelope.stress, shifted: s.lossShift.stress, color: 'text-sensitive' },
