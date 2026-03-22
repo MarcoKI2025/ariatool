@@ -473,9 +473,9 @@ export function CompanyView() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 0, padding: '20px 28px 24px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_340px] gap-0 px-4 sm:px-7 py-5">
           {/* LEFT: Input controls */}
-          <div style={{ paddingRight: 24, borderRight: '1px solid hsl(var(--bd))', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="pr-0 md:pr-6 md:border-r border-b md:border-b-0 border-border pb-5 md:pb-0 flex flex-col gap-4">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
               {/* Autonomy */}
               <div>
