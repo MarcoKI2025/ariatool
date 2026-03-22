@@ -602,7 +602,7 @@ export function InsuranceDecision() {
         <div className="text-[13px] text-foreground font-medium mb-3">
           If 8–15 entities share similar AI infrastructure, <strong className="text-fragile font-mono">systemic correlation risk emerges</strong> <span className="text-[10px] text-muted-foreground font-normal">— Swiss Re sigma 01/2026: Provider concentration creates accumulation risk</span>
         </div>
-        <div className="grid grid-cols-3 gap-3 mb-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
           <div className="bg-card border border-border rounded-lg p-3">
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Correlation Factor</div>
             <div className="text-[22px] font-bold font-mono text-foreground">{correlationFactor.toFixed(2)}</div>
