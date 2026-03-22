@@ -330,6 +330,14 @@ export function ExposureResults() {
         </div>
       </div>
 
+      {/* Loss pressure callout */}
+      <div className="flex items-start gap-3 p-3 bg-card border border-border rounded-lg mb-4">
+        <div className="w-[6px] h-[6px] rounded-full bg-fragile flex-shrink-0 mt-[5px] animate-pulse" />
+        <span className="text-[11px] text-secondary-foreground leading-[1.55]">
+          <strong className="text-foreground">These losses can materialise without a single obvious system failure.</strong> Correlated dependency structures create aggregate exposure that exceeds the sum of individual incidents — invisible to per-entity risk assessment.
+        </span>
+      </div>
+
       {/* ═══ AGRI / ALRI / SCRI Panels ═══ */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         {[
