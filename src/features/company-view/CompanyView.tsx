@@ -548,7 +548,7 @@ export function CompanyView() {
           </div>
 
           {/* RIGHT: Live Price Panel */}
-          <div style={{ paddingLeft: 24, display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <div className="pl-0 md:pl-6 flex flex-col gap-0">
             {/* Main price */}
             <div style={{ padding: '18px 20px', background: 'linear-gradient(135deg, hsl(var(--pb)), hsl(var(--s2)))', border: '1px solid hsl(var(--pbr))', borderRadius: 12, marginBottom: 12, position: 'relative', overflow: 'hidden' }}>
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 8 }}>Estimated Annual AI Liability Premium</div>
