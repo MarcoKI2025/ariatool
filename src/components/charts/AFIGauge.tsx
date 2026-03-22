@@ -36,7 +36,7 @@ export function AFIGauge({ afi, band }: AFIGaugeProps) {
       data: {
         datasets: [{
           data: [normalizedAFI, maxAFI - normalizedAFI],
-          backgroundColor: [color, '#1e1d14'],
+          backgroundColor: [color, '#e1e4e8'],
           borderWidth: 0,
           circumference: 180,
           rotation: 270
