@@ -491,7 +491,7 @@ function Slide9({ onClose }: { onClose: () => void }) {
         <div className="p-3 bg-[#1a0a06] border border-[#5a1810] rounded-[9px] text-center">
           <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">Annual Loss Exposure</div>
           <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">€4.2M</div>
-          <div className="text-[9px] text-[#686460] mt-[2px]">Tail risk: €14.3M</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Tail risk: €14.3M</div>
         </div>
         <div className="p-3 bg-[#0e100e] border border-[#2a2820] rounded-[9px] text-center">
           <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">12-Month Growth</div>
