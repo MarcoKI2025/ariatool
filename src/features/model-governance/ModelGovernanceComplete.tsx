@@ -636,7 +636,7 @@ function RegulatoryAlignment() {
           { icon: 'US', color: 'bg-stable/20 border-stable/40 text-stable', title: 'NIST AI RMF 1.0', sub: 'Risk Management Framework', items: ['GOVERN: Governance structures', 'MAP: Context establishment', 'MEASURE: Assessment & benchmarking', 'MANAGE: Risk response actions'] },
           { icon: 'SR', color: 'bg-fragile/20 border-fragile/40 text-fragile', title: 'Swiss Re sigma 01/2026', sub: 'AI Insurance Market Guidance', quote: '"AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."' },
         ].map((r, i) => (
-          <div key={i} className="bg-secondary border border-chrome-border rounded-lg p-4">
+          <div key={i} className="bg-secondary border border-border rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <div className={`w-8 h-8 rounded-full border flex items-center justify-center text-xs font-bold ${r.color}`}>{r.icon}</div>
               <div>
@@ -769,8 +769,8 @@ function APIIntegrationReference() {
         </div>
         <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/30">Integration-Ready</span>
       </div>
-      <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
-        <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
+      <div className="mx-5 mb-3 bg-secondary border border-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-secondary border-b border-border flex items-center gap-[10px]">
           <span className="text-[10px] font-bold px-2 py-[3px] bg-stable-bg text-stable rounded font-mono">POST</span>
           <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/assessment</code>
           <span className="text-[9px] text-muted-foreground ml-auto">Run full governance assessment</span>
@@ -782,8 +782,8 @@ function APIIntegrationReference() {
           <pre className="text-[10px] text-primary bg-secondary border border-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{postResponse}</pre>
         </div>
       </div>
-      <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
-        <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
+      <div className="mx-5 mb-3 bg-secondary border border-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-secondary border-b border-border flex items-center gap-[10px]">
           <span className="text-[10px] font-bold px-2 py-[3px] bg-purple-bg text-primary rounded font-mono">GET</span>
           <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/portfolio/concentration</code>
           <span className="text-[9px] text-muted-foreground ml-auto">Returns correlated exposure</span>
