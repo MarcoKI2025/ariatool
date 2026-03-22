@@ -37,22 +37,22 @@ export function DemoPitchModal({ open, onClose }: DemoPitchModalProps) {
     <div className="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-8">
       <div className="w-full max-w-[1400px] h-full max-h-[900px] bg-[#0e0d09] rounded-xl overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-[#2e2c22]">
+        <div className="flex items-center justify-between p-6 border-b border-[#3a3828]">
           <div className="flex items-center gap-4">
-            <div className="text-[11px] font-bold tracking-[0.08em] uppercase text-[#585650]">
+            <div className="text-[11px] font-bold tracking-[0.08em] uppercase text-[#a8a49c]">
               AI Governance Engine · Infrastructure Layer Demo
             </div>
-            <div className="text-[11px] font-mono text-[#888478]">
+            <div className="text-[11px] font-mono text-[#b8b4a8]">
               Slide {currentSlide} of {totalSlides}
             </div>
           </div>
           <div className="flex items-center gap-2">
             {currentSlide > 1 && (
-              <button onClick={() => setCurrentSlide(s => Math.max(s - 1, 1))} className="px-4 py-2 text-[11px] font-semibold text-[#888478] hover:text-[#e8e4d8] transition-colors rounded-md border border-[#2e2c22] hover:border-[#4a4642]">
+              <button onClick={() => setCurrentSlide(s => Math.max(s - 1, 1))} className="px-4 py-2 text-[11px] font-semibold text-[#b8b4a8] hover:text-[#eeeadc] transition-colors rounded-md border border-[#3a3828] hover:border-[#5a5648]">
                 ← Back
               </button>
             )}
-            <button onClick={onClose} className="px-4 py-2 text-[11px] font-semibold text-[#888478] hover:text-[#e8e4d8] transition-colors rounded-md border border-[#2e2c22] hover:border-[#4a4642] flex items-center gap-1.5">
+            <button onClick={onClose} className="px-4 py-2 text-[11px] font-semibold text-[#b8b4a8] hover:text-[#eeeadc] transition-colors rounded-md border border-[#3a3828] hover:border-[#5a5648] flex items-center gap-1.5">
               <X className="w-3 h-3" /> Exit Demo
             </button>
             {currentSlide < totalSlides && (
