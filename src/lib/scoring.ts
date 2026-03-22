@@ -114,6 +114,52 @@ function computeMDR(inputs: ExposureInputs): { mdr: number; mdrTier: string; mdr
   return { mdr: mdrPct, mdrTier: tier, mdrLabel: label };
 }
 
+function computeRFSI(components: AFIComponents, mdrNorm: number, iatState1: boolean): { rfsi: number; rfsiTier: 'stable' | 'conditional' | 'limited'; rfsiLabel: string; rfsiDrivers: { contextVariability: number; semanticDriftRisk: number; evaluationMismatch: number; temporalInstability: number } } {
+  const { dr, jd, rc, cd } = components;
+  const contextVariability = Math.min(1, (cd + (1 - jd)) / 2);
+  const semanticDriftRisk = mdrNorm;
+  const evaluationMismatch = Math.min(1, (1 - jd) * 0.8 + dr * 0.2);
+  const temporalInstability = Math.min(1, (rc * 0.6 + (iatState1 ? 0.4 : 0.1)));
+
+  const instability = Math.pow(contextVariability * semanticDriftRisk * evaluationMismatch * temporalInstability, 0.25);
+  const rfsiRaw = Math.round((1 - instability) * 100);
+  const rfsi = Math.max(5, Math.min(99, rfsiRaw));
+
+  const tier = rfsi >= 70 ? 'stable' as const : rfsi >= 45 ? 'conditional' as const : 'limited' as const;
+  const labels = { stable: 'Stable Frame', conditional: 'Conditional Frame', limited: 'Limited Frame' };
+  return { rfsi, rfsiTier: tier, rfsiLabel: labels[tier], rfsiDrivers: { contextVariability, semanticDriftRisk, evaluationMismatch, temporalInstability } };
+}
+
+function computeFrameDriftAlerts(components: AFIComponents, band: Band, inputs: ExposureInputs): FrameDriftAlert[] {
+  const { dr, jd, cd } = components;
+  const auto = inputs.automation / 5;
+  const ovst = inputs.oversightLevel / 5;
+  const intg = inputs.integrationDepth / 5;
+  const rc = components.rc;
+
+  const alerts: FrameDriftAlert[] = [];
+
+  if (jd < 0.5 && dr > 0.5) {
+    alerts.push({ sev: 'critical', title: 'Training–Deployment Context Mismatch', explanation: 'High delegation density combined with low justificatory density creates a gap between the conditions under which this system was aligned and the conditions under which it now operates.', mitigation: 'Increase justificatory density through structured audit logs. Reduce autonomous execution scope until evaluation coverage matches deployment breadth.' });
+  }
+  if (intg > 0.6 && cd > 0.5) {
+    alerts.push({ sev: 'critical', title: 'Context Expansion Risk', explanation: 'High integration depth combined with elevated correlation density indicates the system has expanded beyond its original operational scope.', mitigation: 'Document original deployment scope and compare to current operational footprint. Any expansion beyond original scope requires formal re-authorisation.' });
+  }
+  if (band === 'Fragile' && ovst < 0.4) {
+    alerts.push({ sev: 'high', title: 'Normative Instability Signal', explanation: 'Fragile classification combined with low human oversight creates conditions for normative drift — the gradual erosion of standards the system was designed to uphold.', mitigation: 'Mandate mandatory human review for all high-stakes decisions. Establish explicit normative boundary conditions.' });
+  }
+  if (rc > 0.65) {
+    alerts.push({ sev: jd < 0.45 ? 'high' : 'moderate', title: 'Evaluation Decay — Long-Horizon Operation', explanation: 'This system has been operational long enough for evaluation decay to occur. Prior assessments reflect the system\'s state at a specific moment — not its current interpretive frame.', mitigation: 'Schedule a full structural re-assessment. Treat evaluation decay as a first-class governance risk.' });
+  }
+  if (auto > 0.6 && ovst < 0.45) {
+    alerts.push({ sev: 'moderate', title: 'Semantic Boundary Erosion', explanation: 'High automation level with low oversight creates structural conditions for semantic boundary erosion — the gradual expansion of what the system treats as within scope for autonomous action.', mitigation: 'Implement explicit scope boundaries that require human override to cross. Monitor for unauthorized scope creep.' });
+  }
+
+  const sevOrder = { critical: 0, high: 1, moderate: 2 };
+  alerts.sort((a, b) => sevOrder[a.sev] - sevOrder[b.sev]);
+  return alerts;
+}
+
 export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   const components = computeAFIComponents(inputs);
   const { dr, jd, rc, cd, na } = components;
