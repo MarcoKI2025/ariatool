@@ -111,7 +111,7 @@ export function SectionCard({ title, subtitle, children, highlight, icon, badgeT
           )}
         </div>
       </div>
-      {subtitle && <div className="text-[11px] text-muted-foreground mt-[3px] mb-[10px] leading-[1.5]" dangerouslySetInnerHTML={{ __html: subtitle }} />}
+      {subtitle && <div className="text-[11px] text-muted-foreground mt-1 mb-4 leading-[1.6]" dangerouslySetInnerHTML={{ __html: subtitle }} />}
       {children}
     </div>
   );
