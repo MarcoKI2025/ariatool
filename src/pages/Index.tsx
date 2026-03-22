@@ -35,11 +35,11 @@ function AppContent() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden">
+    <div className="flex flex-col lg:flex-row h-screen w-full overflow-hidden bg-background">
       <AppSidebar />
       <div className="app-main flex-1 flex flex-col overflow-hidden min-w-0">
         <AppHeader />
-        <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-4 pb-16 md:p-5 md:pb-18 lg:p-7 lg:pb-20">
+        <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-5 pb-16 md:p-8 md:pb-20 lg:p-10 lg:pb-24">
           {renderStep()}
         </main>
       </div>
