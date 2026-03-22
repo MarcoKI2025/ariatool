@@ -267,7 +267,7 @@ function MeaningDriftRegister() {
         <div className="text-[11px] text-secondary-foreground leading-[1.55] mb-[6px]">
           AGAF §8 identifies consequence externalization as the structural root beneath behavioral alignment decay: when the costs of reinterpretation are fully absorbed by rollback, retraining, and governance intervention, <em className="text-foreground">interpretation becomes cheap</em>. The system has no internal incentive to preserve stable governance alignment.
         </div>
-        <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
           <div className="bg-secondary border border-border rounded-md p-[9px_11px]">
             <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-1">Externalization Vectors</div>
             <div className="text-[10px] text-secondary-foreground/80 leading-[1.5]">Rollback · Retraining · Patching · Policy update · Governance intervention</div>
