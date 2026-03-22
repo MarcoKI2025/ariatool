@@ -65,6 +65,26 @@ export default {
           DEFAULT: "hsl(var(--nav))",
           border: "hsl(var(--chrome-border))",
         },
+        fragile: {
+          DEFAULT: "hsl(var(--fragile))",
+          bg: "hsl(var(--fragile-bg))",
+          border: "hsl(var(--fragile-border))",
+        },
+        sensitive: {
+          DEFAULT: "hsl(var(--sensitive))",
+          bg: "hsl(var(--sensitive-bg))",
+          border: "hsl(var(--sensitive-border))",
+        },
+        stable: {
+          DEFAULT: "hsl(var(--stable))",
+          bg: "hsl(var(--stable-bg))",
+          border: "hsl(var(--stable-border))",
+        },
+        purple: {
+          DEFAULT: "hsl(var(--purple))",
+          bg: "hsl(var(--purple-bg))",
+          border: "hsl(var(--purple-border))",
+        },
         amb: "hsl(var(--amb))",
         ab: "hsl(var(--ab))",
         abr: "hsl(var(--abr))",
