@@ -132,7 +132,7 @@ export function Banner({ band, title, children }: BannerProps) {
   const titleColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
 
   return (
-    <div className={`rounded-[10px] border p-5 mb-4 ${cls}`}>
+    <div className={`rounded-xl border p-7 mb-6 ${cls}`}>
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[5px]">
         Executive Signal
       </div>
