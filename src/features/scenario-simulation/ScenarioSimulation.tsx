@@ -358,7 +358,7 @@ export function ScenarioSimulation() {
       {/* ═══ What Changes Under This Scenario ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">What Changes Under This Scenario</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-primary mb-2">Governance Impact</div>
             <div className="text-[11px] text-secondary-foreground leading-[1.55]">{s.whatChanges.governance}</div>
