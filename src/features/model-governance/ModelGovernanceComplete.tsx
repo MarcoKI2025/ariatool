@@ -680,7 +680,7 @@ function ResearchFoundation() {
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px_18px]">
           <div className="text-[9px] tracking-wider uppercase text-secondary-foreground font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
-          <div className="grid grid-cols-3 gap-[14px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-[14px]">
             {[
               { title: 'Paper I · EU AI Act Blind Spots', text: 'Risk-based regulation governs deployment — not continuation. Systems persist without re-authorisation. This engine operationalises that gap as a measurable AFI signal.' },
               { title: 'Paper II · Price of Convenience', text: 'Agentic AI erodes oversight without malice — through delegation density and oversight decay. This engine makes that erosion visible before it becomes structural.' },
