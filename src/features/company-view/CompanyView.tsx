@@ -96,149 +96,149 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
   return (
-    <div style={{ margin: 0, background: 'hsl(var(--sf))', borderBottom: '1px solid hsl(var(--bd))', position: 'relative', overflow: 'hidden', borderRadius: '12px', marginLeft: 28, marginRight: 28 }}>
+    <div className="mx-8 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(to right, #b53020, #c0392b, #e09000, #4038b8, #6058d8)' }} />
-      <div style={{ padding: '0 28px', paddingTop: 4 }}>
-        {/* Row 1: Risk Index + Loss Exposure + Industry Comparison */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(var(--bd))' }}>
-          {/* AI Risk Index */}
-          <div style={{ padding: '20px', borderRight: '1px solid hsl(var(--bd))', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8 }}>AI Risk Index</div>
-            <div style={{ position: 'relative', width: 88, height: 88, margin: '0 auto 8px' }}>
-              <svg viewBox="0 0 88 88" style={{ width: 88, height: 88, transform: 'rotate(-90deg)' }}>
-                <circle cx="44" cy="44" r="36" fill="none" stroke="#e1e4e8" strokeWidth="8" />
-                <circle cx="44" cy="44" r="36" fill="none" stroke={riskColor} strokeWidth="8" strokeDasharray="226" strokeDashoffset={ringOffset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease, stroke .3s' }} />
-              </svg>
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ fontSize: 26, fontWeight: 700, fontFamily: 'var(--font-mono)', lineHeight: 1, color: riskColor }}>{riskIdx}</div>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>/ 100</div>
-              </div>
-            </div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: riskColor }}>{riskLabel}</div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', marginTop: 2 }}>{riskSub}</div>
-          </div>
-
-          {/* Annual Loss Exposure */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--bd))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Risk Characterization</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>Baseline (expected)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--t2))' }}>{baseBand}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>Stress scenario (correlated event)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{elevBand}</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>Tail risk (99th percentile)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{critBand}</span>
-              </div>
-            </div>
-            <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid hsl(var(--bd))', fontSize: 9, color: 'hsl(var(--t3))', lineHeight: 1.5 }}>
-              Indicative governance-heuristic risk bands. Not actuarially certified.
+      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
+      
+      {/* Row 1: Risk Index + Characterization + Industry */}
+      <div className="grid grid-cols-1 md:grid-cols-3 border-b border-border" style={{ paddingTop: 4 }}>
+        {/* AI Risk Index */}
+        <div className="flex flex-col items-center justify-center text-center p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-4">AI Risk Index</div>
+          <div className="relative mb-4" style={{ width: 110, height: 110 }}>
+            <svg viewBox="0 0 110 110" style={{ width: 110, height: 110, transform: 'rotate(-90deg)' }}>
+              <circle cx="55" cy="55" r="44" fill="none" stroke="hsl(var(--s2))" strokeWidth="9" />
+              <circle cx="55" cy="55" r="44" fill="none" stroke={riskColor} strokeWidth="9" strokeDasharray="276" strokeDashoffset={Math.round(276 - (riskIdx / 100) * 276)} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease' }} />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="text-[34px] font-bold font-mono leading-none" style={{ color: riskColor }}>{riskIdx}</div>
+              <div className="text-[10px] text-muted-foreground mt-0.5">/ 100</div>
             </div>
           </div>
+          <div className="text-sm font-bold" style={{ color: riskColor }}>{riskLabel}</div>
+          <div className="text-[11px] text-muted-foreground mt-1 max-w-[180px]">{riskSub}</div>
+        </div>
 
-          {/* Industry Comparison */}
-          <div style={{ padding: '18px 22px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Industry Comparison · Your Sector</div>
-            <div style={{ marginBottom: 10 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--t3))' }}>
-                <span>Your profile</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--t2))', fontWeight: 700 }}>{riskIdx} / 100</span>
-              </div>
-              <div style={{ background: 'hsl(var(--s2))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 6 }}>
-                <div style={{ height: '100%', background: riskColor, borderRadius: 4, width: `${riskIdx}%`, transition: 'width .5s ease' }} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--t3))' }}>
-                <span>Sector average</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--t3))', fontWeight: 700 }}>{sectorAvg} / 100</span>
-              </div>
-              <div style={{ background: 'hsl(var(--s2))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 8 }}>
-                <div style={{ height: '100%', background: 'hsl(220 6% 52%)', borderRadius: 4, width: `${sectorAvg}%`, transition: 'width .5s ease' }} />
-              </div>
-              <div style={{
-                fontSize: 11, fontWeight: 700, padding: '6px 10px', borderRadius: 6, textAlign: 'center',
-                background: diff > 10 ? 'hsl(var(--rb))' : diff > 0 ? 'hsl(var(--ab))' : 'hsl(var(--gb))',
-                color: diff > 10 ? 'hsl(var(--red))' : diff > 0 ? 'hsl(var(--amb))' : 'hsl(var(--grn))',
-                border: `1px solid ${diff > 10 ? 'hsl(var(--rbr))' : diff > 0 ? 'hsl(var(--abr))' : 'hsl(var(--gbr))'}`
-              }}>
-                {diff > 10 ? `+${diffPct}% above sector average — elevated exposure` : diff > 0 ? 'Slightly above sector average' : 'Below sector average — well-governed'}
-              </div>
+        {/* Risk Characterization */}
+        <div className="p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Risk Characterization</div>
+          <div className="flex flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-secondary-foreground">Baseline (expected)</span>
+              <span className="text-[16px] font-bold font-mono text-foreground">{baseBand}</span>
             </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-secondary-foreground">Stress scenario (correlated event)</span>
+              <span className="text-[16px] font-bold font-mono text-sensitive">{elevBand}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[12px] text-secondary-foreground">Tail risk (99th percentile)</span>
+              <span className="text-[16px] font-bold font-mono text-fragile">{critBand}</span>
+            </div>
+          </div>
+          <div className="mt-6 pt-5 border-t border-border text-[10px] text-muted-foreground leading-relaxed">
+            Indicative governance-heuristic risk bands. Not actuarially certified.
           </div>
         </div>
 
-        {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 0 }}>
-          {/* Top Loss Scenarios */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--bd))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Top Loss Scenarios</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {scenarios.map((s, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 7 }}>
-                  <span style={{ fontSize: 14 }}>{s.icon}</span>
-                  <span style={{ flex: 1, fontSize: 10, color: 'hsl(var(--t2))' }}>{s.label}</span>
-                  <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: s.col }}>{s.risk}</span>
-                </div>
-              ))}
+        {/* Industry Comparison */}
+        <div className="p-8">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Industry Comparison · Your Sector</div>
+          <div className="mb-5">
+            <div className="flex justify-between mb-2 text-[12px] text-secondary-foreground">
+              <span>Your profile</span>
+              <span className="font-mono text-foreground font-bold">{riskIdx} / 100</span>
+            </div>
+            <div className="bg-secondary rounded h-3 overflow-hidden mb-5">
+              <div className="h-full rounded" style={{ background: riskColor, width: `${riskIdx}%`, transition: 'width .5s ease' }} />
+            </div>
+            <div className="flex justify-between mb-2 text-[12px] text-secondary-foreground">
+              <span>Sector average</span>
+              <span className="font-mono text-muted-foreground font-bold">{sectorAvg} / 100</span>
+            </div>
+            <div className="bg-secondary rounded h-3 overflow-hidden mb-5">
+              <div className="h-full rounded" style={{ background: 'hsl(220 6% 52%)', width: `${sectorAvg}%`, transition: 'width .5s ease' }} />
             </div>
           </div>
+          <div className="text-[12px] font-bold py-2.5 px-4 rounded-lg text-center border" style={{
+            background: diff > 10 ? 'hsl(var(--rb))' : diff > 0 ? 'hsl(var(--ab))' : 'hsl(var(--gb))',
+            color: diff > 10 ? 'hsl(var(--red))' : diff > 0 ? 'hsl(var(--amb))' : 'hsl(var(--grn))',
+            borderColor: diff > 10 ? 'hsl(var(--rbr))' : diff > 0 ? 'hsl(var(--abr))' : 'hsl(var(--gbr))'
+          }}>
+            {diff > 10 ? `+${diffPct}% above sector average — elevated exposure` : diff > 0 ? 'Slightly above sector average' : 'Below sector average — well-governed'}
+          </div>
+        </div>
+      </div>
 
-          {/* Exposure Trajectory */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--bd))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>Exposure Trajectory · 12 Months</div>
-            <div style={{ marginBottom: 8 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Today</span>
-                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--t2))' }}>{baseBand}</span>
+      {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        {/* Top Loss Scenarios */}
+        <div className="p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Top Loss Scenarios</div>
+          <div className="flex flex-col gap-3">
+            {scenarios.map((s, i) => (
+              <div key={i} className="flex items-center gap-4 p-4 bg-secondary border border-border rounded-xl">
+                <span className="text-xl">{s.icon}</span>
+                <span className="flex-1 text-[12px] text-foreground leading-snug">{s.label}</span>
+                <span className="text-[15px] font-bold font-mono" style={{ color: s.col }}>{s.risk}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>In 6 months</span>
-                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{trend6m}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>In 12 months</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{trend12m}</span>
-              </div>
-              {/* Mini bar chart */}
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 36, marginTop: 8 }}>
-                {[
-                  { l: 'Now', h: 12, c: 'hsl(220 6% 52%)' },
-                  { l: '6mo', h: band === 'Fragile' ? 24 : 16, c: 'hsl(var(--amb))' },
-                  { l: '12mo', h: 34, c: 'hsl(var(--red))' },
-                ].map((bar, i) => (
-                  <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, justifyContent: 'flex-end' }}>
-                    <div style={{ width: '100%', height: bar.h, background: bar.c, borderRadius: '3px 3px 0 0' }} />
-                    <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>{bar.l}</span>
-                  </div>
-                ))}
-              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Exposure Trajectory */}
+        <div className="p-8 md:border-r border-border">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Exposure Trajectory · 12 Months</div>
+          <div className="flex flex-col gap-3 mb-5">
+            <div className="flex justify-between items-end">
+              <span className="text-[12px] text-secondary-foreground">Today</span>
+              <span className="text-[16px] font-bold font-mono text-foreground">{baseBand}</span>
             </div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', lineHeight: 1.5 }}>
-              Without governance changes: +{Math.round(growthRate * 100)}% exposure growth in 12 months. {band === 'Fragile' ? 'EU AI Act (Aug 2026) adds regulatory loading on top.' : 'Regulatory obligations from Aug 2026 will accelerate this.'}
+            <div className="flex justify-between items-end">
+              <span className="text-[12px] text-secondary-foreground">In 6 months</span>
+              <span className="text-[16px] font-bold font-mono text-sensitive">{trend6m}</span>
+            </div>
+            <div className="flex justify-between items-end">
+              <span className="text-[12px] text-secondary-foreground">In 12 months</span>
+              <span className="text-[16px] font-bold font-mono text-fragile">{trend12m}</span>
             </div>
           </div>
+          {/* Mini bar chart */}
+          <div className="flex items-end gap-3 mb-5" style={{ height: 50 }}>
+            {[
+              { l: 'Now', h: 16, c: 'hsl(220 6% 52%)' },
+              { l: '6mo', h: band === 'Fragile' ? 32 : 22, c: 'hsl(var(--amb))' },
+              { l: '12mo', h: 46, c: 'hsl(var(--red))' },
+            ].map((bar, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1.5 justify-end">
+                <div className="w-full rounded-t" style={{ height: bar.h, background: bar.c }} />
+                <span className="text-[10px] text-muted-foreground">{bar.l}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-[11px] text-muted-foreground leading-relaxed">
+            Without governance changes: +{Math.round(growthRate * 100)}% exposure growth in 12 months. {band === 'Fragile' ? 'EU AI Act (Aug 2026) adds regulatory loading on top.' : 'Regulatory obligations from Aug 2026 will accelerate this.'}
+          </div>
+        </div>
 
-          {/* What If You Do Nothing */}
-          <div style={{ padding: '18px 22px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 10 }}>If Nothing Changes · 12 Month Impact</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {[
-                { icon: '📈', label: `+${Math.round(growthRate * 100)}% exposure growth`, sub: 'Risk compounds without structural intervention', col: riskColor },
-                { icon: '💸', label: `+${fmtM(Math.round(sim.mid * growthRate / 10) * 10)} additional annual exposure`, sub: 'Incremental loss exposure in 12 months vs today', col: 'hsl(var(--red))' },
-                { icon: '⚖', label: 'EU AI Act Art. 26 — August 2026', sub: `Deployer obligations in ${monthsToAug} months`, col: 'hsl(var(--amb))' },
-                { icon: '🔒', label: 'Insurers adding AI exclusions now', sub: 'Coverage gaps grow without governance evidence', col: band === 'Fragile' ? 'hsl(var(--red))' : 'hsl(var(--amb))' },
-              ].map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-                  <span style={{ fontSize: 14, flexShrink: 0 }}>{item.icon}</span>
-                  <div>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: item.col }}>{item.label}</div>
-                    <div style={{ fontSize: 9, color: 'hsl(var(--t3))', marginTop: 1 }}>{item.sub}</div>
-                  </div>
+        {/* What If You Do Nothing */}
+        <div className="p-8">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">If Nothing Changes · 12 Month Impact</div>
+          <div className="flex flex-col gap-5">
+            {[
+              { icon: '📈', label: `+${Math.round(growthRate * 100)}% exposure growth`, sub: 'Risk compounds without structural intervention', col: riskColor },
+              { icon: '💸', label: `+${fmtM(Math.round(sim.mid * growthRate / 10) * 10)} additional annual exposure`, sub: 'Incremental loss exposure in 12 months vs today', col: 'hsl(var(--red))' },
+              { icon: '⚖', label: 'EU AI Act Art. 26 — August 2026', sub: `Deployer obligations in ${monthsToAug} months`, col: 'hsl(var(--amb))' },
+              { icon: '🔒', label: 'Insurers adding AI exclusions now', sub: 'Coverage gaps grow without governance evidence', col: band === 'Fragile' ? 'hsl(var(--red))' : 'hsl(var(--amb))' },
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-4">
+                <span className="text-xl flex-shrink-0 mt-0.5">{item.icon}</span>
+                <div>
+                  <div className="text-[13px] font-bold leading-snug" style={{ color: item.col }}>{item.label}</div>
+                  <div className="text-[11px] text-muted-foreground mt-1">{item.sub}</div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -255,28 +255,28 @@ function StrategicInterpretation({ band, components }: { band: string; component
   };
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', background: 'hsl(var(--sf))', borderRadius: '12px', marginLeft: 28, marginRight: 28, marginTop: 16, border: '1px solid hsl(var(--bd))' }}>
+    <div className="mx-8 mt-6 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
       {/* Gradient top bar */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(to right, #b53020, #c0392b, #e09000, #4038b8, #6058d8)' }} />
-      <div style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: 16, padding: '28px 36px 24px' }}>
-        <div style={{ fontSize: 28, color: 'hsl(var(--pur))', textAlign: 'center', paddingTop: 4 }}>◈</div>
+      <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
+      <div className="grid grid-cols-[56px_1fr] gap-5 p-10 pt-8">
+        <div className="text-3xl text-primary text-center pt-1">◈</div>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))' }}>Governance Assessment · Structured Risk Signal for Committee Review</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', padding: '4px 10px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 5, color: 'hsl(var(--pur))' }}>◆ Governance Signal</span>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Risk Classification</div>
-                <div style={{ fontSize: 18, fontWeight: 800, fontFamily: 'var(--font-mono)', color: band === 'Fragile' ? '#c9392a' : band === 'Sensitive' ? '#b87400' : '#227a44', marginTop: 2 }}>{band === 'Fragile' ? 'HIGH' : band === 'Sensitive' ? 'MODERATE' : 'LOW'}</div>
-                <div style={{ fontSize: 8, color: 'hsl(var(--t3))', marginTop: 1 }}>{band === 'Fragile' ? 'Above tolerance' : band === 'Sensitive' ? 'Approaching threshold' : 'Within tolerance'}</div>
+          <div className="flex items-center justify-between mb-5">
+            <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-primary">Governance Assessment · Structured Risk Signal for Committee Review</div>
+            <div className="flex items-center gap-4">
+              <span className="text-[9px] font-bold tracking-[0.07em] uppercase py-1.5 px-3 bg-purple-bg border border-purple-border rounded text-primary">◆ Governance Signal</span>
+              <div className="text-right">
+                <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Risk Classification</div>
+                <div className="text-xl font-extrabold font-mono mt-1" style={{ color: band === 'Fragile' ? '#c9392a' : band === 'Sensitive' ? '#b87400' : '#227a44' }}>{band === 'Fragile' ? 'HIGH' : band === 'Sensitive' ? 'MODERATE' : 'LOW'}</div>
+                <div className="text-[9px] text-muted-foreground mt-0.5">{band === 'Fragile' ? 'Above tolerance' : band === 'Sensitive' ? 'Approaching threshold' : 'Within tolerance'}</div>
               </div>
             </div>
           </div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.35, marginBottom: 14 }} dangerouslySetInnerHTML={{ __html: interp[band]?.split('.').slice(0, 2).join('.') + '.' || '' }} />
-          <p style={{ fontSize: 12, color: 'hsl(220 6% 58%)', lineHeight: 1.75, margin: 0, marginBottom: 16 }} dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
+          <div className="text-lg font-bold text-foreground leading-snug mb-4" dangerouslySetInnerHTML={{ __html: interp[band]?.split('.').slice(0, 2).join('.') + '.' || '' }} />
+          <p className="text-[13px] text-secondary-foreground leading-[1.8] mb-6" dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
           
           {/* Action items */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
+          <div className="flex flex-col gap-3 mb-6">
             {(band === 'Fragile' ? [
               { tag: 'REMEDIATE', tagCol: '#c9392a', tagBg: 'hsl(var(--rb))', title: 'Reduce execution authority and implement quarterly re-authorisation', sub: 'Current autonomy level exceeds governance capacity. Structural change required.' },
               { tag: 'ESCALATE', tagCol: '#b87400', tagBg: 'hsl(var(--ab))', title: 'Engage insurance broker with this assessment', sub: 'Premium loading likely without documented governance improvement plan.' },
@@ -284,25 +284,25 @@ function StrategicInterpretation({ band, components }: { band: string; component
               { tag: 'MAINTAIN', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Continue governance cadence — re-assess annually', sub: 'Current profile is within tolerance. Structural changes require re-assessment.' },
               { tag: 'MONITOR', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Monitor delegation density and dependency concentration', sub: 'Key drift vectors to watch — both tend to increase silently over time.' },
             ]).map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 8 }}>
-                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
+              <div key={i} className="flex items-center gap-4 p-5 bg-secondary border border-border rounded-xl">
+                <span className="text-[10px] font-bold tracking-[0.06em] uppercase py-1 px-3 rounded-md" style={{ color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: 'hsl(var(--tx))' }}>{item.title}</div>
-                  <div style={{ fontSize: 10, color: 'hsl(var(--t3))', marginTop: 2 }}>{item.sub}</div>
+                  <div className="text-[13px] font-bold text-foreground">{item.title}</div>
+                  <div className="text-[11px] text-muted-foreground mt-1">{item.sub}</div>
                 </div>
               </div>
             ))}
           </div>
           
           {/* Structural signals strip */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid hsl(var(--bd))' }}>
-            <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Structural Signals:</span>
+          <div className="flex items-center gap-3 pt-5 border-t border-border flex-wrap">
+            <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Structural Signals:</span>
             {[
               `Delegation Density: ${components.dr > 0.6 ? 'High' : components.dr > 0.4 ? 'Moderate' : 'Low'} (${Math.round(components.dr * 100)})`,
               `Reversibility: ${components.rc > 0.6 ? 'Locked' : components.rc > 0.4 ? 'Constrained' : 'Flexible'} (${Math.round(components.rc * 100)})`,
               `Continuation: ${components.cd > 0.6 ? 'Ungoverned' : components.cd > 0.4 ? 'Monitored' : 'Governed'}`,
             ].map((signal, i) => (
-              <span key={i} style={{ fontSize: 10, fontWeight: 600, padding: '5px 12px', border: '1px solid hsl(var(--bd))', borderRadius: 6, color: 'hsl(var(--tx))', background: 'transparent' }}>{signal}</span>
+              <span key={i} className="text-[11px] font-semibold py-1.5 px-4 border border-border rounded-lg text-foreground">{signal}</span>
             ))}
           </div>
         </div>
@@ -611,79 +611,83 @@ export function CompanyView() {
       </div>
 
       {/* HERO SECTION */}
-      {/* HERO SECTION */}
-      <div ref={heroRef} style={{ padding: '36px 36px 32px' }}>
-        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 7 }}>
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: bandColor, animation: 'pulse-dot 2s infinite' }} />
+      <div ref={heroRef} className="px-10 pt-10 pb-8">
+        <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3 flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: bandColor, animation: 'pulse-dot 2s infinite' }} />
           Company View · AI Risk Executive Summary · {now}
         </div>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20, marginBottom: 6 }}>
-          <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', color: 'hsl(var(--tx))' }}>{companyName}</div>
-          {/* AFI Mini Gauge */}
-          <div style={{ flexShrink: 0, textAlign: 'center', paddingTop: 4 }}>
+        <div className="flex items-start justify-between gap-6 mb-2">
+          <div className="text-[36px] font-bold tracking-tight text-foreground">{companyName}</div>
+          <div className="flex-shrink-0 text-center pt-1">
             <CvAfiGauge afi={afi} band={band} />
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', marginTop: 2, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Fragility Score</div>
+            <div className="text-[10px] text-muted-foreground mt-1 tracking-[0.06em] uppercase">Fragility Score</div>
           </div>
         </div>
-        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', marginBottom: 32 }}>{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
+        <div className="text-sm text-secondary-foreground mb-10">{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Premium card */}
-          <div className="card" style={{ borderTop: `4px solid hsl(var(--pur))`, padding: '24px 24px 20px', borderRadius: 14 }}>
-            <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Estimated Annual AI Insurance Premium</div>
-            <div style={{ fontSize: 28, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))', marginTop: 8, marginBottom: 10 }}>{fmtK(sim.lo)} – {fmtK(sim.hi)}</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, marginBottom: 8 }}>Based on structural governance assessment. Indicative range for committee orientation.</div>
-            <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))' }}>
-              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>After governance improvements →</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{fmtK(sim.mid)}</span>
-                <span style={{ fontSize: 14, color: 'hsl(var(--t3))' }}>→</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--grn))' }}>{fmtK(Math.round(sim.mid * 0.55 / 10) * 10)}</span>
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', background: 'hsl(var(--gb))', color: 'hsl(var(--grn))', border: '1px solid hsl(var(--gbr))', borderRadius: 4 }}>Save ~45%</span>
+          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid hsl(var(--pur))` }}>
+            <div className="p-7">
+              <div className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-muted-foreground">Estimated Annual AI Insurance Premium</div>
+              <div className="text-[30px] font-bold font-mono text-primary mt-3 mb-3">{fmtK(sim.lo)} – {fmtK(sim.hi)}</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed mb-4">Based on structural governance assessment. Indicative range for committee orientation.</div>
+              <div className="pt-5 border-t border-border">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-[0.08em] mb-3">After governance improvements →</div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[15px] font-bold font-mono text-fragile">{fmtK(sim.mid)}</span>
+                  <span className="text-[15px] text-muted-foreground">→</span>
+                  <span className="text-[15px] font-bold font-mono text-stable">{fmtK(Math.round(sim.mid * 0.55 / 10) * 10)}</span>
+                  <span className="text-[10px] font-bold py-1 px-2.5 bg-stable-bg text-stable border border-stable-border rounded">Save ~45%</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Risk card */}
-          <div className="card" style={{ borderTop: `4px solid ${bandColor}`, padding: '24px 24px 20px', borderRadius: 14 }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Overall AI Risk</div>
-            <div style={{ fontSize: 22, fontWeight: 700, color: bandColor, marginTop: 8, marginBottom: 10 }}>{band} — Score {structuralScore}/100</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>
-              {band === 'Fragile' ? 'Above underwriting tolerance. Structural remediation required before standard coverage.' :
-               band === 'Sensitive' ? 'Approaching threshold. Conditional review process with 90-day improvement plan.' :
-               'Within tolerance. Standard coverage terms apply.'}
-            </div>
-            <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))', display: 'flex', gap: 10 }}>
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>AFI</div>
-                <div style={{ fontSize: 17, fontWeight: 700, fontFamily: 'var(--font-mono)', color: bandColor }}>{afi.toFixed(2)}</div>
+          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid ${bandColor}` }}>
+            <div className="p-7">
+              <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Overall AI Risk</div>
+              <div className="text-[24px] font-bold mt-3 mb-3" style={{ color: bandColor }}>{band} — Score {structuralScore}/100</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed">
+                {band === 'Fragile' ? 'Above underwriting tolerance. Structural remediation required before standard coverage.' :
+                 band === 'Sensitive' ? 'Approaching threshold. Conditional review process with 90-day improvement plan.' :
+                 'Within tolerance. Standard coverage terms apply.'}
               </div>
-              <div style={{ width: 1, background: 'hsl(var(--bd))' }} />
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>ECI</div>
-                <div style={{ fontSize: 17, fontWeight: 700, fontFamily: 'var(--font-mono)', color: bandColor }}>ECI-{eciTier}</div>
-              </div>
-              <div style={{ width: 1, background: 'hsl(var(--bd))' }} />
-              <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 3 }}>Band</div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: bandColor }}>{band}</div>
+              <div className="mt-5 pt-5 border-t border-border flex gap-4">
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">AFI</div>
+                  <div className="text-lg font-bold font-mono" style={{ color: bandColor }}>{afi.toFixed(2)}</div>
+                </div>
+                <div className="w-px bg-border" />
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">ECI</div>
+                  <div className="text-lg font-bold font-mono" style={{ color: bandColor }}>ECI-{eciTier}</div>
+                </div>
+                <div className="w-px bg-border" />
+                <div className="flex-1 text-center">
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">Band</div>
+                  <div className="text-sm font-bold" style={{ color: bandColor }}>{band}</div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Regulatory card */}
-          <div className="card" style={{ borderTop: '4px solid hsl(var(--amb))', padding: '24px 24px 20px', borderRadius: 14 }}>
-            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Regulatory Exposure</div>
-            <div style={{ fontSize: 22, fontWeight: 700, color: 'hsl(var(--amb))', marginTop: 8, marginBottom: 10 }}>High-Risk (Annex III)</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.</div>
-            <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid hsl(var(--bd))' }}>
-              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Compliance window</div>
-              <div style={{ background: 'hsl(var(--s2))', borderRadius: 6, overflow: 'hidden', height: 6 }}>
-                <div style={{ height: '100%', background: 'linear-gradient(90deg, #146030, #208040)', width: '40%' }} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Today</span>
-                <span style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>Aug 2026</span>
+          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: '4px solid hsl(var(--amb))' }}>
+            <div className="p-7">
+              <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Regulatory Exposure</div>
+              <div className="text-[24px] font-bold text-sensitive mt-3 mb-3">High-Risk (Annex III)</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed">EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.</div>
+              <div className="mt-5 pt-5 border-t border-border">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-[0.08em] mb-3">Compliance window</div>
+                <div className="bg-secondary rounded-md overflow-hidden h-2">
+                  <div className="h-full rounded-md" style={{ background: 'linear-gradient(90deg, #146030, #208040)', width: '40%' }} />
+                </div>
+                <div className="flex justify-between mt-2">
+                  <span className="text-[10px] text-muted-foreground">Today</span>
+                  <span className="text-[10px] text-muted-foreground">Aug 2026</span>
+                </div>
               </div>
             </div>
           </div>
@@ -697,49 +701,51 @@ export function CompanyView() {
       <StrategicInterpretation band={band} components={components} />
 
       {/* COST DRIVERS */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20, paddingBottom: 14 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Cost Drivers</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>What's Driving Your Insurance Cost</div>
-          <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 4 }}>Ranked by impact on annual premium. Address high-impact drivers first for maximum cost reduction.</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Cost Drivers</div>
+          <div className="text-xl font-bold text-foreground">What's Driving Your Insurance Cost</div>
+          <div className="text-[12px] text-secondary-foreground mt-2">Ranked by impact on annual premium. Address high-impact drivers first for maximum cost reduction.</div>
         </div>
-        {drivers.map((d, i) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 100px', gap: 20, padding: '18px 22px', background: 'hsl(var(--sf))', border: '1px solid hsl(var(--bd))', borderRadius: 12, marginBottom: 8, alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: 'hsl(var(--tx))', marginBottom: 5 }}>{d.label}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.5 }}>{d.sub}</div>
-            </div>
-            <div>
-              <div style={{ height: 10, background: 'hsl(var(--s2))', borderRadius: 5, overflow: 'hidden' }}>
-                <div style={{ height: '100%', borderRadius: 5, width: `${d.pct}%`, background: d.level === 'high' ? 'linear-gradient(90deg, hsl(var(--red)), #d85040)' : d.level === 'medium' ? 'linear-gradient(90deg, hsl(var(--amb)), #c88000)' : 'linear-gradient(90deg, hsl(var(--grn)), #208040)' }} />
+        <div className="flex flex-col gap-3">
+          {drivers.map((d, i) => (
+            <div key={i} className="grid grid-cols-[240px_1fr_120px] gap-6 p-6 bg-card border border-border rounded-2xl items-center shadow-sm">
+              <div>
+                <div className="text-sm font-bold text-foreground mb-1.5">{d.label}</div>
+                <div className="text-[12px] text-secondary-foreground leading-relaxed">{d.sub}</div>
               </div>
+              <div>
+                <div className="h-3 bg-secondary rounded-md overflow-hidden">
+                  <div className="h-full rounded-md" style={{ width: `${d.pct}%`, background: d.level === 'high' ? 'linear-gradient(90deg, hsl(var(--red)), #d85040)' : d.level === 'medium' ? 'linear-gradient(90deg, hsl(var(--amb)), #c88000)' : 'linear-gradient(90deg, hsl(var(--grn)), #208040)' }} />
+                </div>
+              </div>
+              <div className="text-right text-[13px] font-bold font-mono" style={{ color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
             </div>
-            <div style={{ textAlign: 'right', fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-mono)', color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* PREMIUM REDUCTION LEVERS */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Premium Reduction Levers</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>Three Actions to Reduce Your AI Insurance Cost</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Premium Reduction Levers</div>
+          <div className="text-xl font-bold text-foreground">Three Actions to Reduce Your AI Insurance Cost</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 8 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {levers.map(l => (
-            <div key={l.rank} className="card" style={{ borderRadius: 14, padding: 24, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, width: 4, bottom: 0, background: 'hsl(var(--grn))', borderRadius: '14px 0 0 14px' }} />
-              <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: 'hsl(var(--grn))' }}>{l.rank}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.25 }}>{l.title}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, flex: 1 }}>{l.body}</div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', borderRadius: 9, padding: '12px 16px' }}>
-                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--grn))' }}>Est. Saving</span>
-                <span style={{ fontSize: 16, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--grn))' }}>{l.saving}</span>
+            <div key={l.rank} className="bg-card border border-border rounded-2xl shadow-sm p-7 relative overflow-hidden flex flex-col gap-4">
+              <div className="absolute top-0 left-0 w-1 bottom-0 bg-stable rounded-l-2xl" />
+              <div className="w-8 h-8 rounded-full bg-stable-bg border border-stable-border flex items-center justify-center text-[11px] font-bold text-stable">{l.rank}</div>
+              <div className="text-[15px] font-bold text-foreground leading-snug">{l.title}</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed flex-1">{l.body}</div>
+              <div className="flex items-center justify-between bg-stable-bg border border-stable-border rounded-xl p-4">
+                <span className="text-[10px] font-bold tracking-[0.07em] uppercase text-stable">Est. Saving</span>
+                <span className="text-lg font-bold font-mono text-stable">{l.saving}</span>
               </div>
-              <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                <span style={{ fontSize: 9, fontWeight: 600, padding: '2px 7px', borderRadius: 3, background: 'hsl(var(--rb))', color: 'hsl(var(--red))' }}>{l.before}</span>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>→</span>
-                <span style={{ fontSize: 9, fontWeight: 600, padding: '2px 7px', borderRadius: 3, background: 'hsl(var(--gb))', color: 'hsl(var(--grn))' }}>{l.after}</span>
+              <div className="flex gap-2 items-center">
+                <span className="text-[10px] font-semibold py-1 px-2.5 rounded bg-fragile-bg text-fragile">{l.before}</span>
+                <span className="text-[11px] text-muted-foreground">→</span>
+                <span className="text-[10px] font-semibold py-1 px-2.5 rounded bg-stable-bg text-stable">{l.after}</span>
               </div>
             </div>
           ))}
@@ -747,49 +753,49 @@ export function CompanyView() {
       </div>
 
       {/* REGULATORY READINESS */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Governance & Regulatory Readiness</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>Are You Ready for August 2026?</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance & Regulatory Readiness</div>
+          <div className="text-xl font-bold text-foreground">Are You Ready for August 2026?</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 12 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
             { name: 'Oversight Maturity', level: components.jd > 0.6 ? 'green' : components.jd > 0.4 ? 'yellow' : 'red', label: components.jd > 0.6 ? 'Adequate' : components.jd > 0.4 ? 'Partial' : 'Insufficient', body: 'Human oversight density and governance review frequency. Art. 14 requires "appropriate" human oversight.', why: 'Directly affects insurability and premium loading' },
             { name: 'Deployer Obligation Readiness', level: components.dr < 0.4 ? 'green' : components.dr < 0.6 ? 'yellow' : 'red', label: components.dr < 0.4 ? 'On Track' : components.dr < 0.6 ? 'Gaps Identified' : 'Not Ready', body: 'Readiness for Art. 26 deployer obligations (Aug 2026). Includes FRIA, incident reporting, post-market monitoring.', why: 'Non-compliance: up to €15M / 3% global turnover' },
             { name: 'Post-Market Monitoring', level: 'yellow', label: 'Under Development', body: 'Art. 72 requires continuous monitoring systems. Most deployments currently lack structured AI-specific monitoring.', why: 'Required for all high-risk AI from Aug 2026' },
           ].map((r, i) => (
-            <div key={i} className="card" style={{ borderRadius: 12, padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ width: 12, height: 12, borderRadius: '50%', background: r.level === 'green' ? '#18a050' : r.level === 'yellow' ? '#e09000' : '#c03020', animation: r.level !== 'green' ? 'pulse-dot 2s infinite' : undefined }} />
-                <span style={{ fontSize: 12, fontWeight: 700, color: r.level === 'green' ? 'hsl(var(--grn))' : r.level === 'yellow' ? 'hsl(var(--amb))' : 'hsl(var(--red))' }}>{r.label}</span>
+            <div key={i} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full" style={{ background: r.level === 'green' ? '#18a050' : r.level === 'yellow' ? '#e09000' : '#c03020', animation: r.level !== 'green' ? 'pulse-dot 2s infinite' : undefined }} />
+                <span className="text-[13px] font-bold" style={{ color: r.level === 'green' ? 'hsl(var(--grn))' : r.level === 'yellow' ? 'hsl(var(--amb))' : 'hsl(var(--red))' }}>{r.label}</span>
               </div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'hsl(var(--tx))' }}>{r.name}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>{r.body}</div>
-              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', paddingTop: 6, borderTop: '1px solid hsl(var(--bd))' }}>{r.why}</div>
+              <div className="text-sm font-bold text-foreground">{r.name}</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed">{r.body}</div>
+              <div className="text-[10px] text-muted-foreground pt-3 border-t border-border">{r.why}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ACTION PLAN */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Recommended Action Plan</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>What To Do Next</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Recommended Action Plan</div>
+          <div className="text-xl font-bold text-foreground">What To Do Next</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
             { num: '1', title: 'Schedule AI Governance Review', body: 'Book a 90-minute governance review session with your risk committee. Use this assessment as the agenda basis. Focus on the three cost drivers identified above.', horizon: 'This Week' },
             { num: '2', title: 'Document AI System Inventory', body: 'Create a structured inventory of all AI systems, their providers, integration points, and decision authority. This is a prerequisite for EU AI Act Art. 26 compliance.', horizon: '30 Days' },
             { num: '3', title: 'Engage Insurance Broker', body: 'Share this assessment with your insurance broker or risk advisor. Use the pricing simulator outputs to start a conversation about AI-specific coverage terms.', horizon: '60 Days' },
           ].map(a => (
-            <div key={a.num} className="card" style={{ borderRadius: 14, padding: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div style={{ width: 32, height: 32, borderRadius: 9, background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{a.num}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.25 }}>{a.title}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.65, flex: 1 }}>{a.body}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'hsl(var(--pur))' }} />
-                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'hsl(var(--pur))' }}>{a.horizon}</span>
+            <div key={a.num} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-4">
+              <div className="w-9 h-9 rounded-xl bg-purple-bg border border-purple-border flex items-center justify-center text-sm font-bold font-mono text-primary">{a.num}</div>
+              <div className="text-[15px] font-bold text-foreground leading-snug">{a.title}</div>
+              <div className="text-[12px] text-secondary-foreground leading-[1.7] flex-1">{a.body}</div>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span className="text-[10px] font-bold tracking-[0.06em] uppercase text-primary">{a.horizon}</span>
               </div>
             </div>
           ))}
@@ -797,12 +803,12 @@ export function CompanyView() {
       </div>
 
       {/* FOOTER CTA */}
-      <div style={{ margin: '28px 36px', padding: '28px 32px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
-        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', lineHeight: 1.5 }}>
-          <strong style={{ fontSize: 15, fontWeight: 700, display: 'block', marginBottom: 4, color: 'hsl(var(--tx))' }}>Ready to take action?</strong>
+      <div className="mx-10 my-10 p-8 bg-purple-bg border border-purple-border rounded-2xl flex items-center justify-between gap-6">
+        <div className="text-sm text-secondary-foreground leading-relaxed">
+          <strong className="text-base font-bold block mb-1 text-foreground">Ready to take action?</strong>
           Download the executive report for your board, or switch to the Underwriter View for the full structural analysis.
         </div>
-        <button onClick={() => setPerspective('underwriter')} className="btn-p" style={{ padding: '13px 26px', fontSize: 13, borderRadius: 9, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
+        <button onClick={() => setPerspective('underwriter')} className="btn-p" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
       </div>
     </div>
   );
