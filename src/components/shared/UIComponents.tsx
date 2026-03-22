@@ -56,7 +56,7 @@ export function MetricCard({ label, value, sublabel, band, icon }: MetricCardPro
   const colorClass = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : band === 'Stable' ? 'text-stable' : 'text-foreground';
 
   return (
-    <div className="bg-card border border-border rounded-[10px] p-4">
+    <div className="bg-card border border-border rounded-xl p-6">
       <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-[6px] flex items-center gap-1">
         {icon && <span>{icon}</span>}
         {label}
