@@ -876,7 +876,7 @@ function ProductRoadmap() {
         <span className="text-[8px] font-bold px-2 py-0.5 bg-primary/10 text-primary border border-primary/30 rounded">2026–2028</span>
         <div className="flex-1 h-px bg-border" />
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {phases.map((phase, i) => (
           <div key={i} className={`p-4 bg-secondary border border-border rounded-lg border-t-[3px] ${phase.color}`}>
             <div className={`text-[9px] font-bold tracking-[0.1em] uppercase ${phase.labelColor} mb-3`}>{phase.label}</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 
+
 const VIEW_TITLES: Record<string, string> = {
   '1': 'Exposure Analysis',
   '2': 'Decision Intelligence',
