@@ -302,7 +302,8 @@ export const SYSTEMIC_SLIDERS: SliderConfig[] = [
     category: 'Systemic Risk',
     name: 'Cloud Provider Concentration',
     description: 'Diversity of cloud infrastructure providers',
-    tooltip: 'Number of distinct cloud providers supporting AI workloads. 1 = Single provider (AWS only, Azure only, GCP only). 3 = 2 providers with active failover. 5 = 3+ providers, multi-cloud architecture, active-active. Provider concentration creates correlated failure risk. Swiss Re sigma 01/2026: "Growing reliance on small number of cloud providers adds systemic and accumulation risk." Lower diversity = higher AFI amplification.',
+    tooltip: 'Number of distinct cloud providers supporting AI workloads. Lower diversity = higher systemic risk.',
+    explainText: 'Swiss Re sigma insights 01/2026 identifies this as the fastest-growing new risk category: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk." These inputs drive the Portfolio Cascade Amplification factor — the mechanism behind non-linear aggregate losses.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Single Provider', 2: 'Primary + Backup', 3: 'Two Active', 4: 'Three Providers', 5: 'Multi-Cloud Active' }
   },
@@ -312,7 +313,8 @@ export const SYSTEMIC_SLIDERS: SliderConfig[] = [
     category: 'Systemic Risk',
     name: 'Model Provider Concentration',
     description: 'Diversity of AI model providers',
-    tooltip: 'Number of distinct AI model providers (OpenAI, Anthropic, Google, etc.). 1 = Single provider (OpenAI only, Anthropic only). 3 = 2 providers, can switch if needed. 5 = 3+ providers, multi-vendor strategy. Model provider outage (OpenAI Nov 2023 outage: 3hrs, global impact) creates correlated exposure across all customers. Diversification reduces single-point-of-failure risk.',
+    tooltip: 'Number of distinct AI model providers. Single provider creates correlated failure risk.',
+    explainText: 'Model provider outages (OpenAI Nov 2023: 3hrs global impact) create correlated exposure across all customers. A single provider event affects every entity in the portfolio that depends on that provider simultaneously — geographic diversification does not help.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Single Provider', 2: 'Primary + Backup', 3: 'Two Active', 4: 'Three Providers', 5: 'Multi-Provider' }
   },
@@ -322,7 +324,8 @@ export const SYSTEMIC_SLIDERS: SliderConfig[] = [
     category: 'Systemic Risk',
     name: 'GPU / Compute Concentration',
     description: 'Concentration in compute infrastructure',
-    tooltip: 'Dependence on specific GPU clusters or compute regions. 1 = Single datacenter or region (e.g. us-east-1 only). 3 = Multi-region within single provider. 5 = Geographically distributed across providers and regions. Swiss Re sigma 01/2026 identifies Hyperscale Data Centres and High-Performance Computing as new insurable asset classes with concentration risk. GPU shortages or datacenter outages create systemic bottlenecks.',
+    tooltip: 'Dependence on specific GPU clusters or compute regions. Concentration creates systemic bottlenecks.',
+    explainText: 'Swiss Re sigma 01/2026 identifies Hyperscale Data Centres and High-Performance Computing as new insurable asset classes with concentration risk. GPU shortages, datacenter outages, or regional power failures create systemic bottlenecks that cascade across all AI-dependent operations.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Single Region', 2: 'Multi-Region', 3: 'Multi-Provider', 4: 'Distributed', 5: 'Fully Diversified' }
   },
@@ -332,7 +335,8 @@ export const SYSTEMIC_SLIDERS: SliderConfig[] = [
     category: 'Systemic Risk',
     name: 'Cross-Vendor Contagion Risk',
     description: 'Degree of shared dependencies across AI vendors',
-    tooltip: 'Extent to which different AI vendors share underlying infrastructure. Example: Multiple AI providers run on AWS → AWS outage affects all simultaneously. 1 = Completely isolated vendor stacks, no shared dependencies. 3 = Some shared infrastructure (cloud, CDN), partial isolation. 5 = All vendors use same underlying cloud/GPU → single point of failure. Hidden correlations amplify tail risk. Example: Crowdstrike incident July 2024 affected Microsoft ecosystem globally.',
+    tooltip: 'Extent to which different AI vendors share underlying infrastructure. Hidden correlations amplify tail risk.',
+    explainText: 'Multiple AI providers running on the same underlying cloud (e.g. AWS) creates hidden correlation: an AWS outage affects all simultaneously. The Crowdstrike incident (July 2024) demonstrated how a single vendor failure cascaded across the entire Microsoft ecosystem globally — affecting airlines, hospitals, banks, and government services simultaneously.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Isolated Stacks', 2: 'Mostly Isolated', 3: 'Some Overlap', 4: 'Significant Overlap', 5: 'Fully Correlated' }
   },
@@ -342,7 +346,8 @@ export const SYSTEMIC_SLIDERS: SliderConfig[] = [
     category: 'Systemic Risk',
     name: 'ESG / Climate Risk Alignment',
     description: 'Exposure to climate-related AI infrastructure risks',
-    tooltip: 'Vulnerability to climate/ESG risks in AI supply chain. 1 = Renewable-powered datacenters, climate-resilient locations. 3 = Mixed energy sources, some climate exposure. 5 = High-risk regions (flood zones, water-stressed), fossil fuel dependent. Swiss Re sigma 01/2026: New asset classes (Data Centres, HPC) create concentrated climate exposure. Water usage for cooling, energy grid stress, physical location risks all factor into systemic resilience.',
+    tooltip: 'Vulnerability to climate/ESG risks in AI supply chain. Water usage, energy grid stress, physical location risks.',
+    explainText: 'AI data centres consume enormous energy and water resources. A single GPT-4 training run consumes as much electricity as 120 US homes use in a year. Water-cooled data centres in water-stressed regions create physical climate risk. Regulatory ESG disclosure requirements (CSRD, SFDR) increasingly cover AI infrastructure dependencies.',
     min: 1, max: 5, defaultValue: 2,
     labels: { 1: 'Low ESG Risk', 2: 'Moderate ESG Risk', 3: 'Some ESG Exposure', 4: 'High ESG Risk', 5: 'Critical ESG Risk' }
   },
