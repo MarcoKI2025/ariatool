@@ -370,8 +370,8 @@ function Slide6() {
         When an AI system fails, the loss does not stop at the system boundary. It propagates through workflows, decisions,
         revenue, and portfolio — amplifying at each layer.
       </BodyText>
-      <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-5 mb-4">
-        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] mb-3">
+      <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
           Loss Envelope by Scenario — Meridian Financial (€M) · AFI 2.23 · Standard vs. Structural Model
         </div>
         <ScenariosChart />
