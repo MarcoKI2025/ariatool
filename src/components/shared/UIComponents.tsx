@@ -64,7 +64,7 @@ export function MetricCard({ label, value, sublabel, band, icon }: MetricCardPro
       <div className={`text-[26px] font-bold leading-[1.1] font-mono ${colorClass}`}>
         {value}
       </div>
-      {sublabel && <div className="text-[11px] text-secondary-foreground mt-1">{sublabel}</div>}
+      {sublabel && <div className="text-[11px] text-secondary-foreground mt-2">{sublabel}</div>}
     </div>
   );
 }
