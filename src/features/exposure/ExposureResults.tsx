@@ -312,14 +312,19 @@ export function ExposureResults() {
           <div className="text-[11px] text-muted-foreground mb-4">Qualitative risk characterization based on structural governance factors.</div>
           <div className="grid grid-cols-3 gap-0 border border-border rounded-lg overflow-hidden">
             {[
-              { label: 'Base Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Structural baseline', color: 'text-stable' },
-              { label: 'Elevated Risk Band', value: formatCurrency(lossEnvelope.stress), sub: 'Provider concentration factors', color: 'text-sensitive' },
-              { label: 'Critical Risk Band', value: formatCurrency(lossEnvelope.tail), sub: 'Tail risk — correlated structures', color: 'text-fragile' },
+              { label: 'Base Risk Band', value: lossEnvelope.expected < 2 ? 'Low' : lossEnvelope.expected < 5 ? 'Medium' : 'High', sub: 'Structural baseline', color: 'text-stable', conf: 'Directional' },
+              { label: 'Elevated Risk Band', value: lossEnvelope.stress < 5 ? 'Medium' : lossEnvelope.stress < 12 ? 'High' : 'Critical', sub: 'Provider concentration factors', color: 'text-sensitive', conf: 'Committee-Grade' },
+              { label: 'Critical Risk Band', value: lossEnvelope.tail < 10 ? 'High' : 'Critical', sub: 'Tail risk — correlated structures', color: 'text-fragile', conf: 'Exploratory' },
             ].map((cell, i) => (
               <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''} ${i === 2 ? 'bg-fragile-bg/30' : ''}`}>
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
                 <div className={`text-[32px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
-                <div className="text-[10px] text-muted-foreground mt-2">{cell.sub}</div>
+                <div className="text-[10px] text-muted-foreground mt-1">{cell.sub}</div>
+                <span className={`inline-flex mt-2 text-[8px] font-bold tracking-[0.06em] uppercase px-[6px] py-[2px] rounded border ${
+                  cell.conf === 'Directional' ? 'bg-sensitive-bg border-sensitive-border text-sensitive' :
+                  cell.conf === 'Committee-Grade' ? 'bg-primary/10 border-purple-border text-primary' :
+                  'bg-fragile-bg border-fragile-border text-fragile'
+                }`}>{cell.conf}</span>
               </div>
             ))}
           </div>
@@ -328,6 +333,16 @@ export function ExposureResults() {
           <div className="text-[11px] font-bold text-fragile mb-1">⚠ Tail risk amplification from correlated dependencies</div>
           <div className="text-[10px] text-fragile/80 leading-[1.5]">Swiss Re sigma insights 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic and accumulation risk."</div>
         </div>
+      </div>
+
+      {/* Calculation Snapshot Bar */}
+      <div className="flex items-center gap-4 px-4 py-[8px] bg-secondary border border-border rounded-lg mb-4 text-[9px] font-mono text-muted-foreground">
+        <span className="font-bold tracking-wider uppercase text-foreground">Calc Snapshot</span>
+        <span>Model: <strong className="text-foreground">GEE-v3.0</strong></span>
+        <span>Run: <strong className="text-foreground">{new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</strong></span>
+        <span>AFI: <strong className={bandColor}>{afi.toFixed(2)}</strong></span>
+        <span>Band: <strong className={bandColor}>{band}</strong></span>
+        <span className="ml-auto">Confidence: <strong className="text-primary">Directional</strong></span>
       </div>
 
       {/* Loss pressure callout */}
