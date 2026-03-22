@@ -330,7 +330,7 @@ function MethodologyWhitePaper() {
 
       <div className="border-t border-border p-5 pb-4">
         <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[10px]">3 · Secondary Constructs</div>
-        <div className="grid grid-cols-2 gap-[10px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
           {[
             { color: 'border-l-primary', label: 'MDR — Meaning Drift Risk', desc: 'Geometric mean of three structural drivers: autonomous execution pressure, governance feedback gap, and ungoverned operating horizon. Based on Kindermann (2026) §5. Classified: Exploratory.' },
             { color: 'border-l-primary', label: 'RFSI — Reference Frame Stability', desc: 'Inverse geometric mean of context variability, semantic drift risk, evaluation mismatch, and temporal instability. Measures how valid the current governance assessment remains over time. Classified: Exploratory.' },
