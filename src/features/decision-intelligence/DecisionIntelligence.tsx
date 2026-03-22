@@ -52,6 +52,7 @@ export function DecisionIntelligence() {
            band === 'Sensitive' ? 'Elevated Structural Signals' :
            'Governance Signals Within Range'}
         </div>
+        <div className="text-[12px] text-secondary-foreground mb-3">This system identifies structural AI risks not captured in traditional underwriting models.</div>
         <div className="text-[12px] text-muted-foreground leading-[1.6] max-w-[700px] mb-4">
           {band === 'Fragile' 
             ? 'This system introduces structural AI risk that exceeds current underwriting assumptions — and is not visible through compliance frameworks, audit processes, or point-in-time regulatory reviews.'
