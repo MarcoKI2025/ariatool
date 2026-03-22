@@ -142,7 +142,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
 
         {/* Industry Comparison */}
-        <div className="p-8">
+        <div className="p-4 sm:p-8">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Industry Comparison · Your Sector</div>
           <div className="mb-5">
             <div className="flex justify-between mb-2 text-[12px] text-secondary-foreground">
