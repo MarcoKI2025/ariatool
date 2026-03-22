@@ -240,7 +240,7 @@ export function InsuranceDecision() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },
