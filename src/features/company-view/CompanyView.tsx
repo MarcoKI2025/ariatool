@@ -173,7 +173,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
       {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
       <div className="grid grid-cols-1 md:grid-cols-3">
         {/* Top Loss Scenarios */}
-        <div className="p-8 md:border-r border-border">
+        <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Top Loss Scenarios</div>
           <div className="flex flex-col gap-3">
             {scenarios.map((s, i) => (
