@@ -427,7 +427,7 @@ function Slide7() {
         <div className="bg-[#0e1a28] border border-[#1a3858] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#4888c0] uppercase tracking-[0.08em] mb-1">Art. 113(3) · Aug 2025</div>
           <div className="font-mono text-[20px] font-bold text-[#80b8e0] mb-1">Full</div>
-          <div className="text-[9px] text-[#686458] leading-[1.5]">Standardisation phase begins. Governance frameworks become regulatory baseline.</div>
+          <div className="text-[9px] text-[#b0aca0] leading-[1.5]">Standardisation phase begins. Governance frameworks become regulatory baseline.</div>
         </div>
       </div>
       <InsightBox color="red" title="The Engine Connects Structure to Statutory Exposure" text="This is the only tool that maps structural fragility (AFI, RFS, IAT criteria) directly to EU AI Act penalty tiers. A Fragile classification with IAT criteria 6+7 triggered means active Art. 27 + Art. 72 violations — up to €15M, today, without a triggering incident." />
