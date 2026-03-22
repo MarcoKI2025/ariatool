@@ -186,7 +186,7 @@ export function ExecutiveReport() {
 
       {/* Risk Position + Financial Exposure */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
-        <div className="grid grid-cols-2 gap-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
           <div className="p-5 border-r border-border">
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Risk Position</div>
             <div className="space-y-[10px]">
