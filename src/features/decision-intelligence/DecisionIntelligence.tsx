@@ -598,7 +598,7 @@ export function DecisionIntelligence() {
             <div className="h-[8px] bg-border rounded overflow-hidden mb-3">
               <div className="h-full rounded gradient-bar" style={{ width: `${compositeRiskIndex}%` }} />
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="text-center">
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AFI Component (50%)</div>
                 <div className="text-[18px] font-bold font-mono text-foreground">{Math.min(100, Math.round((afi / 3.0) * 100))}</div>
