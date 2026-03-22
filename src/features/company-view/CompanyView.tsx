@@ -781,7 +781,7 @@ export function CompanyView() {
             { num: '2', title: 'Document AI System Inventory', body: 'Create a structured inventory of all AI systems, their providers, integration points, and decision authority. This is a prerequisite for EU AI Act Art. 26 compliance.', horizon: '30 Days' },
             { num: '3', title: 'Engage Insurance Broker', body: 'Share this assessment with your insurance broker or risk advisor. Use the pricing simulator outputs to start a conversation about AI-specific coverage terms.', horizon: '60 Days' },
           ].map(a => (
-            <div key={a.num} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-4">
+            <div key={a.num} className="bg-card border border-border rounded-2xl shadow-sm p-4 sm:p-7 flex flex-col gap-4">
               <div className="w-9 h-9 rounded-xl bg-purple-bg border border-purple-border flex items-center justify-center text-sm font-bold font-mono text-primary">{a.num}</div>
               <div className="text-[15px] font-bold text-foreground leading-snug">{a.title}</div>
               <div className="text-[12px] text-secondary-foreground leading-[1.7] flex-1">{a.body}</div>
