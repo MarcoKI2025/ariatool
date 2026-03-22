@@ -220,7 +220,7 @@ export function InsuranceDecision() {
       </SectionCard>
 
       {/* ═══ 8. CASCADE PROPAGATION — CIRCLES + ARROWS ═══ */}
-      <div className="bg-card border-2 border-border rounded-xl p-6 mb-4 relative overflow-hidden">
+      <div className="bg-card border-2 border-border rounded-xl p-3 sm:p-6 mb-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #f39c12, #c0392b, #7b0e0e)' }} />
         <div className="flex items-start justify-between mb-5">
           <div>
