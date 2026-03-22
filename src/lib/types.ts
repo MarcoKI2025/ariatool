@@ -64,6 +64,13 @@ export interface AFIComponents {
   na: number; // Network Amplification
 }
 
+export interface FrameDriftAlert {
+  sev: 'critical' | 'high' | 'moderate';
+  title: string;
+  explanation: string;
+  mitigation: string;
+}
+
 export interface AnalysisResults {
   afi: number;
   band: Band;
@@ -89,6 +96,11 @@ export interface AnalysisResults {
   mdr: number;
   mdrTier: string;
   mdrLabel: string;
+  rfsi: number;
+  rfsiTier: 'stable' | 'conditional' | 'limited';
+  rfsiLabel: string;
+  rfsiDrivers: { contextVariability: number; semanticDriftRisk: number; evaluationMismatch: number; temporalInstability: number };
+  frameDriftAlerts: FrameDriftAlert[];
 }
 
 export type IATState = Record<number, boolean>;

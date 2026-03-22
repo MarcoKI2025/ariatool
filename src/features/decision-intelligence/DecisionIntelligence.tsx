@@ -12,7 +12,7 @@ export function DecisionIntelligence() {
     return <LockedState title="Decision Intelligence Locked" description="Complete the Exposure Analysis to unlock AFI scoring, governance exposure, and structural risk signals." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor, alri, scri, compositeRiskIndex, mdr, mdrTier, mdrLabel } = results;
+  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor, alri, scri, compositeRiskIndex, mdr, mdrTier, mdrLabel, rfsi, rfsiTier, rfsiLabel, rfsiDrivers, frameDriftAlerts } = results;
 
   // Responsibility scores
   const respFragmentation = Math.round(Math.min(99, (1 - components.jd) * 100 + components.dr * 20));
@@ -446,6 +446,125 @@ export function DecisionIntelligence() {
           </div>
         </div>
       </SectionCard>
+
+      {/* ═══ RFSI — Assessment Validity Index ═══ */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="p-4 pb-3 border-b border-border flex items-start justify-between">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-1">◈ Assessment Validity Index <span className="text-[8px] px-[6px] py-[1px] bg-primary/10 border border-primary/30 rounded text-primary ml-1">Exploratory</span></div>
+            <div className="text-[14px] font-bold text-foreground">How valid is this governance assessment across the deployment lifecycle?</div>
+            <div className="text-[11px] text-muted-foreground mt-[2px] leading-[1.5] max-w-[480px]">Governance assessments are not permanent. This index measures whether the conditions under which this system was assessed still hold — and for how long the current assessment can be considered operationally valid.</div>
+          </div>
+          <div className="text-right flex-shrink-0 ml-5">
+            <div className={`text-[44px] font-bold font-mono leading-none ${rfsiTier === 'stable' ? 'text-stable' : rfsiTier === 'conditional' ? 'text-sensitive' : 'text-fragile'}`}>{rfsi}</div>
+            <div className={`text-[10px] font-semibold tracking-[0.04em] uppercase mt-[3px] ${rfsiTier === 'stable' ? 'text-stable' : rfsiTier === 'conditional' ? 'text-sensitive' : 'text-fragile'}`}>{rfsiLabel}</div>
+          </div>
+        </div>
+        <div className="p-4">
+          <div className="grid grid-cols-4 gap-[10px] mb-[14px]">
+            {[
+              { label: 'Deployment Context Shift', value: rfsiDrivers.contextVariability, desc: 'Deployment context drift from alignment baseline' },
+              { label: 'Behavioral Drift Risk', value: rfsiDrivers.semanticDriftRisk, desc: 'MDR-derived interpretive instability' },
+              { label: 'Audit Coverage Gap', value: rfsiDrivers.evaluationMismatch, desc: 'Audit coverage vs. operational reality' },
+              { label: 'Assessment Age Risk', value: rfsiDrivers.temporalInstability, desc: 'Duration-weighted frame decay signal' },
+            ].map((d, i) => (
+              <div key={i} className="bg-secondary border border-border rounded-[7px] p-[10px_12px]">
+                <div className="text-[9px] font-bold tracking-[0.07em] uppercase text-muted-foreground mb-1">{d.label}</div>
+                <div className={`text-[16px] font-bold font-mono mb-[2px] ${d.value > 0.65 ? 'text-fragile' : d.value > 0.4 ? 'text-sensitive' : 'text-stable'}`}>{Math.round(d.value * 100)}%</div>
+                <div className="text-[9px] text-muted-foreground leading-[1.4]">{d.desc}</div>
+              </div>
+            ))}
+          </div>
+          <div className={`p-3 rounded-lg border text-[12px] font-medium leading-[1.55] ${
+            rfsiTier === 'stable' ? 'bg-stable-bg border-stable-border text-stable' :
+            rfsiTier === 'conditional' ? 'bg-sensitive-bg border-sensitive-border text-sensitive' :
+            'bg-fragile-bg border-fragile-border text-fragile'
+          }`}>
+            {rfsiTier === 'stable' ? 'This governance assessment is likely to remain valid across its current deployment lifecycle. Alignment claims derived from prior evaluations may reasonably be extended — with continued monitoring.' :
+             rfsiTier === 'conditional' ? 'This assessment is conditionally valid. Governance findings hold under current conditions but may not generalize beyond them. Deployment context shift and audit coverage gaps signal that the assessment baseline is diverging from the current operational state.' :
+             'This assessment is no longer structurally valid. Governance findings from prior evaluations should not be assumed to hold. Re-evaluation is required immediately.'}
+          </div>
+          {rfsiTier === 'limited' && (
+            <div className="mt-[10px] p-[10px_14px] bg-[#1a0808] border border-[#5a1810] rounded-md text-[11px] text-[#d08070] leading-[1.5]">
+              ⚠ <strong>This governance assessment may no longer be valid under current operational conditions.</strong> The deployment context has shifted significantly from the conditions under which this system was assessed.
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ═══ FRAME DRIFT ALERTS ═══ */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+        <div className="p-4 pb-3 border-b border-border flex items-start justify-between">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[3px]">◈ Governance Alignment Alert System</div>
+            <div className="text-[14px] font-bold text-foreground">Active Governance Alignment Alerts</div>
+          </div>
+          <div className={`text-[28px] font-bold font-mono ${frameDriftAlerts.length > 0 ? 'text-fragile' : 'text-stable'}`}>{frameDriftAlerts.length}</div>
+        </div>
+        <div className="p-4">
+          {frameDriftAlerts.length === 0 ? (
+            <div className="text-[12px] text-stable">✓ No active frame drift alerts detected under current profile.</div>
+          ) : (
+            <div className="space-y-3">
+              {frameDriftAlerts.map((alert, i) => (
+                <div key={i} className={`border rounded-lg overflow-hidden ${
+                  alert.sev === 'critical' ? 'border-fragile' : alert.sev === 'high' ? 'border-sensitive' : 'border-border'
+                }`}>
+                  <div className={`px-4 py-[10px] flex items-center gap-3 ${
+                    alert.sev === 'critical' ? 'bg-fragile-bg' : alert.sev === 'high' ? 'bg-sensitive-bg' : 'bg-secondary'
+                  }`}>
+                    <span className={`text-[9px] font-bold tracking-wider uppercase px-[7px] py-[2px] rounded ${
+                      alert.sev === 'critical' ? 'bg-fragile text-white' : alert.sev === 'high' ? 'bg-sensitive text-white' : 'bg-muted text-muted-foreground'
+                    }`}>{alert.sev}</span>
+                    <span className="text-[12px] font-bold text-foreground">{alert.title}</span>
+                  </div>
+                  <div className="p-4">
+                    <div className="text-[11px] text-muted-foreground leading-[1.55] mb-3">{alert.explanation}</div>
+                    <div className="text-[10px] text-stable leading-[1.5]"><strong>Mitigation:</strong> {alert.mitigation}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ═══ EVALUATION LIMITS ═══ */}
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[4px]">◈ Evaluation Limits · The Boundaries of What Can Be Known</div>
+        <div className="text-[16px] font-bold text-foreground mb-[6px]">What This Assessment Cannot Tell You</div>
+        <div className="text-[11px] text-muted-foreground leading-[1.6] mb-4 max-w-[600px]">Every evaluation is a snapshot under constrained conditions. This panel makes the epistemic limits of this assessment explicit — not as a disclaimer, but as a first-class governance signal.</div>
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          {[
+            { t: 'No External Ground Truth', s: 'There is no external reference against which AI governance fragility can be absolutely verified. AFI scores are structurally valid within their calibration context — not universally certified.' },
+            { t: 'Metrics Are Proxies', s: 'Delegation Ratio, Reversibility Cost, and Correlation Density are structural proxies — not direct measurements of risk. They correlate with failure conditions; they do not cause or predict them with certainty.' },
+            { t: 'Audits Measure Compliance, Not Correctness', s: 'Standard compliance audits verify adherence to specified procedures. They do not verify that the system is operating as intended across all contexts.' },
+            { t: 'Performance ≠ Justification', s: 'A system that performs well is trusted with more autonomy — which increases exposure, not reduces it. Performance-based legitimacy erodes governance leverage.' },
+            { t: 'Self-Assessment Bias', s: 'This assessment relies on operator-reported inputs. Systematic under-reporting of delegation depth or oversight gaps will produce optimistic scores.' },
+            { t: 'Behavioral Drift Is Not Auditable', s: 'Gradual shifts in what a system effectively prioritizes — while remaining behaviorally compliant — are not detectable by standard audits.' },
+          ].map((item, i) => (
+            <div key={i} className="p-3 bg-secondary/30 rounded-lg text-[10px] text-muted-foreground leading-[1.5]">
+              <span className="text-fragile mr-1">⊘</span>
+              <strong className="text-foreground">{item.t}</strong> — {item.s}
+            </div>
+          ))}
+        </div>
+        <div className="p-3 border border-sensitive/30 rounded-lg bg-sensitive/5 text-[11px] text-muted-foreground leading-[1.6] italic">
+          "Alignment is conditional, context-dependent, and frame-dependent. A system aligned under one set of conditions may not be aligned under another — and standard evaluation cannot establish when the boundary has been crossed." — AI Governance Architecture Framework (AGAF)
+        </div>
+      </div>
+
+      {/* ═══ FRAMEWORK LIMITATIONS DISCLAIMER ═══ */}
+      <div className="p-[14px_18px] bg-chrome border-2 border-chrome-border rounded-[10px] mb-4">
+        <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-sensitive mb-[6px]">⚠ FRAMEWORK LIMITATIONS — READ BEFORE USE</div>
+        <div className="text-[11px] text-chrome-fg leading-[1.6]">
+          This is an <strong className="text-chrome-fg-bright">internal structuring and simulation tool</strong>. NOT actuarially certified. NOT a regulatory submission. NOT legal or compliance advice.
+          <br /><br />
+          <strong className="text-chrome-fg-bright">DO NOT use for:</strong> Binding capital allocation · Treaty structuring · Regulatory filing · Insurance pricing decisions · Legal compliance certification
+          <br /><br />
+          <strong className="text-chrome-fg-bright">Use ONLY with:</strong> Independent actuarial validation · Legal counsel review · Regulatory compliance assessment · Professional risk management advice
+        </div>
+      </div>
 
       {/* ═══ RESEARCH FOUNDATION (dark panel) ═══ */}
       <div className="flex items-stretch bg-chrome rounded-[10px] overflow-hidden mb-5">
