@@ -442,7 +442,7 @@ export function DecisionIntelligence() {
 
       {/* ═══ FINANCIAL EXPOSURE ═══ */}
       <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope" icon="📊" subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Expected scenario · median market outcome', highlight: false, color: 'text-foreground' },
             { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', highlight: false, color: 'text-sensitive' },
