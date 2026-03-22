@@ -197,8 +197,8 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
-        <div className="flex items-start gap-6">
+      <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
+        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚡ AI Governance Readiness Index (AGRI)<InfoTip text="Multi-agent orchestration, tool-call authority, persistent memory, human checkpoints" /></div>
             <div className={`text-[48px] font-bold font-mono leading-none ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</div>
