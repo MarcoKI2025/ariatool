@@ -66,7 +66,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO SCORE + ECI ═══ */}
-      <div className="grid grid-cols-[1fr_300px] gap-4 mb-0">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 mb-0">
         <div className="bg-card border border-border rounded-xl p-6">
           <div className="flex items-end gap-6">
             <div>
