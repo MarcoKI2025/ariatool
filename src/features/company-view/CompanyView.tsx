@@ -420,7 +420,7 @@ export function CompanyView() {
       </div>
 
       {/* LIVE PRICING SIMULATOR */}
-      <div style={{ background: '#f8f7f4', borderBottom: '1px solid hsl(var(--bd))' }}>
+      <div style={{ background: 'hsl(var(--s2))', borderBottom: '1px solid hsl(var(--bd))' }}>
         <div style={{ padding: '20px 28px 0', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20 }}>
           <div>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>◈ AI Insurance Pricing Simulator · Live Calculation</div>
