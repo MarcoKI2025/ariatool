@@ -82,7 +82,7 @@ function ModelGovernanceRegister() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-0 border-b border-border">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border-b border-border">
         {[
           { label: 'Model Type', title: 'Structural Heuristic', desc: 'Rule-based weighted ratio. Deterministic, not stochastic. No ML, no historical claims distribution, no Monte Carlo. Outputs are structural proxy signals — not probabilistic estimates.' },
           { label: 'Data Basis', title: 'Qualitative · Market-Derived', desc: 'Inputs: self-attested operator assessment (12 parameters). Loss anchors: published market guidance (Lloyd\'s CRI 2024, EIOPA 2024). No proprietary claims database. No system-derived inputs.' },
