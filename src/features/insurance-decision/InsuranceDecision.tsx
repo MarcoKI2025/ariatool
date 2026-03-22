@@ -290,6 +290,27 @@ export function InsuranceDecision() {
         </SectionCard>
       </div>
 
+      {/* ═══ OPERATIONAL DECISION PANEL ═══ */}
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Operational Decision</div>
+        <div className="text-[13px] text-muted-foreground mb-4">Select underwriting action based on structural risk assessment.</div>
+        <div className="flex gap-3">
+          {[
+            { label: 'Approved', desc: 'Standard terms', active: decisionClass === 'Approved', color: 'bg-stable hover:bg-stable/90 text-white' },
+            { label: 'Conditional Review', desc: 'Loaded terms + conditions', active: decisionClass === 'Conditional Review', color: 'bg-sensitive hover:bg-sensitive/90 text-white' },
+            { label: 'Escalate to Committee', desc: 'Committee required', active: decisionClass === 'Escalate to Committee', color: 'bg-fragile hover:bg-fragile/90 text-white' },
+            { label: 'Not Approved', desc: 'Decline coverage', active: decisionClass === 'Not Approved', color: 'bg-[#7b0e0e] hover:bg-[#5a0a0a] text-white' },
+          ].map((btn, i) => (
+            <button key={i} className={`flex-1 py-3 px-4 rounded-lg text-center transition-all ${
+              btn.active ? `${btn.color} ring-2 ring-offset-2 ring-primary shadow-lg` : 'bg-secondary text-muted-foreground border border-border hover:bg-muted'
+            }`}>
+              <div className="text-[12px] font-bold">{btn.label}</div>
+              <div className="text-[9px] opacity-80 mt-[2px]">{btn.desc}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* ═══ 10. PREMIUM ESTIMATE ROW ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Premium Estimate & Structural Factors</div>

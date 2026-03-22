@@ -249,6 +249,28 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Tested & Monitored', 2: 'Periodic Audits', 3: 'Reactive Mitigation', 4: 'Minimal Testing', 5: 'Untested' }
   },
+  {
+    id: 'dataIntegrity',
+    fieldKey: 'dataIntegrity',
+    category: 'Liability Risk',
+    name: 'Data Supply Chain Integrity',
+    description: 'Confidence in training data provenance and quality',
+    tooltip: 'Assurance that AI training data is accurate, unbiased, and legally obtained. 1 = Full data lineage. 5 = No provenance tracking.',
+    explainText: 'Data supply chain integrity is the "upstream" equivalent of prompt injection. A compromised data vendor or poisoned training dataset can corrupt every decision the AI makes — systematically and invisibly. The EU AI Act (Art. 10) mandates data governance for high-risk AI systems.',
+    min: 1, max: 5, defaultValue: 2,
+    labels: { 1: 'Full Lineage', 2: 'Known Sources', 3: 'Partial Lineage', 4: 'Unknown Sources', 5: 'No Tracking' }
+  },
+  {
+    id: 'esgAlignment',
+    fieldKey: 'esgLiability',
+    category: 'Liability Risk',
+    name: 'ESG / Climate Risk Alignment',
+    description: 'Exposure to climate-related AI infrastructure risks',
+    tooltip: 'Vulnerability to climate/ESG risks in AI supply chain. Water usage, energy grid stress, physical location risks.',
+    explainText: 'AI data centres consume enormous energy and water resources. A single GPT-4 training run consumes as much electricity as 120 US homes use in a year. Regulatory ESG disclosure requirements (CSRD, SFDR) increasingly cover AI infrastructure dependencies.',
+    min: 1, max: 5, defaultValue: 2,
+    labels: { 1: 'Low ESG Risk', 2: 'Moderate ESG Risk', 3: 'Some ESG Exposure', 4: 'High ESG Risk', 5: 'Critical ESG Risk' }
+  },
 ];
 
 // ══════════════════════════════════════════════════════════
@@ -263,7 +285,7 @@ export const GOVERNANCE_SLIDERS: SliderConfig[] = [
     name: 'Shadow AI Prevalence',
     description: 'Extent of unauthorized or untracked AI usage',
     tooltip: 'Degree of unmanaged AI usage outside official channels. 1 = All AI use is centrally managed. 5 = Widespread shadow AI, no visibility.',
-    explainText: 'Shadow AI is the primary vector for data exfiltration and privacy violations in 2025–2026. Employees uploading customer PII, contracts, or IP into public LLMs creates direct GDPR/data protection liability — and may void cyber insurance coverage if the insurer determines the loss arose from unauthorised use of AI. Coalition identifies chatbots as an "emerging risk" based on nearly 200 cyber claims from 2023–25.',
+    explainText: 'Shadow AI is the primary vector for data exfiltration and privacy violations in 2025–2026.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Fully Managed', 2: 'Mostly Managed', 3: 'Some Shadow AI', 4: 'Significant Shadow', 5: 'Widespread Shadow' }
   },
@@ -274,20 +296,9 @@ export const GOVERNANCE_SLIDERS: SliderConfig[] = [
     name: 'Explainability / XAI',
     description: 'Ability to explain AI decisions to stakeholders',
     tooltip: 'Capability to provide clear explanations of AI decisions. 1 = Full explainability. 5 = Complete black box.',
-    explainText: 'Explainability gap creates a "forensic liability hole" — when an AI causes harm, the organisation cannot explain what happened, cannot demonstrate due diligence, and cannot defend itself in litigation. Digital Insurance (Feb 2026) reports that insurers now view unexplainable AI as approaching "uninsurable" territory. A human kill switch and audit trail are moving from best practice to coverage prerequisites.',
+    explainText: 'Explainability gap creates a "forensic liability hole" — when an AI causes harm, the organisation cannot explain what happened.',
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Fully Explainable', 2: 'Mostly Explainable', 3: 'Partially Explainable', 4: 'Limited Explainability', 5: 'Black Box' }
-  },
-  {
-    id: 'dataIntegrity',
-    fieldKey: 'dataIntegrity',
-    category: 'Governance',
-    name: 'Data Supply Chain Integrity',
-    description: 'Confidence in training data provenance and quality',
-    tooltip: 'Assurance that AI training data is accurate, unbiased, and legally obtained. 1 = Full data lineage. 5 = No provenance tracking.',
-    explainText: 'Data supply chain integrity is the "upstream" equivalent of prompt injection. A compromised data vendor or poisoned training dataset can corrupt every decision the AI makes — systematically and invisibly. The EU AI Act (Art. 10) mandates data governance for high-risk AI systems. EIOPA GenAI Survey (Feb 2026) found data quality and integrity as the primary governance concern among European insurers using generative AI.',
-    min: 1, max: 5, defaultValue: 2,
-    labels: { 1: 'Full Lineage', 2: 'Known Sources', 3: 'Partial Lineage', 4: 'Unknown Sources', 5: 'No Tracking' }
   },
 ];
 
@@ -340,17 +351,6 @@ export const SYSTEMIC_SLIDERS: SliderConfig[] = [
     min: 1, max: 5, defaultValue: 3,
     labels: { 1: 'Isolated Stacks', 2: 'Mostly Isolated', 3: 'Some Overlap', 4: 'Significant Overlap', 5: 'Fully Correlated' }
   },
-  {
-    id: 'esgAlignment',
-    fieldKey: 'esgLiability',
-    category: 'Systemic Risk',
-    name: 'ESG / Climate Risk Alignment',
-    description: 'Exposure to climate-related AI infrastructure risks',
-    tooltip: 'Vulnerability to climate/ESG risks in AI supply chain. Water usage, energy grid stress, physical location risks.',
-    explainText: 'AI data centres consume enormous energy and water resources. A single GPT-4 training run consumes as much electricity as 120 US homes use in a year. Water-cooled data centres in water-stressed regions create physical climate risk. Regulatory ESG disclosure requirements (CSRD, SFDR) increasingly cover AI infrastructure dependencies.',
-    min: 1, max: 5, defaultValue: 2,
-    labels: { 1: 'Low ESG Risk', 2: 'Moderate ESG Risk', 3: 'Some ESG Exposure', 4: 'High ESG Risk', 5: 'Critical ESG Risk' }
-  },
 ];
 
 // All slider categories for rendering
@@ -386,7 +386,7 @@ export const SLIDER_CATEGORIES = [
     title: 'AI-Specific Liability Exposure',
     icon: '⚠',
     subtitle: 'These dimensions reflect actual AI liability claim patterns emerging in 2025–2026. Each maps to a realized or imminent loss vector with documented precedent.',
-    badge: '5 inputs · 2025–26 Claim Vectors',
+    badge: '7 inputs · 2025–26 Claim Vectors',
     confidenceBadge: '2025–2026 Claim Patterns',
     sliders: LIABILITY_SLIDERS,
   },
@@ -395,7 +395,7 @@ export const SLIDER_CATEGORIES = [
     title: 'Governance & Transparency',
     icon: '🔒',
     subtitle: 'Governance maturity signals that affect Justificatory Density and overall risk posture. Low scores signal systemic entrenchment — the system cannot be safely exited without significant disruption.',
-    badge: '3 inputs · Governance Maturity',
+    badge: '2 inputs · Governance Maturity',
     sliders: GOVERNANCE_SLIDERS,
   },
   {
@@ -403,7 +403,7 @@ export const SLIDER_CATEGORIES = [
     title: 'Systemic & Concentration Risk',
     icon: '🌐',
     subtitle: 'Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk." Lower diversity scores indicate higher concentration risk.',
-    badge: '5 inputs · Swiss Re sigma 01/2026',
+    badge: '4 inputs · Swiss Re sigma 01/2026',
     sliders: SYSTEMIC_SLIDERS,
   },
 ];
