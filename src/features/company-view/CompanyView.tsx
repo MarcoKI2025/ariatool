@@ -432,34 +432,29 @@ export function CompanyView() {
       </div>
 
       {/* Company View Header */}
-      <div style={{ padding: '20px 28px 0' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, paddingBottom: 16, borderBottom: '1px solid hsl(var(--bd))' }}>
+      <div className="px-4 sm:px-7 pt-5">
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-3 pb-4 border-b border-border">
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>◈ Company View — Executive AI Risk Summary</div>
-            <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))', letterSpacing: '-0.01em', marginBottom: 5 }}>What does your AI cost — and what can you do about it?</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, maxWidth: 600 }}>This view translates the structural AI risk assessment into plain business language: your overall risk level, estimated annual insurance cost, what drives it, and three concrete actions to reduce it.</div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Company View — Executive AI Risk Summary</div>
+            <div className="text-[15px] sm:text-[18px] font-bold text-foreground tracking-tight mb-1.5">What does your AI cost — and what can you do about it?</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.6] max-w-[600px]">This view translates the structural AI risk assessment into plain business language: your overall risk level, estimated annual insurance cost, what drives it, and three concrete actions to reduce it.</div>
           </div>
-          <button onClick={() => setPerspective('underwriter')} className="btn-ghost" style={{ flexShrink: 0 }}>⊕ Underwriter View →</button>
+          <button onClick={() => setPerspective('underwriter')} className="btn-ghost text-[11px] flex-shrink-0">⊕ Underwriter View →</button>
         </div>
 
         {/* 4 section preview cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, padding: '14px 0 4px' }}>
-          <div style={{ background: 'hsl(var(--rb))', border: '1px solid hsl(var(--rbr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--red))', marginBottom: 3 }}>① Risk Level</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Overall AI risk score, ECI tier, and what it means for your organisation</div>
-          </div>
-          <div style={{ background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>② Insurance Cost</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Indicative annual premium range and what's driving the price up</div>
-          </div>
-          <div style={{ background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--grn))', marginBottom: 3 }}>③ Cost Reduction</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>Three concrete actions with estimated annual premium saving per action</div>
-          </div>
-          <div style={{ background: 'hsl(var(--ab))', border: '1px solid hsl(var(--abr))', borderRadius: 8, padding: '10px 12px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--amb))', marginBottom: 3 }}>④ Regulatory</div>
-            <div style={{ fontSize: 10, color: 'hsl(var(--t2))', lineHeight: 1.4 }}>EU AI Act & DORA exposure signal — what applies and when</div>
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-3">
+          {[
+            { bg: 'hsl(var(--rb))', border: 'hsl(var(--rbr))', color: 'hsl(var(--red))', label: '① Risk Level', desc: 'Overall AI risk score, ECI tier' },
+            { bg: 'hsl(var(--pb))', border: 'hsl(var(--pbr))', color: 'hsl(var(--pur))', label: '② Insurance Cost', desc: 'Annual premium range & drivers' },
+            { bg: 'hsl(var(--gb))', border: 'hsl(var(--gbr))', color: 'hsl(var(--grn))', label: '③ Cost Reduction', desc: 'Concrete actions & savings' },
+            { bg: 'hsl(var(--ab))', border: 'hsl(var(--abr))', color: 'hsl(var(--amb))', label: '④ Regulatory', desc: 'EU AI Act & DORA signal' },
+          ].map((c, i) => (
+            <div key={i} style={{ background: c.bg, border: `1px solid ${c.border}`, borderRadius: 8, padding: '10px 12px' }}>
+              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: c.color, marginBottom: 3 }}>{c.label}</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.4]">{c.desc}</div>
+            </div>
+          ))}
         </div>
       </div>
 
