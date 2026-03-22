@@ -141,25 +141,8 @@ export function ExecutiveReport() {
         </SectionCard>
       </div>
 
-      {/* Responsibility & Ownership */}
-      <SectionCard title="Responsibility & Ownership Structure" icon="👥" subtitle="Who Is Responsible? — And Can They Be Held Accountable?">
-        <div className="space-y-2 mb-4">
-          {[
-            { icon: '✕', color: 'text-fragile', title: 'Deployer Accountability', body: 'Structurally incomplete — low justificatory density means decisions are not fully traceable to documented human oversight.' },
-            { icon: '✕', color: 'text-fragile', title: 'Provider Accountability', body: 'External providers bear technical responsibility but face no operational accountability for consequences at deployment site.' },
-            { icon: '✕', color: 'text-fragile', title: 'Oversight Actor — Named Human with Stop Authority', body: 'Insufficient human oversight — system operates without a clearly empowered individual capable of suspending it safely.' },
-            { icon: '✕', color: 'text-sensitive', title: 'Cross-System Liability — Cascade Accountability', body: 'Where failure propagates across correlated infrastructure, each actor\'s responsibility is entirely unaddressed.' },
-          ].map((item, i) => (
-            <div key={i} className="flex items-start gap-3 p-3 bg-card border border-border rounded-lg">
-              <span className={`font-bold flex-shrink-0 mt-[1px] ${item.color}`}>{item.icon}</span>
-              <div>
-                <div className="text-[12px] font-semibold text-foreground">{item.title}</div>
-                <div className="text-[11px] text-muted-foreground mt-[2px] leading-[1.5]">{item.body}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </SectionCard>
+      {/* Responsibility & Ownership Structure */}
+      <ResponsibilityOwnershipPanel results={results} inputs={inputs} />
 
       {/* Epistemic Status — Dark section */}
       <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
