@@ -161,30 +161,30 @@ function InsightBox({ color, title, text }: { color: string; title: string; text
 function ConstructBox({ code, name, desc }: { code: string; name: string; desc: string }) {
   return (
     <div className="bg-[#111108] border border-[#3830a8] rounded-[10px] p-4">
-      <div className="text-[10px] font-bold text-[#7068e0] uppercase tracking-[0.07em] mb-1">{code}</div>
-      <div className="text-[12px] font-bold text-[#e8e4d8] mb-1">{name}</div>
-      <div className="text-[10px] text-[#686458] leading-[1.5]">{desc}</div>
+      <div className="text-[10px] font-bold text-[#9088e0] uppercase tracking-[0.07em] mb-1">{code}</div>
+      <div className="text-[12px] font-bold text-[#eeeadc] mb-1">{name}</div>
+      <div className="text-[10px] text-[#b0aca0] leading-[1.5]">{desc}</div>
     </div>
   );
 }
 
 function LossCell({ label, value, src, color }: { label: string; value: string; src: string; color: string }) {
   return (
-    <div className="bg-[#111108] border border-[#2e2c22] rounded-lg p-4 text-center">
-      <div className="text-[9px] uppercase tracking-[0.07em] text-[#585650] mb-[6px] font-bold">{label}</div>
+    <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-4 text-center">
+      <div className="text-[9px] uppercase tracking-[0.07em] text-[#a8a49c] mb-[6px] font-bold">{label}</div>
       <div className="text-[22px] font-bold font-mono leading-none" style={{ color }}>{value}</div>
-      <div className="text-[9px] text-[#807c70] mt-[5px]">{src}</div>
+      <div className="text-[9px] text-[#9e9a90] mt-[5px]">{src}</div>
     </div>
   );
 }
 
 function ActionCard({ num, numColor, title, desc }: { num: number; numColor: string; title: string; desc: string }) {
   return (
-    <div className="bg-[#111108] border border-[#2e2c22] rounded-lg p-4 flex gap-[10px] items-start">
+    <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-4 flex gap-[10px] items-start">
       <div className="w-5 h-5 rounded-full text-[9px] font-bold flex items-center justify-center flex-shrink-0 text-white" style={{ backgroundColor: numColor }}>{num}</div>
       <div>
-        <div className="text-[11px] font-bold text-[#e8e4d8] mb-1">{title}</div>
-        <div className="text-[10px] text-[#686458]">{desc}</div>
+        <div className="text-[11px] font-bold text-[#eeeadc] mb-1">{title}</div>
+        <div className="text-[10px] text-[#b0aca0]">{desc}</div>
       </div>
     </div>
   );
