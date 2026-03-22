@@ -476,7 +476,7 @@ function RFSIPanel() {
         </div>
       </div>
       <div className="p-4">
-        <div className="grid grid-cols-4 gap-[10px] mb-[14px]">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-[10px] mb-[14px]">
           {[
             { label: 'Deployment Context Shift', value: rfsiDrivers.contextVariability, desc: 'Deployment context drift from alignment baseline' },
             { label: 'Behavioral Drift Risk', value: rfsiDrivers.semanticDriftRisk, desc: 'MDR-derived interpretive instability' },

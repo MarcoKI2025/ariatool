@@ -23,8 +23,8 @@ const VIEW_SUBTITLES: Record<string, string> = {
 };
 
 export function AppHeader() {
-  const { state, toggleDarkMode } = useApp();
-  const { perspective, activeStep, analysisComplete, darkMode } = state;
+  const { state } = useApp();
+  const { perspective, activeStep, analysisComplete } = state;
 
   const key = perspective === 'company' ? 'company' : String(activeStep);
   const title = VIEW_TITLES[key] || VIEW_TITLES['1'];
