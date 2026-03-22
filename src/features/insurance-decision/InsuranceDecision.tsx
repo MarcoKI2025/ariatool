@@ -113,7 +113,7 @@ export function InsuranceDecision() {
         <div className="text-[11px] text-muted-foreground leading-[1.55] mb-4">
           AFI {afi.toFixed(2)} exceeds standard underwriting threshold. Structural risk requires committee-level review before coverage terms can be offered.
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {[
             { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
