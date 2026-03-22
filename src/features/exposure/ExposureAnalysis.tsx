@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { computeLivePreview } from '@/lib/scoring';
 import { USE_CASES, PROVIDERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES } from '@/lib/constants';
@@ -9,6 +9,7 @@ import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { ExposureInputs } from '@/lib/types';
 import { IATAssessmentPanel } from '@/features/iat/IATAssessmentPanel';
+import { LoadingOverlay } from '@/components/shared/LoadingOverlay';
 
 const PROGRESS_STEPS = ['Company', 'Core AFI', 'Agent', 'Liability', 'Governance', 'Systemic'];
 
