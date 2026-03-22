@@ -638,7 +638,7 @@ export function CompanyView() {
 
           {/* Risk card */}
           <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid ${bandColor}` }}>
-            <div className="p-7">
+            <div className="p-4 sm:p-7">
               <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Overall AI Risk</div>
               <div className="text-[24px] font-bold mt-3 mb-3" style={{ color: bandColor }}>{band} — Score {structuralScore}/100</div>
               <div className="text-[12px] text-secondary-foreground leading-relaxed">
