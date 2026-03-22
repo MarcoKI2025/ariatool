@@ -365,7 +365,7 @@ function AGAFMethodologyStatement() {
       <div className="text-[11px] text-secondary-foreground leading-[1.65] mb-[14px]">
         AGAF operationalises governance concepts from published academic research into a structured assessment instrument. The conceptual foundations draw on Kindermann (2026) — a series of working papers on AI governance architecture including <em>'Semantic Drift and Temporal Coherence in Long-Horizon AI Systems'</em>, <em>'What Are We Aligning To?'</em>, and <em>'Blind Spots of the EU AI Act'</em> — alongside NIST AI RMF 1.0, EIOPA AI Opinion (August 2025), EU AI Act 2024/1689, and LMA E&O Guidelines 2025. <strong className="text-foreground">The AFI, MDR, RFSI, ECI, RFS, and IAT constructs are proprietary operationalisations</strong> of these concepts into measurable structural proxy signals.
       </div>
-      <div className="grid grid-cols-2 gap-3 mb-[14px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-[14px]">
         <div className="bg-stable-bg border border-stable-border rounded-lg p-3">
           <div className="text-[9px] font-bold tracking-wider uppercase text-stable mb-[6px]">✓ AGAF is designed for</div>
           <div className="text-[10px] text-secondary-foreground leading-[1.6]">Structured pre-underwriting intake · Risk committee preparation · Board-level governance documentation · AI deployment intake screening · Internal audit challenge · Regulatory conversation framing (EIOPA, BaFin, FCA) · Accumulation watchlist management</div>
