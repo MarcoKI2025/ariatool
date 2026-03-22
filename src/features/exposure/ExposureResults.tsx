@@ -3,6 +3,8 @@ import { useApp } from '@/hooks/useAppState';
 import { formatCurrency } from '@/lib/formatters';
 import { BandBadge, SectionCard, InfoTip } from '@/components/shared/UIComponents';
 import { TOOLTIPS } from '@/lib/tooltips';
+import { AFIGauge } from '@/components/charts/AFIGauge';
+import { AFIRadar } from '@/components/charts/AFIRadar';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
@@ -108,6 +110,46 @@ export function ExposureResults() {
             {band === 'Fragile' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-fragile text-white">Dependency Diversification Required</span>}
           </div>
         </div>
+      </div>
+
+      {/* ═══ AFI GAUGE & RADAR CHARTS ═══ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <SectionCard title="Authority Fragility Index (AFI)" subtitle="Governance Stability Meter">
+          <AFIGauge afi={afi} band={band} />
+          <div className="flex items-center justify-center gap-4 mt-3">
+            <div className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-full bg-stable" />
+              <span className="text-[10px] text-muted-foreground">Stable &lt; 0.85</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-full bg-sensitive" />
+              <span className="text-[10px] text-muted-foreground">Sensitive 0.85–1.35</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-full bg-fragile" />
+              <span className="text-[10px] text-muted-foreground">Fragile &gt; 1.35</span>
+            </div>
+          </div>
+        </SectionCard>
+
+        <SectionCard title="AFI Component Breakdown" subtitle="Structural Dimensions">
+          <AFIRadar dr={components.dr} jd={components.jd} rc={components.rc} cd={components.cd} na={components.na} />
+          <div className="grid grid-cols-5 gap-2 mt-3 text-center">
+            {[
+              { key: 'DR', val: components.dr, label: 'Delegation' },
+              { key: 'JD', val: components.jd, label: 'Justification' },
+              { key: 'RC', val: components.rc, label: 'Reversibility' },
+              { key: 'CD', val: components.cd, label: 'Correlation' },
+              { key: 'NA', val: components.na, label: 'Normalisation' },
+            ].map(c => (
+              <div key={c.key}>
+                <div className="text-[13px] font-bold font-mono text-foreground">{c.val.toFixed(3)}</div>
+                <div className="text-[10px] font-bold text-primary">{c.key}</div>
+                <div className="text-[9px] text-muted-foreground">{c.label}</div>
+              </div>
+            ))}
+          </div>
+        </SectionCard>
       </div>
 
       {/* ═══ STEP 1: Diagnosis Banner ═══ */}
