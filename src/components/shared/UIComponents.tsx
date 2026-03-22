@@ -57,7 +57,7 @@ export function MetricCard({ label, value, sublabel, band, icon }: MetricCardPro
 
   return (
     <div className="bg-card border border-border rounded-xl p-6">
-      <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-[6px] flex items-center gap-1">
+      <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2 flex items-center gap-1.5">
         {icon && <span>{icon}</span>}
         {label}
       </div>
