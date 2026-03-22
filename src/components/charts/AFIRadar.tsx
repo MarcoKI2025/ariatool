@@ -64,7 +64,7 @@ export function AFIRadar({ dr, jd, rc, cd, na }: AFIRadarProps) {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#111108',
+        backgroundColor: 'hsl(0, 0%, 100%)',
         titleColor: '#e8e4d8',
         bodyColor: '#888478',
         borderColor: '#e1e4e8',
