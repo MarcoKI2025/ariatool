@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, Legend, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
-import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
+import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 
@@ -21,8 +20,12 @@ export function DecisionIntelligence() {
   const decisionAttribGap = Math.round(Math.min(99, components.dr * 80 + (1 - components.jd) * 15));
   const diffuseLabel = respFragmentation >= 60 ? 'Diffuse' : respFragmentation >= 40 ? 'Partial' : 'Clear';
 
+  const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
+  const bandBg = band === 'Fragile' ? 'bg-fragile-bg border-fragile' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' : 'bg-stable-bg border-stable';
+
   return (
     <div>
+      {/* Page header */}
       <div className="mb-6">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 6 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Decision Intelligence</h1>
@@ -31,16 +34,10 @@ export function DecisionIntelligence() {
         </p>
       </div>
 
-      {/* Hero diagnosis */}
-      <div className={`rounded-xl p-6 mb-4 border-2 ${
-        band === 'Fragile' ? 'bg-fragile-bg border-fragile' :
-        band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' :
-        'bg-stable-bg border-stable'
-      }`}>
+      {/* ═══ HERO DIAGNOSIS ═══ */}
+      <div className={`rounded-xl p-6 mb-4 border-2 ${bandBg}`}>
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
-        <div className={`text-[28px] font-extrabold tracking-tight leading-[1.1] mb-3 uppercase ${
-          band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
-        }`}>
+        <div className={`text-[28px] font-extrabold tracking-tight leading-[1.1] mb-3 uppercase ${bandColor}`}>
           {band === 'Fragile' ? 'Structural Exposure Detected' :
            band === 'Sensitive' ? 'Elevated Structural Signals' :
            'Governance Signals Within Range'}
@@ -57,18 +54,15 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      {/* Hero score + ECI gauge */}
+      {/* ═══ HERO SCORE + ECI ═══ */}
       <div className="grid grid-cols-[1fr_300px] gap-4 mb-4">
         <div className="bg-card border border-border rounded-xl p-6">
           <div className="flex items-end gap-6">
             <div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Structural Exposure Score<InfoTip text={TOOLTIPS.afi} /></div>
-              <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${
-                band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
-              }`}>{structuralScore}</div>
+              <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
             </div>
             <div className="flex-1">
-              {/* Semicircle gauge */}
               <div className="relative w-[140px] h-[70px] mx-auto">
                 <svg viewBox="0 0 140 70" className="w-full h-full">
                   <path d="M 10 65 A 60 60 0 0 1 130 65" fill="none" stroke="hsl(var(--border))" strokeWidth="8" strokeLinecap="round" />
@@ -78,7 +72,7 @@ export function DecisionIntelligence() {
                     strokeDasharray={`${Math.min(188, structuralScore * 1.88)} 188`} />
                 </svg>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
-                  <div className={`text-[18px] font-bold font-mono ${band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>
+                  <div className={`text-[18px] font-bold font-mono ${bandColor}`}>
                     ECI-{eciTier}<InfoTip text={TOOLTIPS.eci} />
                   </div>
                   <div className="text-[8px] text-muted-foreground uppercase tracking-wider">{eciName}</div>
@@ -99,21 +93,19 @@ export function DecisionIntelligence() {
         {/* Quick metrics */}
         <div className="flex flex-col gap-3">
           {[
-            { label: 'AFI Score', value: afi.toFixed(2), band, tooltip: TOOLTIPS.afi },
-            { label: 'AGRI', value: `${agri}`, band: agri >= 60 ? 'Fragile' as const : agri >= 35 ? 'Sensitive' as const : 'Stable' as const },
-            { label: 'Decision Class', value: results.decisionClass, band },
+            { label: 'AFI Score', value: afi.toFixed(2), color: bandColor, tooltip: TOOLTIPS.afi },
+            { label: 'AGRI', value: `${agri}`, color: agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable' },
+            { label: 'Decision Class', value: results.decisionClass, color: bandColor },
           ].map((m, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}{(m as any).tooltip && <InfoTip text={(m as any).tooltip} />}</div>
-              <div className={`text-[18px] font-bold font-mono ${m.band === 'Fragile' ? 'text-fragile' : m.band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>
-                {m.value}
-              </div>
+              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}{m.tooltip && <InfoTip text={m.tooltip} />}</div>
+              <div className={`text-[18px] font-bold font-mono ${m.color}`}>{m.value}</div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* AFI Component chips */}
+      {/* ═══ AFI COMPONENT CHIPS ═══ */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         {[
           { label: `DR ${Math.round(components.dr * 100)}`, desc: 'Delegation Ratio', tooltip: TOOLTIPS.dr },
@@ -124,63 +116,55 @@ export function DecisionIntelligence() {
           <div key={i} className="px-3 py-[6px] bg-card border border-border rounded-lg text-[10px]">
             <span className="font-mono font-bold text-foreground">{c.label}</span>
             <span className="text-muted-foreground ml-1">{c.desc}</span>
-            {(c as any).tooltip && <InfoTip text={(c as any).tooltip} />}
+            {c.tooltip && <InfoTip text={c.tooltip} />}
           </div>
         ))}
         <BandBadge band={band} size="sm" />
       </div>
 
-      {/* AFI Component Analysis — Radar Chart */}
-      <SectionCard title="AFI Component Analysis">
-        <div className="h-[250px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <RadarChart data={[
-              { dimension: 'Delegation Ratio', value: components.dr },
-              { dimension: 'Reversibility Cost', value: components.rc },
-              { dimension: 'Continuation Density', value: components.cd },
-              { dimension: 'Justificatory Density', value: components.jd },
-              { dimension: 'Network Amplification', value: components.na },
-            ]}>
-              <PolarGrid stroke="hsl(var(--border))" />
-              <PolarAngleAxis
-                dataKey="dimension"
-                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontFamily: 'Inter' }}
-              />
-              <PolarRadiusAxis
-                domain={[0, 1]}
-                tickCount={6}
-                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 8, fontFamily: 'IBM Plex Mono' }}
-                tickFormatter={(v: number) => `${(v * 100).toFixed(0)}%`}
-                axisLine={false}
-              />
-              <Radar
-                name="Your Profile"
-                dataKey="value"
-                stroke="#b53020"
-                fill="rgba(181, 48, 32, 0.15)"
-                strokeWidth={2}
-                dot={{ fill: '#b53020', stroke: '#fff', strokeWidth: 1, r: 3 }}
-              />
-              <RechartsTooltip
-                content={({ active, payload }) => {
-                  if (!active || !payload?.length) return null;
-                  const d = payload[0].payload;
-                  return (
-                    <div className="bg-[#111108] border border-[#3a3828] rounded-lg px-3 py-2 text-[11px] shadow-xl">
-                      <div className="text-white font-medium">{d.dimension}</div>
-                      <div className="text-[#c0bcb0]">{(d.value * 100).toFixed(0)}%</div>
-                    </div>
-                  );
-                }}
-              />
-            </RadarChart>
-          </ResponsiveContainer>
+      {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="flex items-start gap-6">
+          <div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚡ AI Governance Readiness Index (AGRI)<InfoTip text="Multi-agent orchestration, tool-call authority, persistent memory, human checkpoints" /></div>
+            <div className={`text-[48px] font-bold font-mono leading-none ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</div>
+            <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>
+              {agri >= 60 ? 'Critical — Autonomous Governance Required' : agri >= 35 ? 'Elevated — Governance Gaps Emerging' : agri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Standard Governance Adequate'}
+            </div>
+          </div>
+          <div className="flex-1 pt-3">
+            <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-3">
+              <div className={`h-full rounded-[3px] ${agri >= 60 ? 'bg-fragile' : agri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${agri}%` }} />
+            </div>
+            <div className="text-[11px] text-muted-foreground leading-[1.55]">
+              Multi-agent orchestration · Tool-call authority · Persistent memory · Human checkpoints. AGRI measures the degree to which AI agents operate with structural autonomy beyond traditional software boundaries.
+            </div>
+          </div>
         </div>
-        <p className="text-[11px] text-muted-foreground mt-3">
-          Radar visualization of AFI sub-components. Values closer to 100% indicate higher structural exposure in that dimension. JD (Justificatory Density) is protective — higher values reduce AFI.
-        </p>
-      </SectionCard>
+      </div>
 
+      {/* ═══ ALRI — Standalone Panel (matches HTML position) ═══ */}
+      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+        <div className="flex items-start gap-6">
+          <div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚠ AI Liability Risk Index (ALRI)</div>
+            <div className={`text-[48px] font-bold font-mono leading-none ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{alri}</div>
+            <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>
+              {alri >= 60 ? 'Critical — Multiple Active Claim Vectors' : alri >= 35 ? 'Elevated — Emerging Claim Exposure' : alri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Controlled Liability Profile'}
+            </div>
+          </div>
+          <div className="flex-1 pt-3">
+            <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-3">
+              <div className={`h-full rounded-[3px] ${alri >= 60 ? 'bg-fragile' : alri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${alri}%` }} />
+            </div>
+            <div className="text-[11px] text-muted-foreground leading-[1.55]">
+              Premium loading from ALRI: <strong className="text-foreground">+{Math.round(alri * 0.8)}%</strong> above base premium. Based on hallucination, deepfake, prompt injection, model drift, algorithmic bias, shadow AI, explainability, data integrity, and ESG liability dimensions.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ "THIS MEANS" CALLOUT ═══ */}
       <div className="bg-card rounded-xl p-5 mb-4 border-l-4 border-l-fragile border border-border flex items-start gap-[14px]">
         <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
           band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
@@ -200,17 +184,66 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      {/* Financial Exposure */}
+      {/* ═══ COMMITTEE REVIEW / DECISION PANEL ═══ */}
+      <div className={`rounded-xl p-5 mb-4 border-2 ${bandBg}`}>
+        <div className={`text-[18px] font-extrabold tracking-wider uppercase mb-3 ${bandColor}`}>
+          {band === 'Fragile' ? 'Committee Review Required' : band === 'Sensitive' ? 'Conditional Review Process' : 'Standard Underwriting Process'}
+        </div>
+        <div className="grid grid-cols-4 gap-4">
+          {[
+            { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
+            { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
+            { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
+            { label: 'Amplification', value: amplificationFactor, sub: 'Munich Re loss multiplier' },
+          ].map((m, i) => (
+            <div key={i}>
+              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+              <div className="text-[16px] font-bold font-mono text-foreground">{m.value}</div>
+              <div className="text-[9px] text-muted-foreground">{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══ AFI COMPONENT ANALYSIS — HORIZONTAL BARS (matches HTML) ═══ */}
+      <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
+        {[
+          { label: 'Delegation Ratio (DR)', value: components.dr, desc: 'Autonomous decision share without human review', tooltip: TOOLTIPS.dr },
+          { label: 'Justificatory Density (JD)', value: components.jd, desc: 'Governance transparency and audit coverage (protective)', tooltip: TOOLTIPS.jd, inverted: true },
+          { label: 'Reversibility Cost (RC)', value: components.rc, desc: 'Structural lock-in — exit difficulty', tooltip: TOOLTIPS.rc },
+          { label: 'Continuation Density (CD)', value: components.cd, desc: 'Cross-system propagation surface', tooltip: TOOLTIPS.cd },
+        ].map((item, i) => {
+          const pct = Math.round(item.value * 100);
+          const barColor = item.inverted
+            ? (pct < 40 ? 'bg-fragile' : pct < 60 ? 'bg-sensitive' : 'bg-stable')
+            : (pct > 70 ? 'bg-fragile' : pct > 50 ? 'bg-sensitive' : 'bg-stable');
+          return (
+            <div key={i} className="flex items-center gap-3 py-[9px] border-b border-border last:border-none">
+              <div className="w-[200px]">
+                <span className="text-[12px] text-foreground font-medium">{item.label}</span>
+                {item.tooltip && <InfoTip text={item.tooltip} />}
+                <div className="text-[9px] text-muted-foreground">{item.desc}</div>
+              </div>
+              <div className="flex-1 h-[5px] bg-secondary rounded-[3px] overflow-hidden">
+                <div className={`h-full rounded-[3px] ${barColor}`} style={{ width: `${pct}%` }} />
+              </div>
+              <span className="w-[28px] text-right text-[11px] font-bold font-mono">{pct}</span>
+            </div>
+          );
+        })}
+      </SectionCard>
+
+      {/* ═══ FINANCIAL EXPOSURE ═══ */}
       <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope" icon="📊" subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
         <div className="grid grid-cols-3 gap-4 mb-4">
           {[
-            { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Expected scenario · median market outcome', highlight: false },
-            { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', highlight: false },
-            { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Provider concentration · Tail risk', highlight: true },
+            { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Expected scenario · median market outcome', highlight: false, color: 'text-foreground' },
+            { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', highlight: false, color: 'text-sensitive' },
+            { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Provider concentration · Tail risk', highlight: true, color: 'text-fragile' },
           ].map((cell, i) => (
             <div key={i} className={`rounded-xl p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
               <div className={`text-[9px] tracking-[0.08em] uppercase font-bold mb-2 ${cell.highlight ? 'text-fragile' : 'text-muted-foreground'}`}>{cell.label}</div>
-              <div className={`text-[32px] font-bold font-mono leading-none ${cell.highlight ? 'text-fragile' : 'text-foreground'}`}>{formatCurrency(cell.value)}</div>
+              <div className={`text-[32px] font-bold font-mono leading-none ${cell.color}`}>{formatCurrency(cell.value)}</div>
               <div className="text-[10px] text-muted-foreground mt-2">{cell.sub}</div>
             </div>
           ))}
@@ -241,56 +274,7 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
-      {/* Risk Comparison — Governance Gap Analysis */}
-      <SectionCard title="Risk Comparison — Governance Gap Analysis" icon="📊" subtitle="Comparing your current governance profile against a well-governed baseline across risk scenarios.">
-        {(() => {
-          const mapToRiskLevel = (afiVal: number) => {
-            if (afiVal < 0.5) return 1;
-            if (afiVal < 0.85) return 2;
-            if (afiVal < 1.35) return 3;
-            return 4;
-          };
-          const chartData = [
-            { name: 'Base Risk', baseline: 1, profile: mapToRiskLevel(afi * 0.6) },
-            { name: 'Elevated Risk', baseline: 2, profile: mapToRiskLevel(afi * 0.9) },
-            { name: 'Critical Risk', baseline: 2, profile: mapToRiskLevel(afi * 1.2) },
-          ];
-          const riskLabels = ['', 'Low', 'Medium', 'High', 'Critical'];
-          return (
-            <>
-              <div className="h-[200px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={chartData} barGap={4} barCategoryGap="20%">
-                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-                    <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontFamily: 'Inter' }} axisLine={{ stroke: 'hsl(var(--border))' }} tickLine={false} />
-                    <YAxis domain={[0, 4]} ticks={[0, 1, 2, 3, 4]} tickFormatter={(v: number) => riskLabels[v] || ''} tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10, fontFamily: 'IBM Plex Mono' }} axisLine={{ stroke: 'hsl(var(--border))' }} tickLine={false} />
-                    <RechartsTooltip
-                      contentStyle={{ backgroundColor: '#111108', border: '1px solid #3a3828', borderRadius: '8px', padding: '10px' }}
-                      labelStyle={{ color: '#ffffff', fontSize: 11, fontWeight: 600 }}
-                      itemStyle={{ color: '#c0bcb0', fontSize: 11 }}
-                      formatter={(value: number, name: string) => [riskLabels[Math.round(value)] || '', name === 'baseline' ? 'Well-Governed Baseline' : 'Your Current Profile']}
-                    />
-                    <Legend
-                      verticalAlign="bottom"
-                      iconType="rect"
-                      iconSize={8}
-                      formatter={(value: string) => value === 'baseline' ? 'Well-Governed Baseline' : 'Your Current Profile'}
-                      wrapperStyle={{ fontSize: 10, color: 'hsl(var(--muted-foreground))' }}
-                    />
-                    <Bar dataKey="baseline" fill="rgba(64, 56, 184, 0.55)" stroke="#4038b8" strokeWidth={1} radius={[3, 3, 0, 0]} />
-                    <Bar dataKey="profile" fill="rgba(181, 48, 32, 0.75)" stroke="#b53020" strokeWidth={1} radius={[3, 3, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="mt-3 p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground leading-[1.5]">
-                Comparison methodology: Well-governed baseline assumes AFI &lt;0.5 across all scenarios. Your profile maps current AFI ({afi.toFixed(2)}) to Base (×0.6), Elevated (×0.9), and Critical (×1.2) risk multipliers. Gap between profiles indicates governance-driven excess exposure.
-              </div>
-            </>
-          );
-        })()}
-      </SectionCard>
-
-      {/* Continuation / Dependency / Portfolio */}
+      {/* ═══ CONTINUATION / DEPENDENCY / PORTFOLIO ═══ */}
       <div className="grid grid-cols-3 gap-3 mb-4">
         <div className="bg-card border border-border rounded-[10px] p-4">
           <div className="text-[11px] font-bold text-foreground mb-2">Continuation Risk</div>
@@ -312,56 +296,7 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      {/* COMMITTEE REVIEW REQUIRED */}
-      <div className={`rounded-xl p-5 mb-4 border-2 ${
-        band === 'Fragile' ? 'bg-fragile-bg border-fragile' :
-        band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' :
-        'bg-stable-bg border-stable'
-      }`}>
-        <div className={`text-[18px] font-extrabold tracking-wider uppercase mb-3 ${
-          band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
-        }`}>
-          {band === 'Fragile' ? 'Committee Review Required' : band === 'Sensitive' ? 'Conditional Review Process' : 'Standard Underwriting Process'}
-        </div>
-        <div className="grid grid-cols-4 gap-4">
-          {[
-            { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
-            { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
-            { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
-            { label: 'Amplification', value: amplificationFactor, sub: 'Munich Re loss multiplier' },
-          ].map((m, i) => (
-            <div key={i}>
-              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
-              <div className="text-[16px] font-bold font-mono text-foreground">{m.value}</div>
-              <div className="text-[9px] text-muted-foreground">{m.sub}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* AFI Components breakdown */}
-      <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
-        {[
-          { label: 'Delegation Ratio (DR)', value: components.dr, desc: 'Autonomous decision share without human review' },
-          { label: 'Justificatory Density (JD)', value: components.jd, desc: 'Governance transparency and audit coverage', inverted: true },
-          { label: 'Reversibility Cost (RC)', value: components.rc, desc: 'Structural lock-in — exit difficulty' },
-          { label: 'Continuation Density (CD)', value: components.cd, desc: 'Cross-system propagation surface' },
-        ].map((item, i) => (
-          <div key={i} className="flex items-center gap-3 py-[9px] border-b border-border last:border-none">
-            <div className="w-[200px]">
-              <span className="text-[12px] text-foreground font-medium">{item.label}</span>
-              <div className="text-[9px] text-muted-foreground">{item.desc}</div>
-            </div>
-            <div className="flex-1 h-[5px] bg-secondary rounded-[3px] overflow-hidden">
-              <div className={`h-full rounded-[3px] ${item.value > 0.7 ? 'bg-fragile' : item.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`}
-                   style={{ width: `${Math.round(item.value * 100)}%` }} />
-            </div>
-            <span className="w-[28px] text-right text-[11px] font-bold font-mono">{Math.round(item.value * 100)}</span>
-          </div>
-        ))}
-      </SectionCard>
-
-      {/* Responsibility & Ownership Structure */}
+      {/* ═══ RESPONSIBILITY & OWNERSHIP ═══ */}
       <SectionCard title="Responsibility & Ownership Structure" icon="👥" subtitle="Who is responsible? — And can they be held accountable?">
         <div className="flex items-center justify-between mb-4">
           <div className="text-[12px] text-muted-foreground leading-[1.5] max-w-[600px]">
@@ -382,9 +317,7 @@ export function DecisionIntelligence() {
             { label: 'Decision Attribution Gap', value: decisionAttribGap, desc: 'The majority of system decisions cannot be attributed to identifiable human judgment.' },
           ].map((m, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-4">
-              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1 flex items-center gap-1">
-                {m.label} <InfoTip text={m.label.includes('Fragmentation') ? TOOLTIPS.rfs : m.label.includes('Stewardship') ? TOOLTIPS.jd : TOOLTIPS.dr} />
-              </div>
+              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
               <div className={`text-[32px] font-bold font-mono leading-none mb-2 ${
                 m.value >= 60 ? 'text-fragile' : m.value >= 40 ? 'text-sensitive' : 'text-stable'
               }`}>{m.value}</div>
@@ -413,36 +346,16 @@ export function DecisionIntelligence() {
         </div>
 
         <div className="mt-4 p-3 bg-secondary border border-border rounded-lg text-[11px] text-muted-foreground leading-[1.55]">
-          <strong className="text-foreground">Underwriting Implication:</strong> Fragmented responsibility directly affects loss attribution, subrogation rights, and recovery pathways. Where no clear owner exists, insurers absorb residual liability by default. The Responsibility Fragmentation Score is a direct input to coverage scope decisions — not a secondary governance signal.
+          <strong className="text-foreground">Underwriting Implication:</strong> Fragmented responsibility directly affects loss attribution, subrogation rights, and recovery pathways. Where no clear owner exists, insurers absorb residual liability by default.
         </div>
       </SectionCard>
 
-      {/* ═══ ALRI — AI Liability Risk Index ═══ */}
-      <SectionCard title="AI Liability Risk Index (ALRI)" icon="⚡" subtitle="Compound score from 9 liability dimensions — weighted by claims frequency and severity.">
-        <div className="flex items-start gap-6 mb-4">
-          <div>
-            <div className={`text-[48px] font-bold font-mono leading-none ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{alri}</div>
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mt-1">
-              {alri >= 60 ? 'Critical — Multiple Active Claim Vectors' : alri >= 35 ? 'Elevated — Emerging Claim Exposure' : alri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Controlled Liability Profile'}
-            </div>
-          </div>
-          <div className="flex-1">
-            <div className="h-[6px] bg-border rounded-[3px] overflow-hidden mb-2">
-              <div className={`h-full rounded-[3px] ${alri >= 60 ? 'bg-fragile' : alri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${alri}%` }} />
-            </div>
-            <div className="text-[11px] text-muted-foreground leading-[1.55]">
-              Premium loading from ALRI: <strong className="text-foreground">+{Math.round(alri * 0.8)}%</strong> above base premium. Based on hallucination, deepfake, prompt injection, model drift, algorithmic bias, shadow AI, explainability, data integrity, and ESG liability dimensions.
-            </div>
-          </div>
-        </div>
-      </SectionCard>
-
-      {/* ═══ SCRI — Systemic Concentration Risk Index ═══ */}
+      {/* ═══ SCRI ═══ */}
       <SectionCard title="Systemic Concentration Risk Index (SCRI)" icon="🌐" subtitle="Infrastructure concentration creates correlated portfolio-level exposure.">
         <div className="flex items-start gap-6 mb-4">
           <div>
             <div className={`text-[48px] font-bold font-mono leading-none ${scri >= 65 ? 'text-fragile' : scri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{scri}</div>
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mt-1">
+            <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${scri >= 65 ? 'text-fragile' : scri >= 35 ? 'text-sensitive' : 'text-stable'}`}>
               {scri >= 65 ? 'Critical Concentration' : scri >= 35 ? 'Elevated Concentration' : 'Diversified'}
             </div>
           </div>
@@ -468,7 +381,7 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
-      {/* ═══ Composite Risk Index ═══ */}
+      {/* ═══ COMPOSITE RISK INDEX ═══ */}
       <SectionCard title="Composite Risk Index" icon="📊" subtitle="Weighted blend: AFI (50%) + ALRI (30%) + AGRI (20%).">
         <div className="flex items-center gap-6">
           <div className={`text-[64px] font-bold font-mono leading-none ${compositeRiskIndex >= 60 ? 'text-fragile' : compositeRiskIndex >= 35 ? 'text-sensitive' : 'text-stable'}`}>
@@ -534,7 +447,67 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
-      {/* Epistemic Status — Dark section */}
+      {/* ═══ RESEARCH FOUNDATION (dark panel) ═══ */}
+      <div className="flex items-stretch bg-chrome rounded-[10px] overflow-hidden mb-5">
+        <div className="w-[3px] bg-primary flex-shrink-0" />
+        <div className="flex-1 p-[14px] px-[18px]">
+          <div className="text-[9px] tracking-wider uppercase text-chrome-fg-muted font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
+          <div className="grid grid-cols-3 gap-[14px]">
+            <div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper I · EU AI Act Blind Spots</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-chrome-fg-bright">continuation</em>. Systems persist without re-authorisation.</div>
+            </div>
+            <div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper II · Price of Convenience</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Agentic AI erodes oversight without malice — through <em className="text-chrome-fg-bright">delegation density</em> and oversight decay.</div>
+            </div>
+            <div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper III · Governing Continuation</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Evaluation cannot authorise existence. Once ECI-2 is reached, <em className="text-chrome-fg-bright">performance ≠ permission</em>.</div>
+            </div>
+          </div>
+          <div className="mt-[10px] pt-2 border-t border-chrome-border text-[10px] text-chrome-fg-muted">AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. <span className="text-chrome-fg">Buyers who adopt this framework now are 3 years ahead of enforcement.</span></div>
+        </div>
+      </div>
+
+      {/* ═══ CATEGORY COMPARISON ═══ */}
+      <div className="bg-card border border-border rounded-xl p-7 mb-5">
+        <div className="mb-5">
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-[6px]">New Category · Underwriting Intelligence Layer</div>
+          <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">What this engine measures — and others cannot</div>
+          <div className="text-[13px] text-secondary-foreground max-w-[560px] leading-[1.6]">This is not a compliance tool. It is a structural risk detection layer that reveals exposure invisible to traditional underwriting models.</div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[14px] pb-[10px] border-b-2 border-border">Traditional Underwriting Models</div>
+            {['Evaluate AI systems individually — systemic network effects remain invisible',
+              'Assume reversibility — do not quantify exit costs or switching friction',
+              'Ignore shared model dependencies — portfolio-level aggregation never modelled',
+              'Stop at point-in-time compliance — continuation without re-authorisation not priced',
+              'Cannot price non-linear loss amplification — standard models underestimate tail risk 3–5×',
+            ].map((t, i) => (
+              <div key={i} className="flex items-start gap-2 py-[6px] text-[12px] text-secondary-foreground leading-[1.5]">
+                <span className="text-fragile font-bold flex-shrink-0">✗</span>{t}
+              </div>
+            ))}
+          </div>
+          <div>
+            <div className="text-[10px] font-bold tracking-wider uppercase text-primary mb-[14px] pb-[10px] border-b-2 border-primary">This Engine</div>
+            {['Detects structural dependency and quantifies lock-in depth — creates explicit reversibility cost signal',
+              'Models continuation without re-authorisation as a persistent, compounding liability state',
+              'Quantifies cross-system propagation — cascade amplification visible before it materialises',
+              'Estimates portfolio-level correlated exposure across entities sharing AI infrastructure',
+              'Produces a single AFI signal that reflects structural fragility — not compliance posture',
+            ].map((t, i) => (
+              <div key={i} className="flex items-start gap-2 py-[6px] text-[12px] text-secondary-foreground leading-[1.5]">
+                <span className="text-stable font-bold flex-shrink-0">✓</span>{t}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ═══ EPISTEMIC STATUS ═══ */}
       <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Epistemic Status · What This Assessment Cannot Guarantee</div>
         <div className="text-[18px] font-bold text-white mb-3">You Cannot Rely on This Evaluation</div>
@@ -569,8 +542,6 @@ export function DecisionIntelligence() {
         <span>Generated: <strong className="text-foreground">{formatDate()}</strong></span>
         <span>·</span>
         <span>AFI: <strong className="text-foreground">{afi.toFixed(2)} ({band})</strong></span>
-        <span>·</span>
-        <span>Model: <strong className="text-foreground">AFI Structural Model</strong></span>
         <span>·</span>
         <span>Band: <strong className="text-foreground">{band}</strong></span>
       </div>
