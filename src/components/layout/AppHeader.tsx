@@ -51,13 +51,6 @@ export function AppHeader() {
         <span className="hidden md:inline font-mono text-[10px] text-muted-foreground">
           v3.0
         </span>
-        <button
-          onClick={toggleDarkMode}
-          className="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-[12px] hover:bg-muted transition-colors"
-          title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          {darkMode ? '☀' : '🌙'}
-        </button>
       </div>
     </header>
   );
