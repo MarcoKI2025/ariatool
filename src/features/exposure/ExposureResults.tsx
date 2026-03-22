@@ -487,7 +487,7 @@ export function ExposureResults() {
           <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">What this engine measures — and others cannot</div>
           <div className="text-[13px] text-secondary-foreground max-w-[560px] leading-[1.6]">This is not a compliance tool. It is a structural risk detection layer that reveals exposure invisible to traditional underwriting models.</div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[14px] pb-[10px] border-b-2 border-border">Traditional Underwriting Models</div>
             {['Evaluate AI systems individually — systemic network effects remain invisible',
