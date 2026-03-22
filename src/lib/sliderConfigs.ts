@@ -395,7 +395,7 @@ export const SLIDER_CATEGORIES = [
     title: 'Governance & Transparency',
     icon: '🔒',
     subtitle: 'Governance maturity signals that affect Justificatory Density and overall risk posture. Low scores signal systemic entrenchment — the system cannot be safely exited without significant disruption.',
-    badge: '3 inputs · Governance Maturity',
+    badge: '2 inputs · Governance Maturity',
     sliders: GOVERNANCE_SLIDERS,
   },
   {
