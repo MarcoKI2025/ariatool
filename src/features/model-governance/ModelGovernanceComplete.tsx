@@ -784,7 +784,7 @@ function APIIntegrationReference() {
       </div>
       <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
         <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
-          <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0a1e2e] text-[#5090d0] rounded font-mono">GET</span>
+          <span className="text-[10px] font-bold px-2 py-[3px] bg-purple-bg text-primary rounded font-mono">GET</span>
           <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/portfolio/concentration</code>
           <span className="text-[9px] text-muted-foreground ml-auto">Returns correlated exposure</span>
         </div>
