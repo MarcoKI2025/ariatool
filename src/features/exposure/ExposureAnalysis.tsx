@@ -64,7 +64,7 @@ export function ExposureAnalysis() {
     <div>
       {/* Welcome banner */}
       {!dismissedWelcome && !analysisComplete && (
-        <div className="flex items-start gap-4 p-[18px] rounded-xl mb-5 border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--card)))' }}>
+        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-4 sm:p-[18px] rounded-xl mb-5 border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--card)))' }}>
           <div className="w-9 h-9 rounded-[9px] bg-primary flex items-center justify-center text-[16px] flex-shrink-0 text-white font-bold">⊕</div>
           <div className="flex-1">
             <div className="text-[15px] font-bold text-foreground mb-1 tracking-tight">Assess your AI risk exposure in 3 minutes</div>
