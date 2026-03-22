@@ -270,7 +270,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 9. RISK POSITION + REQUIRED ACTIONS ═══ */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <SectionCard title="Risk Position" icon="📋">
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
             <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
