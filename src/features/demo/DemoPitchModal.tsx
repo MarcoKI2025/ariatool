@@ -82,8 +82,8 @@ export function DemoPitchModal({ open, onClose }: DemoPitchModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-[#1e1d14]">
-          <div className="text-[10px] text-[#807c70]">Press → or click Next to continue</div>
+        <div className="flex items-center justify-between px-6 py-4 border-t border-[#3a3828]">
+          <div className="text-[10px] text-[#9e9a90]">Press → or click Next to continue</div>
           <div className="flex items-center gap-6">
             <div className="flex gap-[6px]">
               {Array.from({ length: totalSlides }).map((_, i) => (

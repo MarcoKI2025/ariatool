@@ -350,22 +350,22 @@ export function ExposureResults() {
       <div className="flex items-stretch bg-chrome rounded-[10px] overflow-hidden mb-5">
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px] px-[18px]">
-          <div className="text-[9px] tracking-wider uppercase text-[#a8a49c] font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
+          <div className="text-[9px] tracking-wider uppercase text-chrome-fg-muted font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
           <div className="grid grid-cols-3 gap-[14px]">
             <div>
-              <div className="text-[10px] font-semibold text-[#9490a8] mb-[3px]">Paper I · EU AI Act Blind Spots</div>
-              <div className="text-[10px] text-[#b0aca8] leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-[#c8c4c0]">continuation</em>. Systems persist without re-authorisation.</div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper I · EU AI Act Blind Spots</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Risk-based regulation governs deployment — not <em className="text-chrome-fg-bright">continuation</em>. Systems persist without re-authorisation.</div>
             </div>
             <div>
-              <div className="text-[10px] font-semibold text-[#9490a8] mb-[3px]">Paper II · Price of Convenience</div>
-              <div className="text-[10px] text-[#b0aca8] leading-[1.5]">Agentic AI erodes oversight without malice — through <em className="text-[#c8c4c0]">delegation density</em> and oversight decay.</div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper II · Price of Convenience</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Agentic AI erodes oversight without malice — through <em className="text-chrome-fg-bright">delegation density</em> and oversight decay.</div>
             </div>
             <div>
-              <div className="text-[10px] font-semibold text-[#9490a8] mb-[3px]">Paper III · Governing Continuation</div>
-              <div className="text-[10px] text-[#b0aca8] leading-[1.5]">Evaluation cannot authorise existence. Once ECI-2 is reached, <em className="text-[#c8c4c0]">performance ≠ permission</em>.</div>
+              <div className="text-[10px] font-semibold text-primary mb-[3px]">Paper III · Governing Continuation</div>
+              <div className="text-[10px] text-chrome-fg leading-[1.5]">Evaluation cannot authorise existence. Once ECI-2 is reached, <em className="text-chrome-fg-bright">performance ≠ permission</em>.</div>
             </div>
           </div>
-          <div className="mt-[10px] pt-2 border-t border-[#252318] text-[10px] text-[#a8a49c]">AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. <span className="text-[#c8c4b8]">Buyers who adopt this framework now are 3 years ahead of enforcement.</span></div>
+          <div className="mt-[10px] pt-2 border-t border-chrome-border text-[10px] text-chrome-fg-muted">AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. <span className="text-chrome-fg">Buyers who adopt this framework now are 3 years ahead of enforcement.</span></div>
         </div>
       </div>
 
