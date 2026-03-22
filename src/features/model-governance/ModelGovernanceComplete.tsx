@@ -223,7 +223,7 @@ function NonGoals() {
         </div>
         <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-primary/10 text-primary border border-primary/30">Formally Declared</span>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {nonGoals.map((ng, i) => (
           <div key={i} className="p-3 bg-secondary border border-border rounded-lg">
             <div className="text-[11px] font-bold text-foreground mb-1"><span className="text-fragile mr-1">✗</span>{ng.title}</div>

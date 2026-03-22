@@ -245,7 +245,7 @@ export function ExecutiveReport() {
               ))}
             </div>
           </div>
-          <div className="p-5">
+          <div className="p-4 sm:p-5">
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Required Action</div>
             <div className="space-y-[10px]">
               {[
