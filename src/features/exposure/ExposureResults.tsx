@@ -280,7 +280,7 @@ export function ExposureResults() {
           <span className="text-fragile text-sm flex-shrink-0 mt-[1px]">⚠</span>
           <div>
             <div className="text-[12px] font-semibold text-white leading-[1.4]">Traditional models stop at system failure. This level of propagation is not captured in traditional risk models.</div>
-            <div className="text-[11px] text-[#c0bca8] mt-[3px]">This model extends into cross-system propagation — each layer amplifies the preceding disruption, creating non-linear risk escalation.</div>
+            <div className="text-[11px] text-chrome-fg mt-[3px]">This model extends into cross-system propagation — each layer amplifies the preceding disruption, creating non-linear risk escalation.</div>
           </div>
         </div>
       </div>
