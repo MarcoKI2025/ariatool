@@ -157,18 +157,6 @@ export function AppSidebar() {
       {/* Footer */}
       <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-[10px] py-3 border-t border-[#1e1d14]`}>
         <button
-          onClick={() => { setPerspective('underwriter'); setActiveStep(6); setMobileNavOpen(false); }}
-          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-[#a0a09a] hover:bg-[#1a1910] text-[12px] transition-colors"
-        >
-          <span className="text-[11px] flex-shrink-0">◈</span> Methodology
-        </button>
-        <button
-          onClick={() => { setPerspective('underwriter'); setActiveStep(6); setMobileNavOpen(false); }}
-          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-[#a0a09a] hover:bg-[#1a1910] text-[12px] transition-colors"
-        >
-          <span className="text-[11px] flex-shrink-0">⚙</span> Assumptions
-        </button>
-        <button
           onClick={() => { if (confirm('Reset analysis? All progress will be lost.')) { resetAnalysis(); setMobileNavOpen(false); } }}
           className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-fragile hover:bg-[#1a1910] text-[11px] border border-[#2a2820] hover:border-fragile/30 transition-all mt-1"
         >
