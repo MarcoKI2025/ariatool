@@ -32,11 +32,11 @@ export function InsuranceDecision() {
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
       <div className={`rounded-xl p-8 mb-4 border-2 relative overflow-hidden ${
-        band === 'Fragile' ? 'bg-dark-section border-fragile' :
-        band === 'Sensitive' ? 'bg-dark-section border-sensitive' :
-        'bg-dark-section border-stable'
+        band === 'Fragile' ? 'bg-card border-fragile' :
+        band === 'Sensitive' ? 'bg-card border-sensitive' :
+        'bg-card border-stable'
       }`}>
-        <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-chrome-fg-muted mb-3">
+        <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-muted-foreground mb-3">
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
         <div className={`text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
@@ -44,7 +44,7 @@ export function InsuranceDecision() {
            decisionClass === 'Conditional Review' ? 'Conditional Review' :
            'Standard Coverage'}
         </div>
-        <div className="text-[13px] text-dark-section-fg leading-[1.6] max-w-[700px] mb-4">
+        <div className="text-[13px] text-secondary-foreground leading-[1.6] max-w-[700px] mb-4">
           {band === 'Fragile'
             ? 'AI deployment creates structural risk that exceeds current underwriting tolerance and cannot be adequately priced using standard rating factors. This profile requires committee-level review before any coverage terms are offered.'
             : band === 'Sensitive'
@@ -53,16 +53,16 @@ export function InsuranceDecision() {
         </div>
         <div className="grid grid-cols-3 gap-4">
           <div>
-            <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">Decision Class</div>
-            <div className="text-[14px] font-bold text-white">{decisionClass}</div>
+            <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Decision Class</div>
+            <div className="text-[14px] font-bold text-foreground">{decisionClass}</div>
           </div>
           <div>
-            <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">AFI Position<InfoTip text={TOOLTIPS.afi} /></div>
-            <div className="text-[14px] font-bold text-white font-mono">{afi.toFixed(2)} · {band}</div>
+            <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AFI Position<InfoTip text={TOOLTIPS.afi} /></div>
+            <div className="text-[14px] font-bold text-foreground font-mono">{afi.toFixed(2)} · {band}</div>
           </div>
           <div>
-            <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">Premium Range<InfoTip text={TOOLTIPS.premium} /></div>
-            <div className="text-[14px] font-bold text-white font-mono">{formatCurrency(premium.lo, 'k')} – {formatCurrency(premium.hi, 'k')}</div>
+            <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Premium Range<InfoTip text={TOOLTIPS.premium} /></div>
+            <div className="text-[14px] font-bold text-foreground font-mono">{formatCurrency(premium.lo, 'k')} – {formatCurrency(premium.hi, 'k')}</div>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@ export function InsuranceDecision() {
         <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
           band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
         }`}>
-          <span className="text-[11px] text-white font-bold">!</span>
+          <span className="text-[11px] text-foreground font-bold">!</span>
         </div>
         <div>
           <div className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground font-bold mb-[5px]">Standard coverage is not justified without structural changes</div>
@@ -260,11 +260,11 @@ export function InsuranceDecision() {
           ))}
         </div>
 
-        <div className="bg-chrome rounded-lg p-[14px] flex items-start gap-[10px]">
+        <div className="bg-secondary border border-border rounded-lg p-[14px] flex items-start gap-[10px]">
           <span className="text-fragile text-sm flex-shrink-0 mt-[1px]">⚠</span>
           <div>
-            <div className="text-[12px] font-semibold text-white leading-[1.4]">Traditional models stop at system failure. This level of propagation is not captured in traditional risk models.</div>
-            <div className="text-[11px] text-chrome-fg mt-[3px]">This model extends into cross-system propagation — each layer amplifies the preceding disruption, creating non-linear risk escalation.</div>
+            <div className="text-[12px] font-semibold text-foreground leading-[1.4]">Traditional models stop at system failure. This level of propagation is not captured in traditional risk models.</div>
+            <div className="text-[11px] text-secondary-foreground mt-[3px]">This model extends into cross-system propagation — each layer amplifies the preceding disruption, creating non-linear risk escalation.</div>
           </div>
         </div>
       </div>
@@ -293,12 +293,12 @@ export function InsuranceDecision() {
       {/* ═══ OPERATIONAL DECISION PANEL (full-width dark ops-decision block) ═══ */}
       {(() => {
         const statusCls = decisionClass === 'Approved' ? 'approved' : decisionClass === 'Conditional Review' ? 'conditional' : decisionClass === 'Escalate to Committee' ? 'escalate' : 'not-approved';
-        const bgMap: Record<string, string> = { approved: 'bg-chrome border-b border-stable/40', conditional: 'bg-chrome border-b border-sensitive/40', escalate: 'bg-chrome border-b border-primary/50', 'not-approved': 'bg-chrome border-b border-fragile/40' };
+        const bgMap: Record<string, string> = { approved: 'bg-secondary border-b border-stable/40', conditional: 'bg-secondary border-b border-sensitive/40', escalate: 'bg-secondary border-b border-primary/50', 'not-approved': 'bg-secondary border-b border-fragile/40' };
         const topBarMap: Record<string, string> = { approved: 'hsl(var(--stable))', conditional: 'hsl(var(--sensitive))', escalate: 'hsl(var(--primary))', 'not-approved': 'hsl(var(--fragile))' };
         const eyebrowColorMap: Record<string, string> = { approved: 'text-stable', conditional: 'text-sensitive', escalate: 'text-primary', 'not-approved': 'text-fragile' };
         const statusColorMap: Record<string, string> = { approved: 'text-stable', conditional: 'text-sensitive', escalate: 'text-primary', 'not-approved': 'text-fragile' };
-        const rationaleColorMap: Record<string, string> = { approved: 'text-chrome-fg', conditional: 'text-chrome-fg', escalate: 'text-chrome-fg-bright', 'not-approved': 'text-chrome-fg' };
-        const consBgMap: Record<string, string> = { approved: 'bg-chrome-hover border-stable/40', conditional: 'bg-chrome-hover border-sensitive/40', escalate: 'bg-chrome-hover border-primary/40', 'not-approved': 'bg-chrome-hover border-fragile/40' };
+        const rationaleColorMap: Record<string, string> = { approved: 'text-chrome-fg', conditional: 'text-chrome-fg', escalate: 'text-foreground', 'not-approved': 'text-chrome-fg' };
+        const consBgMap: Record<string, string> = { approved: 'bg-muted border-stable/40', conditional: 'bg-muted border-sensitive/40', escalate: 'bg-muted border-primary/40', 'not-approved': 'bg-muted border-fragile/40' };
         const dotBgMap: Record<string, string> = { approved: 'bg-stable', conditional: 'bg-sensitive', escalate: 'bg-primary', 'not-approved': 'bg-fragile' };
 
         const statusText = decisionClass === 'Approved' ? 'APPROVED — STANDARD TERMS' : decisionClass === 'Conditional Review' ? 'CONDITIONAL REVIEW' : decisionClass === 'Escalate to Committee' ? 'ESCALATE TO COMMITTEE' : 'NOT APPROVED';
@@ -336,9 +336,9 @@ export function InsuranceDecision() {
                   { label: 'Escalation Required:', value: band === 'Fragile' ? 'Risk Committee Review' : band === 'Sensitive' ? 'Senior Underwriter' : 'Standard Monitoring' },
                   { label: 'Generated:', value: formatDate() },
                 ].map((meta, i) => (
-                  <div key={i} className="text-chrome-fg-muted">
+                  <div key={i} className="text-muted-foreground">
                     <span className="font-bold">{meta.label}</span>
-                    <span className="text-white ml-1">{meta.value}</span>
+                    <span className="text-foreground ml-1">{meta.value}</span>
                   </div>
                 ))}
               </div>
@@ -429,12 +429,12 @@ export function InsuranceDecision() {
       <SectionCard title="Underwriting Conditions for AI Coverage" icon="📋" subtitle="Required structural conditions before standard terms apply.">
         <div className="space-y-3">
           {[
-            { num: 1, title: 'Implement quarterly AI re-authorisation cadence', status: 'MANDATORY', statusColor: 'bg-fragile text-white', desc: 'Each deployed AI system must undergo formal re-authorisation at least quarterly. Performance-based continuation is not acceptable as a governance standard. Re-authorisation must include explicit sign-off from a named human with stop authority.' },
-            { num: 2, title: 'Establish multi-provider diversification (≥3 providers)', status: 'MANDATORY', statusColor: 'bg-fragile text-white', desc: 'Single-provider dependency creates uninsurable concentration risk. Minimum 3 independent providers across model, compute, and orchestration layers. Timeline: 90 days from coverage inception.' },
-            { num: 3, title: 'Deploy automated oversight with kill-switch capability', status: 'CONDITIONAL', statusColor: 'bg-sensitive text-white', desc: 'Automated monitoring must include anomaly detection, threshold alerts, and immediate suspension capability. Human-in-the-loop escalation for all decisions exceeding defined impact thresholds.' },
-            { num: 4, title: 'Maintain governance transparency — audit trail requirement', status: 'CONDITIONAL', statusColor: 'bg-sensitive text-white', desc: 'All AI-influenced decisions must produce traceable audit records. Justificatory density must demonstrably improve above current baseline to maintain coverage terms.' },
-            { num: 5, title: 'Establish incident response and communication protocol', status: 'RECOMMENDED', statusColor: 'bg-primary text-white', desc: 'AI-specific incident response plan required, including communication protocol for regulators, affected parties, and insurers. Response time targets: detection <1h, containment <4h, notification <24h.' },
-            { num: 6, title: 'Conduct annual AI governance audit by independent assessor', status: 'RECOMMENDED', statusColor: 'bg-primary text-white', desc: 'Annual independent governance review to verify structural conditions are maintained. Assessment must cover all AFI dimensions including continuation risk and dependency concentration.' },
+            { num: 1, title: 'Implement quarterly AI re-authorisation cadence', status: 'MANDATORY', statusColor: 'bg-fragile text-foreground', desc: 'Each deployed AI system must undergo formal re-authorisation at least quarterly. Performance-based continuation is not acceptable as a governance standard. Re-authorisation must include explicit sign-off from a named human with stop authority.' },
+            { num: 2, title: 'Establish multi-provider diversification (≥3 providers)', status: 'MANDATORY', statusColor: 'bg-fragile text-foreground', desc: 'Single-provider dependency creates uninsurable concentration risk. Minimum 3 independent providers across model, compute, and orchestration layers. Timeline: 90 days from coverage inception.' },
+            { num: 3, title: 'Deploy automated oversight with kill-switch capability', status: 'CONDITIONAL', statusColor: 'bg-sensitive text-foreground', desc: 'Automated monitoring must include anomaly detection, threshold alerts, and immediate suspension capability. Human-in-the-loop escalation for all decisions exceeding defined impact thresholds.' },
+            { num: 4, title: 'Maintain governance transparency — audit trail requirement', status: 'CONDITIONAL', statusColor: 'bg-sensitive text-foreground', desc: 'All AI-influenced decisions must produce traceable audit records. Justificatory density must demonstrably improve above current baseline to maintain coverage terms.' },
+            { num: 5, title: 'Establish incident response and communication protocol', status: 'RECOMMENDED', statusColor: 'bg-primary text-foreground', desc: 'AI-specific incident response plan required, including communication protocol for regulators, affected parties, and insurers. Response time targets: detection <1h, containment <4h, notification <24h.' },
+            { num: 6, title: 'Conduct annual AI governance audit by independent assessor', status: 'RECOMMENDED', statusColor: 'bg-primary text-foreground', desc: 'Annual independent governance review to verify structural conditions are maintained. Assessment must cover all AFI dimensions including continuation risk and dependency concentration.' },
           ].map((cond, i) => (
             <div key={i} className="flex items-start gap-3 p-4 bg-card border border-border rounded-lg">
               <div className="w-[24px] h-[24px] rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px]">{cond.num}</div>
@@ -480,19 +480,19 @@ export function InsuranceDecision() {
       </SectionCard>
 
       {/* ═══ 15. REINSURANCE € BOXES (dark panel) ═══ */}
-      <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Existing Insurance applicable in Reinsurance</div>
-        <div className="text-[14px] font-bold text-white mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
+        <div className="text-[14px] font-bold text-foreground mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
         <div className="grid grid-cols-3 gap-4">
           {[
             { label: 'Cyber / Tech E&O', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
             { label: 'Professional Indemnity', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
             { label: 'D&O / Management Liability', value: `€${Math.round(lossEnvelope.expected * 1.5)}M`, color: 'text-fragile', desc: 'Directors & Officers — governance failure liability' },
           ].map((m, i) => (
-            <div key={i} className="bg-dark-section-border/50 border border-dark-section-border rounded-lg p-4">
-              <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">{m.label}</div>
+            <div key={i} className="bg-secondary border border-border rounded-lg p-4">
+              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
               <div className={`text-[28px] font-bold font-mono leading-none ${m.color}`}>{m.value}</div>
-              <div className="text-[10px] text-chrome-fg mt-2">{m.desc}</div>
+              <div className="text-[10px] text-secondary-foreground mt-2">{m.desc}</div>
             </div>
           ))}
         </div>
@@ -502,11 +502,11 @@ export function InsuranceDecision() {
       <SectionCard title="Underwriting Decision Log — Full Audit Trail" icon="📋" subtitle="Chronological record of all underwriting signals and decisions.">
         <div className="space-y-3">
           {[
-            { num: 1, time: 'T+0', title: 'Exposure Analysis submitted', status: 'COMPLETE', statusColor: 'bg-stable text-white', desc: `${inputs.companyName || 'Entity'} · ${inputs.industry} · ${inputs.useCases?.length || 0} AI use cases · ${inputs.providers?.length || 0} provider dependencies` },
-            { num: 2, time: 'T+0', title: 'AFI calculated at {afi}', status: band.toUpperCase(), statusColor: band === 'Fragile' ? 'bg-fragile text-white' : band === 'Sensitive' ? 'bg-sensitive text-white' : 'bg-stable text-white', desc: `Structural Exposure Score: ${structuralScore}. ECI Tier: ${eciTier} (${eciName}). Delegation ratio: ${Math.round(components.dr * 100)}%. Justificatory density: ${Math.round(components.jd * 100)}%.` },
-            { num: 3, time: 'T+0', title: 'Risk indices computed', status: 'ASSESSED', statusColor: 'bg-primary text-white', desc: `ALRI: ${alri}. AGRI: ${agri}. SCRI: ${scri}. Composite: ${compositeRiskIndex}. MDR: ${results.mdr}% (${results.mdrLabel}).` },
-            { num: 4, time: 'T+0', title: 'Financial exposure modelled', status: 'MODELLED', statusColor: 'bg-primary text-white', desc: `Expected: ${formatCurrency(lossEnvelope.expected)}. Stress: ${formatCurrency(lossEnvelope.stress)}. Tail: ${formatCurrency(lossEnvelope.tail)}. Portfolio aggregate: ${formatCurrency(lossEnvelope.portfolio)}.` },
-            { num: 5, time: 'T+0', title: 'Decision class determined', status: decisionClass.toUpperCase().replace(/ /g, '_'), statusColor: band === 'Fragile' ? 'bg-fragile text-white' : 'bg-sensitive text-white', desc: `${decisionClass}. Premium range: ${formatCurrency(premium.lo, 'k')}–${formatCurrency(premium.hi, 'k')}/year. Structural loading: +${Math.round(Math.min(80, afi * 45))}%.` },
+            { num: 1, time: 'T+0', title: 'Exposure Analysis submitted', status: 'COMPLETE', statusColor: 'bg-stable text-foreground', desc: `${inputs.companyName || 'Entity'} · ${inputs.industry} · ${inputs.useCases?.length || 0} AI use cases · ${inputs.providers?.length || 0} provider dependencies` },
+            { num: 2, time: 'T+0', title: 'AFI calculated at {afi}', status: band.toUpperCase(), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : band === 'Sensitive' ? 'bg-sensitive text-foreground' : 'bg-stable text-foreground', desc: `Structural Exposure Score: ${structuralScore}. ECI Tier: ${eciTier} (${eciName}). Delegation ratio: ${Math.round(components.dr * 100)}%. Justificatory density: ${Math.round(components.jd * 100)}%.` },
+            { num: 3, time: 'T+0', title: 'Risk indices computed', status: 'ASSESSED', statusColor: 'bg-primary text-foreground', desc: `ALRI: ${alri}. AGRI: ${agri}. SCRI: ${scri}. Composite: ${compositeRiskIndex}. MDR: ${results.mdr}% (${results.mdrLabel}).` },
+            { num: 4, time: 'T+0', title: 'Financial exposure modelled', status: 'MODELLED', statusColor: 'bg-primary text-foreground', desc: `Expected: ${formatCurrency(lossEnvelope.expected)}. Stress: ${formatCurrency(lossEnvelope.stress)}. Tail: ${formatCurrency(lossEnvelope.tail)}. Portfolio aggregate: ${formatCurrency(lossEnvelope.portfolio)}.` },
+            { num: 5, time: 'T+0', title: 'Decision class determined', status: decisionClass.toUpperCase().replace(/ /g, '_'), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : 'bg-sensitive text-foreground', desc: `${decisionClass}. Premium range: ${formatCurrency(premium.lo, 'k')}–${formatCurrency(premium.hi, 'k')}/year. Structural loading: +${Math.round(Math.min(80, afi * 45))}%.` },
             { num: 6, time: 'T+0', title: 'Awaiting committee review', status: 'PENDING', statusColor: 'bg-secondary text-foreground border border-border', desc: 'All signals computed. Decision requires human underwriter sign-off before coverage terms are issued. No automated binding authority.' },
           ].map((entry, i) => (
             <div key={i} className="flex items-start gap-3">
@@ -563,7 +563,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 18. WHAT THE INSURER PORTFOLIO SEES (dark) ═══ */}
-      <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-2">◆ What the insurer portfolio sees</div>
         <div className="grid grid-cols-3 gap-4 mb-4">
           {[
@@ -571,16 +571,16 @@ export function InsuranceDecision() {
             { label: 'Correlated Cluster', value: formatCurrency(lossEnvelope.stress), color: 'text-fragile' },
             { label: 'Portfolio Aggregate', value: formatCurrency(lossEnvelope.portfolio), color: 'text-fragile' },
           ].map((m, i) => (
-            <div key={i} className="bg-dark-section-border/50 border border-dark-section-border rounded-lg p-4">
-              <div className="text-[8px] font-bold tracking-wider uppercase text-chrome-fg-muted mb-1">{m.label}</div>
+            <div key={i} className="bg-secondary border border-border rounded-lg p-4">
+              <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
               <div className={`text-[28px] font-bold font-mono leading-none ${m.color}`}>{m.value}</div>
             </div>
           ))}
         </div>
-        <div className="space-y-2 text-[11px] text-dark-section-fg leading-[1.55]">
-          <div>• <strong className="text-white">Multi-entity cascade exposure</strong> — if 5+ entities in portfolio share AI infrastructure stack, a single provider event triggers correlated losses across all entities.</div>
-          <div>• <strong className="text-white">Aggregate treaty implications</strong> — portfolio aggregate exceeds standard catastrophe reserve assumptions. Reinsurance treaty review required.</div>
-          <div>• <strong className="text-white">Concentration creates systemic risk</strong> — AI provider concentration in a portfolio mirrors natural catastrophe concentration. Geographic diversification does not help.</div>
+        <div className="space-y-2 text-[11px] text-secondary-foreground leading-[1.55]">
+          <div>• <strong className="text-foreground">Multi-entity cascade exposure</strong> — if 5+ entities in portfolio share AI infrastructure stack, a single provider event triggers correlated losses across all entities.</div>
+          <div>• <strong className="text-foreground">Aggregate treaty implications</strong> — portfolio aggregate exceeds standard catastrophe reserve assumptions. Reinsurance treaty review required.</div>
+          <div>• <strong className="text-foreground">Concentration creates systemic risk</strong> — AI provider concentration in a portfolio mirrors natural catastrophe concentration. Geographic diversification does not help.</div>
         </div>
       </div>
 
@@ -762,30 +762,30 @@ export function InsuranceDecision() {
       </div>
 
       {/* EU AI ACT PENALTY CALCULATOR */}
-      <div className="bg-chrome rounded-xl overflow-hidden mb-4 border border-chrome-border relative">
+      <div className="bg-secondary border border-border rounded-xl overflow-hidden mb-4 border border-border relative">
         <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(to right, #b53020, #780808)' }} />
         <div className="p-[18px_22px_14px]">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-fragile mb-[6px]">⚖ EU AI Act — Art. 99 Regulatory Penalty Exposure</div>
-          <div className="text-[13px] font-bold text-chrome-fg-bright mb-1">Statutory fine ceilings applicable to this deployment</div>
-          <div className="text-[11px] text-chrome-fg leading-[1.5] mb-[14px]">Penalties apply independently of AFI score or insurance status. A system within underwriting tolerance can still incur maximum fines.</div>
+          <div className="text-[13px] font-bold text-foreground mb-1">Statutory fine ceilings applicable to this deployment</div>
+          <div className="text-[11px] text-secondary-foreground leading-[1.5] mb-[14px]">Penalties apply independently of AFI score or insurance status. A system within underwriting tolerance can still incur maximum fines.</div>
           <div className="grid grid-cols-3 gap-3 mb-[14px]">
             <div className="bg-[#1a0808] border border-[#5a1810] rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-chrome-fg-muted mb-[6px]">Art. 99 §3 · Prohibited Practices</div>
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[6px]">Art. 99 §3 · Prohibited Practices</div>
               <div className="text-[24px] font-bold font-mono text-[#ff6b5b] leading-none mb-1">€35M</div>
               <div className="text-[10px] text-[#c08070]">or 7% worldwide annual turnover</div>
-              <div className="text-[9px] text-chrome-fg-muted mt-[6px] leading-[1.45]">Triggered by: Art. 5 violations (subliminal manipulation, social scoring, predictive policing, biometric scraping)</div>
+              <div className="text-[9px] text-muted-foreground mt-[6px] leading-[1.45]">Triggered by: Art. 5 violations (subliminal manipulation, social scoring, predictive policing, biometric scraping)</div>
             </div>
             <div className="bg-[#1a1200] border border-[#4a3400] rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-chrome-fg-muted mb-[6px]">Art. 99 §4 · Provider & Deployer</div>
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[6px]">Art. 99 §4 · Provider & Deployer</div>
               <div className="text-[24px] font-bold font-mono text-sensitive leading-none mb-1">€15M</div>
               <div className="text-[10px] text-[#c09040]">or 3% worldwide annual turnover</div>
-              <div className="text-[9px] text-chrome-fg-muted mt-[6px] leading-[1.45]">Triggered by: Art. 16, Art. 26, Art. 50 obligations. Covers failure to implement human oversight or maintain logs.</div>
+              <div className="text-[9px] text-muted-foreground mt-[6px] leading-[1.45]">Triggered by: Art. 16, Art. 26, Art. 50 obligations. Covers failure to implement human oversight or maintain logs.</div>
             </div>
             <div className="bg-[#0e1a10] border border-[#1a3a28] rounded-lg p-3">
-              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-chrome-fg-muted mb-[6px]">Art. 99 §5 · Misleading Regulators</div>
+              <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[6px]">Art. 99 §5 · Misleading Regulators</div>
               <div className="text-[24px] font-bold font-mono text-stable leading-none mb-1">€7.5M</div>
               <div className="text-[10px] text-[#609070]">or 1% worldwide annual turnover</div>
-              <div className="text-[9px] text-chrome-fg-muted mt-[6px] leading-[1.45]">Triggered by: Supplying incorrect or misleading information to notified bodies or authorities.</div>
+              <div className="text-[9px] text-muted-foreground mt-[6px] leading-[1.45]">Triggered by: Supplying incorrect or misleading information to notified bodies or authorities.</div>
             </div>
           </div>
           <div className="p-[10px_14px] bg-[#120606] border border-[#5a1810] rounded-md text-[11px] text-[#d08070] leading-[1.5]">

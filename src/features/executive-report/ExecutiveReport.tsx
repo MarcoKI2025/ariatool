@@ -63,7 +63,7 @@ function ResponsibilityOwnershipPanel({ results, inputs }: { results: AnalysisRe
           { icon: oversightIcon, status: oversightIcon === '✓' ? 'ok' : 'gap', title: 'Oversight Actor — Named Human with Stop Authority', body: 'The system requires a named, empowered individual with both authority to suspend and operational knowledge to do so safely. Without this actor, continuation is structurally ungoverned.' },
           { icon: '✗', status: 'gap', title: 'Cross-System Liability — Cascade Accountability', body: 'When failure propagates across correlated infrastructure, cascade responsibility is entirely unresolved. No actor is accountable for aggregate portfolio impact.' },
         ].map((a, i) => {
-          const bgMap: Record<string, string> = { ok: 'bg-stable text-white', partial: 'bg-sensitive text-white', gap: 'bg-fragile text-white' };
+          const bgMap: Record<string, string> = { ok: 'bg-stable text-foreground', partial: 'bg-sensitive text-foreground', gap: 'bg-fragile text-foreground' };
           return (
             <div key={i} className="flex items-start gap-3 p-3 bg-card border border-border rounded-lg">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0 ${bgMap[a.status]}`}>{a.icon}</div>
@@ -148,9 +148,9 @@ export function ExecutiveReport() {
               Structural AI dependency creates underwriting exposure that current models do not price, reserve for, or capture — this profile exceeds standard tolerance thresholds.
             </div>
             <div className={`inline-block px-3 py-[6px] rounded-lg text-[12px] font-bold ${
-              band === 'Fragile' ? 'bg-fragile text-white' :
-              band === 'Sensitive' ? 'bg-sensitive text-white' :
-              'bg-stable text-white'
+              band === 'Fragile' ? 'bg-fragile text-foreground' :
+              band === 'Sensitive' ? 'bg-sensitive text-foreground' :
+              'bg-stable text-foreground'
             }`}>
               THIS MEANS: {band === 'Fragile' ? 'Standard coverage is not justified. Apply mandatory premium loading and require structural remediation before renewal.' :
                 band === 'Sensitive' ? 'Conditional coverage — improvements required within 90 days.' :
@@ -269,7 +269,7 @@ export function ExecutiveReport() {
             { num: 4, title: 'Limit coverage scope to operational layers', desc: 'Full-stack coverage is uneconomic at current structural lock-in levels. Recommended to limit coverage to operational impact layers only.' },
           ].map((action, i) => (
             <div key={i} className="flex items-start gap-3 p-4 bg-secondary border border-border rounded-lg">
-              <div className="w-[24px] h-[24px] rounded-full bg-fragile text-white flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px]">{action.num}</div>
+              <div className="w-[24px] h-[24px] rounded-full bg-fragile text-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px]">{action.num}</div>
               <div>
                 <div className="text-[12px] font-semibold text-foreground">{action.title}</div>
                 <div className="text-[11px] text-muted-foreground leading-[1.55] mt-[2px]">{action.desc}</div>
@@ -283,10 +283,10 @@ export function ExecutiveReport() {
       <ResponsibilityOwnershipPanel results={results} inputs={inputs} />
 
       {/* Epistemic Status — Dark section */}
-      <div className="bg-dark-section border border-dark-section-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Epistemic Status · What This Assessment Cannot Guarantee</div>
-        <div className="text-[18px] font-bold text-white mb-3">You Cannot Rely on This Evaluation</div>
-        <div className="text-[11px] text-dark-section-fg leading-[1.6] mb-4">
+        <div className="text-[18px] font-bold text-foreground mb-3">You Cannot Rely on This Evaluation</div>
+        <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-4">
           This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment.
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -297,9 +297,9 @@ export function ExecutiveReport() {
             { title: 'Performance is not justification for continued operation', body: 'Performance-based legitimacy is the primary mechanism by which governance oversight erodes.' },
             { title: 'This assessment itself is subject to the limits it describes', body: 'All derived scores are structural proxies. They correlate with governance fragility — they do not predict specific incidents.' },
           ].map((item, i) => (
-            <div key={i} className="p-3 bg-dark-section-border/50 border border-dark-section-border rounded-lg">
+            <div key={i} className="p-3 bg-secondary border border-border rounded-lg">
               <div className="text-[11px] font-bold text-sensitive mb-1">{item.title}</div>
-              <div className="text-[10px] text-dark-section-fg leading-[1.5]">{item.body}</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">{item.body}</div>
             </div>
           ))}
         </div>
