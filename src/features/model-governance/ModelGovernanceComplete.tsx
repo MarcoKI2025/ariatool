@@ -67,14 +67,14 @@ export function ModelGovernanceComplete() {
 
 function ModelGovernanceRegister() {
   return (
-    <div className="bg-dark-section border border-dark-section-border rounded-xl overflow-hidden mb-5">
-      <div className="p-[16px_22px] border-b border-dark-section-border flex items-center justify-between">
+    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+      <div className="p-[16px_22px] border-b border-border flex items-center justify-between">
         <div>
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Model Governance Register · AGAF v3.0 · Required for audit trail</div>
           <div className="text-[15px] font-bold text-white">Model Governance & Validation Status</div>
         </div>
         <div className="text-right">
-          <div className="text-[9px] text-dark-section-fg mb-1">Validation Status</div>
+          <div className="text-[9px] text-secondary-foreground mb-1">Validation Status</div>
           <div className="inline-flex items-center gap-1.5 px-3 py-[5px] bg-[#1a1200] border border-[#5a3800] rounded-md">
             <div className="w-[7px] h-[7px] rounded-full bg-sensitive animate-pulse flex-shrink-0" />
             <span className="text-[11px] font-bold text-sensitive tracking-wide uppercase">Internally Reviewed · Not Independently Validated</span>
@@ -82,23 +82,23 @@ function ModelGovernanceRegister() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-0 border-b border-dark-section-border">
+      <div className="grid grid-cols-3 gap-0 border-b border-border">
         {[
           { label: 'Model Type', title: 'Structural Heuristic', desc: 'Rule-based weighted ratio. Deterministic, not stochastic. No ML, no historical claims distribution, no Monte Carlo. Outputs are structural proxy signals — not probabilistic estimates.' },
           { label: 'Data Basis', title: 'Qualitative · Market-Derived', desc: 'Inputs: self-attested operator assessment (12 parameters). Loss anchors: published market guidance (Lloyd\'s CRI 2024, EIOPA 2024). No proprietary claims database. No system-derived inputs.' },
           { label: 'Last Calibration', title: 'Q4 2025 Market Data', desc: 'Multipliers anchored to Q4 2025 market guidance. Formula thresholds (AFI 0.85 / 1.35) internally calibrated. Annual recalibration recommended. Next trigger: EIOPA Opinion implementation 2026–2027.' },
         ].map((item, i) => (
-          <div key={i} className={`p-[14px_18px] ${i < 2 ? 'border-r border-dark-section-border' : ''}`}>
-            <div className="text-[9px] font-bold tracking-wider uppercase text-dark-section-fg mb-[5px]">{item.label}</div>
+          <div key={i} className={`p-[14px_18px] ${i < 2 ? 'border-r border-border' : ''}`}>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-[5px]">{item.label}</div>
             <div className="text-[13px] font-bold text-white mb-[3px]">{item.title}</div>
-            <div className="text-[10px] text-dark-section-fg leading-[1.4]">{item.desc}</div>
+            <div className="text-[10px] text-secondary-foreground leading-[1.4]">{item.desc}</div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-0 border-b border-dark-section-border">
-        <div className="p-[14px_18px] border-r border-dark-section-border">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-dark-section-fg mb-[5px]">Validation Pathway</div>
+      <div className="grid grid-cols-3 gap-0 border-b border-border">
+        <div className="p-[14px_18px] border-r border-border">
+          <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-[5px]">Validation Pathway</div>
           <div className="flex flex-col gap-[5px]">
             {[
               { done: true, text: 'Internal logical consistency review ✓' },
@@ -109,12 +109,12 @@ function ModelGovernanceRegister() {
             ].map((v, i) => (
               <div key={i} className="flex items-center gap-[7px]">
                 <div className={`w-[7px] h-[7px] rounded-full flex-shrink-0 ${v.done ? 'bg-[#60d090]' : 'bg-[#5a3800]'}`} />
-                <span className={`text-[10px] ${v.done ? 'text-dark-section-fg' : 'text-dark-section-fg/60'}`}>{v.text}</span>
+                <span className={`text-[10px] ${v.done ? 'text-secondary-foreground' : 'text-secondary-foreground/60'}`}>{v.text}</span>
               </div>
             ))}
           </div>
         </div>
-        <div className="p-[14px_18px] border-r border-dark-section-border">
+        <div className="p-[14px_18px] border-r border-border">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-[5px]">Known Failure Modes</div>
           <div className="flex flex-col gap-[5px]">
             {[
@@ -123,12 +123,12 @@ function ModelGovernanceRegister() {
               'Cross-entity correlation unmodelled (independence assumed)',
               'Non-EU jurisdictions require separate calibration',
             ].map((f, i) => (
-              <div key={i} className="text-[10px] text-dark-section-fg px-2 py-1 bg-[#1a0606] rounded border-l-2 border-fragile">{f}</div>
+              <div key={i} className="text-[10px] text-secondary-foreground px-2 py-1 bg-[#1a0606] rounded border-l-2 border-fragile">{f}</div>
             ))}
           </div>
         </div>
         <div className="p-[14px_18px]">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-dark-section-fg mb-[5px]">Approved Use Cases</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-[5px]">Approved Use Cases</div>
           <div className="flex flex-col gap-1">
             {[
               { ok: true, text: 'Pre-underwriting intake triage' },
@@ -147,11 +147,11 @@ function ModelGovernanceRegister() {
       </div>
 
       <div className="px-[18px] py-3 flex items-center gap-[10px]">
-        <div className="text-[10px] text-dark-section-fg">Model ID: <span className="font-mono text-primary">AGAF-v3.0-AFI-2026Q1</span></div>
+        <div className="text-[10px] text-secondary-foreground">Model ID: <span className="font-mono text-primary">AGAF-v3.0-AFI-2026Q1</span></div>
         <div className="w-px h-3 bg-dark-section-border" />
-        <div className="text-[10px] text-dark-section-fg">Formula: <span className="font-mono text-dark-section-fg/80">AFI = (DR × RC × CD) / (JD × NA + 0.001)</span></div>
+        <div className="text-[10px] text-secondary-foreground">Formula: <span className="font-mono text-secondary-foreground/80">AFI = (DR × RC × CD) / (JD × NA + 0.001)</span></div>
         <div className="w-px h-3 bg-dark-section-border" />
-        <div className="text-[10px] text-dark-section-fg">Thresholds: <span className="font-mono text-dark-section-fg/80">Stable &lt;0.85 · Sensitive 0.85–1.35 · Fragile &gt;1.35</span></div>
+        <div className="text-[10px] text-secondary-foreground">Thresholds: <span className="font-mono text-secondary-foreground/80">Stable &lt;0.85 · Sensitive 0.85–1.35 · Fragile &gt;1.35</span></div>
       </div>
     </div>
   );
@@ -262,21 +262,21 @@ function MeaningDriftRegister() {
       </div>
 
       {/* Consequence Externalization */}
-      <div className="bg-dark-section border border-dark-section-border rounded-lg p-4 mb-4">
+      <div className="bg-card border border-border rounded-lg p-4 mb-4">
         <div className="text-[9px] font-bold tracking-wider uppercase text-primary mb-2">§8 · Consequence Externalization — Root Cause of Drift</div>
-        <div className="text-[11px] text-dark-section-fg leading-[1.55] mb-[6px]">
+        <div className="text-[11px] text-secondary-foreground leading-[1.55] mb-[6px]">
           AGAF §8 identifies consequence externalization as the structural root beneath behavioral alignment decay: when the costs of reinterpretation are fully absorbed by rollback, retraining, and governance intervention, <em className="text-white">interpretation becomes cheap</em>. The system has no internal incentive to preserve stable governance alignment.
         </div>
         <div className="grid grid-cols-2 gap-2 mt-2">
-          <div className="bg-chrome border border-dark-section-border rounded-md p-[9px_11px]">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-dark-section-fg mb-1">Externalization Vectors</div>
-            <div className="text-[10px] text-dark-section-fg/80 leading-[1.5]">Rollback · Retraining · Patching · Policy update · Governance intervention</div>
-            <div className="text-[9px] text-dark-section-fg/50 mt-1 italic">Each absorbs the cost of drift externally — removing internal stabilizing pressure</div>
+          <div className="bg-secondary border border-border rounded-md p-[9px_11px]">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-1">Externalization Vectors</div>
+            <div className="text-[10px] text-secondary-foreground/80 leading-[1.5]">Rollback · Retraining · Patching · Policy update · Governance intervention</div>
+            <div className="text-[9px] text-secondary-foreground/50 mt-1 italic">Each absorbs the cost of drift externally — removing internal stabilizing pressure</div>
           </div>
-          <div className="bg-chrome border border-dark-section-border rounded-md p-[9px_11px]">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-dark-section-fg mb-1">Design Implication (§10)</div>
-            <div className="text-[10px] text-dark-section-fg/80 leading-[1.5]">Consequence-carrying invariants — constraints that make behavioral drift internally costly, not merely externally correctable</div>
-            <div className="text-[9px] text-dark-section-fg/50 mt-1 italic">Not yet implementable — open research direction per §13</div>
+          <div className="bg-secondary border border-border rounded-md p-[9px_11px]">
+            <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-1">Design Implication (§10)</div>
+            <div className="text-[10px] text-secondary-foreground/80 leading-[1.5]">Consequence-carrying invariants — constraints that make behavioral drift internally costly, not merely externally correctable</div>
+            <div className="text-[9px] text-secondary-foreground/50 mt-1 italic">Not yet implementable — open research direction per §13</div>
           </div>
         </div>
       </div>
@@ -421,9 +421,9 @@ function AssessmentScopeDeclaration() {
 
 function CalibrationParameters() {
   return (
-    <div className="bg-dark-section border border-dark-section-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-xl p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[10px]">Calibration Parameters · Loss Model Configuration</div>
-      <div className="text-[11px] text-dark-section-fg leading-[1.6] mb-4">
+      <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-4">
         Loss estimates are anchored to published market data — not proprietary claims databases. These multipliers can be replaced with portfolio-specific actuarial assumptions without changing the governance signal layer.
       </div>
       <div className="grid grid-cols-4 gap-3 mb-4">
@@ -433,18 +433,18 @@ function CalibrationParameters() {
           { label: 'TAIL_MULT', value: '5.6×', sub: 'Swiss Re sigma 01/2026 tail risk factor' },
           { label: 'PORT_FACTOR', value: '12×', sub: 'Portfolio aggregate (8–15 entity cluster)' },
         ].map((p, i) => (
-          <div key={i} className="bg-chrome border border-dark-section-border rounded-lg p-3 text-center">
+          <div key={i} className="bg-secondary border border-border rounded-lg p-3 text-center">
             <div className="text-[10px] font-mono font-bold text-primary mb-1">{p.label}</div>
             <div className="text-[18px] font-bold font-mono text-white">{p.value}</div>
-            <div className="text-[9px] text-dark-section-fg mt-1 leading-[1.3]">{p.sub}</div>
+            <div className="text-[9px] text-secondary-foreground mt-1 leading-[1.3]">{p.sub}</div>
           </div>
         ))}
       </div>
-      <div className="flex items-start gap-3 p-3 bg-chrome border border-dark-section-border rounded-lg">
+      <div className="flex items-start gap-3 p-3 bg-secondary border border-border rounded-lg">
         <span className="text-primary text-[14px] mt-0.5">⚙</span>
         <div>
           <div className="text-[11px] font-bold text-white mb-1">For Portfolio-Specific Calibration</div>
-          <div className="text-[10px] text-dark-section-fg leading-[1.6]">Replace default multipliers with your own actuarial assumptions by modifying the four constants: <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">ANCHOR</code>, <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">STRESS_MULT</code>, <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">TAIL_MULT</code>, <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">PORT_FACTOR</code>. The governance signal (AFI, RFS, MDR) is independent of the loss calibration.</div>
+          <div className="text-[10px] text-secondary-foreground leading-[1.6]">Replace default multipliers with your own actuarial assumptions by modifying the four constants: <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">ANCHOR</code>, <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">STRESS_MULT</code>, <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">TAIL_MULT</code>, <code className="bg-secondary border border-border px-1 rounded text-[9px] text-primary">PORT_FACTOR</code>. The governance signal (AFI, RFS, MDR) is independent of the loss calibration.</div>
         </div>
       </div>
     </div>
@@ -601,18 +601,18 @@ function EpistemicLimitations() {
   ];
 
   return (
-    <div className="bg-dark-section border border-dark-section-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
       <div className="p-6">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-2">◈ Epistemic Status · What This Assessment Cannot Guarantee</div>
         <div className="text-[18px] font-bold text-white mb-3">You Cannot Rely on This Evaluation</div>
-        <div className="text-[11px] text-dark-section-fg leading-[1.6] mb-5 max-w-[700px]">
+        <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-5 max-w-[700px]">
           This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment.
         </div>
         <div className="grid grid-cols-2 gap-3">
           {limitations.map((lim, i) => (
-            <div key={i} className="p-3 bg-chrome-hover border border-dark-section-border rounded-lg">
+            <div key={i} className="p-3 bg-muted border border-border rounded-lg">
               <div className="text-[11px] font-semibold text-sensitive/70 mb-1">{lim.title}</div>
-              <div className="text-[10px] text-dark-section-fg leading-[1.5]">{lim.text}</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">{lim.text}</div>
             </div>
           ))}
         </div>
@@ -636,12 +636,12 @@ function RegulatoryAlignment() {
           { icon: 'US', color: 'bg-stable/20 border-stable/40 text-stable', title: 'NIST AI RMF 1.0', sub: 'Risk Management Framework', items: ['GOVERN: Governance structures', 'MAP: Context establishment', 'MEASURE: Assessment & benchmarking', 'MANAGE: Risk response actions'] },
           { icon: 'SR', color: 'bg-fragile/20 border-fragile/40 text-fragile', title: 'Swiss Re sigma 01/2026', sub: 'AI Insurance Market Guidance', quote: '"AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."' },
         ].map((r, i) => (
-          <div key={i} className="bg-chrome border border-chrome-border rounded-lg p-4">
+          <div key={i} className="bg-secondary border border-chrome-border rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <div className={`w-8 h-8 rounded-full border flex items-center justify-center text-xs font-bold ${r.color}`}>{r.icon}</div>
               <div>
-                <div className="text-[11px] font-bold text-chrome-fg-bright">{r.title}</div>
-                <div className="text-[9px] text-chrome-fg-muted">{r.sub}</div>
+                <div className="text-[11px] font-bold text-foreground">{r.title}</div>
+                <div className="text-[9px] text-muted-foreground">{r.sub}</div>
               </div>
             </div>
             {'content' in r && r.content ? (
@@ -649,18 +649,18 @@ function RegulatoryAlignment() {
                 {r.content.map((c: {article: string; text: string}, j: number) => (
                   <div key={j} className="flex items-start gap-2">
                     <div className="text-primary font-mono font-bold text-[9px] mt-0.5">{c.article}</div>
-                    <div className="text-chrome-fg leading-[1.4] flex-1">{c.text}</div>
+                    <div className="text-secondary-foreground leading-[1.4] flex-1">{c.text}</div>
                   </div>
                 ))}
               </div>
             ) : 'items' in r && r.items ? (
               <div className="flex flex-col gap-1.5 text-[10px]">
                 {r.items.map((t: string, j: number) => (
-                  <div key={j} className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-stable" /><span className="text-chrome-fg">{t}</span></div>
+                  <div key={j} className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-stable" /><span className="text-secondary-foreground">{t}</span></div>
                 ))}
               </div>
             ) : (
-              <div className="text-[10px] text-chrome-fg leading-[1.5]">{r.quote}</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">{r.quote}</div>
             )}
           </div>
         ))}
@@ -675,11 +675,11 @@ function RegulatoryAlignment() {
 
 function ResearchFoundation() {
   return (
-    <div className="bg-dark-section border border-dark-section-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
       <div className="flex">
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px_18px]">
-          <div className="text-[9px] tracking-wider uppercase text-dark-section-fg font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
+          <div className="text-[9px] tracking-wider uppercase text-secondary-foreground font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
           <div className="grid grid-cols-3 gap-[14px]">
             {[
               { title: 'Paper I · EU AI Act Blind Spots', text: 'Risk-based regulation governs deployment — not continuation. Systems persist without re-authorisation. This engine operationalises that gap as a measurable AFI signal.' },
@@ -688,12 +688,12 @@ function ResearchFoundation() {
             ].map((p, i) => (
               <div key={i}>
                 <div className="text-[10px] font-semibold text-primary/60 mb-[3px]">{p.title}</div>
-                <div className="text-[10px] text-dark-section-fg/80 leading-[1.5]">{p.text}</div>
+                <div className="text-[10px] text-secondary-foreground/80 leading-[1.5]">{p.text}</div>
               </div>
             ))}
           </div>
-          <div className="mt-[10px] pt-2 border-t border-dark-section-border text-[10px] text-dark-section-fg/70">
-            AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. The EU AI Act 2029 review cycle creates the regulatory mandate. <span className="text-dark-section-fg">Buyers who adopt this framework now are 3 years ahead of enforcement.</span>
+          <div className="mt-[10px] pt-2 border-t border-border text-[10px] text-secondary-foreground/70">
+            AGAF, M. (Feb 2026) — Working Papers on AI Continuation Governance. The EU AI Act 2029 review cycle creates the regulatory mandate. <span className="text-secondary-foreground">Buyers who adopt this framework now are 3 years ahead of enforcement.</span>
           </div>
         </div>
       </div>
@@ -716,14 +716,14 @@ function CompetitivePositioning() {
           { title: 'vs. Compliance Audit Tools', what: 'EU AI Act compliance checklists, FRIA generators', gap: 'Binary compliance — not risk quantification', miss: ['Compliance ≠ governance — compliant system can be fragile', 'No premium loading recommendations', 'No loss envelope estimation', 'No underwriter decision support'], borderColor: 'border-primary/30' },
           { title: 'vs. Manual Underwriting', what: 'Traditional questionnaire review', gap: 'Subjective, non-systematic, high variance', miss: ['Reproducible scoring methodology', 'Quantified fragility thresholds', 'Structured constructs (AFI, MDR, RFSI)', 'Scalable across portfolio'], borderColor: 'border-border' },
         ].map((c, i) => (
-          <div key={i} className={`bg-chrome border ${c.borderColor} rounded-lg p-4`}>
-            <div className="text-[11px] font-bold text-chrome-fg-bright mb-1">{c.title}</div>
-            <div className="text-[9px] text-chrome-fg-muted mb-2 italic">{c.what}</div>
-            <div className="text-[10px] text-chrome-fg leading-[1.4] mb-3"><strong className="text-chrome-fg-bright">Coverage gap:</strong> {c.gap}</div>
-            <div className="text-[9px] font-bold text-chrome-fg-muted mb-1.5 uppercase">What They Miss:</div>
+          <div key={i} className={`bg-secondary border ${c.borderColor} rounded-lg p-4`}>
+            <div className="text-[11px] font-bold text-foreground mb-1">{c.title}</div>
+            <div className="text-[9px] text-muted-foreground mb-2 italic">{c.what}</div>
+            <div className="text-[10px] text-secondary-foreground leading-[1.4] mb-3"><strong className="text-foreground">Coverage gap:</strong> {c.gap}</div>
+            <div className="text-[9px] font-bold text-muted-foreground mb-1.5 uppercase">What They Miss:</div>
             <div className="flex flex-col gap-1">
               {c.miss.map((m, j) => (
-                <div key={j} className="flex items-start gap-1.5 text-[10px] text-chrome-fg"><span className="text-fragile mt-0.5">⊘</span><span className="leading-[1.4]">{m}</span></div>
+                <div key={j} className="flex items-start gap-1.5 text-[10px] text-secondary-foreground"><span className="text-fragile mt-0.5">⊘</span><span className="leading-[1.4]">{m}</span></div>
               ))}
             </div>
           </div>
@@ -769,24 +769,24 @@ function APIIntegrationReference() {
         </div>
         <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase bg-primary/10 text-primary border border-primary/30">Integration-Ready</span>
       </div>
-      <div className="mx-5 mb-3 bg-chrome border border-chrome-border rounded-[9px] overflow-hidden">
-        <div className="px-4 py-[10px] bg-chrome border-b border-chrome-border flex items-center gap-[10px]">
+      <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
           <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0d2a1a] text-stable rounded font-mono">POST</span>
-          <code className="text-[11px] text-chrome-fg font-mono">/v1/agaf/assessment</code>
-          <span className="text-[9px] text-chrome-fg-muted ml-auto">Run full governance assessment</span>
+          <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/assessment</code>
+          <span className="text-[9px] text-muted-foreground ml-auto">Run full governance assessment</span>
         </div>
         <div className="p-[14px_16px]">
-          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-chrome-fg-muted mb-2">Request Body</div>
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">Request Body</div>
           <pre className="text-[10px] text-stable bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto mb-3 leading-[1.6] font-mono">{postRequest}</pre>
-          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-chrome-fg-muted mb-2">Response (200 OK)</div>
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">Response (200 OK)</div>
           <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{postResponse}</pre>
         </div>
       </div>
-      <div className="mx-5 mb-3 bg-chrome border border-chrome-border rounded-[9px] overflow-hidden">
-        <div className="px-4 py-[10px] bg-chrome border-b border-chrome-border flex items-center gap-[10px]">
+      <div className="mx-5 mb-3 bg-secondary border border-chrome-border rounded-[9px] overflow-hidden">
+        <div className="px-4 py-[10px] bg-secondary border-b border-chrome-border flex items-center gap-[10px]">
           <span className="text-[10px] font-bold px-2 py-[3px] bg-[#0a1e2e] text-[#5090d0] rounded font-mono">GET</span>
-          <code className="text-[11px] text-chrome-fg font-mono">/v1/agaf/portfolio/concentration</code>
-          <span className="text-[9px] text-chrome-fg-muted ml-auto">Returns correlated exposure</span>
+          <code className="text-[11px] text-secondary-foreground font-mono">/v1/agaf/portfolio/concentration</code>
+          <span className="text-[9px] text-muted-foreground ml-auto">Returns correlated exposure</span>
         </div>
         <div className="p-[14px_16px]">
           <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
