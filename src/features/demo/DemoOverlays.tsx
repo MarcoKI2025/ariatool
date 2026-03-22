@@ -93,7 +93,7 @@ export function CompanyDemoOverlay() {
 
 export function DemoPitchOverlay() {
   const [open, setOpen] = useState(false);
-  const { setInputs, runAnalysis, setPerspective } = useApp();
+  const { setInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
 
   useEffect(() => {
     const handler = () => setOpen(true);
@@ -113,6 +113,16 @@ export function DemoPitchOverlay() {
     document.addEventListener('load-demo-meridian', handler);
     return () => document.removeEventListener('load-demo-meridian', handler);
   }, [setInputs, runAnalysis, setPerspective]);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.perspective) setPerspective(detail.perspective);
+      if (detail?.step) setActiveStep(detail.step);
+    };
+    document.addEventListener('navigate-to-step', handler);
+    return () => document.removeEventListener('navigate-to-step', handler);
+  }, [setPerspective, setActiveStep]);
 
   return <DemoPitchModal open={open} onClose={() => setOpen(false)} />;
 }
