@@ -340,9 +340,9 @@ function Slide5() {
       <div className="grid grid-cols-6 gap-0 mb-5">
         {steps.map((s, i) => (
           <div key={i} className="text-center px-1 relative py-3">
-            {i < steps.length - 1 && <span className="absolute right-[-8px] top-[38%] text-[#6a6858] text-[13px]">→</span>}
+            {i < steps.length - 1 && <span className="absolute right-[-8px] top-[38%] text-[#9e9a90] text-[13px]">→</span>}
             <div className="w-8 h-8 rounded-full flex items-center justify-center text-[12px] mx-auto mb-[7px] border-2" style={{ background: s.bg, borderColor: s.border, color: s.color }}>{s.num}</div>
-            <div className="text-[8px] font-bold uppercase tracking-[0.03em] text-[#888478] leading-[1.3] mb-1">{s.label}</div>
+            <div className="text-[8px] font-bold uppercase tracking-[0.03em] text-[#b8b4a8] leading-[1.3] mb-1">{s.label}</div>
             <div className="text-[10px] font-bold font-mono" style={{ color: s.color }}>{s.value}</div>
           </div>
         ))}
