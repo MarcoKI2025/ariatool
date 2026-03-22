@@ -709,7 +709,7 @@ function CompetitivePositioning() {
   return (
     <div className="bg-card border border-border rounded-xl p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Competitive Positioning · What This Engine Does Differently</div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
           { title: 'vs. Standard Cyber Insurance', what: 'Traditional cyber/E&O policies', gap: 'Coverage designed for network breaches — not AI-specific structural risks', miss: ['Continuation risk (persists without re-authorisation)', 'Provider concentration (cascade exposure)', 'Responsibility fragmentation (unclear ownership)', 'Behavioral drift (alignment decay)'], borderColor: 'border-fragile/30' },
           { title: 'vs. Parametric AI Solutions', what: 'Munich Re aiSure, Armilla parametric triggers', gap: 'Event-triggered payouts without governance assessment', miss: ['Pre-incident structural fragility assessment', 'Governance posture baseline', 'Committee intake workflow', 'Underwriting decision support signals'], borderColor: 'border-sensitive/30' },
