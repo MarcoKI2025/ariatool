@@ -39,7 +39,7 @@ function AppContent() {
       <AppSidebar />
       <div className="app-main flex-1 flex flex-col overflow-hidden min-w-0">
         <AppHeader />
-        <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-5 pb-16 md:p-8 md:pb-20 lg:p-10 lg:pb-24">
+        <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-6 pb-20 md:p-10 md:pb-24 lg:p-14 lg:pb-32">
           {renderStep()}
         </main>
       </div>

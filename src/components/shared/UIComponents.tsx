@@ -207,7 +207,7 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
           {value}
         </span>
       </div>
-      <div className="text-[11px] text-muted-foreground mb-[6px]">{description}</div>
+      <div className="text-[11px] text-muted-foreground mb-2">{description}</div>
       <input
         type="range"
         min={min}
