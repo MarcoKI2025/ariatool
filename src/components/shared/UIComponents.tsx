@@ -136,7 +136,7 @@ export function Banner({ band, title, children }: BannerProps) {
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[5px]">
         Executive Signal
       </div>
-      <div className={`text-[18px] font-extrabold tracking-[0.01em] mb-[14px] ${titleColor}`}>
+      <div className={`text-[18px] font-extrabold tracking-[0.01em] mb-5 ${titleColor}`}>
         {title}
       </div>
       {children}
