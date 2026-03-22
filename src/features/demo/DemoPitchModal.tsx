@@ -496,7 +496,7 @@ function Slide9({ onClose }: { onClose: () => void }) {
         <div className="p-3 bg-[#0e100e] border border-[#2a2820] rounded-[9px] text-center">
           <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">12-Month Growth</div>
           <div className="text-[22px] font-bold font-mono text-[#ffc040]">+35%</div>
-          <div className="text-[9px] text-[#686460] mt-[2px]">If nothing changes</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">If nothing changes</div>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4 text-[9px]">
