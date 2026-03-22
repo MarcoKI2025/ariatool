@@ -329,7 +329,7 @@ export function InsuranceDecision() {
                 <span className="text-[18px] flex-shrink-0">{consIcon}</span>
                 <div className={`text-[11px] leading-[1.55] ${rationaleColorMap[statusCls]}`}>{consTxt}</div>
               </div>
-              <div className="grid grid-cols-4 gap-4 text-[10px]">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[10px]">
                 {[
                   { label: 'Decision Basis:', value: `AFI ${afi.toFixed(2)} · ${band} · ${afi >= 1.35 ? 'Above tolerance' : afi >= 0.85 ? 'Approaching threshold' : 'Within tolerance'}` },
                   { label: 'Valid Until:', value: band === 'Fragile' ? 'Next structural re-assessment' : 'Until next renewal or material change' },
