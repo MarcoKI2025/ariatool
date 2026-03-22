@@ -5,6 +5,7 @@ export interface SliderConfig {
   name: string;
   description: string;
   tooltip: string;
+  explainText?: string;
   min: number;
   max: number;
   defaultValue: number;
