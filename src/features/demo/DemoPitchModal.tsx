@@ -77,8 +77,8 @@ export function DemoPitchModal({ open, onClose }: DemoPitchModalProps) {
           {currentSlide === 5 && <Slide5 />}
           {currentSlide === 6 && <Slide6 />}
           {currentSlide === 7 && <Slide7 />}
-          {currentSlide === 8 && <Slide8 />}
-          {currentSlide === 9 && <Slide9 />}
+          {currentSlide === 8 && <Slide8 onClose={onClose} />}
+          {currentSlide === 9 && <Slide9 onClose={onClose} />}
         </div>
 
         {/* Footer */}
@@ -439,7 +439,7 @@ function Slide7() {
 // SLIDE 8: THE DECISION / CTA
 // ═══════════════════════════════════════════════════════════════════
 
-function Slide8() {
+function Slide8({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow>The Value Proposition · Why AGAF is Acquisition-Ready Infrastructure</Eyebrow>
@@ -455,10 +455,10 @@ function Slide8() {
         <ActionCard num={4} numColor="#9c6200" title="Risk & Governance Consulting" desc="The first client conversation that ends with a binding operational verdict — NOT APPROVED — is a conversation that redefines the engagement scope immediately." />
       </div>
       <div className="flex gap-[10px] justify-center mt-5 flex-wrap">
-        <button className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
+        <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
           ▶ Run Live Analysis — Meridian Financial
         </button>
-        <button className="px-5 py-3 border border-[#2e2c22] text-[#888478] rounded-md text-[13px] font-semibold hover:text-[#e8e4d8] hover:border-[#4a4642] transition-colors">
+        <button onClick={onClose} className="px-5 py-3 border border-[#2e2c22] text-[#888478] rounded-md text-[13px] font-semibold hover:text-[#e8e4d8] hover:border-[#4a4642] transition-colors">
           Explore the System →
         </button>
       </div>
@@ -473,7 +473,7 @@ function Slide8() {
 // SLIDE 9: COMPANY VIEW
 // ═══════════════════════════════════════════════════════════════════
 
-function Slide9() {
+function Slide9({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#60d090">Company View · Financial Decision Engine</Eyebrow>
@@ -514,10 +514,10 @@ function Slide9() {
         </div>
       </div>
       <div className="flex gap-[9px] flex-wrap">
-        <button className="px-5 py-[9px] text-[12px] font-semibold rounded-md text-[#90e8a0] border border-[#2a9050] bg-gradient-to-br from-[#1a6030] to-[#228040] hover:shadow-lg transition-all">
+        <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-5 py-[9px] text-[12px] font-semibold rounded-md text-[#90e8a0] border border-[#2a9050] bg-gradient-to-br from-[#1a6030] to-[#228040] hover:shadow-lg transition-all">
           ◈ Open Company View — Meridian Financial
         </button>
-        <button className="px-[18px] py-[9px] text-[12px] border border-[#2e2c22] text-[#888478] rounded-md font-medium hover:text-[#e8e4d8] transition-colors">
+        <button onClick={onClose} className="px-[18px] py-[9px] text-[12px] border border-[#2e2c22] text-[#888478] rounded-md font-medium hover:text-[#e8e4d8] transition-colors">
           Explore Company View →
         </button>
       </div>

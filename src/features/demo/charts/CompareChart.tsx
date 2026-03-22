@@ -56,5 +56,5 @@ export function CompareChart() {
     return () => { if (chartRef.current) chartRef.current.destroy(); };
   }, []);
 
-  return <canvas ref={canvasRef} height={110} />;
+  return <div style={{ position: 'relative', height: '200px', width: '100%' }}><canvas ref={canvasRef} /></div>;
 }
