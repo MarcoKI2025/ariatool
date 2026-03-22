@@ -517,7 +517,7 @@ export function DecisionIntelligence() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
           {[
             { label: 'Responsibility Fragmentation Score', value: respFragmentation, desc: 'Accountability is partially assigned — gaps exist at provider boundaries and cascade events.' },
             { label: 'Stewardship Clarity Index', value: stewardshipClarity, desc: 'Partial stewardship — oversight assignment exists but authority to sunset the system is unclear.' },
