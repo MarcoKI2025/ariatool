@@ -249,6 +249,28 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     min: 1, max: 5, defaultValue: 1,
     labels: { 1: 'Tested & Monitored', 2: 'Periodic Audits', 3: 'Reactive Mitigation', 4: 'Minimal Testing', 5: 'Untested' }
   },
+  {
+    id: 'dataIntegrity',
+    fieldKey: 'dataIntegrity',
+    category: 'Liability Risk',
+    name: 'Data Supply Chain Integrity',
+    description: 'Confidence in training data provenance and quality',
+    tooltip: 'Assurance that AI training data is accurate, unbiased, and legally obtained. 1 = Full data lineage. 5 = No provenance tracking.',
+    explainText: 'Data supply chain integrity is the "upstream" equivalent of prompt injection. A compromised data vendor or poisoned training dataset can corrupt every decision the AI makes — systematically and invisibly. The EU AI Act (Art. 10) mandates data governance for high-risk AI systems.',
+    min: 1, max: 5, defaultValue: 2,
+    labels: { 1: 'Full Lineage', 2: 'Known Sources', 3: 'Partial Lineage', 4: 'Unknown Sources', 5: 'No Tracking' }
+  },
+  {
+    id: 'esgAlignment',
+    fieldKey: 'esgLiability',
+    category: 'Liability Risk',
+    name: 'ESG / Climate Risk Alignment',
+    description: 'Exposure to climate-related AI infrastructure risks',
+    tooltip: 'Vulnerability to climate/ESG risks in AI supply chain. Water usage, energy grid stress, physical location risks.',
+    explainText: 'AI data centres consume enormous energy and water resources. A single GPT-4 training run consumes as much electricity as 120 US homes use in a year. Regulatory ESG disclosure requirements (CSRD, SFDR) increasingly cover AI infrastructure dependencies.',
+    min: 1, max: 5, defaultValue: 2,
+    labels: { 1: 'Low ESG Risk', 2: 'Moderate ESG Risk', 3: 'Some ESG Exposure', 4: 'High ESG Risk', 5: 'Critical ESG Risk' }
+  },
 ];
 
 // ══════════════════════════════════════════════════════════
