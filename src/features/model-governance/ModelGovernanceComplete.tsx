@@ -777,7 +777,7 @@ function APIIntegrationReference() {
         </div>
         <div className="p-[14px_16px]">
           <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">Request Body</div>
-          <pre className="text-[10px] text-stable bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto mb-3 leading-[1.6] font-mono">{postRequest}</pre>
+          <pre className="text-[10px] text-stable bg-secondary border border-border rounded-md p-3 overflow-x-auto mb-3 leading-[1.6] font-mono">{postRequest}</pre>
           <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2">Response (200 OK)</div>
           <pre className="text-[10px] text-primary bg-[#080807] border border-chrome-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{postResponse}</pre>
         </div>
