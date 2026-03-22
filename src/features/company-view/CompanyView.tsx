@@ -103,7 +103,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
       {/* Row 1: Risk Index + Characterization + Industry */}
       <div className="grid grid-cols-1 md:grid-cols-3 border-b border-border" style={{ paddingTop: 4 }}>
         {/* AI Risk Index */}
-        <div className="flex flex-col items-center justify-center text-center p-8 md:border-r border-border">
+        <div className="flex flex-col items-center justify-center text-center p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-4">AI Risk Index</div>
           <div className="relative mb-4" style={{ width: 110, height: 110 }}>
             <svg viewBox="0 0 110 110" style={{ width: 110, height: 110, transform: 'rotate(-90deg)' }}>
