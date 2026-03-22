@@ -82,6 +82,12 @@ function computeSCRI(inputs: ExposureInputs): number {
   return scri;
 }
 
+function computeCompositeRiskIndex(afi: number, alri: number, agri: number): number {
+  const afiNorm = Math.min(100, Math.round((afi / 3.0) * 100));
+  const composite = Math.round(afiNorm * 0.50 + alri * 0.30 + agri * 0.20);
+  return Math.min(100, composite);
+}
+
 function computeMDR(inputs: ExposureInputs): { mdr: number; mdrTier: string; mdrLabel: string } {
   const auto = inputs.automation / 5;
   const dens = inputs.actionDensity / 5;
