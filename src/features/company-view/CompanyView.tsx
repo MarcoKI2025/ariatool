@@ -745,7 +745,7 @@ export function CompanyView() {
       </div>
 
       {/* REGULATORY READINESS */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance & Regulatory Readiness</div>
           <div className="text-xl font-bold text-foreground">Are You Ready for August 2026?</div>
