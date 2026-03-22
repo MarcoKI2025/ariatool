@@ -768,7 +768,7 @@ export function InsuranceDecision() {
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-fragile mb-[6px]">⚖ EU AI Act — Art. 99 Regulatory Penalty Exposure</div>
           <div className="text-[13px] font-bold text-foreground mb-1">Statutory fine ceilings applicable to this deployment</div>
           <div className="text-[11px] text-secondary-foreground leading-[1.5] mb-[14px]">Penalties apply independently of AFI score or insurance status. A system within underwriting tolerance can still incur maximum fines.</div>
-          <div className="grid grid-cols-3 gap-3 mb-[14px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-[14px]">
             <div className="bg-fragile-bg border border-fragile-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-[0.09em] uppercase text-fragile mb-[6px]">Art. 99 §3 · Prohibited Practices</div>
               <div className="text-[24px] font-bold font-mono text-fragile leading-none mb-1">€35M</div>
