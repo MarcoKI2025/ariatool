@@ -18,6 +18,15 @@ export function ExposureAnalysis() {
   const { inputs, analysisComplete } = state;
   const [dismissedWelcome, setDismissedWelcome] = useState(false);
   const [showForm, setShowForm] = useState(!analysisComplete);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleRunAnalysis = useCallback(() => {
+    setIsLoading(true);
+    setTimeout(() => {
+      runAnalysis();
+      setTimeout(() => setIsLoading(false), 500);
+    }, 5000);
+  }, [runAnalysis]);
 
   const preview = useMemo(() => computeLivePreview(inputs), [inputs]);
 
