@@ -565,7 +565,7 @@ export function InsuranceDecision() {
       {/* ═══ 18. WHAT THE INSURER PORTFOLIO SEES (dark) ═══ */}
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-2">◆ What the insurer portfolio sees</div>
-        <div className="grid grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { label: 'Direct Entity Loss', value: formatCurrency(lossEnvelope.expected), color: 'text-sensitive' },
             { label: 'Correlated Cluster', value: formatCurrency(lossEnvelope.stress), color: 'text-fragile' },
