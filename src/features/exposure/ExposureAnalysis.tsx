@@ -318,13 +318,15 @@ export function ExposureAnalysis() {
 
       {/* Bottom action bar - PURPLE like HTML */}
       <div className="fixed bottom-0 left-[236px] right-0 bg-primary flex items-center justify-center flex-col gap-1 px-[28px] py-[14px] z-10 border-t border-white/10">
-        <button onClick={runAnalysis} className="text-white text-[14px] font-semibold bg-transparent border-none cursor-pointer tracking-[0.01em]">
+        <button onClick={handleRunAnalysis} className="text-white text-[14px] font-semibold bg-transparent border-none cursor-pointer tracking-[0.01em]">
           ⊕ Generate AI Risk Assessment
         </button>
         <div className="text-[10px] text-white/40 tracking-[0.04em]">
           {inputs.companyName ? `${inputs.companyName} · ` : ''}AFI {preview.afi.toFixed(2)} · {preview.band} · 28 inputs
         </div>
       </div>
+
+      <LoadingOverlay isVisible={isLoading} />
     </div>
   );
 }
