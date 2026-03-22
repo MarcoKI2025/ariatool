@@ -422,7 +422,7 @@ function Slide7() {
         <div className="bg-[#1a0c00] border border-[#5a3000] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#9c6200] uppercase tracking-[0.08em] mb-1">Art. 99 §4 · Applies Aug 2026</div>
           <div className="font-mono text-[20px] font-bold text-[#ffc040] mb-1">€15M</div>
-          <div className="text-[9px] text-[#686458] leading-[1.5]">High-risk AI deployer obligations. Up to 3% global turnover.</div>
+          <div className="text-[9px] text-[#b0aca0] leading-[1.5]">High-risk AI deployer obligations. Up to 3% global turnover.</div>
         </div>
         <div className="bg-[#0e1a28] border border-[#1a3858] rounded-lg p-3">
           <div className="text-[8px] font-bold text-[#4888c0] uppercase tracking-[0.08em] mb-1">Art. 113(3) · Aug 2025</div>
