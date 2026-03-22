@@ -36,7 +36,7 @@ function CvAfiGauge({ afi, band }: { afi: number; band: string }) {
     const norm = Math.min(afi, maxAFI);
     chartRef.current = new Chart(ctx, {
       type: 'doughnut',
-      data: { datasets: [{ data: [norm, maxAFI - norm], backgroundColor: [color, '#2a2820'], borderWidth: 0, circumference: 180, rotation: 270 }] },
+      data: { datasets: [{ data: [norm, maxAFI - norm], backgroundColor: [color, '#e1e4e8'], borderWidth: 0, circumference: 180, rotation: 270 }] },
       options: { responsive: false, maintainAspectRatio: false, cutout: '72%', plugins: { legend: { display: false }, tooltip: { enabled: false } } },
       plugins: [{
         id: 'cvCenter',
@@ -107,7 +107,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8 }}>AI Risk Index</div>
             <div style={{ position: 'relative', width: 88, height: 88, margin: '0 auto 8px' }}>
               <svg viewBox="0 0 88 88" style={{ width: 88, height: 88, transform: 'rotate(-90deg)' }}>
-                <circle cx="44" cy="44" r="36" fill="none" stroke="hsl(var(--bd))" strokeWidth="8" />
+                <circle cx="44" cy="44" r="36" fill="none" stroke="#e1e4e8" strokeWidth="8" />
                 <circle cx="44" cy="44" r="36" fill="none" stroke={riskColor} strokeWidth="8" strokeDasharray="226" strokeDashoffset={ringOffset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease, stroke .3s' }} />
               </svg>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
