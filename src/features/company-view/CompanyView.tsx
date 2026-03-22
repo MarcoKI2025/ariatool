@@ -701,49 +701,51 @@ export function CompanyView() {
       <StrategicInterpretation band={band} components={components} />
 
       {/* COST DRIVERS */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20, paddingBottom: 14 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Cost Drivers</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>What's Driving Your Insurance Cost</div>
-          <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 4 }}>Ranked by impact on annual premium. Address high-impact drivers first for maximum cost reduction.</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Cost Drivers</div>
+          <div className="text-xl font-bold text-foreground">What's Driving Your Insurance Cost</div>
+          <div className="text-[12px] text-secondary-foreground mt-2">Ranked by impact on annual premium. Address high-impact drivers first for maximum cost reduction.</div>
         </div>
-        {drivers.map((d, i) => (
-          <div key={i} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 100px', gap: 20, padding: '18px 22px', background: 'hsl(var(--sf))', border: '1px solid hsl(var(--bd))', borderRadius: 12, marginBottom: 8, alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: 'hsl(var(--tx))', marginBottom: 5 }}>{d.label}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.5 }}>{d.sub}</div>
-            </div>
-            <div>
-              <div style={{ height: 10, background: 'hsl(var(--s2))', borderRadius: 5, overflow: 'hidden' }}>
-                <div style={{ height: '100%', borderRadius: 5, width: `${d.pct}%`, background: d.level === 'high' ? 'linear-gradient(90deg, hsl(var(--red)), #d85040)' : d.level === 'medium' ? 'linear-gradient(90deg, hsl(var(--amb)), #c88000)' : 'linear-gradient(90deg, hsl(var(--grn)), #208040)' }} />
+        <div className="flex flex-col gap-3">
+          {drivers.map((d, i) => (
+            <div key={i} className="grid grid-cols-[240px_1fr_120px] gap-6 p-6 bg-card border border-border rounded-2xl items-center shadow-sm">
+              <div>
+                <div className="text-sm font-bold text-foreground mb-1.5">{d.label}</div>
+                <div className="text-[12px] text-secondary-foreground leading-relaxed">{d.sub}</div>
               </div>
+              <div>
+                <div className="h-3 bg-secondary rounded-md overflow-hidden">
+                  <div className="h-full rounded-md" style={{ width: `${d.pct}%`, background: d.level === 'high' ? 'linear-gradient(90deg, hsl(var(--red)), #d85040)' : d.level === 'medium' ? 'linear-gradient(90deg, hsl(var(--amb)), #c88000)' : 'linear-gradient(90deg, hsl(var(--grn)), #208040)' }} />
+                </div>
+              </div>
+              <div className="text-right text-[13px] font-bold font-mono" style={{ color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
             </div>
-            <div style={{ textAlign: 'right', fontSize: 12, fontWeight: 700, fontFamily: 'var(--font-mono)', color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* PREMIUM REDUCTION LEVERS */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Premium Reduction Levers</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>Three Actions to Reduce Your AI Insurance Cost</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Premium Reduction Levers</div>
+          <div className="text-xl font-bold text-foreground">Three Actions to Reduce Your AI Insurance Cost</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 8 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {levers.map(l => (
-            <div key={l.rank} className="card" style={{ borderRadius: 14, padding: 24, position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, width: 4, bottom: 0, background: 'hsl(var(--grn))', borderRadius: '14px 0 0 14px' }} />
-              <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: 'hsl(var(--grn))' }}>{l.rank}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.25 }}>{l.title}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6, flex: 1 }}>{l.body}</div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'hsl(var(--gb))', border: '1px solid hsl(var(--gbr))', borderRadius: 9, padding: '12px 16px' }}>
-                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.07em', textTransform: 'uppercase', color: 'hsl(var(--grn))' }}>Est. Saving</span>
-                <span style={{ fontSize: 16, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--grn))' }}>{l.saving}</span>
+            <div key={l.rank} className="bg-card border border-border rounded-2xl shadow-sm p-7 relative overflow-hidden flex flex-col gap-4">
+              <div className="absolute top-0 left-0 w-1 bottom-0 bg-stable rounded-l-2xl" />
+              <div className="w-8 h-8 rounded-full bg-stable-bg border border-stable-border flex items-center justify-center text-[11px] font-bold text-stable">{l.rank}</div>
+              <div className="text-[15px] font-bold text-foreground leading-snug">{l.title}</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed flex-1">{l.body}</div>
+              <div className="flex items-center justify-between bg-stable-bg border border-stable-border rounded-xl p-4">
+                <span className="text-[10px] font-bold tracking-[0.07em] uppercase text-stable">Est. Saving</span>
+                <span className="text-lg font-bold font-mono text-stable">{l.saving}</span>
               </div>
-              <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-                <span style={{ fontSize: 9, fontWeight: 600, padding: '2px 7px', borderRadius: 3, background: 'hsl(var(--rb))', color: 'hsl(var(--red))' }}>{l.before}</span>
-                <span style={{ fontSize: 10, color: 'hsl(var(--t3))' }}>→</span>
-                <span style={{ fontSize: 9, fontWeight: 600, padding: '2px 7px', borderRadius: 3, background: 'hsl(var(--gb))', color: 'hsl(var(--grn))' }}>{l.after}</span>
+              <div className="flex gap-2 items-center">
+                <span className="text-[10px] font-semibold py-1 px-2.5 rounded bg-fragile-bg text-fragile">{l.before}</span>
+                <span className="text-[11px] text-muted-foreground">→</span>
+                <span className="text-[10px] font-semibold py-1 px-2.5 rounded bg-stable-bg text-stable">{l.after}</span>
               </div>
             </div>
           ))}
@@ -751,49 +753,49 @@ export function CompanyView() {
       </div>
 
       {/* REGULATORY READINESS */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Governance & Regulatory Readiness</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>Are You Ready for August 2026?</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance & Regulatory Readiness</div>
+          <div className="text-xl font-bold text-foreground">Are You Ready for August 2026?</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 12 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
             { name: 'Oversight Maturity', level: components.jd > 0.6 ? 'green' : components.jd > 0.4 ? 'yellow' : 'red', label: components.jd > 0.6 ? 'Adequate' : components.jd > 0.4 ? 'Partial' : 'Insufficient', body: 'Human oversight density and governance review frequency. Art. 14 requires "appropriate" human oversight.', why: 'Directly affects insurability and premium loading' },
             { name: 'Deployer Obligation Readiness', level: components.dr < 0.4 ? 'green' : components.dr < 0.6 ? 'yellow' : 'red', label: components.dr < 0.4 ? 'On Track' : components.dr < 0.6 ? 'Gaps Identified' : 'Not Ready', body: 'Readiness for Art. 26 deployer obligations (Aug 2026). Includes FRIA, incident reporting, post-market monitoring.', why: 'Non-compliance: up to €15M / 3% global turnover' },
             { name: 'Post-Market Monitoring', level: 'yellow', label: 'Under Development', body: 'Art. 72 requires continuous monitoring systems. Most deployments currently lack structured AI-specific monitoring.', why: 'Required for all high-risk AI from Aug 2026' },
           ].map((r, i) => (
-            <div key={i} className="card" style={{ borderRadius: 12, padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ width: 12, height: 12, borderRadius: '50%', background: r.level === 'green' ? '#18a050' : r.level === 'yellow' ? '#e09000' : '#c03020', animation: r.level !== 'green' ? 'pulse-dot 2s infinite' : undefined }} />
-                <span style={{ fontSize: 12, fontWeight: 700, color: r.level === 'green' ? 'hsl(var(--grn))' : r.level === 'yellow' ? 'hsl(var(--amb))' : 'hsl(var(--red))' }}>{r.label}</span>
+            <div key={i} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full" style={{ background: r.level === 'green' ? '#18a050' : r.level === 'yellow' ? '#e09000' : '#c03020', animation: r.level !== 'green' ? 'pulse-dot 2s infinite' : undefined }} />
+                <span className="text-[13px] font-bold" style={{ color: r.level === 'green' ? 'hsl(var(--grn))' : r.level === 'yellow' ? 'hsl(var(--amb))' : 'hsl(var(--red))' }}>{r.label}</span>
               </div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'hsl(var(--tx))' }}>{r.name}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.6 }}>{r.body}</div>
-              <div style={{ fontSize: 9, color: 'hsl(var(--t3))', paddingTop: 6, borderTop: '1px solid hsl(var(--bd))' }}>{r.why}</div>
+              <div className="text-sm font-bold text-foreground">{r.name}</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed">{r.body}</div>
+              <div className="text-[10px] text-muted-foreground pt-3 border-t border-border">{r.why}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* ACTION PLAN */}
-      <div style={{ padding: '28px 36px 0' }}>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 4 }}>Recommended Action Plan</div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: 'hsl(var(--tx))' }}>What To Do Next</div>
+      <div className="px-10 pt-10">
+        <div className="mb-6">
+          <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Recommended Action Plan</div>
+          <div className="text-xl font-bold text-foreground">What To Do Next</div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
             { num: '1', title: 'Schedule AI Governance Review', body: 'Book a 90-minute governance review session with your risk committee. Use this assessment as the agenda basis. Focus on the three cost drivers identified above.', horizon: 'This Week' },
             { num: '2', title: 'Document AI System Inventory', body: 'Create a structured inventory of all AI systems, their providers, integration points, and decision authority. This is a prerequisite for EU AI Act Art. 26 compliance.', horizon: '30 Days' },
             { num: '3', title: 'Engage Insurance Broker', body: 'Share this assessment with your insurance broker or risk advisor. Use the pricing simulator outputs to start a conversation about AI-specific coverage terms.', horizon: '60 Days' },
           ].map(a => (
-            <div key={a.num} className="card" style={{ borderRadius: 14, padding: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div style={{ width: 32, height: 32, borderRadius: 9, background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--pur))' }}>{a.num}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: 'hsl(var(--tx))', lineHeight: 1.25 }}>{a.title}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', lineHeight: 1.65, flex: 1 }}>{a.body}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <div style={{ width: 6, height: 6, borderRadius: '50%', background: 'hsl(var(--pur))' }} />
-                <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'hsl(var(--pur))' }}>{a.horizon}</span>
+            <div key={a.num} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-4">
+              <div className="w-9 h-9 rounded-xl bg-purple-bg border border-purple-border flex items-center justify-center text-sm font-bold font-mono text-primary">{a.num}</div>
+              <div className="text-[15px] font-bold text-foreground leading-snug">{a.title}</div>
+              <div className="text-[12px] text-secondary-foreground leading-[1.7] flex-1">{a.body}</div>
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                <span className="text-[10px] font-bold tracking-[0.06em] uppercase text-primary">{a.horizon}</span>
               </div>
             </div>
           ))}
@@ -801,12 +803,12 @@ export function CompanyView() {
       </div>
 
       {/* FOOTER CTA */}
-      <div style={{ margin: '28px 36px', padding: '28px 32px', background: 'hsl(var(--pb))', border: '1px solid hsl(var(--pbr))', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
-        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', lineHeight: 1.5 }}>
-          <strong style={{ fontSize: 15, fontWeight: 700, display: 'block', marginBottom: 4, color: 'hsl(var(--tx))' }}>Ready to take action?</strong>
+      <div className="mx-10 my-10 p-8 bg-purple-bg border border-purple-border rounded-2xl flex items-center justify-between gap-6">
+        <div className="text-sm text-secondary-foreground leading-relaxed">
+          <strong className="text-base font-bold block mb-1 text-foreground">Ready to take action?</strong>
           Download the executive report for your board, or switch to the Underwriter View for the full structural analysis.
         </div>
-        <button onClick={() => setPerspective('underwriter')} className="btn-p" style={{ padding: '13px 26px', fontSize: 13, borderRadius: 9, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
+        <button onClick={() => setPerspective('underwriter')} className="btn-p" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
       </div>
     </div>
   );
