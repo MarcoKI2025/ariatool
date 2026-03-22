@@ -392,7 +392,7 @@ export function InsuranceDecision() {
       {/* ═══ 10. PREMIUM ESTIMATE ROW ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Premium Estimate & Structural Factors</div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AFI Score</div>
             <div className={`text-[28px] font-bold font-mono leading-none ${bandColor}`}>{afi.toFixed(2)}</div>
