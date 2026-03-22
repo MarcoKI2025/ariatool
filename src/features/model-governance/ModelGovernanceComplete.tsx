@@ -123,7 +123,7 @@ function ModelGovernanceRegister() {
               'Cross-entity correlation unmodelled (independence assumed)',
               'Non-EU jurisdictions require separate calibration',
             ].map((f, i) => (
-              <div key={i} className="text-[10px] text-secondary-foreground px-2 py-1 bg-[#1a0606] rounded border-l-2 border-fragile">{f}</div>
+              <div key={i} className="text-[10px] text-foreground px-2 py-1.5 bg-fragile-bg rounded border-l-2 border-fragile">{f}</div>
             ))}
           </div>
         </div>
