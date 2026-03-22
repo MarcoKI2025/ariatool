@@ -294,9 +294,9 @@ export function ExposureResults() {
 
       {/* Continuation Paradox callout */}
       <div className="p-4 px-5 bg-chrome rounded-[10px] mb-4 border-l-4 border-l-primary">
-        <div className="text-[9px] tracking-wider uppercase text-[#a8a49c] font-bold mb-[6px]">The Continuation Paradox — Why This Risk Is Invisible</div>
-        <div className="text-[13px] font-semibold text-white leading-[1.4] mb-[5px] italic">"Agentic AI works often enough to be trusted — the Autopilot Effect quietly reduces oversight — and makes manual intervention feel like unnecessary friction."</div>
-        <div className="text-[10px] text-[#c8c4b8] leading-[1.5]">The more reliable a system becomes, the harder it is to question its continued existence. Performance-based legitimacy erodes governance leverage. <span className="text-[#a8a49c]">— AGAF, 2026</span></div>
+        <div className="text-[9px] tracking-wider uppercase text-chrome-fg-muted font-bold mb-[6px]">The Continuation Paradox — Why This Risk Is Invisible</div>
+        <div className="text-[13px] font-semibold text-chrome-fg-bright leading-[1.4] mb-[5px] italic">"Agentic AI works often enough to be trusted — the Autopilot Effect quietly reduces oversight — and makes manual intervention feel like unnecessary friction."</div>
+        <div className="text-[10px] text-chrome-fg leading-[1.5]">The more reliable a system becomes, the harder it is to question its continued existence. Performance-based legitimacy erodes governance leverage. <span className="text-chrome-fg-muted">— AGAF, 2026</span></div>
       </div>
 
       {/* Loss envelope */}
