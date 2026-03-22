@@ -31,7 +31,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
-      <div className={`rounded-xl p-8 mb-4 border-2 relative overflow-hidden ${
+      <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${
         band === 'Fragile' ? 'bg-card border-fragile' :
         band === 'Sensitive' ? 'bg-card border-sensitive' :
         'bg-card border-stable'
