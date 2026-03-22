@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
+import { DemoPitchModal } from './DemoPitchModal';
 
 export function CompanyDemoOverlay() {
   const [open, setOpen] = useState(false);
