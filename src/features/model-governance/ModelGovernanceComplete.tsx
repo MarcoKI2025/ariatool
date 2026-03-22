@@ -138,7 +138,7 @@ function ModelGovernanceRegister() {
               { ok: false, text: 'Standalone pricing / reserving' },
               { ok: false, text: 'Treaty structuring without actuarial validation' },
             ].map((u, i) => (
-              <div key={i} className={`text-[10px] px-[7px] py-[3px] rounded ${u.ok ? 'text-[#60d090] bg-[#0e2a18]' : 'text-[#ff6b5b] bg-[#1a0606]'}`}>
+              <div key={i} className={`text-[10px] px-[7px] py-[3px] rounded ${u.ok ? 'text-stable bg-stable-bg' : 'text-fragile bg-fragile-bg'}`}>
                 {u.ok ? '✓' : '✗'} {u.text}
               </div>
             ))}
