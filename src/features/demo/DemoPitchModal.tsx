@@ -111,25 +111,25 @@ function Eyebrow({ children, dotColor = '#4038b8' }: { children: React.ReactNode
   return (
     <div className="flex items-center gap-2 mb-4">
       <div className="w-[5px] h-[5px] rounded-full" style={{ backgroundColor: dotColor }} />
-      <span className="text-[10px] font-bold tracking-[0.12em] uppercase text-[#585650]">{children}</span>
+      <span className="text-[10px] font-bold tracking-[0.12em] uppercase text-[#a8a49c]">{children}</span>
     </div>
   );
 }
 
 function DmH1({ children }: { children: React.ReactNode }) {
-  return <h1 className="text-[36px] font-bold text-[#e8e4d8] mb-4 leading-[1.1] tracking-tight">{children}</h1>;
+  return <h1 className="text-[36px] font-bold text-[#eeeadc] mb-4 leading-[1.1] tracking-tight">{children}</h1>;
 }
 
 function BodyText({ children }: { children: React.ReactNode }) {
-  return <p className="text-[15px] text-[#888478] leading-[1.65] mb-7 max-w-[640px]">{children}</p>;
+  return <p className="text-[15px] text-[#b8b4a8] leading-[1.65] mb-7 max-w-[640px]">{children}</p>;
 }
 
 function StatBox({ value, valueColor, label, sublabel }: { value: string; valueColor: string; label: string; sublabel: string }) {
   return (
-    <div className="bg-[#111108] border border-[#2e2c22] rounded-[10px] p-4 min-w-[160px]">
+    <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4 min-w-[160px]">
       <div className="text-[32px] font-bold font-mono leading-none mb-1" style={{ color: valueColor }}>{value}</div>
-      <div className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[#585650]">{label}</div>
-      <div className="text-[10px] text-[#807c70] mt-1">{sublabel}</div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[#a8a49c]">{label}</div>
+      <div className="text-[10px] text-[#9e9a90] mt-1">{sublabel}</div>
     </div>
   );
 }
