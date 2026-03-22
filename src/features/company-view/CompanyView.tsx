@@ -476,7 +476,7 @@ export function CompanyView() {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_340px] gap-0 px-4 sm:px-7 py-5">
           {/* LEFT: Input controls */}
           <div className="pr-0 md:pr-6 md:border-r border-b md:border-b-0 border-border pb-5 md:pb-0 flex flex-col gap-4">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-[14px]">
               {/* Autonomy */}
               <div>
                 <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
@@ -502,7 +502,7 @@ export function CompanyView() {
                 </div>
               </div>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-[14px]">
               {/* Criticality */}
               <div>
                 <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
@@ -548,7 +548,7 @@ export function CompanyView() {
           </div>
 
           {/* RIGHT: Live Price Panel */}
-          <div style={{ paddingLeft: 24, display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <div className="pl-0 md:pl-6 flex flex-col gap-0">
             {/* Main price */}
             <div style={{ padding: '18px 20px', background: 'linear-gradient(135deg, hsl(var(--pb)), hsl(var(--s2)))', border: '1px solid hsl(var(--pbr))', borderRadius: 12, marginBottom: 12, position: 'relative', overflow: 'hidden' }}>
               <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 8 }}>Estimated Annual AI Liability Premium</div>
@@ -603,24 +603,24 @@ export function CompanyView() {
       </div>
 
       {/* HERO SECTION */}
-      <div ref={heroRef} className="px-10 pt-10 pb-8">
+      <div ref={heroRef} className="px-4 sm:px-10 pt-6 sm:pt-10 pb-6 sm:pb-8">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full" style={{ background: bandColor, animation: 'pulse-dot 2s infinite' }} />
           Company View · AI Risk Executive Summary · {now}
         </div>
-        <div className="flex items-start justify-between gap-6 mb-2">
-          <div className="text-[36px] font-bold tracking-tight text-foreground">{companyName}</div>
+        <div className="flex items-start justify-between gap-4 sm:gap-6 mb-2">
+          <div className="text-[22px] sm:text-[36px] font-bold tracking-tight text-foreground">{companyName}</div>
           <div className="flex-shrink-0 text-center pt-1">
             <CvAfiGauge afi={afi} band={band} />
             <div className="text-[10px] text-muted-foreground mt-1 tracking-[0.06em] uppercase">Fragility Score</div>
           </div>
         </div>
-        <div className="text-sm text-secondary-foreground mb-10">{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
+        <div className="text-sm text-secondary-foreground mb-6 sm:mb-10">{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Premium card */}
           <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid hsl(var(--pur))` }}>
-            <div className="p-7">
+            <div className="p-4 sm:p-7">
               <div className="text-[10px] font-extrabold tracking-[0.08em] uppercase text-muted-foreground">Estimated Annual AI Insurance Premium</div>
               <div className="text-[30px] font-bold font-mono text-primary mt-3 mb-3">{fmtK(sim.lo)} – {fmtK(sim.hi)}</div>
               <div className="text-[12px] text-secondary-foreground leading-relaxed mb-4">Based on structural governance assessment. Indicative range for committee orientation.</div>
@@ -638,7 +638,7 @@ export function CompanyView() {
 
           {/* Risk card */}
           <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid ${bandColor}` }}>
-            <div className="p-7">
+            <div className="p-4 sm:p-7">
               <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Overall AI Risk</div>
               <div className="text-[24px] font-bold mt-3 mb-3" style={{ color: bandColor }}>{band} — Score {structuralScore}/100</div>
               <div className="text-[12px] text-secondary-foreground leading-relaxed">
@@ -667,7 +667,7 @@ export function CompanyView() {
 
           {/* Regulatory card */}
           <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: '4px solid hsl(var(--amb))' }}>
-            <div className="p-7">
+            <div className="p-4 sm:p-7">
               <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Regulatory Exposure</div>
               <div className="text-[24px] font-bold text-sensitive mt-3 mb-3">High-Risk (Annex III)</div>
               <div className="text-[12px] text-secondary-foreground leading-relaxed">EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.</div>
@@ -693,7 +693,7 @@ export function CompanyView() {
       <StrategicInterpretation band={band} components={components} />
 
       {/* COST DRIVERS */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Cost Drivers</div>
           <div className="text-xl font-bold text-foreground">What's Driving Your Insurance Cost</div>
@@ -701,7 +701,7 @@ export function CompanyView() {
         </div>
         <div className="flex flex-col gap-3">
           {drivers.map((d, i) => (
-            <div key={i} className="grid grid-cols-[240px_1fr_120px] gap-6 p-6 bg-card border border-border rounded-2xl items-center shadow-sm">
+            <div key={i} className="flex flex-col sm:grid sm:grid-cols-[240px_1fr_120px] gap-3 sm:gap-6 p-4 sm:p-6 bg-card border border-border rounded-2xl sm:items-center shadow-sm">
               <div>
                 <div className="text-sm font-bold text-foreground mb-1.5">{d.label}</div>
                 <div className="text-[12px] text-secondary-foreground leading-relaxed">{d.sub}</div>
@@ -711,21 +711,21 @@ export function CompanyView() {
                   <div className="h-full rounded-md" style={{ width: `${d.pct}%`, background: d.level === 'high' ? 'linear-gradient(90deg, hsl(var(--red)), #d85040)' : d.level === 'medium' ? 'linear-gradient(90deg, hsl(var(--amb)), #c88000)' : 'linear-gradient(90deg, hsl(var(--grn)), #208040)' }} />
                 </div>
               </div>
-              <div className="text-right text-[13px] font-bold font-mono" style={{ color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
+              <div className="text-left sm:text-right text-[13px] font-bold font-mono" style={{ color: d.level === 'high' ? 'hsl(var(--red))' : d.level === 'medium' ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>{d.pct}% · {d.level === 'high' ? 'High' : d.level === 'medium' ? 'Medium' : 'Low'}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* PREMIUM REDUCTION LEVERS */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Premium Reduction Levers</div>
           <div className="text-xl font-bold text-foreground">Three Actions to Reduce Your AI Insurance Cost</div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {levers.map(l => (
-            <div key={l.rank} className="bg-card border border-border rounded-2xl shadow-sm p-7 relative overflow-hidden flex flex-col gap-4">
+            <div key={l.rank} className="bg-card border border-border rounded-2xl shadow-sm p-4 sm:p-7 relative overflow-hidden flex flex-col gap-4">
               <div className="absolute top-0 left-0 w-1 bottom-0 bg-stable rounded-l-2xl" />
               <div className="w-8 h-8 rounded-full bg-stable-bg border border-stable-border flex items-center justify-center text-[11px] font-bold text-stable">{l.rank}</div>
               <div className="text-[15px] font-bold text-foreground leading-snug">{l.title}</div>
@@ -745,7 +745,7 @@ export function CompanyView() {
       </div>
 
       {/* REGULATORY READINESS */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance & Regulatory Readiness</div>
           <div className="text-xl font-bold text-foreground">Are You Ready for August 2026?</div>
@@ -756,7 +756,7 @@ export function CompanyView() {
             { name: 'Deployer Obligation Readiness', level: components.dr < 0.4 ? 'green' : components.dr < 0.6 ? 'yellow' : 'red', label: components.dr < 0.4 ? 'On Track' : components.dr < 0.6 ? 'Gaps Identified' : 'Not Ready', body: 'Readiness for Art. 26 deployer obligations (Aug 2026). Includes FRIA, incident reporting, post-market monitoring.', why: 'Non-compliance: up to €15M / 3% global turnover' },
             { name: 'Post-Market Monitoring', level: 'yellow', label: 'Under Development', body: 'Art. 72 requires continuous monitoring systems. Most deployments currently lack structured AI-specific monitoring.', why: 'Required for all high-risk AI from Aug 2026' },
           ].map((r, i) => (
-            <div key={i} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-3">
+            <div key={i} className="bg-card border border-border rounded-2xl shadow-sm p-4 sm:p-7 flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full" style={{ background: r.level === 'green' ? '#18a050' : r.level === 'yellow' ? '#e09000' : '#c03020', animation: r.level !== 'green' ? 'pulse-dot 2s infinite' : undefined }} />
                 <span className="text-[13px] font-bold" style={{ color: r.level === 'green' ? 'hsl(var(--grn))' : r.level === 'yellow' ? 'hsl(var(--amb))' : 'hsl(var(--red))' }}>{r.label}</span>
@@ -770,7 +770,7 @@ export function CompanyView() {
       </div>
 
       {/* ACTION PLAN */}
-      <div className="px-10 pt-10">
+      <div className="px-4 sm:px-10 pt-8 sm:pt-10">
         <div className="mb-6">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Recommended Action Plan</div>
           <div className="text-xl font-bold text-foreground">What To Do Next</div>
@@ -781,7 +781,7 @@ export function CompanyView() {
             { num: '2', title: 'Document AI System Inventory', body: 'Create a structured inventory of all AI systems, their providers, integration points, and decision authority. This is a prerequisite for EU AI Act Art. 26 compliance.', horizon: '30 Days' },
             { num: '3', title: 'Engage Insurance Broker', body: 'Share this assessment with your insurance broker or risk advisor. Use the pricing simulator outputs to start a conversation about AI-specific coverage terms.', horizon: '60 Days' },
           ].map(a => (
-            <div key={a.num} className="bg-card border border-border rounded-2xl shadow-sm p-7 flex flex-col gap-4">
+            <div key={a.num} className="bg-card border border-border rounded-2xl shadow-sm p-4 sm:p-7 flex flex-col gap-4">
               <div className="w-9 h-9 rounded-xl bg-purple-bg border border-purple-border flex items-center justify-center text-sm font-bold font-mono text-primary">{a.num}</div>
               <div className="text-[15px] font-bold text-foreground leading-snug">{a.title}</div>
               <div className="text-[12px] text-secondary-foreground leading-[1.7] flex-1">{a.body}</div>
@@ -795,12 +795,12 @@ export function CompanyView() {
       </div>
 
       {/* FOOTER CTA */}
-      <div className="mx-10 my-10 p-8 bg-purple-bg border border-purple-border rounded-2xl flex items-center justify-between gap-6">
+      <div className="mx-4 sm:mx-10 my-6 sm:my-10 p-4 sm:p-8 bg-purple-bg border border-purple-border rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
         <div className="text-sm text-secondary-foreground leading-relaxed">
           <strong className="text-base font-bold block mb-1 text-foreground">Ready to take action?</strong>
           Download the executive report for your board, or switch to the Underwriter View for the full structural analysis.
         </div>
-        <button onClick={() => setPerspective('underwriter')} className="btn-p" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
+        <button onClick={() => setPerspective('underwriter')} className="btn-p w-full sm:w-auto" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
       </div>
     </div>
   );
