@@ -284,7 +284,7 @@ function StrategicInterpretation({ band, components }: { band: string; component
               { tag: 'MAINTAIN', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Continue governance cadence — re-assess annually', sub: 'Current profile is within tolerance. Structural changes require re-assessment.' },
               { tag: 'MONITOR', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Monitor delegation density and dependency concentration', sub: 'Key drift vectors to watch — both tend to increase silently over time.' },
             ]).map((item, i) => (
-              <div key={i} className="flex items-center gap-4 p-5 bg-secondary border border-border rounded-xl">
+              <div key={i} className="flex items-center gap-3 sm:gap-4 p-3 sm:p-5 bg-secondary border border-border rounded-xl">
                 <span className="text-[10px] font-bold tracking-[0.06em] uppercase py-1 px-3 rounded-md" style={{ color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
                 <div>
                   <div className="text-[13px] font-bold text-foreground">{item.title}</div>
