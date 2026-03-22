@@ -96,8 +96,10 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
   return (
-    <div style={{ margin: 0, background: 'hsl(220 16% 13%)', borderBottom: '1px solid hsl(220 10% 24%)' }}>
-      <div style={{ padding: '0 28px' }}>
+    <div style={{ margin: 0, background: 'hsl(220 16% 13%)', borderBottom: '1px solid hsl(220 10% 24%)', position: 'relative', overflow: 'hidden', borderRadius: '12px', marginLeft: 28, marginRight: 28 }}>
+      {/* Gradient top bar */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 4, background: 'linear-gradient(to right, #b53020, #c0392b, #e09000, #4038b8, #6058d8)' }} />
+      <div style={{ padding: '0 28px', paddingTop: 4 }}>
         {/* Row 1: Risk Index + Loss Exposure + Industry Comparison */}
         <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(220 10% 24%)' }}>
           {/* AI Risk Index */}
