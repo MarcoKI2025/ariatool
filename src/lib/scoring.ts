@@ -206,6 +206,13 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   // MDR — Meaning Drift Risk (from HTML)
   const { mdr, mdrTier, mdrLabel } = computeMDR(inputs);
 
+  // RFSI — Assessment Validity Index
+  const mdrNorm = mdr / 100;
+  const { rfsi, rfsiTier, rfsiLabel, rfsiDrivers } = computeRFSI(components, mdrNorm, false);
+
+  // Frame Drift Alerts
+  const frameDriftAlerts = computeFrameDriftAlerts(components, band, inputs);
+
   // Premium estimate
   const basePrem = 180 * sectorMult;
   const autoMult = [0, 0.5, 0.75, 1.0, 1.5, 2.2][inputs.automation] || 1;
@@ -241,6 +248,11 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     mdr,
     mdrTier,
     mdrLabel,
+    rfsi,
+    rfsiTier,
+    rfsiLabel,
+    rfsiDrivers,
+    frameDriftAlerts,
   };
 }
 
