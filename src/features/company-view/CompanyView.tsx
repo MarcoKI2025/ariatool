@@ -99,61 +99,61 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
     <div style={{ margin: 0, background: 'hsl(220 16% 13%)', borderBottom: '1px solid hsl(220 10% 24%)' }}>
       <div style={{ padding: '0 28px' }}>
         {/* Row 1: Risk Index + Loss Exposure + Industry Comparison */}
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(var(--chrome-border))' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(220 10% 24%)' }}>
           {/* AI Risk Index */}
-          <div style={{ padding: '20px', borderRight: '1px solid hsl(var(--chrome-border))', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 8 }}>AI Risk Index</div>
+          <div style={{ padding: '20px', borderRight: '1px solid hsl(220 10% 24%)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)', marginBottom: 8 }}>AI Risk Index</div>
             <div style={{ position: 'relative', width: 88, height: 88, margin: '0 auto 8px' }}>
               <svg viewBox="0 0 88 88" style={{ width: 88, height: 88, transform: 'rotate(-90deg)' }}>
-                <circle cx="44" cy="44" r="36" fill="none" stroke="hsl(var(--chrome-border))" strokeWidth="8" />
+                <circle cx="44" cy="44" r="36" fill="none" stroke="hsl(220 10% 24%)" strokeWidth="8" />
                 <circle cx="44" cy="44" r="36" fill="none" stroke={riskColor} strokeWidth="8" strokeDasharray="226" strokeDashoffset={ringOffset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease, stroke .3s' }} />
               </svg>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ fontSize: 26, fontWeight: 700, fontFamily: 'var(--font-mono)', lineHeight: 1, color: riskColor }}>{riskIdx}</div>
-                <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>/ 100</div>
+                <div style={{ fontSize: 9, color: 'hsl(220 6% 52%)' }}>/ 100</div>
               </div>
             </div>
             <div style={{ fontSize: 11, fontWeight: 700, color: riskColor }}>{riskLabel}</div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', marginTop: 2 }}>{riskSub}</div>
+            <div style={{ fontSize: 9, color: 'hsl(220 6% 52%)', marginTop: 2 }}>{riskSub}</div>
           </div>
 
           {/* Annual Loss Exposure */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--chrome-border))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Risk Characterization</div>
+          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(220 10% 24%)' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)', marginBottom: 10 }}>Risk Characterization</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>Baseline (expected)</span>
-                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg))' }}>{baseBand}</span>
+                <span style={{ fontSize: 10, color: 'hsl(220 6% 52%)' }}>Baseline (expected)</span>
+                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(220 8% 72%)' }}>{baseBand}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>Stress scenario (correlated event)</span>
+                <span style={{ fontSize: 10, color: 'hsl(220 6% 52%)' }}>Stress scenario (correlated event)</span>
                 <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{elevBand}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>Tail risk (99th percentile)</span>
+                <span style={{ fontSize: 10, color: 'hsl(220 6% 52%)' }}>Tail risk (99th percentile)</span>
                 <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{critBand}</span>
               </div>
             </div>
-            <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid hsl(var(--chrome-border))', fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', lineHeight: 1.5 }}>
+            <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid hsl(220 10% 24%)', fontSize: 9, color: 'hsl(220 6% 52%)', lineHeight: 1.5 }}>
               Indicative governance-heuristic risk bands. Not actuarially certified.
             </div>
           </div>
 
           {/* Industry Comparison */}
           <div style={{ padding: '18px 22px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Industry Comparison · Your Sector</div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)', marginBottom: 10 }}>Industry Comparison · Your Sector</div>
             <div style={{ marginBottom: 10 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>
-                <span>Your profile</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg))', fontWeight: 700 }}>{riskIdx} / 100</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(220 6% 52%)' }}>
+                <span>Your profile</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(220 8% 72%)', fontWeight: 700 }}>{riskIdx} / 100</span>
               </div>
-              <div style={{ background: 'hsl(var(--chrome-border))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 6 }}>
+              <div style={{ background: 'hsl(220 10% 24%)', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 6 }}>
                 <div style={{ height: '100%', background: riskColor, borderRadius: 4, width: `${riskIdx}%`, transition: 'width .5s ease' }} />
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>
-                <span>Sector average</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg-muted))', fontWeight: 700 }}>{sectorAvg} / 100</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(220 6% 52%)' }}>
+                <span>Sector average</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(220 6% 52%)', fontWeight: 700 }}>{sectorAvg} / 100</span>
               </div>
-              <div style={{ background: 'hsl(var(--chrome-border))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 8 }}>
-                <div style={{ height: '100%', background: 'hsl(var(--chrome-fg-muted))', borderRadius: 4, width: `${sectorAvg}%`, transition: 'width .5s ease' }} />
+              <div style={{ background: 'hsl(220 10% 24%)', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 8 }}>
+                <div style={{ height: '100%', background: 'hsl(220 6% 52%)', borderRadius: 4, width: `${sectorAvg}%`, transition: 'width .5s ease' }} />
               </div>
               <div style={{
                 fontSize: 11, fontWeight: 700, padding: '6px 10px', borderRadius: 6, textAlign: 'center',
@@ -170,13 +170,13 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 0 }}>
           {/* Top Loss Scenarios */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--chrome-border))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Top Loss Scenarios</div>
+          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(220 10% 24%)' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)', marginBottom: 10 }}>Top Loss Scenarios</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {scenarios.map((s, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: 'hsl(var(--chrome-border))', border: '1px solid hsl(var(--chrome-border))', borderRadius: 7 }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: 'hsl(220 10% 24%)', border: '1px solid hsl(220 10% 24%)', borderRadius: 7 }}>
                   <span style={{ fontSize: 14 }}>{s.icon}</span>
-                  <span style={{ flex: 1, fontSize: 10, color: 'hsl(var(--chrome-fg))' }}>{s.label}</span>
+                  <span style={{ flex: 1, fontSize: 10, color: 'hsl(220 8% 72%)' }}>{s.label}</span>
                   <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: s.col }}>{s.risk}</span>
                 </div>
               ))}
@@ -184,43 +184,43 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
           </div>
 
           {/* Exposure Trajectory */}
-          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--chrome-border))' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Exposure Trajectory · 12 Months</div>
+          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(220 10% 24%)' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)', marginBottom: 10 }}>Exposure Trajectory · 12 Months</div>
             <div style={{ marginBottom: 8 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>Today</span>
-                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg))' }}>{baseBand}</span>
+                <span style={{ fontSize: 9, color: 'hsl(220 6% 52%)' }}>Today</span>
+                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(220 8% 72%)' }}>{baseBand}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>In 6 months</span>
+                <span style={{ fontSize: 9, color: 'hsl(220 6% 52%)' }}>In 6 months</span>
                 <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{trend6m}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
-                <span style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>In 12 months</span>
+                <span style={{ fontSize: 9, color: 'hsl(220 6% 52%)' }}>In 12 months</span>
                 <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{trend12m}</span>
               </div>
               {/* Mini bar chart */}
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 36, marginTop: 8 }}>
                 {[
-                  { l: 'Now', h: 12, c: 'hsl(var(--chrome-fg-muted))' },
+                  { l: 'Now', h: 12, c: 'hsl(220 6% 52%)' },
                   { l: '6mo', h: band === 'Fragile' ? 24 : 16, c: 'hsl(var(--amb))' },
                   { l: '12mo', h: 34, c: 'hsl(var(--red))' },
                 ].map((bar, i) => (
                   <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, justifyContent: 'flex-end' }}>
                     <div style={{ width: '100%', height: bar.h, background: bar.c, borderRadius: '3px 3px 0 0' }} />
-                    <span style={{ fontSize: 8, color: 'hsl(var(--chrome-fg-muted))' }}>{bar.l}</span>
+                    <span style={{ fontSize: 8, color: 'hsl(220 6% 52%)' }}>{bar.l}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', lineHeight: 1.5 }}>
+            <div style={{ fontSize: 9, color: 'hsl(220 6% 52%)', lineHeight: 1.5 }}>
               Without governance changes: +{Math.round(growthRate * 100)}% exposure growth in 12 months. {band === 'Fragile' ? 'EU AI Act (Aug 2026) adds regulatory loading on top.' : 'Regulatory obligations from Aug 2026 will accelerate this.'}
             </div>
           </div>
 
           {/* What If You Do Nothing */}
           <div style={{ padding: '18px 22px' }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>If Nothing Changes · 12 Month Impact</div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(220 6% 52%)', marginBottom: 10 }}>If Nothing Changes · 12 Month Impact</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {[
                 { icon: '📈', label: `+${Math.round(growthRate * 100)}% exposure growth`, sub: 'Risk compounds without structural intervention', col: riskColor },
@@ -232,7 +232,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
                   <span style={{ fontSize: 14, flexShrink: 0 }}>{item.icon}</span>
                   <div>
                     <div style={{ fontSize: 11, fontWeight: 700, color: item.col }}>{item.label}</div>
-                    <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', marginTop: 1 }}>{item.sub}</div>
+                    <div style={{ fontSize: 9, color: 'hsl(220 6% 52%)', marginTop: 1 }}>{item.sub}</div>
                   </div>
                 </div>
               ))}
