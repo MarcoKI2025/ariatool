@@ -78,7 +78,7 @@ export function AppSidebar() {
                 isActive ? 'bg-primary text-white' :
                 isDone ? 'bg-stable text-white' :
                 isLocked ? 'bg-[#2a2820] text-[#484642]' :
-                'bg-[#262420] text-[#686460]'
+                'bg-[#262420] text-chrome-fg-muted'
               }`}>
                 {isDone ? '✓' : step.id}
               </div>
@@ -111,7 +111,7 @@ export function AppSidebar() {
             className={`w-full text-left px-[14px] py-[11px] rounded-lg transition-all border flex items-center gap-[10px] ${
               perspective === 'underwriter'
                 ? 'bg-[#1c1a38] border-primary text-[#c0bcf8] shadow-[0_2px_8px_rgba(64,56,184,0.25)]'
-                : 'border-[#2a2820] text-[#686460] hover:bg-[#1e1d14] hover:border-[#3a3828] hover:text-[#b0aca0]'
+                : 'border-chrome-border text-chrome-fg-muted hover:bg-[#1e1d14] hover:border-[#3a3828] hover:text-[#b0aca0]'
             }`}
           >
             <span className="text-[16px] w-6 text-center flex-shrink-0">📊</span>
@@ -125,7 +125,7 @@ export function AppSidebar() {
             className={`w-full text-left px-[14px] py-[11px] rounded-lg transition-all border flex items-center gap-[10px] ${
               perspective === 'company'
                 ? 'bg-[#0e1e10] border-[#1a6030] text-[#70c890] shadow-[0_2px_8px_rgba(20,96,48,0.25)]'
-                : 'border-[#2a2820] text-[#686460] hover:bg-[#1e1d14] hover:border-[#3a3828] hover:text-[#b0aca0]'
+                : 'border-chrome-border text-chrome-fg-muted hover:bg-[#1e1d14] hover:border-[#3a3828] hover:text-[#b0aca0]'
             }`}
           >
             <span className="text-[16px] w-6 text-center flex-shrink-0">◆</span>
@@ -142,13 +142,13 @@ export function AppSidebar() {
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#585650] px-2 pb-[6px]">Demo Shortcuts</div>
         <button
           onClick={() => { document.dispatchEvent(new CustomEvent('open-demo-pitch')); setMobileNavOpen(false); }}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[#c0bca8] hover:text-[#e8e4d8] hover:bg-[#201e14] hover:translate-x-[2px] text-[11px] font-medium transition-all border border-[#2e2c22] bg-[#1a1910] mb-[6px]"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-chrome-fg hover:text-chrome-fg-bright hover:bg-chrome-bg-active hover:translate-x-[2px] text-[11px] font-medium transition-all border border-chrome-border bg-chrome-bg-hover mb-[6px]"
         >
           <span className="text-[9px] text-primary flex-shrink-0">▶</span> Demo Mode · 3-Min Pitch
         </button>
         <button
           onClick={() => { document.dispatchEvent(new CustomEvent('open-company-demo')); setMobileNavOpen(false); }}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-[#c0bca8] hover:text-[#e8e4d8] hover:bg-[#201e14] hover:translate-x-[2px] text-[11px] font-medium transition-all border border-[#2e2c22] bg-[#1a1910]"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-chrome-fg hover:text-chrome-fg-bright hover:bg-chrome-bg-active hover:translate-x-[2px] text-[11px] font-medium transition-all border border-chrome-border bg-chrome-bg-hover"
         >
           <span className="text-[9px] text-primary flex-shrink-0">▶</span> Company Demo · 3 Scenarios
         </button>
@@ -158,7 +158,7 @@ export function AppSidebar() {
       <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-[10px] py-3 border-t border-[#1e1d14]`}>
         <button
           onClick={() => { if (confirm('Reset analysis? All progress will be lost.')) { resetAnalysis(); setMobileNavOpen(false); } }}
-          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-[#686460] hover:text-fragile hover:bg-[#1a1910] text-[11px] border border-[#2a2820] hover:border-fragile/30 transition-all mt-1"
+          className="w-full flex items-center gap-2 px-[10px] py-[7px] rounded-md text-chrome-fg-muted hover:text-fragile hover:bg-chrome-bg-hover text-[11px] border border-chrome-border hover:border-fragile/30 transition-all mt-1"
         >
           <span className="text-[12px]">↺</span> Reset Analysis
         </button>

@@ -268,12 +268,12 @@ function MeaningDriftRegister() {
           AGAF §8 identifies consequence externalization as the structural root beneath behavioral alignment decay: when the costs of reinterpretation are fully absorbed by rollback, retraining, and governance intervention, <em className="text-white">interpretation becomes cheap</em>. The system has no internal incentive to preserve stable governance alignment.
         </div>
         <div className="grid grid-cols-2 gap-2 mt-2">
-          <div className="bg-[#0e0d09] border border-dark-section-border rounded-md p-[9px_11px]">
+          <div className="bg-chrome border border-dark-section-border rounded-md p-[9px_11px]">
             <div className="text-[9px] font-bold tracking-wider uppercase text-dark-section-fg mb-1">Externalization Vectors</div>
             <div className="text-[10px] text-dark-section-fg/80 leading-[1.5]">Rollback · Retraining · Patching · Policy update · Governance intervention</div>
             <div className="text-[9px] text-dark-section-fg/50 mt-1 italic">Each absorbs the cost of drift externally — removing internal stabilizing pressure</div>
           </div>
-          <div className="bg-[#0e0d09] border border-dark-section-border rounded-md p-[9px_11px]">
+          <div className="bg-chrome border border-dark-section-border rounded-md p-[9px_11px]">
             <div className="text-[9px] font-bold tracking-wider uppercase text-dark-section-fg mb-1">Design Implication (§10)</div>
             <div className="text-[10px] text-dark-section-fg/80 leading-[1.5]">Consequence-carrying invariants — constraints that make behavioral drift internally costly, not merely externally correctable</div>
             <div className="text-[9px] text-dark-section-fg/50 mt-1 italic">Not yet implementable — open research direction per §13</div>
@@ -433,18 +433,18 @@ function CalibrationParameters() {
           { label: 'TAIL_MULT', value: '5.6×', sub: 'Swiss Re sigma 01/2026 tail risk factor' },
           { label: 'PORT_FACTOR', value: '12×', sub: 'Portfolio aggregate (8–15 entity cluster)' },
         ].map((p, i) => (
-          <div key={i} className="bg-[#0e0d09] border border-dark-section-border rounded-lg p-3 text-center">
+          <div key={i} className="bg-chrome border border-dark-section-border rounded-lg p-3 text-center">
             <div className="text-[10px] font-mono font-bold text-primary mb-1">{p.label}</div>
             <div className="text-[18px] font-bold font-mono text-white">{p.value}</div>
             <div className="text-[9px] text-dark-section-fg mt-1 leading-[1.3]">{p.sub}</div>
           </div>
         ))}
       </div>
-      <div className="flex items-start gap-3 p-3 bg-[#0e0d09] border border-dark-section-border rounded-lg">
+      <div className="flex items-start gap-3 p-3 bg-chrome border border-dark-section-border rounded-lg">
         <span className="text-primary text-[14px] mt-0.5">⚙</span>
         <div>
           <div className="text-[11px] font-bold text-white mb-1">For Portfolio-Specific Calibration</div>
-          <div className="text-[10px] text-dark-section-fg leading-[1.6]">Replace default multipliers with your own actuarial assumptions by modifying the four constants: <code className="bg-[#0e0d09] border border-dark-section-border px-1 rounded text-[9px] text-primary">ANCHOR</code>, <code className="bg-[#0e0d09] border border-dark-section-border px-1 rounded text-[9px] text-primary">STRESS_MULT</code>, <code className="bg-[#0e0d09] border border-dark-section-border px-1 rounded text-[9px] text-primary">TAIL_MULT</code>, <code className="bg-[#0e0d09] border border-dark-section-border px-1 rounded text-[9px] text-primary">PORT_FACTOR</code>. The governance signal (AFI, RFS, MDR) is independent of the loss calibration.</div>
+          <div className="text-[10px] text-dark-section-fg leading-[1.6]">Replace default multipliers with your own actuarial assumptions by modifying the four constants: <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">ANCHOR</code>, <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">STRESS_MULT</code>, <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">TAIL_MULT</code>, <code className="bg-chrome border border-dark-section-border px-1 rounded text-[9px] text-primary">PORT_FACTOR</code>. The governance signal (AFI, RFS, MDR) is independent of the loss calibration.</div>
         </div>
       </div>
     </div>
