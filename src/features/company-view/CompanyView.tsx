@@ -557,12 +557,8 @@ export function CompanyView() {
               </div>
             </div>
 
-            {/* Generate Summary button */}
-            <button onClick={generateSummary} style={{ width: '100%', marginTop: 10, padding: '13px 16px', background: 'linear-gradient(135deg, hsl(var(--pur)), #6058d8)', border: 'none', borderRadius: 9, color: '#fff', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 4px 16px rgba(64,56,184,0.3)' }}>
-              <span>⊕</span>
-              <span>Generate Executive Summary →</span>
-            </button>
-            <div style={{ textAlign: 'center', marginTop: 7, fontSize: 10, color: 'hsl(var(--t3))' }}>Results appear below · Adjust inputs and click again to update</div>
+
+
           </div>
         </div>
       </div>
