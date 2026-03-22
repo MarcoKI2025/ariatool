@@ -278,11 +278,11 @@ function StrategicInterpretation({ band, components }: { band: string; component
           {/* Action items */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 16 }}>
             {(band === 'Fragile' ? [
-              { tag: 'REMEDIATE', tagCol: '#c9392a', tagBg: 'hsl(4 35% 18%)', title: 'Reduce execution authority and implement quarterly re-authorisation', sub: 'Current autonomy level exceeds governance capacity. Structural change required.' },
-              { tag: 'ESCALATE', tagCol: '#b87400', tagBg: 'hsl(38 30% 18%)', title: 'Engage insurance broker with this assessment', sub: 'Premium loading likely without documented governance improvement plan.' },
+              { tag: 'REMEDIATE', tagCol: '#c9392a', tagBg: 'hsl(var(--rb))', title: 'Reduce execution authority and implement quarterly re-authorisation', sub: 'Current autonomy level exceeds governance capacity. Structural change required.' },
+              { tag: 'ESCALATE', tagCol: '#b87400', tagBg: 'hsl(var(--ab))', title: 'Engage insurance broker with this assessment', sub: 'Premium loading likely without documented governance improvement plan.' },
             ] : [
-              { tag: 'MAINTAIN', tagCol: '#227a44', tagBg: 'hsl(150 25% 16%)', title: 'Continue governance cadence — re-assess annually', sub: 'Current profile is within tolerance. Structural changes require re-assessment.' },
-              { tag: 'MONITOR', tagCol: '#227a44', tagBg: 'hsl(150 25% 16%)', title: 'Monitor delegation density and dependency concentration', sub: 'Key drift vectors to watch — both tend to increase silently over time.' },
+              { tag: 'MAINTAIN', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Continue governance cadence — re-assess annually', sub: 'Current profile is within tolerance. Structural changes require re-assessment.' },
+              { tag: 'MONITOR', tagCol: '#227a44', tagBg: 'hsl(var(--gb))', title: 'Monitor delegation density and dependency concentration', sub: 'Key drift vectors to watch — both tend to increase silently over time.' },
             ]).map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 8 }}>
                 <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 10px', borderRadius: 5, color: item.tagCol, border: `1px solid ${item.tagCol}40`, background: item.tagBg }}>{item.tag}</span>
