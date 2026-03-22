@@ -21,6 +21,248 @@ const SIM_REV_LABELS   = ['','Under €10M (SME)','€10M–€50M','€50M–�
 
 const fmtK = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
+/* ── Mini AFI Gauge for Hero ──────────────────────────────── */
+function CvAfiGauge({ afi, band }: { afi: number; band: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const chartRef = useRef<Chart | null>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const ctx = canvasRef.current.getContext('2d');
+    if (!ctx) return;
+    if (chartRef.current) chartRef.current.destroy();
+    const color = afi >= 1.35 ? '#b53020' : afi >= 0.85 ? '#9c6200' : '#146030';
+    const maxAFI = 3.0;
+    const norm = Math.min(afi, maxAFI);
+    chartRef.current = new Chart(ctx, {
+      type: 'doughnut',
+      data: { datasets: [{ data: [norm, maxAFI - norm], backgroundColor: [color, '#2a2820'], borderWidth: 0, circumference: 180, rotation: 270 }] },
+      options: { responsive: false, maintainAspectRatio: false, cutout: '72%', plugins: { legend: { display: false }, tooltip: { enabled: false } } },
+      plugins: [{
+        id: 'cvCenter',
+        afterDraw: (chart) => {
+          const cx = chart.width / 2;
+          const cy = chart.height / 2 + 10;
+          chart.ctx.save();
+          chart.ctx.font = 'bold 20px "IBM Plex Mono", monospace';
+          chart.ctx.fillStyle = color;
+          chart.ctx.textAlign = 'center';
+          chart.ctx.textBaseline = 'middle';
+          chart.ctx.fillText(afi.toFixed(2), cx, cy);
+          chart.ctx.restore();
+        }
+      }]
+    });
+    return () => { chartRef.current?.destroy(); };
+  }, [afi, band]);
+
+  return <canvas ref={canvasRef} width={120} height={70} style={{ display: 'block' }} />;
+}
+
+/* ── Financial Decision Engine Block ─────────────────────── */
+function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band: string; sim: any; inputs: any }) {
+  const getRiskBand = (v: number) => v < 0.5 ? 'Low' : v < 0.85 ? 'Low-Medium' : v < 1.35 ? 'Medium-High' : 'High';
+  const baseBand = getRiskBand(afi * 0.6);
+  const elevBand = getRiskBand(afi * 0.9);
+  const critBand = getRiskBand(afi * 1.2);
+
+  // Risk Index (simplified)
+  const afiNorm = Math.min(100, Math.round(afi / 3.0 * 100));
+  const riskIdx = Math.round(afiNorm * 0.50 + 25 * 0.30 + 20 * 0.20); // simplified without full slider access
+  const riskColor = riskIdx >= 65 ? 'var(--red)' : riskIdx >= 40 ? 'var(--amb)' : 'var(--grn)';
+  const riskLabel = riskIdx >= 65 ? 'High Risk' : riskIdx >= 40 ? 'Moderate Risk' : 'Low Risk';
+  const riskSub = riskIdx >= 65 ? 'Immediate governance action required' : riskIdx >= 40 ? 'Governance improvements recommended' : 'Profile within acceptable parameters';
+  const ringOffset = Math.round(226 - (riskIdx / 100) * 226);
+
+  // Industry comparison
+  const secAvgs: Record<string, number> = { 'Financial Services': 48, 'Healthcare': 55, 'Insurance': 44, 'Legal / RegTech': 50, 'Technology': 38, 'Retail / E-Commerce': 32, 'Manufacturing': 35, 'Government / Public': 28 };
+  const sectorAvg = secAvgs[inputs.industry] || 45;
+  const diff = riskIdx - sectorAvg;
+  const diffPct = Math.round(Math.abs(diff) / sectorAvg * 100);
+
+  // Scenarios
+  const scenarios = [
+    { icon: '⚡', label: 'Autonomous decision error', risk: band === 'Fragile' ? 'High' : 'Medium', col: band === 'Fragile' ? 'hsl(var(--red))' : 'hsl(var(--amb))' },
+    { icon: '🔗', label: 'System cascade / infrastructure failure', risk: 'High', col: 'hsl(var(--red))' },
+    { icon: '⚖', label: 'Regulatory / compliance breach', risk: 'Medium', col: 'hsl(var(--amb))' },
+  ];
+
+  // Trajectory
+  const growthRate = band === 'Fragile' ? 0.35 : band === 'Sensitive' ? 0.20 : 0.10;
+  const trend6m = band === 'Fragile' ? elevBand : baseBand;
+  const trend12m = band === 'Fragile' ? critBand : band === 'Sensitive' ? elevBand : baseBand;
+  const monthsToAug = Math.max(0, Math.round((new Date('2026-08-02').getTime() - Date.now()) / 86400000 / 30));
+
+  const fmtM = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
+
+  return (
+    <div style={{ margin: 0, background: 'hsl(var(--chrome-bg))', borderBottom: '1px solid hsl(var(--chrome-border))' }}>
+      <div style={{ padding: '0 28px' }}>
+        {/* Row 1: Risk Index + Loss Exposure + Industry Comparison */}
+        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr 1fr', gap: 0, borderBottom: '1px solid hsl(var(--chrome-border))' }}>
+          {/* AI Risk Index */}
+          <div style={{ padding: '20px', borderRight: '1px solid hsl(var(--chrome-border))', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 8 }}>AI Risk Index</div>
+            <div style={{ position: 'relative', width: 88, height: 88, margin: '0 auto 8px' }}>
+              <svg viewBox="0 0 88 88" style={{ width: 88, height: 88, transform: 'rotate(-90deg)' }}>
+                <circle cx="44" cy="44" r="36" fill="none" stroke="hsl(var(--chrome-border))" strokeWidth="8" />
+                <circle cx="44" cy="44" r="36" fill="none" stroke={riskColor} strokeWidth="8" strokeDasharray="226" strokeDashoffset={ringOffset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease, stroke .3s' }} />
+              </svg>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ fontSize: 26, fontWeight: 700, fontFamily: 'var(--font-mono)', lineHeight: 1, color: riskColor }}>{riskIdx}</div>
+                <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>/ 100</div>
+              </div>
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: riskColor }}>{riskLabel}</div>
+            <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', marginTop: 2 }}>{riskSub}</div>
+          </div>
+
+          {/* Annual Loss Exposure */}
+          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--chrome-border))' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Risk Characterization</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>Baseline (expected)</span>
+                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg))' }}>{baseBand}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>Stress scenario (correlated event)</span>
+                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{elevBand}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>Tail risk (99th percentile)</span>
+                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{critBand}</span>
+              </div>
+            </div>
+            <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid hsl(var(--chrome-border))', fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', lineHeight: 1.5 }}>
+              Indicative governance-heuristic risk bands. Not actuarially certified.
+            </div>
+          </div>
+
+          {/* Industry Comparison */}
+          <div style={{ padding: '18px 22px' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Industry Comparison · Your Sector</div>
+            <div style={{ marginBottom: 10 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>
+                <span>Your profile</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg))', fontWeight: 700 }}>{riskIdx} / 100</span>
+              </div>
+              <div style={{ background: 'hsl(var(--chrome-border))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 6 }}>
+                <div style={{ height: '100%', background: riskColor, borderRadius: 4, width: `${riskIdx}%`, transition: 'width .5s ease' }} />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 10, color: 'hsl(var(--chrome-fg-muted))' }}>
+                <span>Sector average</span><span style={{ fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg-muted))', fontWeight: 700 }}>{sectorAvg} / 100</span>
+              </div>
+              <div style={{ background: 'hsl(var(--chrome-border))', borderRadius: 4, height: 10, overflow: 'hidden', marginBottom: 8 }}>
+                <div style={{ height: '100%', background: 'hsl(var(--chrome-fg-muted))', borderRadius: 4, width: `${sectorAvg}%`, transition: 'width .5s ease' }} />
+              </div>
+              <div style={{
+                fontSize: 11, fontWeight: 700, padding: '6px 10px', borderRadius: 6, textAlign: 'center',
+                background: diff > 10 ? 'hsl(var(--rb))' : diff > 0 ? 'hsl(var(--ab))' : 'hsl(var(--gb))',
+                color: diff > 10 ? 'hsl(var(--red))' : diff > 0 ? 'hsl(var(--amb))' : 'hsl(var(--grn))',
+                border: `1px solid ${diff > 10 ? 'hsl(var(--rbr))' : diff > 0 ? 'hsl(var(--abr))' : 'hsl(var(--gbr))'}`
+              }}>
+                {diff > 10 ? `+${diffPct}% above sector average — elevated exposure` : diff > 0 ? 'Slightly above sector average' : 'Below sector average — well-governed'}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 0 }}>
+          {/* Top Loss Scenarios */}
+          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--chrome-border))' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Top Loss Scenarios</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {scenarios.map((s, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', background: 'hsl(var(--chrome-border))', border: '1px solid hsl(var(--chrome-border))', borderRadius: 7 }}>
+                  <span style={{ fontSize: 14 }}>{s.icon}</span>
+                  <span style={{ flex: 1, fontSize: 10, color: 'hsl(var(--chrome-fg))' }}>{s.label}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: s.col }}>{s.risk}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Exposure Trajectory */}
+          <div style={{ padding: '18px 22px', borderRight: '1px solid hsl(var(--chrome-border))' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>Exposure Trajectory · 12 Months</div>
+            <div style={{ marginBottom: 8 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
+                <span style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>Today</span>
+                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--chrome-fg))' }}>{baseBand}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 4 }}>
+                <span style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>In 6 months</span>
+                <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--amb))' }}>{trend6m}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
+                <span style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))' }}>In 12 months</span>
+                <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{trend12m}</span>
+              </div>
+              {/* Mini bar chart */}
+              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 36, marginTop: 8 }}>
+                {[
+                  { l: 'Now', h: 12, c: 'hsl(var(--chrome-fg-muted))' },
+                  { l: '6mo', h: band === 'Fragile' ? 24 : 16, c: 'hsl(var(--amb))' },
+                  { l: '12mo', h: 34, c: 'hsl(var(--red))' },
+                ].map((bar, i) => (
+                  <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, justifyContent: 'flex-end' }}>
+                    <div style={{ width: '100%', height: bar.h, background: bar.c, borderRadius: '3px 3px 0 0' }} />
+                    <span style={{ fontSize: 8, color: 'hsl(var(--chrome-fg-muted))' }}>{bar.l}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', lineHeight: 1.5 }}>
+              Without governance changes: +{Math.round(growthRate * 100)}% exposure growth in 12 months. {band === 'Fragile' ? 'EU AI Act (Aug 2026) adds regulatory loading on top.' : 'Regulatory obligations from Aug 2026 will accelerate this.'}
+            </div>
+          </div>
+
+          {/* What If You Do Nothing */}
+          <div style={{ padding: '18px 22px' }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--chrome-fg-muted))', marginBottom: 10 }}>If Nothing Changes · 12 Month Impact</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[
+                { icon: '📈', label: `+${Math.round(growthRate * 100)}% exposure growth`, sub: 'Risk compounds without structural intervention', col: riskColor },
+                { icon: '💸', label: `+${fmtM(Math.round(sim.mid * growthRate / 10) * 10)} additional annual exposure`, sub: 'Incremental loss exposure in 12 months vs today', col: 'hsl(var(--red))' },
+                { icon: '⚖', label: 'EU AI Act Art. 26 — August 2026', sub: `Deployer obligations in ${monthsToAug} months`, col: 'hsl(var(--amb))' },
+                { icon: '🔒', label: 'Insurers adding AI exclusions now', sub: 'Coverage gaps grow without governance evidence', col: band === 'Fragile' ? 'hsl(var(--red))' : 'hsl(var(--amb))' },
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                  <span style={{ fontSize: 14, flexShrink: 0 }}>{item.icon}</span>
+                  <div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: item.col }}>{item.label}</div>
+                    <div style={{ fontSize: 9, color: 'hsl(var(--chrome-fg-muted))', marginTop: 1 }}>{item.sub}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Strategic Interpretation Block ──────────────────────── */
+function StrategicInterpretation({ band }: { band: string }) {
+  const interp: Record<string, string> = {
+    Fragile: 'Your current AI deployment creates <strong>significant structural exposure</strong> due to high execution authority, deep process integration, and insufficient governance oversight. This fragility profile is not primarily a compliance issue — it is a <strong>governance architecture issue</strong> that insurers price as non-standard, typically requiring premium loading of 40–80% above baseline. The exposure is real but addressable through targeted improvements to oversight cadence, execution authority limits, and dependency diversification.',
+    Sensitive: 'Your current AI deployment creates <strong>meaningful structural exposure</strong> due to elevated autonomy, process relevance, and moderate governance gaps. Insurers apply conditional terms here — coverage is available, but with governance requirements and likely premium loading. <strong>Three targeted improvements</strong> could move you to standard coverage terms within 60–90 days, representing a meaningful reduction in annual insurance cost.',
+    Stable: 'Your current AI deployment sits <strong>within manageable parameters</strong>. Governance signals are within normal range — structural dependency is balanced by adequate oversight and cadence. Standard insurance terms are likely available. The focus now should be maintaining this profile as your AI deployments evolve.',
+  };
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: 16, padding: '24px 36px', background: 'hsl(var(--pb))', borderBottom: '1px solid hsl(var(--pbr))' }}>
+      <div style={{ fontSize: 28, color: 'hsl(var(--pur))', textAlign: 'center', paddingTop: 4 }}>◈</div>
+      <div>
+        <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 8 }}>Strategic Interpretation · Plain Business English</div>
+        <p style={{ fontSize: 13, color: 'hsl(var(--t2))', lineHeight: 1.75, margin: 0 }} dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
+      </div>
+    </div>
+  );
+}
+
 export function CompanyView() {
   const { state, setInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
