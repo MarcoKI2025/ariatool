@@ -297,7 +297,7 @@ function Slide4() {
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#b53020">Live Case · Meridian Financial Group · Financial Services · Autonomous Trading AI</Eyebrow>
       <DmH1><span className="text-[#ff4040]">ESCALATE TO COMMITTEE</span></DmH1>
-      <p className="text-[18px] text-[#888478] font-medium mb-7">AFI 2.23 · ECI-3 · No clear owner · Governance signals above normal parameters</p>
+      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI 2.23 · ECI-3 · No clear owner · Governance signals above normal parameters</p>
       <div className="grid grid-cols-4 gap-3 mb-5">
         <LossCell label="Assessment Signal" value="ESCALATE" src="Committee review required" color="#ff4040" />
         <LossCell label="Base Risk" value="Elevated" src="Structural governance exposure" color="#9c6200" />
