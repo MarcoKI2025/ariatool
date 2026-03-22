@@ -795,12 +795,12 @@ export function CompanyView() {
       </div>
 
       {/* FOOTER CTA */}
-      <div className="mx-10 my-10 p-8 bg-purple-bg border border-purple-border rounded-2xl flex items-center justify-between gap-6">
+      <div className="mx-4 sm:mx-10 my-6 sm:my-10 p-4 sm:p-8 bg-purple-bg border border-purple-border rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
         <div className="text-sm text-secondary-foreground leading-relaxed">
           <strong className="text-base font-bold block mb-1 text-foreground">Ready to take action?</strong>
           Download the executive report for your board, or switch to the Underwriter View for the full structural analysis.
         </div>
-        <button onClick={() => setPerspective('underwriter')} className="btn-p" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
+        <button onClick={() => setPerspective('underwriter')} className="btn-p w-full sm:w-auto" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
       </div>
     </div>
   );
