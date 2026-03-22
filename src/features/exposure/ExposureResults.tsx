@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { formatCurrency } from '@/lib/formatters';
 import { BandBadge, SectionCard, InfoTip } from '@/components/shared/UIComponents';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { AFIGauge } from '@/components/charts/AFIGauge';
 import { AFIRadar } from '@/components/charts/AFIRadar';
+import { computeFullAnalysis } from '@/lib/scoring';
+import { ExposureInputs } from '@/lib/types';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
   const { results, inputs } = state;
 
-  if (!results) return null;
-
-  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, alri, scri, amplificationFactor, decisionClass } = results;
+  // Adjustment sliders state
+  const [adjustments, setAdjustments] = useState({ dr: 0, jd: 0, rc: 0, cd: 0, na: 0, ses: 0 });
+  const hasAdjustments = Object.values(adjustments).some(v => v !== 0);
 
   const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
   const bandBg = band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
