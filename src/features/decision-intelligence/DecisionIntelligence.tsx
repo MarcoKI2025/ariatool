@@ -67,8 +67,8 @@ export function DecisionIntelligence() {
 
       {/* ═══ HERO SCORE + ECI ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 mb-0">
-        <div className="bg-card border border-border rounded-xl p-6">
-          <div className="flex items-end gap-6">
+        <div className="bg-card border border-border rounded-xl p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 sm:gap-6">
             <div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">
                 Structural Exposure Score<InfoTip text={TOOLTIPS.afi} />
