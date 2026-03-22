@@ -458,7 +458,7 @@ function Slide8({ onClose }: { onClose: () => void }) {
         <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
           ▶ Run Live Analysis — Meridian Financial
         </button>
-        <button onClick={onClose} className="px-5 py-3 border border-[#3a3828] text-[#b8b4a8] rounded-md text-[13px] font-semibold hover:text-[#eeeadc] hover:border-[#5a5648] transition-colors">
+        <button onClick={() => { document.dispatchEvent(new CustomEvent('navigate-to-step', { detail: { step: 1, perspective: 'underwriter' } })); onClose(); }} className="px-5 py-3 border border-[#3a3828] text-[#b8b4a8] rounded-md text-[13px] font-semibold hover:text-[#eeeadc] hover:border-[#5a5648] transition-colors">
           Explore the System →
         </button>
       </div>
