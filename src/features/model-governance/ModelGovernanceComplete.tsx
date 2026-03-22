@@ -267,7 +267,7 @@ function MeaningDriftRegister() {
         <div className="text-[11px] text-secondary-foreground leading-[1.55] mb-[6px]">
           AGAF §8 identifies consequence externalization as the structural root beneath behavioral alignment decay: when the costs of reinterpretation are fully absorbed by rollback, retraining, and governance intervention, <em className="text-foreground">interpretation becomes cheap</em>. The system has no internal incentive to preserve stable governance alignment.
         </div>
-        <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
           <div className="bg-secondary border border-border rounded-md p-[9px_11px]">
             <div className="text-[9px] font-bold tracking-wider uppercase text-secondary-foreground mb-1">Externalization Vectors</div>
             <div className="text-[10px] text-secondary-foreground/80 leading-[1.5]">Rollback · Retraining · Patching · Policy update · Governance intervention</div>
@@ -330,7 +330,7 @@ function MethodologyWhitePaper() {
 
       <div className="border-t border-border p-5 pb-4">
         <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[10px]">3 · Secondary Constructs</div>
-        <div className="grid grid-cols-2 gap-[10px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
           {[
             { color: 'border-l-primary', label: 'MDR — Meaning Drift Risk', desc: 'Geometric mean of three structural drivers: autonomous execution pressure, governance feedback gap, and ungoverned operating horizon. Based on Kindermann (2026) §5. Classified: Exploratory.' },
             { color: 'border-l-primary', label: 'RFSI — Reference Frame Stability', desc: 'Inverse geometric mean of context variability, semantic drift risk, evaluation mismatch, and temporal instability. Measures how valid the current governance assessment remains over time. Classified: Exploratory.' },
@@ -365,7 +365,7 @@ function AGAFMethodologyStatement() {
       <div className="text-[11px] text-secondary-foreground leading-[1.65] mb-[14px]">
         AGAF operationalises governance concepts from published academic research into a structured assessment instrument. The conceptual foundations draw on Kindermann (2026) — a series of working papers on AI governance architecture including <em>'Semantic Drift and Temporal Coherence in Long-Horizon AI Systems'</em>, <em>'What Are We Aligning To?'</em>, and <em>'Blind Spots of the EU AI Act'</em> — alongside NIST AI RMF 1.0, EIOPA AI Opinion (August 2025), EU AI Act 2024/1689, and LMA E&O Guidelines 2025. <strong className="text-foreground">The AFI, MDR, RFSI, ECI, RFS, and IAT constructs are proprietary operationalisations</strong> of these concepts into measurable structural proxy signals.
       </div>
-      <div className="grid grid-cols-2 gap-3 mb-[14px]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-[14px]">
         <div className="bg-stable-bg border border-stable-border rounded-lg p-3">
           <div className="text-[9px] font-bold tracking-wider uppercase text-stable mb-[6px]">✓ AGAF is designed for</div>
           <div className="text-[10px] text-secondary-foreground leading-[1.6]">Structured pre-underwriting intake · Risk committee preparation · Board-level governance documentation · AI deployment intake screening · Internal audit challenge · Regulatory conversation framing (EIOPA, BaFin, FCA) · Accumulation watchlist management</div>
@@ -426,7 +426,7 @@ function CalibrationParameters() {
       <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-4">
         Loss estimates are anchored to published market data — not proprietary claims databases. These multipliers can be replaced with portfolio-specific actuarial assumptions without changing the governance signal layer.
       </div>
-      <div className="grid grid-cols-4 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
         {[
           { label: 'ANCHOR', value: '€2.8M', sub: 'Lloyd\'s CRI 2024 median AI operational loss' },
           { label: 'STRESS_MULT', value: '3.4×', sub: 'Lloyd\'s correlated loss stress multiplier' },
@@ -476,7 +476,7 @@ function RFSIPanel() {
         </div>
       </div>
       <div className="p-4">
-        <div className="grid grid-cols-4 gap-[10px] mb-[14px]">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-[10px] mb-[14px]">
           {[
             { label: 'Deployment Context Shift', value: rfsiDrivers.contextVariability, desc: 'Deployment context drift from alignment baseline' },
             { label: 'Behavioral Drift Risk', value: rfsiDrivers.semanticDriftRisk, desc: 'MDR-derived interpretive instability' },
@@ -565,7 +565,7 @@ function EvaluationLimitsPanel() {
       <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[4px]">◈ Evaluation Limits · The Boundaries of What Can Be Known</div>
       <div className="text-[16px] font-bold text-foreground mb-[6px]">What This Assessment Cannot Tell You</div>
       <div className="text-[11px] text-muted-foreground leading-[1.6] mb-4 max-w-[600px]">Every evaluation is a snapshot under constrained conditions. This panel makes the epistemic limits of this assessment explicit — not as a disclaimer, but as a first-class governance signal.</div>
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         {[
           { t: 'No External Ground Truth', s: 'There is no external reference against which AI governance fragility can be absolutely verified. AFI scores are structurally valid within their calibration context — not universally certified.' },
           { t: 'Metrics Are Proxies', s: 'Delegation Ratio, Reversibility Cost, and Correlation Density are structural proxies — not direct measurements of risk. They correlate with failure conditions; they do not cause or predict them with certainty.' },
@@ -608,7 +608,7 @@ function EpistemicLimitations() {
         <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-5 max-w-[700px]">
           This is not a disclaimer; it is an operational fact. The following conditions are structurally true of every AI governance assessment.
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {limitations.map((lim, i) => (
             <div key={i} className="p-3 bg-muted border border-border rounded-lg">
               <div className="text-[11px] font-semibold text-sensitive/70 mb-1">{lim.title}</div>
@@ -629,7 +629,7 @@ function RegulatoryAlignment() {
   return (
     <div className="bg-card border border-border rounded-xl p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Regulatory Alignment Map · Framework Grounding</div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
           { icon: 'EU', color: 'bg-primary/20 border-primary/40 text-primary', title: 'EU AI Act 2024/1689', sub: 'Enforcement begins 2026–2027', content: [{ article: 'Art. 26', text: 'High-risk AI system obligations' }, { article: 'Art. 27', text: 'Fundamental Rights Impact Assessment (FRIA)' }, { article: 'Art. 72', text: 'Post-market monitoring requirements' }, { article: 'Art. 99', text: 'Penalty framework (€35M or 7% global revenue)' }] },
           { icon: 'EP', color: 'bg-sensitive/20 border-sensitive/40 text-sensitive', title: 'EIOPA Opinion August 2025', sub: 'AI in Insurance Supervision', quote: '"Proportionality principle requires risk-based governance approach tailored to AI system characteristics."' },
@@ -680,7 +680,7 @@ function ResearchFoundation() {
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px_18px]">
           <div className="text-[9px] tracking-wider uppercase text-secondary-foreground font-bold mb-[10px]">Research Foundation — Three Governance Gaps This Engine Addresses</div>
-          <div className="grid grid-cols-3 gap-[14px]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-[14px]">
             {[
               { title: 'Paper I · EU AI Act Blind Spots', text: 'Risk-based regulation governs deployment — not continuation. Systems persist without re-authorisation. This engine operationalises that gap as a measurable AFI signal.' },
               { title: 'Paper II · Price of Convenience', text: 'Agentic AI erodes oversight without malice — through delegation density and oversight decay. This engine makes that erosion visible before it becomes structural.' },
@@ -709,7 +709,7 @@ function CompetitivePositioning() {
   return (
     <div className="bg-card border border-border rounded-xl p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Competitive Positioning · What This Engine Does Differently</div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
           { title: 'vs. Standard Cyber Insurance', what: 'Traditional cyber/E&O policies', gap: 'Coverage designed for network breaches — not AI-specific structural risks', miss: ['Continuation risk (persists without re-authorisation)', 'Provider concentration (cascade exposure)', 'Responsibility fragmentation (unclear ownership)', 'Behavioral drift (alignment decay)'], borderColor: 'border-fragile/30' },
           { title: 'vs. Parametric AI Solutions', what: 'Munich Re aiSure, Armilla parametric triggers', gap: 'Event-triggered payouts without governance assessment', miss: ['Pre-incident structural fragility assessment', 'Governance posture baseline', 'Committee intake workflow', 'Underwriting decision support signals'], borderColor: 'border-sensitive/30' },
@@ -792,7 +792,7 @@ function APIIntegrationReference() {
           <pre className="text-[10px] text-primary bg-secondary border border-border rounded-md p-3 overflow-x-auto leading-[1.6] font-mono">{getResponse}</pre>
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-[10px] mx-5 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[10px] mx-5 mb-4">
         {[
           { name: 'Guidewire PolicyCenter', desc: 'POST → parse committee_signal + loss_envelope → populate AI Risk Assessment field.' },
           { name: 'SAP Fioneer / Insurance', desc: 'AGAF JSON → SAP BTP via REST adapter. AFI score + flags → Risk Management module.' },
@@ -876,7 +876,7 @@ function ProductRoadmap() {
         <span className="text-[8px] font-bold px-2 py-0.5 bg-primary/10 text-primary border border-primary/30 rounded">2026–2028</span>
         <div className="flex-1 h-px bg-border" />
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {phases.map((phase, i) => (
           <div key={i} className={`p-4 bg-secondary border border-border rounded-lg border-t-[3px] ${phase.color}`}>
             <div className={`text-[9px] font-bold tracking-[0.1em] uppercase ${phase.labelColor} mb-3`}>{phase.label}</div>
