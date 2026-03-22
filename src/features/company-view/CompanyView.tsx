@@ -107,7 +107,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8 }}>AI Risk Index</div>
             <div style={{ position: 'relative', width: 88, height: 88, margin: '0 auto 8px' }}>
               <svg viewBox="0 0 88 88" style={{ width: 88, height: 88, transform: 'rotate(-90deg)' }}>
-                <circle cx="44" cy="44" r="36" fill="none" stroke="hsl(220 10% 24%)" strokeWidth="8" />
+                <circle cx="44" cy="44" r="36" fill="none" stroke="hsl(var(--bd))" strokeWidth="8" />
                 <circle cx="44" cy="44" r="36" fill="none" stroke={riskColor} strokeWidth="8" strokeDasharray="226" strokeDashoffset={ringOffset} strokeLinecap="round" style={{ transition: 'stroke-dashoffset .6s ease, stroke .3s' }} />
               </svg>
               <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -136,7 +136,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
                 <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{critBand}</span>
               </div>
             </div>
-            <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid hsl(220 10% 24%)', fontSize: 9, color: 'hsl(var(--t3))', lineHeight: 1.5 }}>
+            <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid hsl(var(--bd))', fontSize: 9, color: 'hsl(var(--t3))', lineHeight: 1.5 }}>
               Indicative governance-heuristic risk bands. Not actuarially certified.
             </div>
           </div>
@@ -295,7 +295,7 @@ function StrategicInterpretation({ band, components }: { band: string; component
           </div>
           
           {/* Structural signals strip */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid hsl(220 10% 24%)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 14, borderTop: '1px solid hsl(var(--bd))' }}>
             <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))' }}>Structural Signals:</span>
             {[
               `Delegation Density: ${components.dr > 0.6 ? 'High' : components.dr > 0.4 ? 'Moderate' : 'Low'} (${Math.round(components.dr * 100)})`,
