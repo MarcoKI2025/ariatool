@@ -310,7 +310,7 @@ export function ExposureResults() {
         <div className="p-5">
           <div className="text-[13px] font-bold text-foreground mb-1">Indicative Risk Exposure Bands</div>
           <div className="text-[11px] text-muted-foreground mb-4">Qualitative risk characterization based on structural governance factors.</div>
-          <div className="grid grid-cols-3 gap-0 border border-border rounded-lg overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border border-border rounded-lg overflow-hidden">
             {[
               { label: 'Base Risk Band', value: lossEnvelope.expected < 2 ? 'Low' : lossEnvelope.expected < 5 ? 'Medium' : 'High', sub: 'Structural baseline', color: 'text-stable', conf: 'Directional' },
               { label: 'Elevated Risk Band', value: lossEnvelope.stress < 5 ? 'Medium' : lossEnvelope.stress < 12 ? 'High' : 'Critical', sub: 'Provider concentration factors', color: 'text-sensitive', conf: 'Committee-Grade' },
