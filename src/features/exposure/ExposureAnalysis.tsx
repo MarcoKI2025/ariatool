@@ -153,7 +153,7 @@ export function ExposureAnalysis() {
       </div>
 
       {/* Progress bar */}
-      <div className="flex items-center gap-0 mb-5">
+      <div className="hidden sm:flex items-center gap-0 mb-5">
         {PROGRESS_STEPS.map((step, i) => (
           <React.Fragment key={i}>
             <div className={`flex items-center gap-[6px] text-[10px] font-medium ${i <= progressIdx ? 'text-primary' : 'text-muted-foreground'}`}>
