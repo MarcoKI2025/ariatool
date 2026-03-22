@@ -78,7 +78,7 @@ export function ExposureResults() {
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="p-6 pb-4">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0<InfoTip text={TOOLTIPS.afi} /></div>
-          <div className="flex items-start gap-8">
+          <div className="flex flex-col md:flex-row items-start gap-4 md:gap-8">
             <div>
               <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
               <div className="text-[11px] text-muted-foreground mt-1">{band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}</div>
