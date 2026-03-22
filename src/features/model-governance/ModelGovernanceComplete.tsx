@@ -68,7 +68,7 @@ export function ModelGovernanceComplete() {
 function ModelGovernanceRegister() {
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
-      <div className="p-[16px_22px] border-b border-border flex items-center justify-between">
+      <div className="p-[12px_14px] sm:p-[16px_22px] border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Model Governance Register · AGAF v3.0 · Required for audit trail</div>
           <div className="text-[15px] font-bold text-foreground">Model Governance & Validation Status</div>
