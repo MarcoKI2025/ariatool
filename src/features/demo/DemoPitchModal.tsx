@@ -458,11 +458,11 @@ function Slide8({ onClose }: { onClose: () => void }) {
         <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
           ▶ Run Live Analysis — Meridian Financial
         </button>
-        <button onClick={onClose} className="px-5 py-3 border border-[#2e2c22] text-[#888478] rounded-md text-[13px] font-semibold hover:text-[#e8e4d8] hover:border-[#4a4642] transition-colors">
+        <button onClick={onClose} className="px-5 py-3 border border-[#3a3828] text-[#b8b4a8] rounded-md text-[13px] font-semibold hover:text-[#eeeadc] hover:border-[#5a5648] transition-colors">
           Explore the System →
         </button>
       </div>
-      <div className="text-center text-[10px] text-[#585650] mt-2">
+      <div className="text-center text-[10px] text-[#a8a49c] mt-2">
         Loads the full NOT APPROVED scenario · Real-time structural analysis · All 6 outputs computed live
       </div>
     </div>
