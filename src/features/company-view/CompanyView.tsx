@@ -326,13 +326,21 @@ export function CompanyView() {
       </div>
 
       {/* HERO SECTION */}
+      {/* HERO SECTION */}
       <div ref={heroRef} style={{ padding: '36px 36px 32px' }}>
         <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 7 }}>
           <div style={{ width: 5, height: 5, borderRadius: '50%', background: bandColor, animation: 'pulse-dot 2s infinite' }} />
           Company View · AI Risk Executive Summary · {now}
         </div>
-        <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', marginBottom: 6, color: 'hsl(var(--tx))' }}>{companyName}</div>
-        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', marginBottom: 32 }}>AI Governance Architecture Framework · Structural Exposure Assessment</div>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20, marginBottom: 6 }}>
+          <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', color: 'hsl(var(--tx))' }}>{companyName}</div>
+          {/* AFI Mini Gauge */}
+          <div style={{ flexShrink: 0, textAlign: 'center', paddingTop: 4 }}>
+            <CvAfiGauge afi={afi} band={band} />
+            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', marginTop: 2, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Fragility Score</div>
+          </div>
+        </div>
+        <div style={{ fontSize: 13, color: 'hsl(var(--t2))', marginBottom: 32 }}>{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           {/* Premium card */}
@@ -346,7 +354,7 @@ export function CompanyView() {
                 <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--red))' }}>{fmtK(sim.mid)}</span>
                 <span style={{ fontSize: 14, color: 'hsl(var(--t3))' }}>→</span>
                 <span style={{ fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--grn))' }}>{fmtK(Math.round(sim.mid * 0.55 / 10) * 10)}</span>
-                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', background: 'hsl(var(--gb))', color: 'hsl(var(--grn))', border: '1px solid hsl(var(--gbr))', borderRadius: 4 }}>Save ~{Math.round(45)}%</span>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: '3px 8px', background: 'hsl(var(--gb))', color: 'hsl(var(--grn))', border: '1px solid hsl(var(--gbr))', borderRadius: 4 }}>Save ~45%</span>
               </div>
             </div>
           </div>
@@ -394,6 +402,14 @@ export function CompanyView() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* ══ FINANCIAL DECISION ENGINE ══ */}
+      <FinancialDecisionEngine afi={afi} band={band} sim={sim} inputs={inputs} />
+
+      {/* ══ STRATEGIC INTERPRETATION ══ */}
+      <StrategicInterpretation band={band} />
         </div>
       </div>
 
