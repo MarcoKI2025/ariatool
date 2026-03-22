@@ -53,8 +53,8 @@ export function AFIRadar({ dr, jd, rc, cd, na }: AFIRadarProps) {
           backdropColor: 'transparent',
           font: { size: 9, family: '"IBM Plex Mono", monospace' }
         },
-        grid: { color: '#2e2c22', circular: true },
-        angleLines: { color: '#2e2c22' },
+        grid: { color: '#e1e4e8', circular: true },
+        angleLines: { color: '#e1e4e8' },
         pointLabels: {
           color: '#888478',
           font: { size: 11, weight: 'bold' as const, family: 'Inter' }
@@ -67,7 +67,7 @@ export function AFIRadar({ dr, jd, rc, cd, na }: AFIRadarProps) {
         backgroundColor: '#111108',
         titleColor: '#e8e4d8',
         bodyColor: '#888478',
-        borderColor: '#2e2c22',
+        borderColor: '#e1e4e8',
         borderWidth: 1,
         padding: 12,
         displayColors: false,
