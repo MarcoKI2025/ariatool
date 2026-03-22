@@ -348,7 +348,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ AGRI / ALRI SUB-SCORE GRIDS ═══ */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">⚡ AGRI Sub-Scores</div>
           <div className="grid grid-cols-2 gap-2">
