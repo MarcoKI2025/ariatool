@@ -57,7 +57,7 @@ export function AFIRadar({ dr, jd, rc, cd, na }: AFIRadarProps) {
         angleLines: { color: '#2e2c22' },
         pointLabels: {
           color: '#888478',
-          font: { size: 11, weight: '600' as const, family: 'Inter' }
+          font: { size: 11, weight: 'bold' as const, family: 'Inter' }
         }
       }
     },
