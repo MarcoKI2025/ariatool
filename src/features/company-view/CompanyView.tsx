@@ -293,10 +293,11 @@ function StrategicInterpretation({ band, components }: { band: string; component
 /* ══════════════════════════════════════════════════════════ */
 
 export function CompanyView() {
-  const { state, setInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
+  const { state, setInputs, updateInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
   const { results, inputs: globalInputs, analysisComplete } = state;
   const heroRef = useRef<HTMLDivElement>(null);
   const [showSticky, setShowSticky] = useState(false);
+  const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Local standalone inputs (mirrors ExposureInputs) ──
   const [localInputs, setLocalInputs] = useState<ExposureInputs>(() => ({
