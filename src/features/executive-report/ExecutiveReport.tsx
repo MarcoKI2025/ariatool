@@ -323,6 +323,35 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       </div>
 
+      {/* ═══ PREMIUM RECOMMENDATION ═══ */}
+      {(() => {
+        const premium = calculatePremium(5000000, afi, inputs.industry || 'General AI System', 0);
+        const withDeductible = calculatePremium(5000000, afi, inputs.industry || 'General AI System', 250000);
+        return (
+          <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Indicative Premium Recommendation</div>
+            <div className="text-[13px] font-bold text-foreground mb-3">Based on €5M Coverage Limit</div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
+              {[
+                { label: 'Annual Premium', value: formatPremiumCurrency(premium.annualPremium), color: afi >= 1.35 ? 'text-fragile' : afi >= 0.85 ? 'text-sensitive' : 'text-stable' },
+                { label: 'Premium Rate', value: formatPremiumPercentage(premium.premiumRate), color: 'text-foreground' },
+                { label: 'AFI Multiplier', value: `${premium.afiMultiplier.toFixed(2)}×`, color: premium.afiMultiplier > 1 ? 'text-sensitive' : 'text-stable' },
+                { label: 'With €250k Deductible', value: formatPremiumCurrency(withDeductible.annualPremium), color: 'text-stable' },
+              ].map((m, i) => (
+                <div key={i} className="p-3 bg-secondary/30 border border-border rounded-lg">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+                  <div className={`text-[18px] font-bold font-mono ${m.color}`}>{m.value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="text-[10px] text-muted-foreground leading-relaxed">
+              Indicative pricing based on actuarial formula: Base Rate × Coverage × AFI Multiplier × Industry Factor × Deductible Factor.
+              Final pricing subject to underwriter approval. See Insurance Decision view for interactive calculator.
+            </div>
+          </div>
+        );
+      })()}
+
       {/* ═══ MANDATORY CONDITIONS (Fragile only) ═══ */}
       {afi >= 1.35 && (
         <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-5 sm:p-6 mb-4">
