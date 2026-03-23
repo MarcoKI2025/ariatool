@@ -262,6 +262,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
       {/* Real Case Facts Card */}
       <RealCaseFactsCard />
 
+      <SectionDivider title="Assessment Verdict" icon="◈" subtitle="Core risk classification and AFI positioning" />
+
       {/* Main verdict */}
       <div className="bg-card border border-border rounded-xl p-4 sm:p-6 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-3">AI Systemic Risk Assessment · Governance Exposure Engine v3.0</div>
