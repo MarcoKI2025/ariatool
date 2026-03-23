@@ -10,6 +10,7 @@ import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
+import { ViewTabs } from '@/components/shared/ViewTabs';
 interface PortfolioEntity {
   id: string;
   name: string;
@@ -37,6 +38,7 @@ function MetricCell({ label, value }: { label: string; value: string }) {
 
 export function PortfolioView() {
   const { state } = useApp();
+  const [portfolioTab, setPortfolioTab] = useState('overview');
   const analysisInputs = state.inputs;
   const hasAnalysis = state.analysisComplete;
 
@@ -136,6 +138,12 @@ export function PortfolioView() {
     return band === 'Stable';
   }).length;
 
+  const portfolioTabs = [
+    { id: 'overview', label: 'Portfolio Overview', icon: '📊' },
+    { id: 'entities', label: 'Entity Breakdown', icon: '📋' },
+    { id: 'advanced', label: 'Advanced Analysis', icon: '🔬' },
+  ];
+
   return (
     <div className="space-y-6 sm:space-y-8 max-w-5xl">
       {/* Real Case Alert */}
@@ -174,6 +182,11 @@ export function PortfolioView() {
 
       <UseRestrictionBanner />
 
+      <ViewTabs tabs={portfolioTabs} activeTab={portfolioTab} onChange={setPortfolioTab} />
+
+      {/* ═══ TAB: OVERVIEW ═══ */}
+      {portfolioTab === 'overview' && (<>
+
       {/* Portfolio Summary */}
       <div className="bg-card border border-border rounded-xl p-6 space-y-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -206,6 +219,10 @@ export function PortfolioView() {
         </div>
       </div>
 
+      </>)}
+
+      {/* ═══ TAB: ENTITIES ═══ */}
+      {portfolioTab === 'entities' && (<>
       {/* Entity List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -316,6 +333,10 @@ export function PortfolioView() {
         </div>
       </div>
 
+      </>)}
+
+      {/* ═══ TAB: ADVANCED ═══ */}
+      {portfolioTab === 'advanced' && (<>
       {/* Quantum Vulnerability Assessment */}
       <QuantumVulnerabilityAssessment />
 
@@ -332,8 +353,7 @@ export function PortfolioView() {
           Swiss Re sigma insights 01/2026: "AI adoption creates emerging risk dimensions that do not fit neatly within traditional insurance boundaries." "New exposures arising from hyperscale data centres, high-performance computing facilities and expanded power &amp; energy infrastructure."
         </p>
       </div>
-
-      <AppFooter />
+      </>)}
     </div>
   );
 }

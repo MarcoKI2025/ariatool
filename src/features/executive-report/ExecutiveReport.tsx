@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge } from '@/components/shared/UIComponents';
+import { ViewTabs } from '@/components/shared/ViewTabs';
 import { buildExecutiveReport, buildORSAExport } from '@/lib/reportBuilder';
 import { exportORSA } from '@/lib/orsaExport';
 import { formatDate, formatCurrency } from '@/lib/formatters';
@@ -96,6 +97,7 @@ export function ExecutiveReport() {
   const { results, inputs, analysisComplete } = state;
   const [showOverlay, setShowOverlay] = useState(false);
   const [showOnePager, setShowOnePager] = useState(false);
+  const [activeTab, setActiveTab] = useState('summary');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Executive Report Locked" description="Complete the Exposure Analysis to generate a board-level executive report suitable for risk committees and reinsurers." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
@@ -258,6 +260,14 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
 
       <UseRestrictionBanner />
 
+      <ViewTabs tabs={[
+        { id: 'summary', label: 'Executive Summary', icon: '📋' },
+        { id: 'findings', label: 'Risk Position', icon: '🔍' },
+        { id: 'exports', label: 'Export & Share', icon: '📤' },
+      ]} activeTab={activeTab} onChange={setActiveTab} />
+
+      {/* ═══ TAB: SUMMARY ═══ */}
+      {activeTab === 'summary' && (<>
       {/* Real Case Facts Card */}
       <RealCaseFactsCard />
 
@@ -421,6 +431,10 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       )}
 
+      </>)}
+
+      {/* ═══ TAB: FINDINGS ═══ */}
+      {activeTab === 'findings' && (<>
       {/* Risk Position + Financial Exposure */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
@@ -617,6 +631,10 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       </SectionCard>
 
+      </>)}
+
+      {/* ═══ TAB: EXPORTS ═══ */}
+      {activeTab === 'exports' && (<>
       {/* Export controls */}
       <div className="bg-card border border-border rounded-[10px] p-5">
         <div className="text-[13px] font-bold text-foreground mb-[3px]">Export & Share</div>
@@ -636,8 +654,7 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           </button>
         </div>
       </div>
-
-      {/* ═══ ONE-PAGER PDF PREVIEW OVERLAY ═══ */}
+      </>)}
       {showOnePager && (
         <div className="fixed inset-0 bg-black/70 z-[3000] flex items-start justify-center p-6 overflow-y-auto" onClick={() => setShowOnePager(false)}>
           <div className="bg-white w-[820px] max-w-full rounded shadow-2xl" onClick={e => e.stopPropagation()} style={{ fontFamily: 'Inter, sans-serif', color: '#141410' }}>

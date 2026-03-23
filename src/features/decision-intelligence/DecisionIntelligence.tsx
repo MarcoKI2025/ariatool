@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
@@ -9,10 +9,12 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
 import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
 import { PeerBenchmarking } from '@/features/benchmarking/PeerBenchmarking';
+import { ViewTabs } from '@/components/shared/ViewTabs';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
+  const [activeTab, setActiveTab] = useState('overview');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Decision Intelligence Locked" description="Complete the Exposure Analysis to unlock AFI scoring, governance exposure, and structural risk signals." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
@@ -29,10 +31,18 @@ export function DecisionIntelligence() {
   const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
   const bandBg = band === 'Fragile' ? 'bg-fragile-bg border-fragile' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' : 'bg-stable-bg border-stable';
 
+  const diTabs = [
+    { id: 'overview', label: 'Overview', icon: '📊' },
+    { id: 'indices', label: 'Risk Indices', icon: '📈' },
+    { id: 'benchmarking', label: 'Peer Benchmarking', icon: '🏆' },
+    { id: 'agentic', label: 'Agentic Systems', icon: '🤖' },
+    { id: 'diagnostics', label: 'Diagnostics', icon: '🔬' },
+  ];
+
   return (
     <div>
       {/* Page header */}
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 6 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Decision Intelligence</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
@@ -42,6 +52,10 @@ export function DecisionIntelligence() {
 
       <UseRestrictionBanner />
 
+      <ViewTabs tabs={diTabs} activeTab={activeTab} onChange={setActiveTab} />
+
+      {/* ═══ TAB: OVERVIEW ═══ */}
+      {activeTab === 'overview' && (<>
       {/* ═══ HERO BOARD STATEMENT ═══ */}
       <div className={`bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 flex items-start gap-3 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
         <div className={`w-1 h-1 rounded-full flex-shrink-0 mt-[7px] opacity-70 ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`} />
@@ -212,6 +226,10 @@ export function DecisionIntelligence() {
         <BandBadge band={band} size="sm" />
       </div>
 
+      </>)}
+
+      {/* ═══ TAB: RISK INDICES ═══ */}
+      {activeTab === 'indices' && (<>
       {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
       <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
@@ -967,6 +985,10 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
+      </>)}
+
+      {/* ═══ TAB: DIAGNOSTICS ═══ */}
+      {activeTab === 'diagnostics' && (<>
       {/* ═══ CONSEQUENCE ENGINE ═══ */}
       <ConsequenceEngine
         band={band}
@@ -989,7 +1011,10 @@ export function DecisionIntelligence() {
         multiAgent={inputs.multiAgent}
       />
 
-      {/* ═══ PEER BENCHMARKING ═══ */}
+      </>)}
+
+      {/* ═══ TAB: PEER BENCHMARKING ═══ */}
+      {activeTab === 'benchmarking' && (<>
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg">📊</span>
@@ -1000,9 +1025,13 @@ export function DecisionIntelligence() {
         </div>
         <PeerBenchmarking />
       </div>
+      </>)}
 
+      {/* ═══ TAB: AGENTIC ═══ */}
+      {activeTab === 'agentic' && (<>
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
+      </>)}
 
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
