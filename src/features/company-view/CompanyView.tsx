@@ -355,9 +355,14 @@ export function CompanyView() {
     }
   }, []);
 
-  // ── Derive AFI from local inputs ──
+  // ── Derive AFI from local inputs (with size/revenue adjustments matching scoring.ts) ──
   const liveComponents = useMemo(() => computeAFIComponents(localInputs), [localInputs]);
-  const liveAfi = useMemo(() => calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na), [liveComponents]);
+  const liveAfi = useMemo(() => {
+    const baseAfi = calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na);
+    const sizeAdj = SIZE_AFI_ADJUSTMENT[localInputs.size] || 0;
+    const revAdj = REVENUE_AFI_ADJUSTMENT[localInputs.revenue] || 0;
+    return Math.max(0.01, baseAfi + sizeAdj + revAdj);
+  }, [liveComponents, localInputs.size, localInputs.revenue]);
   const liveBand = useMemo(() => getBand(liveAfi), [liveAfi]);
   const liveStructuralScore = useMemo(() => Math.min(100, Math.round(liveAfi / 3.0 * 100)), [liveAfi]);
 
