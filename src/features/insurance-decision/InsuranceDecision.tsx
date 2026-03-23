@@ -44,7 +44,7 @@ export function InsuranceDecision() {
         <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-muted-foreground mb-3">
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
-        <div className={`text-[20px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
+        <div className={`text-[18px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
           {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
            decisionClass === 'Conditional Review' ? 'Conditional Review' :
            'Standard Coverage'}
