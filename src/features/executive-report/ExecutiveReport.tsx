@@ -385,6 +385,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         );
       })()}
 
+      <SectionDivider title="Risk Position & Required Actions" icon="⚖" subtitle="Underwriting actions, governance conditions, and systemic signals" />
+
       {/* ═══ MANDATORY CONDITIONS (Fragile only) ═══ */}
       {afi >= 1.35 && (
         <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-5 sm:p-6 mb-4">
