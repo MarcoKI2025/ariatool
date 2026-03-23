@@ -212,6 +212,47 @@ export function ExecutiveReport() {
         </div>
       </div>
 
+      {/* ═══ MANDATORY CONDITIONS (Fragile only) ═══ */}
+      {afi >= 1.35 && (
+        <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-5 sm:p-6 mb-4">
+          <div className="flex items-start gap-3 mb-5">
+            <div className="text-fragile text-2xl">⚠</div>
+            <div>
+              <div className="text-[10px] font-bold tracking-[0.1em] uppercase text-fragile mb-2">
+                Required Underwriting Actions — Mandatory Conditions Before Standard Coverage Applies
+              </div>
+              <div className="text-[11px] text-secondary-foreground leading-relaxed">
+                Governance fragility index exceeds standard assumptions. All conditions below must be met before coverage can be offered. These are binding underwriting requirements.
+              </div>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {[
+              { num: '1', title: 'Apply premium loading 150–180% above standard', desc: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor, not target. Standard actuarial models do not capture continuation governance exposure.', source: "Lloyd's AI Underwriting Framework 2025" },
+              { num: '2', title: 'Require dependency diversification within 90 days', desc: 'Mandatory — minimum 3 providers across critical model endpoints. Reduces aggregate tail exposure 40–60% (Swiss Re sigma 01/2026). Single-provider concentration creates systemic cascade risk.', source: 'Munich Re AI Risk Guidelines Q4 2025' },
+              { num: '3', title: 'Enforce quarterly governance re-authorisation cadence', desc: 'Condition of coverage — system persists by default without explicit continuation decision. Art. 72 post-market monitoring insufficient without re-authorisation trigger.', source: 'EU AI Act Art. 72 / EIOPA Opinion Aug 2025' },
+              { num: '4', title: 'Limit coverage scope to operational layers only', desc: 'Recommended — full-stack coverage uneconomic at current lock-in depth. Exclude autonomous execution liability, model drift cascade exposure, and cross-entity correlation risk.', source: 'LMA E&O Guidelines 2025' },
+            ].map((action, i) => (
+              <div key={i} className="flex items-start gap-4 p-4 bg-card border border-fragile/30 rounded-lg">
+                <div className="w-9 h-9 rounded-full bg-fragile flex items-center justify-center font-bold text-foreground text-sm flex-shrink-0">{action.num}</div>
+                <div className="flex-1">
+                  <div className="text-[13px] font-bold text-foreground mb-1 leading-tight">{action.title}</div>
+                  <div className="text-[11px] text-secondary-foreground leading-relaxed mb-2">{action.desc}</div>
+                  <div className="text-[9px] text-muted-foreground italic">Source: {action.source}</div>
+                </div>
+                <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 bg-fragile-bg border border-fragile-border rounded text-[9px] font-bold text-fragile uppercase tracking-wide">● Required</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 p-4 bg-secondary border border-fragile/30 rounded-lg">
+            <div className="text-[10px] font-bold text-fragile mb-2 uppercase tracking-wide">Non-Compliance Impact</div>
+            <div className="text-[11px] text-secondary-foreground leading-relaxed">
+              Failure to implement these conditions within the specified timeline results in coverage termination at next renewal. Structural fragility at this level cannot be insured under standard terms. Committee escalation required for any binding decision.
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Risk Position + Financial Exposure */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
