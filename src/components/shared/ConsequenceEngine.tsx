@@ -44,7 +44,7 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
           <div className="text-[10px] font-bold tracking-[0.14em] uppercase text-muted-foreground">
             Consequence Assessment
           </div>
-          <div className="text-[15px] font-bold text-foreground">If This Is Ignored</div>
+          <div className="text-[15px] font-bold text-foreground">Potential Consequences if Unaddressed</div>
         </div>
       </div>
 
