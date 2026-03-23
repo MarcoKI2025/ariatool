@@ -1,5 +1,5 @@
 export type Band = 'Stable' | 'Sensitive' | 'Fragile';
-export type DecisionClass = 'Approved' | 'Conditional Review' | 'Escalate to Committee' | 'Not Approved';
+export type DecisionClass = 'Approved' | 'Conditional Review' | 'Escalate to Committee';
 export type Perspective = 'underwriter' | 'company';
 
 export interface SliderInput {

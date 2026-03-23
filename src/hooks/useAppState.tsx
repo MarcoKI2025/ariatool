@@ -68,7 +68,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   // Persist on changes
   useEffect(() => {
     persistState(state);
-  }, [state.inputs, state.iatState, state.darkMode]);
+  }, [state.inputs, state.iatState, state.darkMode, state.auditLog]);
 
   // Apply dark mode class
   useEffect(() => {
