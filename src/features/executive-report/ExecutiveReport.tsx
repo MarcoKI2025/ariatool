@@ -260,6 +260,14 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
 
       <UseRestrictionBanner />
 
+      <ViewTabs tabs={[
+        { id: 'summary', label: 'Executive Summary', icon: '📋' },
+        { id: 'findings', label: 'Risk Position', icon: '🔍' },
+        { id: 'exports', label: 'Export & Share', icon: '📤' },
+      ]} activeTab={activeTab} onChange={setActiveTab} />
+
+      {/* ═══ TAB: SUMMARY ═══ */}
+      {activeTab === 'summary' && (<>
       {/* Real Case Facts Card */}
       <RealCaseFactsCard />
 
