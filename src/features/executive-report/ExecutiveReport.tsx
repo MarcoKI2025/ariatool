@@ -353,6 +353,33 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         );
       })()}
 
+      {/* ═══ PEER BENCHMARKING SUMMARY ═══ */}
+      {(() => {
+        const peer = calculatePeerComparison(afi, inputs.industry || 'General', inputs);
+        return (
+          <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Industry Peer Comparison</div>
+            <div className="text-[13px] font-bold text-foreground mb-3">Benchmark: {peer.benchmark.industry} (n={peer.benchmark.sampleSize})</div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
+              {[
+                { label: 'Peer Ranking', value: getRankingLabel(peer.ranking), color: getRankingColor(peer.ranking) },
+                { label: 'Percentile', value: `${peer.percentile}th`, color: getRankingColor(peer.ranking) },
+                { label: 'vs. Industry Avg', value: `${peer.vsAverage >= 0 ? '+' : ''}${peer.vsAverage.toFixed(2)}`, color: peer.vsAverage > 0 ? 'text-fragile' : 'text-stable' },
+                { label: 'Better Than', value: `${peer.betterThanPercent}% of peers`, color: 'text-foreground' },
+              ].map((m, i) => (
+                <div key={i} className="p-3 bg-secondary/30 border border-border rounded-lg">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+                  <div className={`text-[16px] font-bold font-mono ${m.color}`}>{m.value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="text-[10px] text-muted-foreground leading-relaxed">
+              Industry peer comparison based on {peer.benchmark.sampleSize} anonymized assessments ({peer.benchmark.dataSource}).
+            </div>
+          </div>
+        );
+      })()}
+
       {/* ═══ MANDATORY CONDITIONS (Fragile only) ═══ */}
       {afi >= 1.35 && (
         <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-5 sm:p-6 mb-4">
