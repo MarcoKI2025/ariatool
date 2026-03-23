@@ -71,10 +71,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '⚡', name: 'System Failure', value: 'Origin', layer: 'Layer 0' },
-        { icon: '🔧', name: 'Workflow Halt', value: '+30%', layer: 'Layer 1' },
-        { icon: '⚖', name: 'Decision Backlog', value: '+80%', layer: 'Layer 2' },
-        { icon: '📉', name: 'Revenue Loss', value: '+150%', layer: 'Layer 3' },
-        { icon: '🌐', name: 'Reputation', value: '+220%', layer: 'Layer 4' },
+        { icon: '🔧', name: 'Workflow Halt', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '⚖', name: 'Decision Backlog', value: 'Critical', layer: 'Layer 2' },
+        { icon: '📉', name: 'Revenue Loss', value: 'Critical', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Reputation', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'Manual fallback activated. Re-authorisation backlog accumulates. Oversight capacity degrades under volume.',
