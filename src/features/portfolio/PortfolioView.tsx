@@ -136,22 +136,22 @@ export function PortfolioView() {
   }).length;
 
   return (
-    <div className="space-y-8 max-w-5xl">
+    <div className="space-y-6 sm:space-y-8 max-w-5xl">
       {/* Portfolio Intelligence Header */}
       <div className="border-b border-border pb-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
               Portfolio Intelligence Dashboard
             </div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
               Multi-Entity Risk Aggregation
             </h1>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mt-2">
-              Assess aggregate structural risk across multiple client deployments. Portfolio AFI is computed as weighted average of entity-level components.
+            <p className="text-[11px] sm:text-sm text-muted-foreground leading-relaxed max-w-2xl mt-2">
+              Assess aggregate structural risk across multiple client deployments.
             </p>
           </div>
-          <div className="text-right flex-shrink-0 ml-4 space-y-1">
+          <div className="sm:text-right flex-shrink-0 space-y-1">
             <LiveIndicator label={`${entities.length} entities monitored`} />
             {totalIncidents > 0 && (
               <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-sensitive-bg border border-sensitive-border">
