@@ -688,11 +688,11 @@ export function ExecutiveReport() {
                     { l: 'Expected Loss', v: lossEnvelope.expected, s: 'Base scenario' },
                     { l: 'Stress Scenario', v: lossEnvelope.stress, s: 'Governance exposure' },
                     { l: 'Tail Risk', v: lossEnvelope.tail, s: '99th percentile' },
-                    { l: 'Portfolio', v: lossEnvelope.portfolio, s: `${amplificationFactor} amplification` },
+                    { l: 'Portfolio', v: lossEnvelope.portfolio, s: `${amplificationFactor}` },
                   ].map((m, i) => (
                     <div key={i} style={{ padding: '10px 12px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 6, textAlign: 'center' }}>
                       <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#96938c', marginBottom: 4 }}>{m.l}</div>
-                      <div style={{ fontSize: 18, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
+                      <div style={{ fontSize: 12, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
                       <div style={{ fontSize: 8, color: '#96938c', marginTop: 2 }}>{m.s}</div>
                     </div>
                   ))}
