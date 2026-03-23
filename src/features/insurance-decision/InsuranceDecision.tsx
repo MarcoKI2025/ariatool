@@ -889,15 +889,10 @@ export function InsuranceDecision() {
         </div>
       </div>
 
+      <SectionDivider title="Premium Calculator" icon="💰" subtitle="Interactive actuarial pricing with coverage and deductible options" />
+
       {/* ═══ PREMIUM CALCULATOR ═══ */}
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-lg">💰</span>
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">New · Actuarial Pricing</div>
-            <div className="text-[15px] font-bold text-foreground">Premium Calculator</div>
-          </div>
-        </div>
         <PremiumCalculator />
       </div>
 

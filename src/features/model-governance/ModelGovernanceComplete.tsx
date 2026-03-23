@@ -68,6 +68,8 @@ export function ModelGovernanceComplete() {
       <ResearchFoundation />
       <CalibrationTransparency />
       <MethodologyTransparencyPanel />
+      <SectionDivider title="Product & Roadmap" icon="🚀" subtitle="Competitive positioning, API integration, revision schedule" />
+
       <CompetitivePositioning />
       <APIIntegrationReference />
       <FrameworkRevisionSchedule />
