@@ -634,6 +634,8 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
+      <SectionDivider title="Advanced Risk Signals" icon="🧬" subtitle="Meaning drift, assessment validity, frame drift alerts" />
+
       {/* ═══ MDR — Meaning Drift Risk ═══ */}
       <SectionCard title="Meaning Drift Risk (MDR)" icon="🔄" subtitle="Behavioral alignment decay risk — from Kindermann (2026), Semantic Drift and Temporal Coherence in Long-Horizon AI Systems.">
         <div className="flex items-start gap-6 mb-4">
