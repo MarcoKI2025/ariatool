@@ -899,6 +899,8 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
+      <SectionDivider title="Epistemic Framework" icon="⚠" subtitle="Assessment limitations and operational constraints" />
+
       {/* ═══ EPISTEMIC STATUS ═══ */}
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Epistemic Status · What This Assessment Cannot Guarantee</div>
