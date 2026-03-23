@@ -169,6 +169,6 @@ Proprietary — All rights reserved
 
 ---
 
-**Version:** 3.2.1
+**Version:** 4.2.0
 **Status:** Production Ready
 **Last Updated:** March 2026
