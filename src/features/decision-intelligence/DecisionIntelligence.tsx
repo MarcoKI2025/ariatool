@@ -966,6 +966,28 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
+      {/* ═══ CONSEQUENCE ENGINE ═══ */}
+      <ConsequenceEngine
+        band={band}
+        afi={afi}
+        components={components}
+        agri={agri}
+        alri={alri}
+        scri={scri}
+        companyName={inputs.companyName || 'Entity'}
+        revenue={inputs.revenue}
+      />
+
+      {/* ═══ RESPONSIBILITY COLLAPSE DETECTOR ═══ */}
+      <ResponsibilityCollapseDetector
+        band={band}
+        components={components}
+        agri={agri}
+        humanCheckpoints={inputs.humanCheckpoints}
+        oversightLevel={inputs.oversightLevel}
+        multiAgent={inputs.multiAgent}
+      />
+
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
 
