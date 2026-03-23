@@ -236,7 +236,7 @@ export function DecisionIntelligence() {
       <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
           <div>
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚠ AI Liability Risk Index (ALRI)</div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚠ AI Liability Risk Index (ALRI)<InfoTip text={TOOLTIPS.alri} /></div>
             <div className={`text-[32px] sm:text-[48px] font-bold font-mono leading-none ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{alri}</div>
             <div className={`text-[9px] font-bold tracking-wider uppercase mt-1 ${alri >= 60 ? 'text-fragile' : alri >= 35 ? 'text-sensitive' : 'text-stable'}`}>
               {alri >= 60 ? 'Critical — Multiple Active Claim Vectors' : alri >= 35 ? 'Elevated — Emerging Claim Exposure' : alri >= 15 ? 'Moderate — Manageable with Controls' : 'Low — Controlled Liability Profile'}
