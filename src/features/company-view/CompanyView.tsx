@@ -448,9 +448,42 @@ export function CompanyView() {
           <div>
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Company View — AI Insurance Cost Calculator</div>
             <div className="text-[15px] sm:text-[18px] font-bold text-foreground tracking-tight mb-1.5">What does your AI cost to insure — and where can you save?</div>
-            <div className="text-[11px] text-secondary-foreground leading-[1.6] max-w-[600px]">Configure your AI deployment profile below. The premium estimate, risk score, and cost reduction levers update in real-time as you adjust each parameter.</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.6] max-w-[600px]">Configure your AI deployment profile below or select a demo scenario. Changes propagate across the entire tool.</div>
           </div>
           <button onClick={() => setPerspective('underwriter')} className="btn-ghost text-[11px] flex-shrink-0">⊕ Underwriter View →</button>
+        </div>
+
+        {/* ── Demo Profile Selector ── */}
+        <div className="py-3 border-b border-border">
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">▶ Quick Start — Load Demo Scenario</div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+            {DEMO_PROFILES.map((p) => {
+              const isActive = localInputs.companyName === p.name;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => {
+                    const applied = applyDemoProfile(p);
+                    setLocalInputs(applied);
+                    setInputs(applied);
+                    setTimeout(() => runAnalysis(), 50);
+                  }}
+                  className={`text-left rounded-lg border p-2.5 transition-all hover:border-primary/40 hover:-translate-y-[1px] ${
+                    isActive ? 'border-primary bg-primary/5' : 'border-border bg-card'
+                  }`}
+                >
+                  <div className="text-[11px] font-bold text-foreground truncate">{p.name}</div>
+                  <div className="text-[9px] text-muted-foreground mt-0.5">{p.industry}</div>
+                  <div className="flex items-center gap-1.5 mt-1.5">
+                    <span className={`text-[8px] font-bold uppercase tracking-wider px-1.5 py-[2px] rounded ${
+                      p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
+                    }`}>{p.band}</span>
+                    <span className="text-[9px] font-mono text-muted-foreground">AFI {p.afi.toFixed(2)}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* 4 section preview cards */}
