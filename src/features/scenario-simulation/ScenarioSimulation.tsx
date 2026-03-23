@@ -342,7 +342,7 @@ export function ScenarioSimulation() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4 overflow-x-auto">
           {s.cascadeLayers.map((node, i) => (
             <div key={i} className="text-center px-2 py-3 relative">
               {i < 4 && <span className="absolute right-[-11px] top-[38%] text-muted-foreground text-sm z-[1]">→</span>}
