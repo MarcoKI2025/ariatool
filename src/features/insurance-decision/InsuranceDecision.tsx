@@ -878,6 +878,18 @@ export function InsuranceDecision() {
         </div>
       </div>
 
+      {/* ═══ PREMIUM CALCULATOR ═══ */}
+      <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-lg">💰</span>
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">New · Actuarial Pricing</div>
+            <div className="text-[15px] font-bold text-foreground">Premium Calculator</div>
+          </div>
+        </div>
+        <PremiumCalculator />
+      </div>
+
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(3)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Scenario Simulation</button>
