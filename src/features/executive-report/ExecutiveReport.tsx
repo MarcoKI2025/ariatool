@@ -377,7 +377,7 @@ export function ExecutiveReport() {
             { num: 2, title: 'Monitor key drift vectors', desc: 'Delegation density and provider concentration tend to increase silently. Establish threshold alerts for proactive governance intervention.' },
           ]).map((action, i) => (
             <div key={i} className="flex items-start gap-3 p-4 bg-secondary border border-border rounded-lg">
-              <div className="w-[24px] h-[24px] rounded-full bg-fragile text-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px]">{action.num}</div>
+              <div className={`w-[24px] h-[24px] rounded-full text-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px] ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>{action.num}</div>
               <div>
                 <div className="text-[12px] font-semibold text-foreground">{action.title}</div>
                 <div className="text-[11px] text-muted-foreground leading-[1.55] mt-[2px]">{action.desc}</div>
