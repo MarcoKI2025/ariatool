@@ -315,7 +315,7 @@ export function ExposureResults() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4 overflow-x-auto">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: 'Elevated', layer: 'Layer 1', color: 'text-sensitive' },
