@@ -321,6 +321,8 @@ export function PortfolioView() {
         </div>
       </div>
 
+      <SectionDivider title="Advanced Analysis" icon="🧬" subtitle="Quantum vulnerability and portfolio interpretation" />
+
       {/* Quantum Vulnerability Assessment */}
       <QuantumVulnerabilityAssessment />
 
