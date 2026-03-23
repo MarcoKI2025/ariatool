@@ -42,7 +42,7 @@ export function ScenarioSimulation() {
     return <LockedState title="Scenario Simulation Locked" description="Complete the Exposure Analysis to run scenario stress tests against your AI deployment profile." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, structuralScore, components, lossEnvelope, agri: stateAgri } = results;
+  const { band, afi, structuralScore, components, lossEnvelope } = results;
 
   const scenarios: ScenarioData[] = [
     {
