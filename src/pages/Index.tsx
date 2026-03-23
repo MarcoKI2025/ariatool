@@ -48,6 +48,8 @@ function AppContent() {
       case 4: return <InsuranceDecision />;
       case 5: return <ExecutiveReport />;
       case 6: return <ModelGovernance />;
+      case 7: return <PortfolioView />;
+      case 8: return <EvidenceLog />;
       default: return <ExposureAnalysis />;
     }
   };
