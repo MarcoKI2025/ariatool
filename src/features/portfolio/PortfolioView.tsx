@@ -207,6 +207,8 @@ export function PortfolioView() {
         </div>
       </div>
 
+      <SectionDivider title="Entity Breakdown" icon="🏢" subtitle="Individual entity risk profiles and weights" />
+
       {/* Entity List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
