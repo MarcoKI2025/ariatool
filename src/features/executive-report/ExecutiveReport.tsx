@@ -559,6 +559,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       </div>
 
+      <SectionDivider title="Governance & Accountability" icon="👥" subtitle="Responsibility structure and epistemic constraints" />
+
       {/* Responsibility & Ownership Structure */}
       <ResponsibilityOwnershipPanel results={results} inputs={inputs} />
 
