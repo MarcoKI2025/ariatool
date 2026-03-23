@@ -24,10 +24,9 @@ Structured AI Risk Signal for Committee Review
 ═══════════════════════════════════════════════════════════════
 
 GOVERNANCE INTELLIGENCE LAYER – USE RESTRICTION
-Dieses Tool erzeugt KEINE Wahrscheinlichkeiten, KEINE Preisfestsetzungen,
-KEINE bindenden Underwriting-Entscheidungen. Alle Ausgaben sind
-Entscheidungsunterstützungssignale und erfordern menschliche Überprüfung
-und explizite Freigabe.
+This tool does NOT produce probabilities, pricing determinations,
+or binding underwriting decisions. All outputs are decision-support
+signals and require mandatory human review and explicit authorization.
 
 Entity:     ${inputs.companyName || 'Unknown Entity'}
 Industry:   ${inputs.industry}
