@@ -38,6 +38,8 @@ export function ModelGovernanceComplete() {
         </div>
       </div>
 
+      <SectionDivider title="AGAF Methodology" icon="📐" subtitle="Framework basis, scope declaration, and calibration" />
+
       <AGAFMethodologyStatement />
 
       {/* ═══ EU AI ACT COMPLIANCE DASHBOARD ═══ */}
