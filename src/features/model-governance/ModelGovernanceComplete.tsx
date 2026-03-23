@@ -42,15 +42,9 @@ export function ModelGovernanceComplete() {
 
       <AGAFMethodologyStatement />
 
-      {/* ═══ EU AI ACT COMPLIANCE DASHBOARD ═══ */}
+      <SectionDivider title="EU AI Act Compliance" icon="🇪🇺" subtitle="Article-by-article assessment against EU Regulation 2024/1689" />
+
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-lg">🇪🇺</span>
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">Regulatory · EU AI Act 2024/1689</div>
-            <div className="text-[15px] font-bold text-foreground">Compliance Assessment</div>
-          </div>
-        </div>
         <ComplianceDashboard />
       </div>
 
