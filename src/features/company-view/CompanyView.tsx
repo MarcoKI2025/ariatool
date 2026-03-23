@@ -340,6 +340,9 @@ export function CompanyView() {
 
   const toggleCat = (key: string) => setExpandedCats(prev => ({ ...prev, [key]: !prev[key] }));
 
+  // Cleanup sync timer
+  useEffect(() => { return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); }; }, []);
+
   // Sticky header
   useEffect(() => {
     const handleScroll = () => {
