@@ -96,10 +96,10 @@ export function AppHeader() {
           </button>
         </div>
 
-        {/* Demo */}
+        {/* Demo - hidden on mobile */}
         <button
           onClick={() => document.dispatchEvent(new CustomEvent('open-demo-pitch'))}
-          className="px-3 py-1.5 rounded-lg text-[11px] font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors border border-border"
+          className="hidden sm:inline-flex px-3 py-1.5 rounded-lg text-[11px] font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors border border-border"
         >
           <span className="text-primary mr-1">▶</span>Demo
         </button>
