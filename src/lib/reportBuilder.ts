@@ -24,10 +24,9 @@ Structured AI Risk Signal for Committee Review
 ═══════════════════════════════════════════════════════════════
 
 GOVERNANCE INTELLIGENCE LAYER – USE RESTRICTION
-Dieses Tool erzeugt KEINE Wahrscheinlichkeiten, KEINE Preisfestsetzungen,
-KEINE bindenden Underwriting-Entscheidungen. Alle Ausgaben sind
-Entscheidungsunterstützungssignale und erfordern menschliche Überprüfung
-und explizite Freigabe.
+This tool does NOT produce probabilities, pricing determinations,
+or binding underwriting decisions. All outputs are decision-support
+signals and require mandatory human review and explicit authorization.
 
 Entity:     ${inputs.companyName || 'Unknown Entity'}
 Industry:   ${inputs.industry}
@@ -54,7 +53,7 @@ Reversibility Cost (RC):     ${(components.rc * 100).toFixed(0)}%
 Continuation Density (CD):   ${(components.cd * 100).toFixed(0)}%
 
 ───────────────────────────────────────────────────────────────
-LOSS ENVELOPE (qualitative Einschätzung)
+LOSS ENVELOPE (qualitative assessment)
 ───────────────────────────────────────────────────────────────
 
 Expected Loss Band:     ${lossEnvelope.expected}
@@ -62,8 +61,8 @@ Stress Scenario Band:   ${lossEnvelope.stress}
 Tail / Systemic Band:   ${lossEnvelope.tail}
 Portfolio Cluster:       ${lossEnvelope.portfolio}
 
-Quelle: Swiss Re sigma insights 01/2026 – qualitative Einschätzung
-neuer systemischer Abhängigkeiten und Akkumulationsrisiken.
+Source: Swiss Re sigma insights 01/2026 – qualitative assessment
+of emerging systemic dependencies and accumulation risks.
 "AI adoption creates emerging risk dimensions that do not fit neatly
 within traditional insurance boundaries."
 
@@ -109,8 +108,8 @@ ORSA-STYLE AI GOVERNANCE RISK ASSESSMENT EXTRACT
 ${date}
 
 GOVERNANCE INTELLIGENCE LAYER – USE RESTRICTION
-Dieses Tool erzeugt KEINE Wahrscheinlichkeiten, KEINE Preisfestsetzungen,
-KEINE bindenden Underwriting-Entscheidungen.
+This tool does NOT produce probabilities, pricing determinations,
+or binding underwriting decisions.
 
 Entity: ${inputs.companyName || 'Unknown'}
 Classification: ${results.band} (AFI ${results.afi.toFixed(2)})
@@ -122,13 +121,13 @@ RISK DRIVERS:
 - Reversibility Cost: ${(results.components.rc * 100).toFixed(0)}%
 - Continuation Density: ${(results.components.cd * 100).toFixed(0)}%
 
-LOSS ENVELOPE (qualitative Einschätzung):
+LOSS ENVELOPE (qualitative assessment):
 - Expected: ${results.lossEnvelope.expected}
 - Stress: ${results.lossEnvelope.stress}
 - Tail: ${results.lossEnvelope.tail}
 
-Quelle: Swiss Re sigma insights 01/2026 – qualitative Einschätzung
-neuer systemischer Abhängigkeiten und Akkumulationsrisiken.
+Source: Swiss Re sigma insights 01/2026 – qualitative assessment
+of emerging systemic dependencies and accumulation risks.
 
 This extract is for Own Risk and Solvency Assessment discussion purposes.
 Not a regulatory filing. Self-attested inputs. Qualitative signals only.

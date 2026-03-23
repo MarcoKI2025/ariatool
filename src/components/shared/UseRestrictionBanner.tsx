@@ -10,10 +10,10 @@ export function UseRestrictionBanner() {
             Governance Intelligence Platform — Strict Use Restriction
           </div>
           <div className="text-[11px] text-fragile leading-[1.55] mb-2">
-            Dieses Tool erzeugt ausschließlich Entscheidungsunterstützungssignale. Es produziert <strong>KEINE</strong> bindenden Underwriting-Entscheidungen, <strong>KEINE</strong> Wahrscheinlichkeiten, <strong>KEINE</strong> Preisfestsetzungen, <strong>KEINE</strong> actuarial loss predictions und <strong>KEINE</strong> regulatorischen Zertifizierungen.
+            This tool generates decision-support signals only. It does <strong>NOT</strong> produce binding underwriting decisions, <strong>NOT</strong> probabilities, <strong>NOT</strong> pricing determinations, <strong>NOT</strong> actuarial loss predictions and <strong>NOT</strong> regulatory certifications.
           </div>
           <div className="text-[11px] text-fragile leading-[1.55]">
-            Alle Ausgaben erfordern <strong>zwingend menschliche Überprüfung und explizite Freigabe</strong> durch autorisierte Personen. Keine versicherungsmathematische Validierung. Nutzung auf eigenes Risiko.
+            All outputs require <strong>mandatory human review and explicit authorization</strong> by qualified personnel. No actuarial validation. Use at your own risk.
           </div>
         </div>
       </div>
