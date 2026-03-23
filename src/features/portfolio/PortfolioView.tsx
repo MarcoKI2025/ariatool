@@ -10,6 +10,7 @@ import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 interface PortfolioEntity {
   id: string;
   name: string;
@@ -206,6 +207,8 @@ export function PortfolioView() {
         </div>
       </div>
 
+      <SectionDivider title="Entity Breakdown" icon="🏢" subtitle="Individual entity risk profiles and weights" />
+
       {/* Entity List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
@@ -273,6 +276,8 @@ export function PortfolioView() {
         </div>
       </div>
 
+      <SectionDivider title="Capital & Solvency" icon="💰" subtitle="Solvency II capital efficiency and reserve optimization" />
+
       {/* Capital Efficiency Calculator */}
       <div className="bg-card border border-border rounded-xl p-6">
         <div className="flex items-start justify-between mb-4">
@@ -315,6 +320,8 @@ export function PortfolioView() {
           Portfolio entities with improved governance scores (AFI reclassification from Sensitive/Fragile → Stable) require lower capital reserves under Solvency II Article 44 operational risk framework. Figures represent estimated opportunity based on current portfolio composition and standard EIOPA calibration factors. Not actuarial advice.
         </div>
       </div>
+
+      <SectionDivider title="Advanced Analysis" icon="🧬" subtitle="Quantum vulnerability and portfolio interpretation" />
 
       {/* Quantum Vulnerability Assessment */}
       <QuantumVulnerabilityAssessment />

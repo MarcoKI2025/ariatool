@@ -11,6 +11,7 @@ import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { RealCaseFactsCard } from '@/features/demo/RealCaseFactsCard';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 
 // ═══════════════════════════════════════════════════════════════
 // RESPONSIBILITY & OWNERSHIP STRUCTURE PANEL
@@ -261,6 +262,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
       {/* Real Case Facts Card */}
       <RealCaseFactsCard />
 
+      <SectionDivider title="Assessment Verdict" icon="◈" subtitle="Core risk classification and AFI positioning" />
+
       {/* Main verdict */}
       <div className="bg-card border border-border rounded-xl p-4 sm:p-6 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-3">AI Systemic Risk Assessment · Governance Exposure Engine v3.0</div>
@@ -295,6 +298,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           Risk characterization based on structural governance factors: AFI score, delegation depth, provider concentration, continuation cost. Swiss Re sigma insights 01/2026: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries." Framework is governance-oriented, not actuarially certified.
         </div>
       </div>
+
+      <SectionDivider title="Financial Exposure" icon="💰" subtitle="Loss envelope, premium recommendation, and peer comparison" />
 
       {/* ═══ LOSS ENVELOPE ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
@@ -379,6 +384,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           </div>
         );
       })()}
+
+      <SectionDivider title="Risk Position & Required Actions" icon="⚖" subtitle="Underwriting actions, governance conditions, and systemic signals" />
 
       {/* ═══ MANDATORY CONDITIONS (Fragile only) ═══ */}
       {afi >= 1.35 && (
@@ -552,6 +559,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       </div>
 
+      <SectionDivider title="Governance & Accountability" icon="👥" subtitle="Responsibility structure and epistemic constraints" />
+
       {/* Responsibility & Ownership Structure */}
       <ResponsibilityOwnershipPanel results={results} inputs={inputs} />
 
@@ -616,6 +625,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           </table>
         </div>
       </SectionCard>
+
+      <SectionDivider title="Export & Share" icon="📤" subtitle="Generate output for risk committee, board, or reinsurer review" />
 
       {/* Export controls */}
       <div className="bg-card border border-border rounded-[10px] p-5">

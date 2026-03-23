@@ -7,6 +7,7 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
 import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
@@ -109,6 +110,8 @@ export function InsuranceDecision() {
           </div>
         </div>
       </div>
+
+      <SectionDivider title="Financial Exposure Model" icon="💰" subtitle="Loss envelope, threshold position, and AFI component analysis" />
 
       {/* ═══ 4. INSURANCE & FINANCIAL EXPOSURE TITLE + COMMITTEE PANEL ═══ */}
       <h2 className="text-[18px] font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h2>
@@ -234,6 +237,8 @@ export function InsuranceDecision() {
         </div>
       </SectionCard>
 
+      <SectionDivider title="Cascade Propagation" icon="🌐" subtitle="How failure travels across systems and amplifies at each layer" />
+
       {/* ═══ 8. CASCADE PROPAGATION — CIRCLES + ARROWS ═══ */}
       <div className="bg-card border-2 border-border rounded-xl p-3 sm:p-6 mb-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #f39c12, #c0392b, #7b0e0e)' }} />
@@ -283,6 +288,8 @@ export function InsuranceDecision() {
           </div>
         </div>
       </div>
+
+      <SectionDivider title="Underwriting Decision" icon="⚖" subtitle="Risk position, required actions, and operational decision" />
 
       {/* ═══ 9. RISK POSITION + REQUIRED ACTIONS ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
@@ -451,6 +458,8 @@ export function InsuranceDecision() {
 
 
 
+      <SectionDivider title="Coverage Conditions" icon="📋" subtitle="Underwriting conditions, anti-stacking, and reinsurance" />
+
       {/* ═══ 12. UNDERWRITING CONDITIONS (numbered) ═══ */}
       <SectionCard title="Underwriting Conditions for AI Coverage" icon="📋" subtitle="Required structural conditions before standard terms apply.">
         <div className="space-y-3">
@@ -551,6 +560,8 @@ export function InsuranceDecision() {
           ))}
         </div>
       </SectionCard>
+
+      <SectionDivider title="Market Position & Portfolio" icon="🌍" subtitle="Market context, portfolio exposure, and provider dependency" />
 
       {/* ═══ 17. WHAT THE MARKET SEES ═══ */}
       <div className="bg-card border border-border rounded-xl p-7 mb-5">
@@ -878,15 +889,10 @@ export function InsuranceDecision() {
         </div>
       </div>
 
+      <SectionDivider title="Premium Calculator" icon="💰" subtitle="Interactive actuarial pricing with coverage and deductible options" />
+
       {/* ═══ PREMIUM CALCULATOR ═══ */}
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-lg">💰</span>
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">New · Actuarial Pricing</div>
-            <div className="text-[15px] font-bold text-foreground">Premium Calculator</div>
-          </div>
-        </div>
         <PremiumCalculator />
       </div>
 

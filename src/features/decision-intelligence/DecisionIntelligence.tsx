@@ -9,6 +9,7 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
 import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
 import { PeerBenchmarking } from '@/features/benchmarking/PeerBenchmarking';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
@@ -41,6 +42,8 @@ export function DecisionIntelligence() {
       </div>
 
       <UseRestrictionBanner />
+
+      <SectionDivider title="Board-Level Assessment" icon="◈" subtitle="Executive summary and risk classification" />
 
       {/* ═══ HERO BOARD STATEMENT ═══ */}
       <div className={`bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 flex items-start gap-3 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
@@ -212,6 +215,8 @@ export function DecisionIntelligence() {
         <BandBadge band={band} size="sm" />
       </div>
 
+      <SectionDivider title="Risk Indices" icon="📊" subtitle="AGRI, ALRI, SCRI, MDR — individual risk dimension scores" />
+
       {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
       <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
@@ -253,6 +258,8 @@ export function DecisionIntelligence() {
           </div>
         </div>
       </div>
+
+      <SectionDivider title="Governance Decision" icon="⚖" subtitle="Required actions and committee signals" />
 
       {/* ═══ GOVERNANCE DECISION SIGNAL ═══ */}
       <div className={`p-4 rounded-xl border-2 mb-4 ${
@@ -437,6 +444,8 @@ export function DecisionIntelligence() {
           ))}
         </div>
       </div>
+
+      <SectionDivider title="Deep Dive Analysis" icon="🔬" subtitle="AFI components, financial exposure, responsibility structure" />
 
       {/* ═══ AFI COMPONENT ANALYSIS — HORIZONTAL BARS (matches HTML) ═══ */}
       <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
@@ -625,6 +634,8 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
+      <SectionDivider title="Advanced Risk Signals" icon="🧬" subtitle="Meaning drift, assessment validity, frame drift alerts" />
+
       {/* ═══ MDR — Meaning Drift Risk ═══ */}
       <SectionCard title="Meaning Drift Risk (MDR)" icon="🔄" subtitle="Behavioral alignment decay risk — from Kindermann (2026), Semantic Drift and Temporal Coherence in Long-Horizon AI Systems.">
         <div className="flex items-start gap-6 mb-4">
@@ -805,6 +816,8 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
+      <SectionDivider title="Market Context & Positioning" icon="🌍" subtitle="Industry comparison, traditional vs. structural detection" />
+
       {/* ═══ STANDARD UNDERWRITING PROCESS — WHERE TRADITIONAL MODELS STOP ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 sm:p-7 mb-5">
         <div className="mb-5">
@@ -885,6 +898,8 @@ export function DecisionIntelligence() {
           </div>
         </div>
       </div>
+
+      <SectionDivider title="Epistemic Framework" icon="⚠" subtitle="Assessment limitations and operational constraints" />
 
       {/* ═══ EPISTEMIC STATUS ═══ */}
       <div className="bg-card border border-border rounded-xl p-6 mb-4">

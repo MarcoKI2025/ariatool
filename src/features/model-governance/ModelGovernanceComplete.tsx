@@ -3,6 +3,7 @@ import { useApp } from '@/hooks/useAppState';
 import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 
 export function ModelGovernanceComplete() {
   const { state, setActiveStep } = useApp();
@@ -37,34 +38,38 @@ export function ModelGovernanceComplete() {
         </div>
       </div>
 
+      <SectionDivider title="AGAF Methodology" icon="📐" subtitle="Framework basis, scope declaration, and calibration" />
+
       <AGAFMethodologyStatement />
 
-      {/* ═══ EU AI ACT COMPLIANCE DASHBOARD ═══ */}
+      <SectionDivider title="EU AI Act Compliance" icon="🇪🇺" subtitle="Article-by-article assessment against EU Regulation 2024/1689" />
+
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-lg">🇪🇺</span>
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">Regulatory · EU AI Act 2024/1689</div>
-            <div className="text-[15px] font-bold text-foreground">Compliance Assessment</div>
-          </div>
-        </div>
         <ComplianceDashboard />
       </div>
+
+      <SectionDivider title="Framework Assumptions" icon="🔒" subtitle="Boundary conditions, non-goals, and degradation signals" />
 
       <AssessmentScopeDeclaration />
       <CalibrationParameters />
       <FrameworkAssumptions />
       <NonGoals />
+      <SectionDivider title="Advanced Governance Signals" icon="🧬" subtitle="Meaning drift, RFSI, frame drift, evaluation limits" />
+
       <MeaningDriftRegister />
       <RFSIPanel />
       <FDAPanel />
       <EvaluationLimitsPanel />
+      <SectionDivider title="Research & Methodology" icon="📚" subtitle="White paper, epistemic limitations, regulatory alignment" />
+
       <MethodologyWhitePaper />
       <EpistemicLimitations />
       <RegulatoryAlignment />
       <ResearchFoundation />
       <CalibrationTransparency />
       <MethodologyTransparencyPanel />
+      <SectionDivider title="Product & Roadmap" icon="🚀" subtitle="Competitive positioning, API integration, revision schedule" />
+
       <CompetitivePositioning />
       <APIIntegrationReference />
       <FrameworkRevisionSchedule />
