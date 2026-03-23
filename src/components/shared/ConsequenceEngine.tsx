@@ -83,12 +83,12 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             <div className="flex items-start gap-2">
               <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${components.jd < 0.5 ? 'bg-fragile' : 'bg-sensitive'}`} />
               <div>
-                <div className="text-[11px] font-semibold text-foreground">
-                  {components.jd < 0.4 ? 'Shared responsibility without documentation' : 'Partial documentation trail'}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  Justificatory density at {Math.round(components.jd * 100)}% — insufficient for regulatory defense
-                </div>
+                 <div className="text-[11px] font-semibold text-foreground">
+                   {components.jd < 0.4 ? 'Documentation trail may not support regulatory defense' : 'Partial documentation trail'}
+                 </div>
+                 <div className="text-[10px] text-muted-foreground">
+                   Justificatory density at {Math.round(components.jd * 100)}% — may require strengthening for formal examination
+                 </div>
               </div>
             </div>
             <div className="flex items-start gap-2">
