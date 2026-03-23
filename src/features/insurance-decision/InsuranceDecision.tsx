@@ -12,6 +12,7 @@ import { ViewTabs } from '@/components/shared/ViewTabs';
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
+  const [activeTab, setActiveTab] = useState('underwriting');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Insurance Decision Locked" description="Complete the Exposure Analysis to view the underwriting decision console with loss envelope and committee signals." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
