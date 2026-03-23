@@ -482,7 +482,7 @@ export function DecisionIntelligence() {
         </div>
 
         {/* Qualitative Risk Band Visualization */}
-        <div className="grid grid-cols-4 gap-2 mb-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
           {[
             { label: 'Expected', value: lossEnvelope.expected, color: 'bg-stable', height: 'h-8' },
             { label: 'Stress', value: lossEnvelope.stress, color: 'bg-sensitive', height: 'h-16' },
