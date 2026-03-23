@@ -274,7 +274,7 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
             </div>
           </div>
           <div className="text-right flex-shrink-0">
-            <div className={`text-[32px] sm:text-[48px] font-extrabold font-mono leading-none ${
+            <div className={`text-[28px] sm:text-[48px] font-extrabold font-mono leading-none ${
               band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
             }`}>{afi.toFixed(2)}</div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground">AFI Score</div>
