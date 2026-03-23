@@ -288,7 +288,7 @@ export function InsuranceDecision() {
             {band === 'Fragile' ? (<>
               <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
               <div>• <strong className="text-foreground">Standard coverage not justified</strong> — Structural change required before standard rates apply</div>
-              <div>• <strong className="text-foreground">Premium loading mandatory</strong> — 150–180% above standard</div>
+              <div>• <strong className="text-foreground">Premium loading mandatory</strong> — Significant loading above standard required</div>
               <div>• <strong className="text-foreground">Critical risk band: {lossEnvelope.tail}</strong> — Provider concentration and automation factors</div>
               <div>• <strong className="text-foreground">Systemic exposure: {lossEnvelope.portfolio}</strong> — If 5 entities share similar AI infrastructure</div>
             </>) : band === 'Sensitive' ? (<>
