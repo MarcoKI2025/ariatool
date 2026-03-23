@@ -567,6 +567,8 @@ export function ExposureResults() {
           Decision Intelligence <span>→</span>
         </button>
       </div>
+
+      <AppFooter />
     </div>
   );
 }
