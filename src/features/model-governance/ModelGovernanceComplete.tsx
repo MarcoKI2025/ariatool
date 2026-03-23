@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 
 export function ModelGovernanceComplete() {
