@@ -4,6 +4,7 @@ import { SectionCard, LockedState, BandBadge } from '@/components/shared/UICompo
 import { buildExecutiveReport, buildORSAExport } from '@/lib/reportBuilder';
 import { exportORSA } from '@/lib/orsaExport';
 import { formatDate, formatCurrency } from '@/lib/formatters';
+import { calculatePremium, formatPremiumCurrency, formatPremiumPercentage } from '@/lib/pricing';
 import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
