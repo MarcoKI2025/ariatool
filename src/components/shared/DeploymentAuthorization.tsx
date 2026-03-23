@@ -40,7 +40,7 @@ const STATUS_CONFIG: Record<AuthStatus, { bg: string; border: string; text: stri
     border: 'border-fragile',
     text: 'text-fragile',
     icon: '✗',
-    sentence: (name) => `Deployment of ${name} is NOT AUTHORIZED due to unresolved governance risk and structural fragility.`,
+    sentence: (name) => `Deployment of ${name} is not advisable due to unresolved governance risks.`,
   },
   'PROHIBITED': {
     bg: 'bg-fragile-bg',
