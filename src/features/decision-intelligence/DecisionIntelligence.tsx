@@ -38,8 +38,8 @@ export function DecisionIntelligence() {
       <UseRestrictionBanner />
 
       {/* ═══ HERO BOARD STATEMENT ═══ */}
-      <div className="bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">
-        <div className="w-1 h-1 rounded-full bg-fragile flex-shrink-0 mt-[7px] opacity-70" />
+      <div className={`bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 flex items-start gap-3 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
+        <div className={`w-1 h-1 rounded-full flex-shrink-0 mt-[7px] opacity-70 ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`} />
         <div className="text-[13px] font-semibold text-foreground leading-[1.45]">
           {band === 'Fragile' ? 'This system creates structural AI risk that is not captured by compliance frameworks, point-in-time audits, or standard underwriting models — and that accumulates without a triggering incident.' :
            band === 'Sensitive' ? 'This system introduces moderate structural risk approaching underwriting tolerance. Conditional coverage available with mandatory governance improvement timeline.' :
