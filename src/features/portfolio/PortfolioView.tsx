@@ -39,6 +39,20 @@ export function PortfolioView() {
   const analysisInputs = state.inputs;
   const hasAnalysis = state.analysisComplete;
 
+  // Live cloud incident count
+  const [totalIncidents, setTotalIncidents] = useState(0);
+  useEffect(() => {
+    fetchCloudProviderStatus().then(providers => {
+      setTotalIncidents(providers.reduce((sum, p) => sum + p.incidents, 0));
+    });
+    const interval = setInterval(() => {
+      fetchCloudProviderStatus().then(providers => {
+        setTotalIncidents(providers.reduce((sum, p) => sum + p.incidents, 0));
+      });
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const [entities, setEntities] = useState<PortfolioEntity[]>([
     { id: '1', name: hasAnalysis && analysisInputs.companyName ? analysisInputs.companyName : 'Client A', inputs: hasAnalysis ? { ...analysisInputs } : { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
     { id: '2', name: 'Client B', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },

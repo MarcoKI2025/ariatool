@@ -55,6 +55,7 @@ export function ModelGovernanceComplete() {
       <APIIntegrationReference />
       <FrameworkRevisionSchedule />
       <ProductRoadmap />
+      <AIIncidentsFeed />
 
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
