@@ -251,7 +251,7 @@ export function PortfolioView() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-7 gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
                   <MetricCell label="DR" value={(components.dr * 100).toFixed(0)} />
                   <MetricCell label="JD" value={(components.jd * 100).toFixed(0)} />
                   <MetricCell label="RC" value={(components.rc * 100).toFixed(0)} />
