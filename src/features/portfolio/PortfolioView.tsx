@@ -219,6 +219,10 @@ export function PortfolioView() {
         </div>
       </div>
 
+      </>)}
+
+      {/* ═══ TAB: ENTITIES ═══ */}
+      {portfolioTab === 'entities' && (<>
       {/* Entity List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
