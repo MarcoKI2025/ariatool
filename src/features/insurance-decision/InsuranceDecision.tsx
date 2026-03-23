@@ -65,7 +65,7 @@ export function InsuranceDecision() {
           </div>
           <div>
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Premium Range<InfoTip text={TOOLTIPS.premium} /></div>
-            <div className="text-[14px] font-bold text-foreground font-mono">{formatCurrency(premium.lo, 'k')} – {formatCurrency(premium.hi, 'k')}</div>
+            <div className="text-[14px] font-bold text-foreground font-mono">{premium.band} – {premium.band}</div>
           </div>
         </div>
       </div>
@@ -128,10 +128,10 @@ export function InsuranceDecision() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {[
-            { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
+            { label: 'Loss Risk Band', value: lossEnvelope.expected, sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
             { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
-            { label: 'Amplification', value: amplificationFactor, sub: 'Munich Re loss multiplier' },
+            { label: 'Amplification', value: amplificationFactor, sub: 'Non-linear risk signal' },
           ].map((m, i) => (
             <div key={i}>
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
@@ -215,8 +215,8 @@ export function InsuranceDecision() {
             { label: 'Tail', value: lossEnvelope.tail, color: 'bg-fragile' },
             { label: 'Portfolio', value: lossEnvelope.portfolio, color: 'bg-purple' },
           ].map((bar, i) => {
-            const maxVal = lossEnvelope.portfolio || 1;
-            const height = Math.max(8, (bar.value / maxVal) * 140);
+            const maxVal = 'Systemic';
+            const height = Math.max(8, (i + 1) * 35);
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
                 <span className="text-[9px] font-mono font-bold text-muted-foreground">{formatCurrency(bar.value)}</span>
@@ -290,17 +290,17 @@ export function InsuranceDecision() {
               <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
               <div>• <strong className="text-foreground">Standard coverage not justified</strong> — Structural change required before standard rates apply</div>
               <div>• <strong className="text-foreground">Premium loading mandatory</strong> — 150–180% above standard</div>
-              <div>• <strong className="text-foreground">Critical risk band: {formatCurrency(lossEnvelope.tail)}</strong> — Provider concentration and automation factors</div>
-              <div>• <strong className="text-foreground">Systemic exposure: {formatCurrency(lossEnvelope.portfolio)}</strong> — If 5 entities share similar AI infrastructure</div>
+              <div>• <strong className="text-foreground">Critical risk band: {lossEnvelope.tail}</strong> — Provider concentration and automation factors</div>
+              <div>• <strong className="text-foreground">Systemic exposure: {lossEnvelope.portfolio}</strong> — If 5 entities share similar AI infrastructure</div>
             </>) : band === 'Sensitive' ? (<>
               <div>• <strong className="text-foreground">Approaching underwriting threshold</strong> — Elevated structural signals detected</div>
               <div>• <strong className="text-foreground">Conditional coverage available</strong> — With mandatory improvement timeline</div>
               <div>• <strong className="text-foreground">Premium loading 110–130%</strong> — Above standard baseline</div>
-              <div>• <strong className="text-foreground">Stress loss band: {formatCurrency(lossEnvelope.stress)}</strong> — Governance drift scenario</div>
+              <div>• <strong className="text-foreground">Stress loss band: {lossEnvelope.stress}</strong> — Governance drift scenario</div>
             </>) : (<>
               <div>• <strong className="text-foreground">Within underwriting tolerance</strong> — Standard structural exposure profile</div>
               <div>• <strong className="text-foreground">Standard coverage terms apply</strong> — No mandatory premium loading</div>
-              <div>• <strong className="text-foreground">Expected loss band: {formatCurrency(lossEnvelope.expected)}</strong> — Standard scenario</div>
+              <div>• <strong className="text-foreground">Expected loss band: {lossEnvelope.expected}</strong> — Standard scenario</div>
               <div>• <strong className="text-foreground">Routine monitoring</strong> — Annual reassessment at renewal</div>
             </>)}
           </div>
@@ -395,12 +395,12 @@ export function InsuranceDecision() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-[10px]">
           {(band === 'Fragile' ? [
-            { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading understates required reserves by 3–5×. Expected loss: ${formatCurrency(lossEnvelope.expected)}. Tail risk: ${formatCurrency(lossEnvelope.tail)}+.` },
+            { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading understates required reserves by 3–5×. Expected loss: ${lossEnvelope.expected}. Tail risk: ${lossEnvelope.tail}+.` },
             { ic: '⚖', title: 'Regulatory Penalty Exposure', body: 'Active Art. 26 §2 and Art. 72 obligations create immediate Art. 99 §4 exposure of up to €15M or 3% global turnover — independent of any loss event.' },
-            { ic: '🌐', title: `Portfolio Contagion: ${formatCurrency(lossEnvelope.portfolio)}+`, body: `Correlated dependency structures amplify individual loss ${amplificationFactor} across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure.` },
+            { ic: '🌐', title: `Portfolio Contagion: ${lossEnvelope.portfolio}+`, body: `Correlated dependency structures amplify individual loss ${amplificationFactor} across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure.` },
           ] : band === 'Sensitive' ? [
             { ic: '↗', title: 'Trajectory to NOT APPROVED', body: 'Without structural intervention within 90 days, this profile escalates to NOT APPROVED at next assessment cycle. Governance gaps compound non-linearly.' },
-            { ic: '€', title: 'Conditional Reserve Gap', body: `Current structural exposure of ${formatCurrency(lossEnvelope.expected)} is priced under conditional terms. If governance improvements are not delivered, the reserve basis is invalidated.` },
+            { ic: '€', title: 'Conditional Reserve Gap', body: `Current structural exposure of ${lossEnvelope.expected} is priced under conditional terms. If governance improvements are not delivered, the reserve basis is invalidated.` },
             { ic: '⚖', title: 'Compliance Window Closing', body: 'EU AI Act Art. 26 and Art. 72 obligations are enforceable now. Without documented human oversight assignment, this entity is in active statutory violation.' },
           ] : [
             { ic: '📋', title: 'Governance Cadence Is Mandatory', body: 'Standard coverage is conditional on maintained governance cadence. Any increase in delegation depth without re-assessment constitutes a material structural change.' },
@@ -435,7 +435,7 @@ export function InsuranceDecision() {
           </div>
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Premium Range</div>
-            <div className="text-[28px] font-bold font-mono leading-none text-foreground">{formatCurrency(premium.lo, 'k')}–{formatCurrency(premium.hi, 'k')}</div>
+            <div className="text-[28px] font-bold font-mono leading-none text-foreground">{premium.band}–{premium.band}</div>
             <div className="text-[9px] text-muted-foreground mt-1">Annual indicative premium band</div>
           </div>
           <div>
@@ -509,9 +509,9 @@ export function InsuranceDecision() {
         <div className="text-[14px] font-bold text-foreground mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { label: 'Cyber / Tech E&O', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
-            { label: 'Professional Indemnity', value: `€${Math.round(lossEnvelope.expected * 3)}M`, color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
-            { label: 'D&O / Management Liability', value: `€${Math.round(lossEnvelope.expected * 1.5)}M`, color: 'text-fragile', desc: 'Directors & Officers — governance failure liability' },
+            { label: 'Cyber / Tech E&O', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
+            { label: 'Professional Indemnity', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
+            { label: 'D&O / Management Liability', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-fragile', desc: 'Directors & Officers — governance failure liability' },
           ].map((m, i) => (
             <div key={i} className="bg-secondary border border-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
@@ -529,8 +529,8 @@ export function InsuranceDecision() {
             { num: 1, time: 'T+0', title: 'Exposure Analysis submitted', status: 'COMPLETE', statusColor: 'bg-stable text-foreground', desc: `${inputs.companyName || 'Entity'} · ${inputs.industry} · ${inputs.useCases?.length || 0} AI use cases · ${inputs.providers?.length || 0} provider dependencies` },
             { num: 2, time: 'T+0', title: 'AFI calculated at {afi}', status: band.toUpperCase(), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : band === 'Sensitive' ? 'bg-sensitive text-foreground' : 'bg-stable text-foreground', desc: `Structural Exposure Score: ${structuralScore}. ECI Tier: ${eciTier} (${eciName}). Delegation ratio: ${Math.round(components.dr * 100)}%. Justificatory density: ${Math.round(components.jd * 100)}%.` },
             { num: 3, time: 'T+0', title: 'Risk indices computed', status: 'ASSESSED', statusColor: 'bg-primary text-foreground', desc: `ALRI: ${alri}. AGRI: ${agri}. SCRI: ${scri}. Composite: ${compositeRiskIndex}. MDR: ${results.mdr}% (${results.mdrLabel}).` },
-            { num: 4, time: 'T+0', title: 'Financial exposure modelled', status: 'MODELLED', statusColor: 'bg-primary text-foreground', desc: `Expected: ${formatCurrency(lossEnvelope.expected)}. Stress: ${formatCurrency(lossEnvelope.stress)}. Tail: ${formatCurrency(lossEnvelope.tail)}. Portfolio aggregate: ${formatCurrency(lossEnvelope.portfolio)}.` },
-            { num: 5, time: 'T+0', title: 'Decision class determined', status: decisionClass.toUpperCase().replace(/ /g, '_'), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : 'bg-sensitive text-foreground', desc: `${decisionClass}. Premium range: ${formatCurrency(premium.lo, 'k')}–${formatCurrency(premium.hi, 'k')}/year. Structural loading: +${Math.round(Math.min(80, afi * 45))}%.` },
+            { num: 4, time: 'T+0', title: 'Financial exposure modelled', status: 'MODELLED', statusColor: 'bg-primary text-foreground', desc: `Expected: ${lossEnvelope.expected}. Stress: ${lossEnvelope.stress}. Tail: ${lossEnvelope.tail}. Portfolio aggregate: ${lossEnvelope.portfolio}.` },
+            { num: 5, time: 'T+0', title: 'Decision class determined', status: decisionClass.toUpperCase().replace(/ /g, '_'), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : 'bg-sensitive text-foreground', desc: `${decisionClass}. Premium range: ${premium.band}–${premium.band}/year. Structural loading: +${Math.round(Math.min(80, afi * 45))}%.` },
             { num: 6, time: 'T+0', title: 'Awaiting committee review', status: 'PENDING', statusColor: 'bg-secondary text-foreground border border-border', desc: 'All signals computed. Decision requires human underwriter sign-off before coverage terms are issued. No automated binding authority.' },
           ].map((entry, i) => (
             <div key={i} className="flex items-start gap-3">
@@ -591,9 +591,9 @@ export function InsuranceDecision() {
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-2">◆ What the insurer portfolio sees</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
-            { label: 'Direct Entity Loss', value: formatCurrency(lossEnvelope.expected), color: 'text-sensitive' },
-            { label: 'Correlated Cluster', value: formatCurrency(lossEnvelope.stress), color: 'text-fragile' },
-            { label: 'Portfolio Aggregate', value: formatCurrency(lossEnvelope.portfolio), color: 'text-fragile' },
+            { label: 'Direct Entity Loss', value: lossEnvelope.expected, color: 'text-sensitive' },
+            { label: 'Correlated Cluster', value: lossEnvelope.stress, color: 'text-fragile' },
+            { label: 'Portfolio Aggregate', value: lossEnvelope.portfolio, color: 'text-fragile' },
           ].map((m, i) => (
             <div key={i} className="bg-secondary border border-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
@@ -639,7 +639,7 @@ export function InsuranceDecision() {
           </div>
           <div className="bg-fragile-bg border border-fragile-border rounded-lg p-3">
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Systemic Risk</div>
-            <div className="text-[22px] font-bold font-mono text-fragile">{formatCurrency(lossEnvelope.portfolio)}</div>
+            <div className="text-[22px] font-bold font-mono text-fragile">{lossEnvelope.portfolio}</div>
             <div className="text-[9px] text-muted-foreground">Correlated tail scenario</div>
           </div>
         </div>

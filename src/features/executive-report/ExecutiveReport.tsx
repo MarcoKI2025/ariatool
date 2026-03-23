@@ -195,10 +195,10 @@ export function ExecutiveReport() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
           {[
-            { label: 'Expected Loss', value: formatCurrency(lossEnvelope.expected), sub: 'Base scenario · median market outcome', bg: 'bg-stable-bg', border: 'border-stable-border', color: 'text-stable', labelColor: 'text-stable' },
-            { label: 'Base Risk Band', value: formatCurrency(lossEnvelope.stress), sub: 'Structural governance exposure', bg: 'bg-sensitive-bg', border: 'border-sensitive-border', color: 'text-sensitive', labelColor: 'text-sensitive' },
-            { label: 'Critical Risk Band', value: formatCurrency(lossEnvelope.tail), sub: 'Provider concentration · Tail risk', bg: 'bg-fragile-bg', border: 'border-fragile-border', color: 'text-fragile', labelColor: 'text-fragile' },
-            { label: 'Systemic Exposure', value: formatCurrency(lossEnvelope.portfolio), sub: 'Correlated entity cluster (8–15 entities)', bg: 'bg-fragile-bg', border: 'border-fragile-border', color: 'text-fragile', labelColor: 'text-fragile' },
+            { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Base scenario · median market outcome', bg: 'bg-stable-bg', border: 'border-stable-border', color: 'text-stable', labelColor: 'text-stable' },
+            { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', bg: 'bg-sensitive-bg', border: 'border-sensitive-border', color: 'text-sensitive', labelColor: 'text-sensitive' },
+            { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Provider concentration · Tail risk', bg: 'bg-fragile-bg', border: 'border-fragile-border', color: 'text-fragile', labelColor: 'text-fragile' },
+            { label: 'Systemic Exposure', value: lossEnvelope.portfolio, sub: 'Correlated entity cluster (8–15 entities)', bg: 'bg-fragile-bg', border: 'border-fragile-border', color: 'text-fragile', labelColor: 'text-fragile' },
           ].map((cell, i) => (
             <div key={i} className={`${cell.bg} border ${cell.border} rounded-xl p-4 sm:p-5`}>
               <div className={`text-[8px] font-bold tracking-[0.09em] uppercase ${cell.labelColor} mb-2`}>{cell.label}</div>
@@ -289,7 +289,7 @@ export function ExecutiveReport() {
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Financial Exposure</div>
             <div className="space-y-[10px]">
               {[
-                { color: 'bg-stable', title: `Base risk band: ${formatCurrency(lossEnvelope.expected)}`, sub: 'Structural baseline — AFI-derived characterization' },
+                { color: 'bg-stable', title: `Base risk band: ${lossEnvelope.expected}`, sub: 'Structural baseline — AFI-derived characterization' },
                 { color: 'bg-sensitive', title: `Elevated risk band: €${lossEnvelope.stress.toFixed(1)}M`, sub: 'Provider concentration and delegation factors' },
                 { color: 'bg-fragile', title: `Critical risk band: €${lossEnvelope.tail.toFixed(1)}M`, sub: 'Tail exposure — correlated dependency structures' },
                 { color: 'bg-fragile', title: `Systemic exposure: €${Math.round(lossEnvelope.portfolio)}M`, sub: 'If 8–15 entities share similar AI infrastructure' },
@@ -555,10 +555,10 @@ export function ExecutiveReport() {
                 <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#96938c', marginBottom: 6 }}>Financial Exposure — Loss Envelope</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8 }}>
                   {[
-                    { l: 'Expected', v: formatCurrency(lossEnvelope.expected) },
-                    { l: 'Stress', v: `€${lossEnvelope.stress.toFixed(1)}M` },
-                    { l: 'Tail (99th)', v: `€${lossEnvelope.tail.toFixed(1)}M` },
-                    { l: 'Portfolio', v: `€${Math.round(lossEnvelope.portfolio)}M+` },
+                    { l: 'Expected', v: lossEnvelope.expected },
+                    { l: 'Stress', v: lossEnvelope.stress },
+                    { l: 'Tail (99th)', v: lossEnvelope.tail },
+                    { l: 'Portfolio', v: lossEnvelope.portfolio },
                   ].map((m, i) => (
                     <div key={i} style={{ padding: '8px 10px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 4, textAlign: 'center' }}>
                       <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#96938c', marginBottom: 3 }}>{m.l}</div>
@@ -685,10 +685,10 @@ export function ExecutiveReport() {
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#96938c', marginBottom: 8 }}>Financial Exposure — Loss Envelope</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
                   {[
-                    { l: 'Expected Loss', v: formatCurrency(lossEnvelope.expected), s: 'Base scenario' },
-                    { l: 'Stress Scenario', v: `€${lossEnvelope.stress.toFixed(1)}M`, s: 'Governance exposure' },
-                    { l: 'Tail Risk', v: `€${lossEnvelope.tail.toFixed(1)}M`, s: '99th percentile' },
-                    { l: 'Portfolio', v: `€${Math.round(lossEnvelope.portfolio)}M+`, s: `${amplificationFactor} amplification` },
+                    { l: 'Expected Loss', v: lossEnvelope.expected, s: 'Base scenario' },
+                    { l: 'Stress Scenario', v: lossEnvelope.stress, s: 'Governance exposure' },
+                    { l: 'Tail Risk', v: lossEnvelope.tail, s: '99th percentile' },
+                    { l: 'Portfolio', v: lossEnvelope.portfolio, s: `${amplificationFactor} amplification` },
                   ].map((m, i) => (
                     <div key={i} style={{ padding: '10px 12px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 6, textAlign: 'center' }}>
                       <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#96938c', marginBottom: 4 }}>{m.l}</div>
@@ -736,7 +736,7 @@ export function ExecutiveReport() {
                   {band === 'Fragile' ? '⊘ If This Decision Is Ignored — Structural Consequences' : band === 'Sensitive' ? '⚠ If Remediation Is Deferred — Escalation Consequences' : '↗ Structural Drift Risk'}
                 </div>
                 {(band === 'Fragile' ? [
-                  { t: 'Reserve Understatement', s: `Expected loss ${formatCurrency(lossEnvelope.expected)} alone understates required reserves by 3–5× without premium loading.` },
+                  { t: 'Reserve Understatement', s: `Expected loss ${lossEnvelope.expected} alone understates required reserves by 3–5× without premium loading.` },
                   { t: `Portfolio Contagion: €${Math.round(lossEnvelope.portfolio)}M+`, s: `${amplificationFactor} cascade amplification across correlated infrastructure.` },
                   { t: 'Statutory Penalty Exposure', s: 'Active Art. 26 + Art. 72 violations: up to €15M or 3% global turnover (Art. 99 §4).' },
                 ] : band === 'Sensitive' ? [

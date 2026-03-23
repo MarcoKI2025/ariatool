@@ -82,9 +82,9 @@ export function ScenarioSimulation() {
         operational: 'Partial operations continue via manual workaround. Staff redeployment required. SLA breaches likely after day 3.',
       },
       lossShift: {
-        expected: lossEnvelope.expected * 1.2,
-        stress: lossEnvelope.stress * 1.4,
-        tail: lossEnvelope.tail * 1.6,
+        expected: 'Elevated Exposure',
+        stress: 'Critical Exposure',
+        tail: 'Systemic Exposure',
       },
     },
     {
@@ -126,9 +126,9 @@ export function ScenarioSimulation() {
         operational: 'Complete AI stack unavailable. No failover. Manual processes absorb partial load at degraded efficiency.',
       },
       lossShift: {
-        expected: lossEnvelope.expected * 1.5,
-        stress: lossEnvelope.stress * 1.8,
-        tail: lossEnvelope.tail * 2.2,
+        expected: 'Elevated Exposure',
+        stress: 'Critical Exposure',
+        tail: 'Systemic Exposure',
       },
     },
     {
@@ -170,9 +170,9 @@ export function ScenarioSimulation() {
         operational: 'All AI-dependent processes cease. Manual reversion or complete halt. Staff capacity insufficient for full manual operation.',
       },
       lossShift: {
-        expected: lossEnvelope.expected * 2.0,
-        stress: lossEnvelope.stress * 2.5,
-        tail: lossEnvelope.tail * 3.0,
+        expected: 'Elevated Exposure',
+        stress: 'Critical Exposure',
+        tail: 'Systemic Exposure',
       },
     },
     {
@@ -214,9 +214,9 @@ export function ScenarioSimulation() {
         operational: 'Individual recovery plans insufficient. Systemic stabilisation precedes entity remediation. Industry-wide coordination needed.',
       },
       lossShift: {
-        expected: lossEnvelope.expected * 3.0,
-        stress: lossEnvelope.stress * 4.0,
-        tail: lossEnvelope.tail * 5.6,
+        expected: 'Elevated Exposure',
+        stress: 'Critical Exposure',
+        tail: 'Systemic Exposure',
       },
     },
   ];
@@ -403,7 +403,7 @@ export function ScenarioSimulation() {
                   <span className="text-[10px] font-bold text-fragile">+{pctChange}%</span>
                 </div>
                 <div className="mt-2 h-[5px] bg-secondary rounded overflow-hidden">
-                  <div className={`h-full rounded ${i === 2 ? 'bg-fragile' : i === 1 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.min(100, (cell.shifted / (lossEnvelope.tail * 2)) * 100)}%` }} />
+                  <div className={`h-full rounded ${i === 2 ? 'bg-fragile' : i === 1 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.min(100, (cell.shifted / ('Systemic Exposure')) * 100)}%` }} />
                 </div>
               </div>
             );
