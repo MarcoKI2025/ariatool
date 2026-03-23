@@ -48,6 +48,8 @@ export function ModelGovernanceComplete() {
         <ComplianceDashboard />
       </div>
 
+      <SectionDivider title="Framework Assumptions" icon="🔒" subtitle="Boundary conditions, non-goals, and degradation signals" />
+
       <AssessmentScopeDeclaration />
       <CalibrationParameters />
       <FrameworkAssumptions />
