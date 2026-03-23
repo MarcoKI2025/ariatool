@@ -118,6 +118,40 @@ export interface AuditLogEntry {
 
 export type IATState = Record<number, boolean>;
 
+// ============================================================================
+// AGENT COORDINATION TYPES
+// ============================================================================
+
+export interface AgentNode {
+  id: string;
+  name: string;
+  type: 'primary' | 'sub-agent' | 'tool';
+  level: number;
+  autonomy: number;
+  authority: number;
+  humanOversight: boolean;
+  description?: string;
+}
+
+export interface AgentEdge {
+  from: string;
+  to: string;
+  delegationType: 'task' | 'tool-call' | 'verification' | 'escalation';
+  canOverride: boolean;
+  requiresApproval: boolean;
+}
+
+export interface AgentCoordinationGraph {
+  nodes: AgentNode[];
+  edges: AgentEdge[];
+  maxDepth: number;
+  totalAgents: number;
+  totalTools: number;
+  recursiveLoops: boolean;
+  delegationDepthScore: number;
+  responsibilityGapScore: number;
+}
+
 export type IATStatus = 'none' | 'approaching' | 'triggered' | 'infrastructural';
 
 export interface DemoProfile {
