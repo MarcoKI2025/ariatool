@@ -370,9 +370,9 @@ export function ExposureResults() {
               { label: 'Elevated Risk Band', value: lossEnvelope.stress, sub: 'Provider concentration factors', color: 'text-sensitive', conf: 'Committee-Grade' },
               { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Tail risk — correlated structures', color: 'text-fragile', conf: 'Exploratory' },
             ].map((cell, i) => (
-              <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''} ${i === 2 ? 'bg-fragile-bg/30' : ''}`}>
+              <div key={i} className={`p-3 sm:p-4 ${i < 2 ? 'sm:border-r border-b sm:border-b-0 border-border' : ''} ${i === 2 ? 'bg-fragile-bg/30' : ''}`}>
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
-                <div className={`text-[32px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
+                <div className={`text-[22px] sm:text-[32px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
                 <div className="text-[10px] text-muted-foreground mt-1">{cell.sub}</div>
                 <span className={`inline-flex mt-2 text-[8px] font-bold tracking-[0.06em] uppercase px-[6px] py-[2px] rounded border ${
                   cell.conf === 'Directional' ? 'bg-sensitive-bg border-sensitive-border text-sensitive' :

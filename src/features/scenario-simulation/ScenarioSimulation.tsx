@@ -397,10 +397,10 @@ export function ScenarioSimulation() {
             { label: 'Tail Loss', baseline: lossEnvelope.tail, shifted: s.lossShift.tail, color: 'text-fragile' },
           ].map((cell, i) => {
             return (
-              <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''}`}>
+              <div key={i} className={`p-4 ${i < 2 ? 'sm:border-r border-b sm:border-b-0 border-border' : ''}`}>
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
                 <div className="flex items-end gap-2 mb-1">
-                  <span className={`text-[20px] font-bold font-mono leading-none ${cell.color}`}>{cell.shifted}</span>
+                  <span className={`text-[18px] sm:text-[20px] font-bold font-mono leading-none ${cell.color}`}>{cell.shifted}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] text-muted-foreground line-through">{cell.baseline}</span>
