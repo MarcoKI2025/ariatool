@@ -14,6 +14,7 @@ import { ViewTabs } from '@/components/shared/ViewTabs';
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
+  const [activeTab, setActiveTab] = useState('overview');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Decision Intelligence Locked" description="Complete the Exposure Analysis to unlock AFI scoring, governance exposure, and structural risk signals." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
@@ -29,8 +30,6 @@ export function DecisionIntelligence() {
 
   const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
   const bandBg = band === 'Fragile' ? 'bg-fragile-bg border-fragile' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' : 'bg-stable-bg border-stable';
-
-  const [activeTab, setActiveTab] = useState('overview');
 
   const diTabs = [
     { id: 'overview', label: 'Overview', icon: '📊' },
