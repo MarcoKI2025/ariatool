@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { MethodologyModal } from '@/features/methodology/MethodologyModal';
 
 const VIEW_TITLES: Record<string, string> = {
   '1': 'Exposure Analysis',
@@ -10,6 +11,7 @@ const VIEW_TITLES: Record<string, string> = {
   '6': 'Model Governance',
   '7': 'Portfolio View',
   '8': 'Evidence Log',
+  '9': 'Integration Hub',
   company: 'Company View',
 };
 
