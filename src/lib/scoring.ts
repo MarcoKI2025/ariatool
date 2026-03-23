@@ -190,22 +190,23 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   const structuralScore = Math.min(99, Math.round(afi * 60));
   const ses = (dr + rc + cd) / 3;
 
+  // Loss envelope — exact HTML formula
   const govPremium = 1 + Math.min(0.8, afi * 0.45);
   const sectorMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
   const sizeMult = SIZE_MULTIPLIERS[inputs.size] || 1.0;
   const revMult = REVENUE_MULTIPLIERS[inputs.revenue] || 1.0;
-
-  // Size and revenue scale absolute loss exposure
   const scaleMultiplier = sizeMult * revMult;
   const expected = parseFloat((ANCHOR_LOSS * afi * govPremium * sectorMult * scaleMultiplier).toFixed(1));
   const stress = parseFloat((expected * 3.4).toFixed(1));
   const tail = parseFloat((expected * 10.8).toFixed(1));
   const portfolio = Math.round(tail * 6.2);
 
+  // Amplification factor — exact HTML formula
   const cf = Math.min(0.99, (cd * 0.75 + afi * 0.08));
   const ampLo = Math.max(1.8, 1 + afi * 0.9);
   const ampHi = Math.min(5.6, 1 + afi * 2.1 + cd * 0.8);
 
+  // ECI — exact HTML thresholds
   const eciTier = afi < 0.5 ? 0 : afi < 0.85 ? 1 : afi < 1.35 ? 2 : 3;
   const eciNames: Record<number, string> = {
     0: 'Reversible Tool',
@@ -214,22 +215,22 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     3: 'Critical Infrastructure',
   };
 
-  // AGRI
+  // AGRI — exact HTML weights: multi 35, tool 30, mem 20, human 15
   const agri = Math.round(Math.min(100,
     (inputs.multiAgent / 5 * 35) + (inputs.toolCallAuthority / 5 * 30) +
     (inputs.persistentMemory / 5 * 20) + ((6 - inputs.humanCheckpoints) / 5 * 15)
   ));
 
-  // ALRI
+  // ALRI — exact HTML weights: hallu 20, dpfk 16, pinj 14, mdrift 16, abias 12, shdw 7, xai 5, dint 6, esg 4
   const alri = computeALRI(inputs);
 
-  // SCRI
+  // SCRI — exact HTML: inverse, weights cloud 30, model 25, gpu 25, xcon 20
   const scri = computeSCRI(inputs);
 
   // Composite Risk Index
   const compositeRiskIndex = computeCompositeRiskIndex(afi, alri, agri);
 
-  // MDR — Meaning Drift Risk (from HTML)
+  // MDR — Meaning Drift Risk
   const { mdr, mdrTier, mdrLabel } = computeMDR(inputs);
 
   // RFSI — Assessment Validity Index
@@ -239,16 +240,21 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   // Frame Drift Alerts
   const frameDriftAlerts = computeFrameDriftAlerts(components, band, inputs);
 
-  // Premium estimate — size and revenue scale the absolute premium
-  const basePrem = 180 * sectorMult * sizeMult * revMult;
-  const autoMult = [0, 0.5, 0.75, 1.0, 1.5, 2.2][inputs.automation] || 1;
-  const critMult = [0, 0.5, 0.7, 1.0, 1.4, 2.0][inputs.criticality] || 1;
-  const depMult = inputs.providers.length <= 1 ? 1.8 : inputs.providers.length <= 2 ? 1.3 : 1.0;
-  const alriLoading = 1 + (alri / 100) * 0.4;
-  const rawPrem = basePrem * autoMult * critMult * depMult * govPremium * alriLoading;
-  const ovstReduction = [0, 0, 0.05, 0.12, 0.22, 0.35][inputs.oversightLevel] || 0;
-  const midPrem = rawPrem * (1 - ovstReduction);
-  const bandPct = inputs.automation >= 4 ? 0.20 : inputs.automation >= 3 ? 0.25 : 0.30;
+  // Premium estimation — exact HTML approach: BASE_PREMIUM * sector * afiLoading * alriLoading * band range
+  const BASE_PREMIUM = 1.2; // €M base for Financial Services
+  const afiLoading = govPremium; // same as loss envelope: 1 + min(0.8, afi*0.45)
+  const alriLoading = 1 + (alri * 0.8) / 100;
+  const basePrem = BASE_PREMIUM * sectorMult * afiLoading * alriLoading * scaleMultiplier;
+
+  // Band-based ranges (exact HTML)
+  let lowMult: number, highMult: number;
+  if (band === 'Stable') { lowMult = 0.8; highMult = 1.2; }
+  else if (band === 'Sensitive') { lowMult = 1.1; highMult = 1.3; }
+  else { lowMult = 1.5; highMult = 1.8; }
+
+  const premLo = Math.round(basePrem * lowMult * 1000 / 10) * 10; // €k rounded to 10
+  const premMid = Math.round(basePrem * ((lowMult + highMult) / 2) * 1000 / 10) * 10;
+  const premHi = Math.round(basePrem * highMult * 1000 / 10) * 10;
 
   return {
     afi,
@@ -267,9 +273,9 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     scri,
     compositeRiskIndex,
     premium: {
-      lo: Math.round(midPrem * (1 - bandPct) / 10) * 10,
-      mid: Math.round(midPrem / 10) * 10,
-      hi: Math.round(midPrem * (1 + bandPct) / 10) * 10,
+      lo: premLo,
+      mid: premMid,
+      hi: premHi,
     },
     mdr,
     mdrTier,
