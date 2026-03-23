@@ -952,26 +952,6 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
-      {/* Export */}
-      <div className="bg-card border border-border rounded-[10px] p-5">
-        <div className="text-[13px] font-bold text-foreground mb-[3px]">Export & Share</div>
-        <div className="text-[11px] text-secondary-foreground mb-[14px]">Generate structured output for risk committee, board, or reinsurer review.</div>
-        <div className="flex gap-2 flex-wrap">
-          <button className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
-            📄 One-Pager PDF Preview
-          </button>
-          <button className="px-4 py-[8px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
-            📋 Board Executive Summary
-          </button>
-          <button className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
-            ✍ Copy Plain Text
-          </button>
-          <button className="px-4 py-[8px] bg-secondary text-foreground border border-border rounded-lg text-[12px] font-semibold hover:bg-muted transition-colors">
-            🖨️ Print Full Report
-          </button>
-        </div>
-      </div>
-
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(1)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Exposure Analysis</button>
