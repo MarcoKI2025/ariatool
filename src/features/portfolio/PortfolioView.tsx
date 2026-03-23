@@ -8,6 +8,7 @@ import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
+import { fetchCloudProviderStatus } from '@/lib/liveData';
 interface PortfolioEntity {
   id: string;
   name: string;
