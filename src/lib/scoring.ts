@@ -1,5 +1,5 @@
 import { Band, DecisionClass, AFIComponents, AnalysisResults, ExposureInputs, FrameDriftAlert } from './types';
-import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, DEFAULT_ELASTICITIES } from './constants';
+import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, DEFAULT_ELASTICITIES } from './constants';
 
 export function calcAFI(
   dr: number, jd: number, rc: number, cd: number, na: number,
@@ -40,6 +40,14 @@ export function getBandClass(band: Band): string {
   return band.toLowerCase();
 }
 
+/** Qualitative exposure band label based on AFI */
+export function getExposureBand(afi: number): { label: string; level: 'base' | 'elevated' | 'critical' | 'systemic' } {
+  if (afi < 0.5) return { label: 'Base Exposure', level: 'base' };
+  if (afi < 0.85) return { label: 'Elevated Exposure', level: 'elevated' };
+  if (afi < 1.35) return { label: 'Critical Exposure', level: 'critical' };
+  return { label: 'Systemic Exposure', level: 'systemic' };
+}
+
 export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
   const { automation, executionAuthority, oversightLevel, reviewCadence,
     sunsetPolicy, switchingCost, portability, integrationDepth, actionDensity,
@@ -47,9 +55,7 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
     cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion,
     useCases, providers } = inputs;
 
-  // Use cases breadth: more use cases = broader attack surface = higher delegation
   const useCaseFactor = 1 + Math.max(0, (useCases.length - 1)) * 0.03;
-  // High-risk use cases amplify delegation ratio
   const hasAutonomousOps = useCases.includes('Autonomous Operations');
   const hasRiskAssessment = useCases.includes('Risk Assessment');
   const hasFraudDetection = useCases.includes('Fraud Detection');
@@ -60,7 +66,6 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
 
   const jd = ((oversightLevel + reviewCadence) / 2) / 5;
 
-  // Provider concentration: fewer providers = harder to exit = higher reversibility cost
   const providerConcentration = providers.length <= 1 ? 0.12 : providers.length <= 2 ? 0.06 : providers.length >= 5 ? -0.04 : 0;
 
   const sunAdj = switchingCost * (1 + (5 - sunsetPolicy) * 0.08);
@@ -69,7 +74,6 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
   const concRcAdd = (1 - concScore) * 0.20;
   const rc = Math.min(1, ((sunAdj + portability) / 2) / 5 + pmemAdj / 5 + concRcAdd + providerConcentration);
 
-  // More use cases increases continuation density (broader operational footprint)
   const useCaseCdBoost = Math.max(0, (useCases.length - 2)) * 0.02;
   const cd = Math.min(1, ((integrationDepth + actionDensity + workflowBreadth * 0.3 + toolCallScope * 0.2 + inputs.toolCallAuthority * 0.25) / 2.75) / 5 + useCaseCdBoost);
   const na = 0.5;
@@ -80,7 +84,6 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
 function computeALRI(inputs: ExposureInputs): number {
   const { hallucinationLiability, deepfakeFraud, promptInjection, modelDrift,
     algorithmicBias, shadowAI, explainabilityGap, dataIntegrity, esgLiability } = inputs;
-  // Weights match HTML exactly: hallu 20, dpfk 16, pinj 14, mdrift 16, abias 12, shdw 7, xai 5, dint 6, esg 4
   const alri = Math.min(100,
     ((hallucinationLiability - 1) / 4) * 20 +
     ((deepfakeFraud - 1) / 4) * 16 +
@@ -97,7 +100,6 @@ function computeALRI(inputs: ExposureInputs): number {
 
 function computeSCRI(inputs: ExposureInputs): number {
   const { cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion } = inputs;
-  // SCRI is inverse: low diversity = high systemic risk. Weights: cloud 30, model 25, gpu 25, xcon 20
   const scri = Math.round(Math.min(100,
     ((5 - cloudConcentration) / 4) * 30 +
     ((5 - modelConcentration) / 4) * 25 +
@@ -189,33 +191,22 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   const components = computeAFIComponents(inputs);
   const { dr, jd, rc, cd, na } = components;
   const baseAfi = calcAFI(dr, jd, rc, cd, na);
-  
-  // Apply size and revenue adjustments to AFI
+
   const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
   const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
   const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
-  
+
   const band = getBand(afi);
   const structuralScore = Math.min(99, Math.round(afi * 60));
   const ses = (dr + rc + cd) / 3;
 
-  // Loss envelope — exact HTML formula
-  const govPremium = 1 + Math.min(0.8, afi * 0.45);
-  const sectorMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
-  const sizeMult = SIZE_MULTIPLIERS[inputs.size] || 1.0;
-  const revMult = REVENUE_MULTIPLIERS[inputs.revenue] || 1.0;
-  const scaleMultiplier = sizeMult * revMult;
-  const expected = parseFloat((ANCHOR_LOSS * afi * govPremium * sectorMult * scaleMultiplier).toFixed(1));
-  const stress = parseFloat((expected * 3.4).toFixed(1));
-  const tail = parseFloat((expected * 10.8).toFixed(1));
-  const portfolio = Math.round(tail * 6.2);
+  // Qualitative exposure bands (no fabricated €-amounts)
+  const exposureBand = getExposureBand(afi);
 
-  // Amplification factor — exact HTML formula
+  // Correlation factor (qualitative, no amplification multipliers)
   const cf = Math.min(0.99, (cd * 0.75 + afi * 0.08));
-  const ampLo = Math.max(1.8, 1 + afi * 0.9);
-  const ampHi = Math.min(5.6, 1 + afi * 2.1 + cd * 0.8);
 
-  // ECI — exact HTML thresholds
+  // ECI
   const eciTier = afi < 0.5 ? 0 : afi < 0.85 ? 1 : afi < 1.35 ? 2 : 3;
   const eciNames: Record<number, string> = {
     0: 'Reversible Tool',
@@ -224,46 +215,19 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     3: 'Critical Infrastructure',
   };
 
-  // AGRI — exact HTML weights: multi 35, tool 30, mem 20, human 15
+  // AGRI
   const agri = Math.round(Math.min(100,
     (inputs.multiAgent / 5 * 35) + (inputs.toolCallAuthority / 5 * 30) +
     (inputs.persistentMemory / 5 * 20) + ((6 - inputs.humanCheckpoints) / 5 * 15)
   ));
 
-  // ALRI — exact HTML weights: hallu 20, dpfk 16, pinj 14, mdrift 16, abias 12, shdw 7, xai 5, dint 6, esg 4
   const alri = computeALRI(inputs);
-
-  // SCRI — exact HTML: inverse, weights cloud 30, model 25, gpu 25, xcon 20
   const scri = computeSCRI(inputs);
-
-  // Composite Risk Index
   const compositeRiskIndex = computeCompositeRiskIndex(afi, alri, agri);
-
-  // MDR — Meaning Drift Risk
   const { mdr, mdrTier, mdrLabel } = computeMDR(inputs);
-
-  // RFSI — Assessment Validity Index
   const mdrNorm = mdr / 100;
   const { rfsi, rfsiTier, rfsiLabel, rfsiDrivers } = computeRFSI(components, mdrNorm, false);
-
-  // Frame Drift Alerts
   const frameDriftAlerts = computeFrameDriftAlerts(components, band, inputs);
-
-  // Premium estimation — exact HTML approach: BASE_PREMIUM * sector * afiLoading * alriLoading * band range
-  const BASE_PREMIUM = 1.2; // €M base for Financial Services
-  const afiLoading = govPremium; // same as loss envelope: 1 + min(0.8, afi*0.45)
-  const alriLoading = 1 + (alri * 0.8) / 100;
-  const basePrem = BASE_PREMIUM * sectorMult * afiLoading * alriLoading * scaleMultiplier;
-
-  // Band-based ranges (exact HTML)
-  let lowMult: number, highMult: number;
-  if (band === 'Stable') { lowMult = 0.8; highMult = 1.2; }
-  else if (band === 'Sensitive') { lowMult = 1.1; highMult = 1.3; }
-  else { lowMult = 1.5; highMult = 1.8; }
-
-  const premLo = Math.round(basePrem * lowMult * 1000 / 10) * 10; // €k rounded to 10
-  const premMid = Math.round(basePrem * ((lowMult + highMult) / 2) * 1000 / 10) * 10;
-  const premHi = Math.round(basePrem * highMult * 1000 / 10) * 10;
 
   return {
     afi,
@@ -272,8 +236,15 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     ses,
     components,
     decisionClass: getDecisionClass(band),
-    lossEnvelope: { expected, stress, tail, portfolio },
-    amplificationFactor: `${ampLo.toFixed(1)}× – ${ampHi.toFixed(1)}×`,
+    // Qualitative loss envelope bands
+    lossEnvelope: {
+      expected: exposureBand.label,
+      stress: afi < 0.85 ? 'Elevated Exposure' : 'Critical Exposure',
+      tail: afi < 1.35 ? 'Critical Exposure' : 'Systemic Exposure',
+      portfolio: 'Systemic Exposure',
+    },
+    // Qualitative amplification description
+    amplificationFactor: 'Significant non-linear amplification — not fully captured in traditional models',
     correlationFactor: parseFloat(cf.toFixed(2)),
     eciTier,
     eciName: eciNames[eciTier],
@@ -281,10 +252,10 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     alri,
     scri,
     compositeRiskIndex,
+    // Qualitative premium band
     premium: {
-      lo: premLo,
-      mid: premMid,
-      hi: premHi,
+      band: band === 'Fragile' ? 'Critical' : band === 'Sensitive' ? 'Elevated' : 'Base',
+      label: band === 'Fragile' ? 'Erhöhte finanzielle Exposure — Band: Critical' : band === 'Sensitive' ? 'Erhöhte finanzielle Exposure — Band: Elevated' : 'Standard Exposure — Band: Base',
     },
     mdr,
     mdrTier,

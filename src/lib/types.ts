@@ -84,10 +84,10 @@ export interface AnalysisResults {
   components: AFIComponents;
   decisionClass: DecisionClass;
   lossEnvelope: {
-    expected: number;
-    stress: number;
-    tail: number;
-    portfolio: number;
+    expected: string;
+    stress: string;
+    tail: string;
+    portfolio: string;
   };
   amplificationFactor: string;
   correlationFactor: number;
@@ -97,7 +97,7 @@ export interface AnalysisResults {
   alri: number;
   scri: number;
   compositeRiskIndex: number;
-  premium: { lo: number; mid: number; hi: number };
+  premium: { band: string; label: string };
   mdr: number;
   mdrTier: string;
   mdrLabel: string;
