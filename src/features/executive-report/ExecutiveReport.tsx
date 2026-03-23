@@ -567,7 +567,7 @@ export function ExecutiveReport() {
                   ))}
                 </div>
                 <div style={{ fontSize: 8, color: '#96938c', marginTop: 6, lineHeight: 1.5 }}>
-                  ⚠ Amplification factor: {amplificationFactor}. Portfolio loss assumes 5 entities with similar AI infrastructure stack.
+                  ⚠ Non-linear amplification across correlated AI infrastructure. Portfolio loss assumes 5 entities with similar AI infrastructure stack. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic and accumulation risk."
                 </div>
               </div>
 
