@@ -446,19 +446,8 @@ export function InsuranceDecision() {
         </div>
       </div>
 
-      {/* ═══ 11. COVERAGE ASSESSMENT PANEL ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Coverage Assessment</div>
-            <div className="text-[12px] text-foreground font-medium">Export & share underwriting decision</div>
-          </div>
-          <div className="flex gap-2">
-            <button className="px-4 py-[6px] bg-primary text-primary-foreground rounded-lg text-[11px] font-semibold hover:bg-primary/90 transition-colors">📄 Standard</button>
-            <button className="px-4 py-[6px] bg-secondary text-foreground border border-border rounded-lg text-[11px] font-semibold hover:bg-muted transition-colors">💰 Premium</button>
-          </div>
-        </div>
-      </div>
+
+
 
       {/* ═══ 12. UNDERWRITING CONDITIONS (numbered) ═══ */}
       <SectionCard title="Underwriting Conditions for AI Coverage" icon="📋" subtitle="Required structural conditions before standard terms apply.">
