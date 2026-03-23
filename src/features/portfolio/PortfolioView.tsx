@@ -138,6 +138,12 @@ export function PortfolioView() {
     return band === 'Stable';
   }).length;
 
+  const portfolioTabs = [
+    { id: 'overview', label: 'Portfolio Overview', icon: '📊' },
+    { id: 'entities', label: 'Entity Breakdown', icon: '📋' },
+    { id: 'advanced', label: 'Advanced Analysis', icon: '🔬' },
+  ];
+
   return (
     <div className="space-y-6 sm:space-y-8 max-w-5xl">
       {/* Real Case Alert */}
@@ -175,6 +181,11 @@ export function PortfolioView() {
       </div>
 
       <UseRestrictionBanner />
+
+      <ViewTabs tabs={portfolioTabs} activeTab={portfolioTab} onChange={setPortfolioTab} />
+
+      {/* ═══ TAB: OVERVIEW ═══ */}
+      {portfolioTab === 'overview' && (<>
 
       {/* Portfolio Summary */}
       <div className="bg-card border border-border rounded-xl p-6 space-y-5">
