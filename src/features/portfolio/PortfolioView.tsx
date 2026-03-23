@@ -276,6 +276,8 @@ export function PortfolioView() {
         </div>
       </div>
 
+      <SectionDivider title="Capital & Solvency" icon="💰" subtitle="Solvency II capital efficiency and reserve optimization" />
+
       {/* Capital Efficiency Calculator */}
       <div className="bg-card border border-border rounded-xl p-6">
         <div className="flex items-start justify-between mb-4">
