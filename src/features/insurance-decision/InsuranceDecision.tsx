@@ -4,6 +4,8 @@ import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
+import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
