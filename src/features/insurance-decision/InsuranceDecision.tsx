@@ -67,7 +67,7 @@ export function InsuranceDecision() {
           </div>
           <div>
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Premium Range<InfoTip text={TOOLTIPS.premium} /></div>
-            <div className="text-[14px] font-bold text-foreground font-mono">{premium.band} – {premium.band}</div>
+            <div className="text-[14px] font-bold text-foreground font-mono">{premium.band}</div>
           </div>
         </div>
       </div>
