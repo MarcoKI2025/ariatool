@@ -333,6 +333,10 @@ export function PortfolioView() {
         </div>
       </div>
 
+      </>)}
+
+      {/* ═══ TAB: ADVANCED ═══ */}
+      {portfolioTab === 'advanced' && (<>
       {/* Quantum Vulnerability Assessment */}
       <QuantumVulnerabilityAssessment />
 
