@@ -489,8 +489,10 @@ export function InsuranceDecision() {
           ))}
         </div>
       </SectionCard>
+      </>)}
 
-      {/* ═══ 13. REINSURANCE TREATY IMPLICATIONS ═══ */}
+      {/* ═══ TAB: FINANCIAL EXPOSURE ═══ */}
+      {activeTab === 'exposure' && (<>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Excess-of-Loss XL Treaty</div>
