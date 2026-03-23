@@ -436,7 +436,7 @@ export function InsuranceDecision() {
           </div>
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Premium Range</div>
-            <div className="text-[28px] font-bold font-mono leading-none text-foreground">{premium.band}–{premium.band}</div>
+            <div className="text-[28px] font-bold font-mono leading-none text-foreground">{premium.band}</div>
             <div className="text-[9px] text-muted-foreground mt-1">Annual indicative premium band</div>
           </div>
           <div>
