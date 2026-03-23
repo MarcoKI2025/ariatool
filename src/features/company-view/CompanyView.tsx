@@ -375,6 +375,20 @@ export function CompanyView() {
 
 
 
+  // Derive live AFI from simulator sliders so the summary reacts to changes
+  const liveComponents = useMemo(() => {
+    if (!results) return { dr: 0, jd: 0.5, rc: 0, cd: 0, na: 0.5 };
+    const dr = (simAuto / 5);
+    const jd = ((6 - simOvst) / 5);
+    const rc = (simDep / 5);
+    const cd = (simCrit / 5);
+    const na = results.components.na;
+    return { dr, jd, rc, cd, na };
+  }, [simAuto, simOvst, simDep, simCrit, results]);
+
+  const liveAfi = useMemo(() => calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na), [liveComponents]);
+  const liveBand = useMemo(() => getBand(liveAfi), [liveAfi]);
+  const liveStructuralScore = useMemo(() => Math.min(100, Math.round(liveAfi / 3.0 * 100)), [liveAfi]);
 
   // Locked state
   if (!analysisComplete || !results) {
@@ -395,20 +409,7 @@ export function CompanyView() {
   }
 
   const { eciTier, eciName, lossEnvelope, premium } = results;
-
-  // Derive live AFI from simulator sliders so the summary reacts to changes
-  const liveComponents = useMemo(() => {
-    const dr = (simAuto / 5);                      // Delegation Ratio from autonomy
-    const jd = ((6 - simOvst) / 5);               // Justificatory Density (inverted oversight)
-    const rc = (simDep / 5);                       // Reversibility Cost from dependency
-    const cd = (simCrit / 5);                      // Continuation Density from criticality
-    const na = results.components.na;
-    return { dr, jd, rc, cd, na };
-  }, [simAuto, simOvst, simDep, simCrit, results.components.na]);
-
-  const liveAfi = useMemo(() => calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na), [liveComponents]);
-  const liveBand = useMemo(() => getBand(liveAfi), [liveAfi]);
-  const liveStructuralScore = useMemo(() => Math.min(100, Math.round(liveAfi / 3.0 * 100)), [liveAfi]);
+  const liveBandColor = liveBand === 'Fragile' ? 'hsl(var(--red))' : liveBand === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
   const liveBandColor = liveBand === 'Fragile' ? 'hsl(var(--red))' : liveBand === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
 
   const companyName = inputs.companyName || 'Your Organisation';
