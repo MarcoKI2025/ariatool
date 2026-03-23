@@ -461,7 +461,7 @@ export function DecisionIntelligence() {
           ].map((cell, i) => (
             <div key={i} className={`rounded-xl p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
               <div className={`text-[9px] tracking-[0.08em] uppercase font-bold mb-2 ${cell.highlight ? 'text-fragile' : 'text-muted-foreground'}`}>{cell.label}</div>
-              <div className={`text-[32px] font-bold font-mono leading-none ${cell.color}`}>{formatCurrency(cell.value)}</div>
+              <div className={`text-[24px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
               <div className="text-[10px] text-muted-foreground mt-2">{cell.sub}</div>
             </div>
           ))}
@@ -495,7 +495,7 @@ export function DecisionIntelligence() {
             Shared AI infrastructure creates correlated exposure — {amplificationFactor} cascade amplification across 5 layers.
           </div>
         </div>
-      </div>
+      </SectionCard>
 
       {/* ═══ RESPONSIBILITY & OWNERSHIP ═══ */}
       <SectionCard title="Responsibility & Ownership Structure" icon="👥" subtitle="Who is responsible? — And can they be held accountable?">
