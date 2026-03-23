@@ -299,6 +299,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       </div>
 
+      <SectionDivider title="Financial Exposure" icon="💰" subtitle="Loss envelope, premium recommendation, and peer comparison" />
+
       {/* ═══ LOSS ENVELOPE ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
         <div className="mb-4">
