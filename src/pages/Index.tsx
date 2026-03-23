@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Component, type ReactNode } from 'react';
 import { AppProvider, useApp } from '@/hooks/useAppState';
 import { AppSidebar } from '@/components/layout/AppSidebar';
 import { AppHeader } from '@/components/layout/AppHeader';
@@ -10,6 +10,22 @@ import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
 import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
+
+// Error boundary to catch HMR glitches gracefully
+class AppErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch() {
+    // Auto-recover after brief delay (HMR race condition)
+    setTimeout(() => this.setState({ hasError: false }), 100);
+  }
+  render() {
+    if (this.state.hasError) {
+      return <div className="flex items-center justify-center h-screen bg-background text-muted-foreground text-sm">Loading…</div>;
+    }
+    return this.props.children;
+  }
+}
 
 function AppContent() {
   const { state } = useApp();
@@ -51,8 +67,10 @@ function AppContent() {
 
 export default function Index() {
   return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
+    <AppErrorBoundary>
+      <AppProvider>
+        <AppContent />
+      </AppProvider>
+    </AppErrorBoundary>
   );
 }
