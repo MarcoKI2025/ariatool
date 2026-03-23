@@ -439,9 +439,9 @@ export function CompanyView() {
   ];
 
   const levers = [
-    { rank: 1, title: 'Implement Quarterly Governance Re-authorisation', body: 'Require explicit board-level re-authorisation of AI deployments every 90 days. This alone reduces continuation risk and demonstrates governance maturity to underwriters.', saving: fmtK(Math.round(premium.mid * 0.15 / 10) * 10), before: 'Annual / None', after: 'Quarterly' },
-    { rank: 2, title: 'Diversify AI Provider Infrastructure', body: 'Reduce single-provider dependency to minimum 3 providers. This eliminates the concentration premium loading and reduces correlated tail risk by 40-60%.', saving: fmtK(Math.round(premium.mid * 0.20 / 10) * 10), before: '1 provider', after: '3+ providers' },
-    { rank: 3, title: 'Establish Named AI System Ownership', body: 'Assign a named individual with stop authority and accountability for each AI deployment. Clear ownership reduces the responsibility fragmentation premium.', saving: fmtK(Math.round(premium.mid * 0.10 / 10) * 10), before: 'Diffuse', after: 'Named owner' },
+    { rank: 1, title: 'Implement Quarterly Governance Re-authorisation', body: 'Require explicit board-level re-authorisation of AI deployments every 90 days. This alone reduces continuation risk and demonstrates governance maturity to underwriters.', saving: fmtK(Math.round(0), before: 'Annual / None', after: 'Quarterly' },
+    { rank: 2, title: 'Diversify AI Provider Infrastructure', body: 'Reduce single-provider dependency to minimum 3 providers. This eliminates the concentration premium loading and reduces correlated tail risk by 40-60%.', saving: fmtK(Math.round(0), before: '1 provider', after: '3+ providers' },
+    { rank: 3, title: 'Establish Named AI System Ownership', body: 'Assign a named individual with stop authority and accountability for each AI deployment. Clear ownership reduces the responsibility fragmentation premium.', saving: fmtK(Math.round(0), before: 'Diffuse', after: 'Named owner' },
   ];
 
   return (

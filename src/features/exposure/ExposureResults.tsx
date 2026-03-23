@@ -334,9 +334,9 @@ export function ExposureResults() {
           <div className="text-[11px] text-muted-foreground mb-4">Qualitative risk characterization based on structural governance factors.</div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 border border-border rounded-lg overflow-hidden">
             {[
-              { label: 'Base Risk Band', value: lossEnvelope.expected < 2 ? 'Low' : lossEnvelope.expected < 5 ? 'Medium' : 'High', sub: 'Structural baseline', color: 'text-stable', conf: 'Directional' },
-              { label: 'Elevated Risk Band', value: lossEnvelope.stress < 5 ? 'Medium' : lossEnvelope.stress < 12 ? 'High' : 'Critical', sub: 'Provider concentration factors', color: 'text-sensitive', conf: 'Committee-Grade' },
-              { label: 'Critical Risk Band', value: lossEnvelope.tail < 10 ? 'High' : 'Critical', sub: 'Tail risk — correlated structures', color: 'text-fragile', conf: 'Exploratory' },
+              { label: 'Base Risk Band', value: lossEnvelope.expected, sub: 'Structural baseline', color: 'text-stable', conf: 'Directional' },
+              { label: 'Elevated Risk Band', value: lossEnvelope.stress, sub: 'Provider concentration factors', color: 'text-sensitive', conf: 'Committee-Grade' },
+              { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Tail risk — correlated structures', color: 'text-fragile', conf: 'Exploratory' },
             ].map((cell, i) => (
               <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''} ${i === 2 ? 'bg-fragile-bg/30' : ''}`}>
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
