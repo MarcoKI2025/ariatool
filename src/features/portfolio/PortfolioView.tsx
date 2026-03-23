@@ -142,7 +142,7 @@ export function PortfolioView() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
-              Portfolio Intelligence Dashboard
+              Step 7 · Portfolio Intelligence
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
               Multi-Entity Risk Aggregation

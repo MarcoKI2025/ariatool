@@ -51,7 +51,7 @@ export function EvidenceLog() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="text-[10px] font-semibold tracking-[0.12em] uppercase text-primary/70 mb-2">
-            Compliance · Audit Trail
+            Step 8 · Compliance · Audit Trail
           </div>
           <h1 className="text-2xl font-bold text-foreground tracking-tight mb-2">
             Evidence Log
