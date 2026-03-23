@@ -210,7 +210,7 @@ export function ExecutiveReport() {
         <div className="bg-fragile-bg border border-fragile-border rounded-lg p-3 flex items-start gap-3">
           <span className="text-fragile text-sm flex-shrink-0 mt-[1px]">⚠</span>
           <div className="text-[11px] text-secondary-foreground leading-[1.55]">
-            <strong className="text-fragile">Correlated AI infrastructure</strong> amplifies aggregate exposure {amplificationFactor} vs. isolated incidents. Reinsurance treaty review required above AFI 1.35 (Lloyd's AI Underwriting Framework 2025).
+            <strong className="text-fragile">Correlated AI infrastructure</strong> creates significant non-linear risk amplification vs. isolated incidents. Swiss Re sigma insights 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk." Reinsurance treaty review required above AFI 1.35.
           </div>
         </div>
       </div>
