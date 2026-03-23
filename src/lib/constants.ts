@@ -43,6 +43,7 @@ export const NAV_STEPS = [
   { id: 6, title: 'Model Governance', sublabel: 'Methodology · Assumptions · Roadmap', viewId: 'model-governance' },
   { id: 7, title: 'Portfolio View', sublabel: 'Multi-entity · Aggregate AFI', viewId: 'portfolio' },
   { id: 8, title: 'Evidence Log', sublabel: 'Audit trail · Compliance', viewId: 'evidence-log' },
+  { id: 9, title: 'Integration Hub', sublabel: 'Data feeds · APIs · Ecosystem', viewId: 'integration-hub' },
 ];
 
 export const DEFAULT_ELASTICITIES = {

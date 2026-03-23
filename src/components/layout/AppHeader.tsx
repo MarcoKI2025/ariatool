@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { MethodologyModal } from '@/features/methodology/MethodologyModal';
 
 const VIEW_TITLES: Record<string, string> = {
   '1': 'Exposure Analysis',
@@ -10,6 +11,7 @@ const VIEW_TITLES: Record<string, string> = {
   '6': 'Model Governance',
   '7': 'Portfolio View',
   '8': 'Evidence Log',
+  '9': 'Integration Hub',
   company: 'Company View',
 };
 
@@ -22,12 +24,14 @@ const VIEW_SUBTITLES: Record<string, string> = {
   '6': 'Methodology & Assumptions',
   '7': 'Multi-Entity Aggregation',
   '8': 'Audit Trail & Compliance',
+  '9': 'Data Feeds · APIs · Ecosystem',
   company: 'AI Risk Executive Summary',
 };
 
 export function AppHeader() {
   const { state, setPerspective, resetAnalysis } = useApp();
   const { perspective, activeStep, analysisComplete } = state;
+  const [methodologyOpen, setMethodologyOpen] = useState(false);
 
   const key = perspective === 'company' ? 'company' : String(activeStep);
   const title = VIEW_TITLES[key] || VIEW_TITLES['1'];
@@ -77,6 +81,14 @@ export function AppHeader() {
           <span className="text-primary mr-1">▶</span>Demo
         </button>
 
+        {/* Methodology */}
+        <button
+          onClick={() => setMethodologyOpen(true)}
+          className="px-3 py-1.5 rounded-lg text-[11px] font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors border border-border"
+        >
+          📄 Methodology
+        </button>
+
         {/* Reset */}
         <button
           onClick={() => { if (confirm('Reset analysis? All progress will be lost.')) resetAnalysis(); }}
@@ -97,8 +109,10 @@ export function AppHeader() {
           <span>{analysisComplete ? 'Ready' : 'Pending'}</span>
         </div>
 
-        <span className="hidden md:inline font-mono text-[10px] text-muted-foreground">v3.0</span>
+        <span className="hidden md:inline font-mono text-[10px] text-muted-foreground">v3.2</span>
       </div>
+
+      <MethodologyModal open={methodologyOpen} onOpenChange={setMethodologyOpen} />
     </header>
   );
 }

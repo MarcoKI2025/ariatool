@@ -10,6 +10,7 @@ import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
 import { PortfolioView } from '@/features/portfolio/PortfolioView';
 import { EvidenceLog } from '@/features/evidence-log/EvidenceLog';
+import { IntegrationHub } from '@/features/integration-hub/IntegrationHub';
 import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
 
@@ -50,6 +51,7 @@ function AppContent() {
       case 6: return <ModelGovernance />;
       case 7: return <PortfolioView />;
       case 8: return <EvidenceLog />;
+      case 9: return <IntegrationHub />;
       default: return <ExposureAnalysis />;
     }
   };

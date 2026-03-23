@@ -3,6 +3,7 @@ import { useApp } from '@/hooks/useAppState';
 import { calcAFI, getBand, computeAFIComponents, getBandClass } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS } from '@/lib/constants';
+import { DependencyNetwork } from './DependencyNetwork';
 
 interface PortfolioEntity {
   id: string;
@@ -203,6 +204,9 @@ export function PortfolioView() {
           })}
         </div>
       </div>
+
+      {/* Dependency Network & Correlation */}
+      <DependencyNetwork entities={normalizedEntities} portfolioAFI={portfolioAFI} />
 
       {/* Interpretation */}
       <div className="bg-card border border-border rounded-xl p-6">
