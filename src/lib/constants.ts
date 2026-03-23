@@ -102,6 +102,11 @@ export const DEFAULT_INPUTS = {
   explainabilityGap: 3,
   dataIntegrity: 2,
   esgLiability: 2,
+  // Non-linear risk vectors
+  dataPoisoning: 1,
+  adversarialAttack: 1,
+  privacyBreach: 1,
+  ipInfringement: 1,
   // Systemic
   cloudConcentration: 3,
   modelConcentration: 3,
