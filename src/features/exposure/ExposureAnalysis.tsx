@@ -75,6 +75,9 @@ export function ExposureAnalysis() {
 
   return (
     <div>
+      {/* Real Case Facts Card */}
+      <RealCaseFactsCard />
+
       {/* Welcome banner */}
       {!dismissedWelcome && !analysisComplete && (
         <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-4 sm:p-[18px] rounded-xl mb-5 border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--card)))' }}>

@@ -138,6 +138,9 @@ export function PortfolioView() {
 
   return (
     <div className="space-y-6 sm:space-y-8 max-w-5xl">
+      {/* Real Case Alert */}
+      <RealCaseAlert />
+
       {/* Portfolio Intelligence Header */}
       <div className="border-b border-border pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
