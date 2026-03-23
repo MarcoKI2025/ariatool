@@ -269,13 +269,13 @@ function Slide2() {
 function Slide3() {
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow>The Engine · Eight Proprietary Assessment Constructs</Eyebrow>
-      <DmH1>Not a dashboard.<br /><span className="text-[#4038b8]">A structured governance assessment engine.</span></DmH1>
+      <Eyebrow>The Engine · Eight Assessment Constructs + Three Decision Layers</Eyebrow>
+      <DmH1>Not a dashboard.<br /><span className="text-[#4038b8]">A structured governance decision engine.</span></DmH1>
       <BodyText>
-        Eight independent risk constructs — each grounded in published academic research, each computing a distinct governance signal.
-        No other product combines these into a single structured committee intake flow.
+        Eight independent risk constructs and three decision authority layers — each grounded in published academic research.
+        No other product combines these into a single structured committee intake flow with binding deployment verdicts.
       </BodyText>
-      <div className="grid grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-4 gap-3 mb-4">
         <ConstructBox code="AFI" name="Authority Fragility Index" desc="Core structural metric. (DR × RC × CD) / (JD × NA). Measures governance stability — not compliance. >1.35 = Fragile." />
         <ConstructBox code="ECI" name="Existence Cost of Intelligence" desc="At what point is continued operation a governance decision? ECI-3 = Critical Infrastructure. Exit is no longer feasible." />
         <ConstructBox code="MDR" name="Meaning Drift Risk" desc="Behavioral alignment decay. A system can pass all audits while gradually shifting its optimization target." />
@@ -285,7 +285,25 @@ function Slide3() {
         <ConstructBox code="SCRI" name="Systemic Concentration Risk" desc="Inverse diversification metric: cloud, model, GPU provider concentration and cross-vendor contagion risk." />
         <ConstructBox code="IAT" name="Infrastructural AI Trigger" desc="7-criterion structured intake check for AI deployment lock-in patterns. Grounded in EU AI Act Art. 26/72." />
       </div>
-      <InsightBox color="purple" title="Real Research Basis · Proprietary Operationalisation" text="Eight structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. The academic concepts are real. The operationalisation into measurable governance signals is the proprietary IP." />
+      <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-2 mt-5">Decision Authority Layers</div>
+      <div className="grid grid-cols-3 gap-3 mb-5">
+        <div className="bg-[#111108] border border-[#b53020] rounded-[10px] p-4">
+          <div className="text-[10px] font-bold text-[#ff8070] uppercase tracking-[0.07em] mb-1">Deployment Authorization</div>
+          <div className="text-[12px] font-bold text-[#eeeadc] mb-1">Go / No-Go Verdict</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.5]">APPROVED · CONDITIONAL · NOT APPROVED · PROHIBITED. Derived from AFI, AGRI, ALRI, and governance signals.</div>
+        </div>
+        <div className="bg-[#111108] border border-[#9c6200] rounded-[10px] p-4">
+          <div className="text-[10px] font-bold text-[#ffc040] uppercase tracking-[0.07em] mb-1">Consequence Engine</div>
+          <div className="text-[12px] font-bold text-[#eeeadc] mb-1">If This Is Ignored</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.5]">Financial exposure ranges, liability cascades, systemic propagation, and regulatory risk — all in uncertainty language.</div>
+        </div>
+        <div className="bg-[#111108] border border-[#780840] rounded-[10px] p-4">
+          <div className="text-[10px] font-bold text-[#e060a0] uppercase tracking-[0.07em] mb-1">Responsibility Detector</div>
+          <div className="text-[12px] font-bold text-[#eeeadc] mb-1">Accountability Structure</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.5]">CLEARLY ASSIGNED · FRAGMENTED · NO ACCOUNTABLE ENTITY. Exposes structural responsibility gaps.</div>
+        </div>
+      </div>
+      <InsightBox color="purple" title="Real Research Basis · Proprietary Operationalisation" text="Eleven structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. The academic concepts are real. The operationalisation into measurable governance signals is the proprietary IP." />
     </div>
   );
 }
