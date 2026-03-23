@@ -81,6 +81,14 @@ export function AppHeader() {
           <span className="text-primary mr-1">▶</span>Demo
         </button>
 
+        {/* Methodology */}
+        <button
+          onClick={() => setMethodologyOpen(true)}
+          className="px-3 py-1.5 rounded-lg text-[11px] font-medium text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors border border-border"
+        >
+          📄 Methodology
+        </button>
+
         {/* Reset */}
         <button
           onClick={() => { if (confirm('Reset analysis? All progress will be lost.')) resetAnalysis(); }}
