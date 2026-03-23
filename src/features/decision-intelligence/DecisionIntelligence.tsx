@@ -227,6 +227,10 @@ export function DecisionIntelligence() {
         <BandBadge band={band} size="sm" />
       </div>
 
+      </>)}
+
+      {/* ═══ TAB: RISK INDICES ═══ */}
+      {activeTab === 'indices' && (<>
       {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
       <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
