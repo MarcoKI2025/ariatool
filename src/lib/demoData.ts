@@ -100,6 +100,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
       multiAgent: 1, toolCallAuthority: 2, persistentMemory: 2, humanCheckpoints: 3,
       hallucinationLiability: 1, deepfakeFraud: 1, promptInjection: 1, modelDrift: 1, algorithmicBias: 1,
       shadowAI: 3, explainabilityGap: 3, dataIntegrity: 3, esgLiability: 3,
+      dataPoisoning: 1, adversarialAttack: 2, privacyBreach: 2, ipInfringement: 2,
       cloudConcentration: 3, modelConcentration: 3, gpuConcentration: 3, crossVendorContagion: 3,
     },
     dependencies: ['AWS Bedrock', 'Anthropic'],
