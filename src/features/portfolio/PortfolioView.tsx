@@ -10,6 +10,7 @@ import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 interface PortfolioEntity {
   id: string;
   name: string;
