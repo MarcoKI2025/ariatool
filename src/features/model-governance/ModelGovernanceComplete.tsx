@@ -24,6 +24,7 @@ export function ModelGovernanceComplete() {
 
   return (
     <div>
+      <UseRestrictionBanner />
       <ModelGovernanceRegister />
 
       <div className="mb-6">
