@@ -71,9 +71,34 @@ export function EvidenceLog() {
           <button
             onClick={exportLog}
             disabled={auditLog.length === 0}
-            className="px-4 py-2 text-[11px] font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+            className="px-4 py-2 text-[11px] font-semibold rounded-lg bg-secondary text-foreground hover:bg-muted disabled:opacity-40 disabled:cursor-not-allowed transition-colors whitespace-nowrap border border-border"
           >
             ⬇ Export Log (.csv)
+          </button>
+          <button
+            onClick={() => {
+              const fullAssessment = {
+                metadata: {
+                  framework_version: 'AGAF v4.1.0',
+                  assessment_date: new Date().toISOString(),
+                  report_id: `ARIA-${Date.now().toString(36).toUpperCase()}`,
+                },
+                inputs: state.inputs,
+                results: state.results,
+                audit_log: auditLog,
+              };
+              const blob = new Blob([JSON.stringify(fullAssessment, null, 2)], { type: 'application/json' });
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `ARIA_Full_Assessment_${Date.now()}.json`;
+              a.click();
+              window.URL.revokeObjectURL(url);
+            }}
+            disabled={!state.results}
+            className="px-4 py-2 text-[11px] font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+          >
+            📦 Export Full Assessment
           </button>
         </div>
       </div>

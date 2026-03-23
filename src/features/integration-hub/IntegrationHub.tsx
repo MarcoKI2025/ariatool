@@ -158,6 +158,12 @@ export function IntegrationHub() {
               No real API connections, data feeds, or external services are active. 
               "Connected" status indicators and data point counts represent mock data to illustrate platform capabilities.
             </div>
+            <p className="text-[10px] text-muted-foreground mt-3 pt-3 border-t border-sensitive-border">
+              <strong className="text-foreground">Integration Architecture:</strong> All data feeds and connectors shown
+              represent <strong>API-ready integration points</strong> with mock data for
+              demonstration. OAuth 2.0 authentication flows, webhook receivers, and live
+              synchronization infrastructure are planned for Q3 2026 enterprise deployment.
+            </p>
           </div>
         </div>
       </div>
