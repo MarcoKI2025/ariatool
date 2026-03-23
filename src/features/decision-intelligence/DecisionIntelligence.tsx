@@ -816,6 +816,8 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
+      <SectionDivider title="Market Context & Positioning" icon="🌍" subtitle="Industry comparison, traditional vs. structural detection" />
+
       {/* ═══ STANDARD UNDERWRITING PROCESS — WHERE TRADITIONAL MODELS STOP ═══ */}
       <div className="bg-card border border-border rounded-xl p-5 sm:p-7 mb-5">
         <div className="mb-5">
