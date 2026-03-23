@@ -286,7 +286,7 @@ export function PortfolioView() {
                 Entities classified as Stable qualify for reduced capital reserves under Solvency II Pillar 2 risk reclassification framework (EIOPA calibration: 12–18% reduction per entity).
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
               <div className="bg-secondary/50 rounded-lg p-3 text-center">
                 <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Stable Entities</div>
                 <div className="text-lg font-bold text-stable font-mono">{stableCount} / {normalizedEntities.length}</div>
