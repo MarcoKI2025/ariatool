@@ -203,16 +203,16 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
     <div>
       {/* Enterprise Report Header */}
       <div className="border-b border-border pb-4 mb-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
               Governance Intelligence Report
             </div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
               AI Risk Assessment Summary
             </h1>
           </div>
-          <div className="text-right">
+          <div className="sm:text-right">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">
               REPORT ID
             </div>
