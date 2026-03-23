@@ -6,6 +6,8 @@ import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisual
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
+import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
+import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
