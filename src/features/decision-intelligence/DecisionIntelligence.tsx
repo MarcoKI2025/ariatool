@@ -8,6 +8,7 @@ import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
 import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
+import { PeerBenchmarking } from '@/features/benchmarking/PeerBenchmarking';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
@@ -987,6 +988,18 @@ export function DecisionIntelligence() {
         oversightLevel={inputs.oversightLevel}
         multiAgent={inputs.multiAgent}
       />
+
+      {/* ═══ PEER BENCHMARKING ═══ */}
+      <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-lg">📊</span>
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">Industry Comparison</div>
+            <div className="text-[15px] font-bold text-foreground">Peer Benchmarking</div>
+          </div>
+        </div>
+        <PeerBenchmarking />
+      </div>
 
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
