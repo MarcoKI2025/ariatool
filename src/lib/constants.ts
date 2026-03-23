@@ -129,3 +129,38 @@ export const REVENUE_RANGES = [
   '€500M–€5B',
   'Over €5B',
 ];
+
+// Size multiplier: larger firms = more systemic exposure, higher absolute loss
+export const SIZE_MULTIPLIERS: Record<string, number> = {
+  'Startup (<50)': 0.5,
+  'SME (50–250)': 0.75,
+  'Mid-Market (250–1000)': 1.0,
+  'Enterprise (1000–10000)': 1.4,
+  'Large Enterprise (10000+)': 1.8,
+};
+
+// Revenue multiplier: higher revenue = higher absolute exposure and regulatory scrutiny
+export const REVENUE_MULTIPLIERS: Record<string, number> = {
+  'Under €10M': 0.5,
+  '€10M–€50M': 0.75,
+  '€50M–€500M': 1.0,
+  '€500M–€5B': 1.5,
+  'Over €5B': 2.0,
+};
+
+// AFI adjustment: larger/richer firms tend to have deeper AI integration
+export const SIZE_AFI_ADJUSTMENT: Record<string, number> = {
+  'Startup (<50)': -0.05,
+  'SME (50–250)': 0,
+  'Mid-Market (250–1000)': 0.03,
+  'Enterprise (1000–10000)': 0.06,
+  'Large Enterprise (10000+)': 0.10,
+};
+
+export const REVENUE_AFI_ADJUSTMENT: Record<string, number> = {
+  'Under €10M': -0.03,
+  '€10M–€50M': 0,
+  '€50M–€500M': 0.02,
+  '€500M–€5B': 0.05,
+  'Over €5B': 0.08,
+};
