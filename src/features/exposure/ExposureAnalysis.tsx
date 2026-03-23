@@ -75,8 +75,6 @@ export function ExposureAnalysis() {
 
   return (
     <div>
-      {/* Real Case Facts Card */}
-      <RealCaseFactsCard />
 
       {/* Welcome banner */}
       {!dismissedWelcome && !analysisComplete && (
@@ -150,6 +148,9 @@ export function ExposureAnalysis() {
         </div>
         <div className="mt-[10px] text-[10px] text-muted-foreground italic">Each profile reflects a real-world AI deployment pattern with different risk characteristics. Adjust any slider after loading to explore scenarios.</div>
       </div>
+
+      {/* Real Case Facts Card — appears after demo selection */}
+      <RealCaseFactsCard />
 
       {/* Divider */}
       <div className="flex items-center gap-3 my-5">
