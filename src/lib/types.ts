@@ -108,6 +108,14 @@ export interface AnalysisResults {
   frameDriftAlerts: FrameDriftAlert[];
 }
 
+export interface AuditLogEntry {
+  timestamp: string;
+  action: 'analysis_run' | 'parameter_change' | 'profile_load';
+  details: string;
+  inputs?: Partial<ExposureInputs>;
+  results?: { afi?: number; band?: Band };
+}
+
 export type IATState = Record<number, boolean>;
 
 export type IATStatus = 'none' | 'approaching' | 'triggered' | 'infrastructural';
