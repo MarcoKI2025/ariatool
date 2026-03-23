@@ -97,6 +97,7 @@ export function ExecutiveReport() {
   const { results, inputs, analysisComplete } = state;
   const [showOverlay, setShowOverlay] = useState(false);
   const [showOnePager, setShowOnePager] = useState(false);
+  const [activeTab, setActiveTab] = useState('summary');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Executive Report Locked" description="Complete the Exposure Analysis to generate a board-level executive report suitable for risk committees and reinsurers." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
