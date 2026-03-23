@@ -409,10 +409,10 @@ export function DecisionIntelligence() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { label: 'Loss Risk Band', value: formatCurrency(lossEnvelope.expected), sub: 'Expected scenario' },
+            { label: 'Loss Risk Band', value: lossEnvelope.expected, sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
             { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
-            { label: 'Amplification', value: amplificationFactor, sub: 'Munich Re loss multiplier' },
+            { label: 'Amplification', value: amplificationFactor, sub: 'Non-linear risk signal' },
           ].map((m, i) => (
             <div key={i}>
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
@@ -467,39 +467,22 @@ export function DecisionIntelligence() {
           ))}
         </div>
 
-        {/* Bar chart visualization */}
-        <div className="flex items-end gap-4 h-[160px] px-4 mb-3">
+        {/* Qualitative Risk Band Visualization */}
+        <div className="grid grid-cols-4 gap-2 mb-3">
           {[
-            { label: 'Expected', value: lossEnvelope.expected, color: 'bg-primary' },
-            { label: 'Stress', value: lossEnvelope.stress, color: 'bg-sensitive' },
-            { label: 'Tail', value: lossEnvelope.tail, color: 'bg-fragile' },
-            { label: 'Portfolio', value: lossEnvelope.portfolio, color: 'bg-purple' },
-          ].map((bar, i) => {
-            const maxVal = lossEnvelope.portfolio || 1;
-            const height = Math.max(8, (bar.value / maxVal) * 140);
-            return (
-              <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[9px] font-mono font-bold text-muted-foreground">{formatCurrency(bar.value)}</span>
-                <div className={`w-full rounded-t-md ${bar.color}`} style={{ height: `${height}px` }} />
-                <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{bar.label}</span>
-              </div>
-            );
-          })}
+            { label: 'Expected', value: lossEnvelope.expected, color: 'bg-stable', height: 'h-8' },
+            { label: 'Stress', value: lossEnvelope.stress, color: 'bg-sensitive', height: 'h-16' },
+            { label: 'Tail', value: lossEnvelope.tail, color: 'bg-fragile', height: 'h-24' },
+            { label: 'Portfolio', value: lossEnvelope.portfolio, color: 'bg-primary', height: 'h-32' },
+          ].map((bar, i) => (
+            <div key={i} className="flex flex-col items-center gap-1">
+              <div className={`w-full rounded-t-md ${bar.color} ${bar.height}`} />
+              <span className="text-[9px] font-medium text-muted-foreground">{bar.value}</span>
+              <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{bar.label}</span>
+            </div>
+          ))}
         </div>
 
-        <div className="p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground">
-          ⚠ Tail risk amplification: Correlated AI infrastructure creates {amplificationFactor} aggregate exposure vs. isolated incidents. Portfolio loss assumes 5 entities with similar AI infrastructure stack. Reinsurance treaty review required above AFI 1.35.
-        </div>
-      </SectionCard>
-
-      {/* ═══ CONTINUATION / DEPENDENCY / PORTFOLIO ═══ */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-        <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[11px] font-bold text-foreground mb-2">Continuation Risk</div>
-          <div className="text-[11px] text-muted-foreground leading-[1.55]">
-            System persists without explicit re-authorisation — accumulating liability with no upper bound.
-          </div>
-        </div>
         <div className="bg-card border border-border rounded-[10px] p-4">
           <div className="text-[11px] font-bold text-foreground mb-2">Dependency Lock-In</div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
