@@ -5,7 +5,7 @@ import { BandBadge, SectionCard, InfoTip } from '@/components/shared/UIComponent
 import { TOOLTIPS } from '@/lib/tooltips';
 import { AFIGauge } from '@/components/charts/AFIGauge';
 import { AFIRadar } from '@/components/charts/AFIRadar';
-import { computeFullAnalysis } from '@/lib/scoring';
+import { computeFullAnalysis, calcAFI, getBand, getDecisionClass } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 
 export function ExposureResults() {
@@ -16,9 +16,31 @@ export function ExposureResults() {
   const [adjustments, setAdjustments] = useState({ dr: 0, jd: 0, rc: 0, cd: 0, na: 0, ses: 0 });
   const hasAdjustments = Object.values(adjustments).some(v => v !== 0);
 
+  // Apply adjustments to components
+  const adjFn = (base: number, pct: number) => Math.max(0.01, Math.min(1, base * (1 + pct / 100)));
+
+  const components = useMemo(() => {
+    if (!results) return { dr: 0, jd: 0.5, rc: 0, cd: 0, na: 0.5 };
+    return {
+      dr: adjFn(results.components.dr, adjustments.dr),
+      jd: adjFn(results.components.jd, adjustments.jd),
+      rc: adjFn(results.components.rc, adjustments.rc),
+      cd: adjFn(results.components.cd, adjustments.cd),
+      na: adjFn(results.components.na, adjustments.na),
+    };
+  }, [results, adjustments]);
+
+  const afi = useMemo(() => calcAFI(components.dr, components.jd, components.rc, components.cd, components.na), [components]);
+  const band = useMemo(() => getBand(afi), [afi]);
+  const decisionClass = useMemo(() => getDecisionClass(band), [band]);
+  const structuralScore = useMemo(() => Math.min(99, Math.round(afi * 60)), [afi]);
+  const eciTier = useMemo(() => afi < 0.5 ? 0 : afi < 0.85 ? 1 : afi < 1.35 ? 2 : 3, [afi]);
+  const eciName = useMemo(() => ['Reversible Tool', 'Persistent Service', 'Institutional Dependency', 'Critical Infrastructure'][eciTier], [eciTier]);
+
   if (!results) return null;
 
-  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, alri, scri, amplificationFactor, decisionClass } = results;
+  // Use original results for values not affected by component adjustments
+  const { lossEnvelope, agri, alri, scri, amplificationFactor } = results;
 
   const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
   const bandBg = band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
