@@ -518,11 +518,11 @@ function Slide9({ onClose }: { onClose: () => void }) {
         </div>
       </div>
       <div className="flex gap-[9px] flex-wrap">
-        <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-5 py-[9px] text-[12px] font-semibold rounded-md text-[#90e8a0] border border-[#2a9050] bg-gradient-to-br from-[#1a6030] to-[#228040] hover:shadow-lg transition-all">
+        <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); setTimeout(() => document.dispatchEvent(new CustomEvent('navigate-to-step', { detail: { step: 1, perspective: 'company' } })), 200); onClose(); }} className="px-5 py-[9px] text-[12px] font-semibold rounded-md text-[#90e8a0] border border-[#2a9050] bg-gradient-to-br from-[#1a6030] to-[#228040] hover:shadow-lg transition-all">
           ◈ Open Company View — Meridian Financial
         </button>
         <button onClick={() => { document.dispatchEvent(new CustomEvent('navigate-to-step', { detail: { step: 1, perspective: 'underwriter' } })); onClose(); }} className="px-[18px] py-[9px] text-[12px] border border-[#3a3828] text-[#b8b4a8] rounded-md font-medium hover:text-[#eeeadc] transition-colors">
-          Explore Company View →
+          Explore Full System →
         </button>
       </div>
     </div>
