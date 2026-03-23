@@ -90,6 +90,13 @@ export function PortfolioView() {
 
   const portfolioBand = getBand(portfolioAFI);
 
+  // Capital Efficiency Calculator
+  const stableCount = normalizedEntities.filter(e => {
+    const components = computeAFIComponents(e.inputs);
+    const afi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
+    return getBand(afi) === 'Stable';
+  }).length;
+
   return (
     <div className="space-y-8 max-w-5xl">
       {/* Page Header */}
@@ -97,13 +104,18 @@ export function PortfolioView() {
         <div className="text-[10px] font-semibold tracking-[0.12em] uppercase text-primary/70 mb-2">
           Advanced · Multi-Entity Analysis
         </div>
-        <h1 className="text-2xl font-bold text-foreground tracking-tight mb-2">
-          Portfolio Aggregation
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-foreground tracking-tight mb-2">
+            Portfolio Aggregation
+          </h1>
+          <LiveIndicator label={`${entities.length} entities monitored`} />
+        </div>
         <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
           Assess aggregate structural risk across multiple client deployments. Portfolio AFI is computed as weighted average of entity-level components.
         </p>
       </div>
+
+      <UseRestrictionBanner />
 
       {/* Portfolio Summary */}
       <div className="bg-card border border-border rounded-xl p-6 space-y-5">
