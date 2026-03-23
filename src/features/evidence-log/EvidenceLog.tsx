@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 
 export function EvidenceLog() {
-  const { state } = useApp();
+  const { state, clearAuditLog } = useApp();
   const auditLog = state.auditLog || [];
 
   const exportLog = () => {
