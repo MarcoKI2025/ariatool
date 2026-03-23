@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
@@ -7,6 +7,7 @@ import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, External
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { fetchCloudProviderStatus, type CloudProviderStatus, formatRelativeTime, getStatusColor, getStatusTextColor } from '@/lib/liveData';
 
 /* ── Integration Data ── */
 interface Integration {
@@ -129,6 +130,20 @@ export function IntegrationHub() {
   const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
 
+  // Live cloud provider status
+  const [cloudStatus, setCloudStatus] = useState<CloudProviderStatus[]>([]);
+  const [cloudStatusLoading, setCloudStatusLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCloudProviderStatus()
+      .then(setCloudStatus)
+      .finally(() => setCloudStatusLoading(false));
+    const interval = setInterval(() => {
+      fetchCloudProviderStatus().then(setCloudStatus);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const filtered = category === 'all' ? INTEGRATIONS : INTEGRATIONS.filter(i => i.category === category);
   const connected = INTEGRATIONS.filter(i => i.status === 'connected');
   const available = INTEGRATIONS.filter(i => i.status === 'available');
@@ -182,6 +197,88 @@ export function IntegrationHub() {
           </p>
           <LiveIndicator label="Platform active" size="sm" />
         </div>
+      </div>
+
+      {/* Live Cloud Provider Status Feed */}
+      <div className="bg-card border border-border rounded-xl p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">
+              🔴 Live Infrastructure Monitor
+            </div>
+            <div className="text-[14px] font-bold text-foreground">Cloud Provider Health Status</div>
+          </div>
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stable-bg border border-stable-border">
+            <span className="w-2 h-2 rounded-full bg-stable animate-pulse" />
+            <span className="text-[10px] font-medium text-stable">Live · Updates every 5 min</span>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {cloudStatusLoading ? (
+            [1, 2, 3].map(i => (
+              <div key={i} className="bg-secondary/50 rounded-lg p-4 animate-pulse">
+                <div className="h-4 bg-muted rounded w-20 mb-3" />
+                <div className="h-8 bg-muted rounded w-12 mb-2" />
+              </div>
+            ))
+          ) : (
+            cloudStatus.map(provider => (
+              <div key={provider.name} className="bg-secondary/30 border border-border rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[13px] font-semibold text-foreground">{provider.name}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className={`w-2 h-2 rounded-full ${getStatusColor(provider.status)}`} />
+                    <span className={`text-[10px] font-medium capitalize ${getStatusTextColor(provider.status)}`}>
+                      {provider.status}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className="text-2xl font-bold font-mono text-foreground">{provider.incidents}</span>
+                  <span className="text-[10px] text-muted-foreground">
+                    Active Incident{provider.incidents !== 1 ? 's' : ''}
+                  </span>
+                </div>
+                {provider.incidents > 0 && (provider.regions || provider.services) && (
+                  <div className="mb-2">
+                    <span className="text-[9px] text-muted-foreground uppercase tracking-wider">Affected</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {(provider.regions || provider.services || []).slice(0, 3).map((item, i) => (
+                        <span key={i} className="px-1.5 py-0.5 rounded text-[9px] bg-fragile-bg text-fragile border border-fragile-border">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <div className="text-[9px] text-muted-foreground">
+                  Checked {formatRelativeTime(provider.lastChecked)}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        <div className="mt-3 flex items-start gap-2 text-[9px] text-muted-foreground">
+          <span>ℹ️</span>
+          <span>
+            Live data: AWS Status API (status.aws.amazon.com) · Google Cloud Status API (status.cloud.google.com) · Azure (cached fallback). Refreshes every 5 minutes.
+          </span>
+        </div>
+        {cloudStatus.some(p => p.incidents > 0) && (
+          <div className="mt-3 p-3 bg-sensitive-bg border border-sensitive-border rounded-lg">
+            <div className="flex items-start gap-2">
+              <span className="text-sensitive">⚠️</span>
+              <div>
+                <div className="text-[11px] font-bold text-sensitive mb-1">Concentration Risk Alert</div>
+                <div className="text-[10px] text-muted-foreground leading-relaxed">
+                  {cloudStatus.filter(p => p.incidents > 0).length} cloud provider(s) currently
+                  experiencing incidents. Entities with high provider concentration (SCRI score)
+                  face elevated operational continuity risk.
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Stats Row */}

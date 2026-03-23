@@ -8,6 +8,7 @@ import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
+import { fetchCloudProviderStatus } from '@/lib/liveData';
 interface PortfolioEntity {
   id: string;
   name: string;
@@ -37,6 +38,20 @@ export function PortfolioView() {
   const { state } = useApp();
   const analysisInputs = state.inputs;
   const hasAnalysis = state.analysisComplete;
+
+  // Live cloud incident count
+  const [totalIncidents, setTotalIncidents] = useState(0);
+  useEffect(() => {
+    fetchCloudProviderStatus().then(providers => {
+      setTotalIncidents(providers.reduce((sum, p) => sum + p.incidents, 0));
+    });
+    const interval = setInterval(() => {
+      fetchCloudProviderStatus().then(providers => {
+        setTotalIncidents(providers.reduce((sum, p) => sum + p.incidents, 0));
+      });
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const [entities, setEntities] = useState<PortfolioEntity[]>([
     { id: '1', name: hasAnalysis && analysisInputs.companyName ? analysisInputs.companyName : 'Client A', inputs: hasAnalysis ? { ...analysisInputs } : { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
@@ -136,9 +151,17 @@ export function PortfolioView() {
               Assess aggregate structural risk across multiple client deployments. Portfolio AFI is computed as weighted average of entity-level components.
             </p>
           </div>
-          <div className="text-right flex-shrink-0 ml-4">
+          <div className="text-right flex-shrink-0 ml-4 space-y-1">
             <LiveIndicator label={`${entities.length} entities monitored`} />
-            <div className="text-[9px] text-muted-foreground mt-1">
+            {totalIncidents > 0 && (
+              <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-sensitive-bg border border-sensitive-border">
+                <span className="w-1.5 h-1.5 rounded-full bg-sensitive animate-pulse" />
+                <span className="text-[9px] font-medium text-sensitive">
+                  {totalIncidents} Provider Incident{totalIncidents !== 1 ? 's' : ''} Active
+                </span>
+              </div>
+            )}
+            <div className="text-[9px] text-muted-foreground">
               Last Updated: {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
             </div>
           </div>

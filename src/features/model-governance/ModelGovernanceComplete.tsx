@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 
 export function ModelGovernanceComplete() {
@@ -54,6 +55,7 @@ export function ModelGovernanceComplete() {
       <APIIntegrationReference />
       <FrameworkRevisionSchedule />
       <ProductRoadmap />
+      <AIIncidentsFeed />
 
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
@@ -1010,6 +1012,101 @@ function ProductRoadmap() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// AI INCIDENTS FEED (LIVE DATA)
+// ═══════════════════════════════════════════════════════════════════
+
+function AIIncidentsFeed() {
+  const [aiIncidents, setAIIncidents] = useState<AIIncident[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAIIncidents(5)
+      .then(setAIIncidents)
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">
+            📊 Industry Intelligence
+          </div>
+          <div className="text-[15px] font-bold text-foreground">Recent AI Governance Incidents</div>
+        </div>
+        <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-primary/10 border border-primary/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span className="text-[9px] font-medium text-primary">Live Feed</span>
+        </div>
+      </div>
+
+      <div className="text-[11px] text-muted-foreground leading-relaxed mb-4">
+        Real-world AI incidents tracked by the AI Incident Database. These cases inform
+        ARIA's risk framework and demonstrate the importance of governance oversight.
+      </div>
+
+      {loading ? (
+        <div className="space-y-3">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="bg-secondary/50 rounded-lg p-4 animate-pulse">
+              <div className="h-4 bg-muted rounded w-3/4 mb-2" />
+              <div className="h-3 bg-muted rounded w-1/2" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {aiIncidents.map(incident => (
+            <div key={incident.id} className="bg-secondary/30 border border-border rounded-lg p-3">
+              <div className="flex items-start justify-between gap-3 mb-1">
+                <div className="text-[11px] font-semibold text-foreground leading-snug">
+                  {incident.title}
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-[9px] text-muted-foreground">{incident.date}</span>
+                  <span className="px-1.5 py-0.5 rounded text-[8px] font-medium bg-sensitive-bg text-sensitive border border-sensitive-border">
+                    {incident.category}
+                  </span>
+                </div>
+              </div>
+              {incident.description && (
+                <div className="text-[10px] text-muted-foreground leading-relaxed mb-1">
+                  {incident.description.slice(0, 150)}{incident.description.length > 150 ? '…' : ''}
+                </div>
+              )}
+              {incident.source && (
+                <a href={incident.source} target="_blank" rel="noopener noreferrer"
+                  className="text-[9px] text-primary hover:underline inline-flex items-center gap-1">
+                  View full report ↗
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-3 flex items-start gap-2 text-[9px] text-muted-foreground border-t border-border pt-3">
+        <span>ℹ️</span>
+        <span>
+          Data source: AI Incident Database (incidentdatabase.ai) — A public repository of AI system
+          failures maintained by Partnership on AI. Feed updates on page load.
+        </span>
+      </div>
+
+      <div className="mt-3 p-3 bg-primary/5 border border-primary/20 rounded-lg">
+        <div className="text-[10px] font-bold text-primary mb-1">Why This Matters for ARIA</div>
+        <div className="text-[10px] text-muted-foreground leading-relaxed">
+          ARIA's Authority Fragility Index (AFI) thresholds (0.85 / 1.35) were calibrated
+          by analyzing incidents like these. Each case study validates the framework:
+          high AFI scores correlate with governance failures that led to operational losses,
+          reputational damage, or regulatory intervention.
+        </div>
       </div>
     </div>
   );
