@@ -269,13 +269,13 @@ function Slide2() {
 function Slide3() {
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow>The Engine · Eight Proprietary Assessment Constructs</Eyebrow>
-      <DmH1>Not a dashboard.<br /><span className="text-[#4038b8]">A structured governance assessment engine.</span></DmH1>
+      <Eyebrow>The Engine · Eight Assessment Constructs + Three Decision Layers</Eyebrow>
+      <DmH1>Not a dashboard.<br /><span className="text-[#4038b8]">A structured governance decision engine.</span></DmH1>
       <BodyText>
-        Eight independent risk constructs — each grounded in published academic research, each computing a distinct governance signal.
-        No other product combines these into a single structured committee intake flow.
+        Eight independent risk constructs and three decision authority layers — each grounded in published academic research.
+        No other product combines these into a single structured committee intake flow with binding deployment verdicts.
       </BodyText>
-      <div className="grid grid-cols-4 gap-3 mb-5">
+      <div className="grid grid-cols-4 gap-3 mb-4">
         <ConstructBox code="AFI" name="Authority Fragility Index" desc="Core structural metric. (DR × RC × CD) / (JD × NA). Measures governance stability — not compliance. >1.35 = Fragile." />
         <ConstructBox code="ECI" name="Existence Cost of Intelligence" desc="At what point is continued operation a governance decision? ECI-3 = Critical Infrastructure. Exit is no longer feasible." />
         <ConstructBox code="MDR" name="Meaning Drift Risk" desc="Behavioral alignment decay. A system can pass all audits while gradually shifting its optimization target." />
@@ -285,7 +285,25 @@ function Slide3() {
         <ConstructBox code="SCRI" name="Systemic Concentration Risk" desc="Inverse diversification metric: cloud, model, GPU provider concentration and cross-vendor contagion risk." />
         <ConstructBox code="IAT" name="Infrastructural AI Trigger" desc="7-criterion structured intake check for AI deployment lock-in patterns. Grounded in EU AI Act Art. 26/72." />
       </div>
-      <InsightBox color="purple" title="Real Research Basis · Proprietary Operationalisation" text="Eight structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. The academic concepts are real. The operationalisation into measurable governance signals is the proprietary IP." />
+      <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-2 mt-5">Decision Authority Layers</div>
+      <div className="grid grid-cols-3 gap-3 mb-5">
+        <div className="bg-[#111108] border border-[#b53020] rounded-[10px] p-4">
+          <div className="text-[10px] font-bold text-[#ff8070] uppercase tracking-[0.07em] mb-1">Deployment Authorization</div>
+          <div className="text-[12px] font-bold text-[#eeeadc] mb-1">Go / No-Go Verdict</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.5]">APPROVED · CONDITIONAL · NOT APPROVED · PROHIBITED. Derived from AFI, AGRI, ALRI, and governance signals.</div>
+        </div>
+        <div className="bg-[#111108] border border-[#9c6200] rounded-[10px] p-4">
+          <div className="text-[10px] font-bold text-[#ffc040] uppercase tracking-[0.07em] mb-1">Consequence Engine</div>
+          <div className="text-[12px] font-bold text-[#eeeadc] mb-1">If This Is Ignored</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.5]">Financial exposure ranges, liability cascades, systemic propagation, and regulatory risk — all in uncertainty language.</div>
+        </div>
+        <div className="bg-[#111108] border border-[#780840] rounded-[10px] p-4">
+          <div className="text-[10px] font-bold text-[#e060a0] uppercase tracking-[0.07em] mb-1">Responsibility Detector</div>
+          <div className="text-[12px] font-bold text-[#eeeadc] mb-1">Accountability Structure</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.5]">CLEARLY ASSIGNED · FRAGMENTED · NO ACCOUNTABLE ENTITY. Exposes structural responsibility gaps.</div>
+        </div>
+      </div>
+      <InsightBox color="purple" title="Real Research Basis · Proprietary Operationalisation" text="Eleven structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. The academic concepts are real. The operationalisation into measurable governance signals is the proprietary IP." />
     </div>
   );
 }
@@ -298,13 +316,13 @@ function Slide4() {
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#b53020">Live Case · Meridian Financial Group · Financial Services · Autonomous Trading AI</Eyebrow>
-      <DmH1><span className="text-[#ff4040]">ESCALATE TO COMMITTEE</span></DmH1>
-      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI 2.23 · ECI-3 · No clear owner · Governance signals above normal parameters</p>
+      <DmH1><span className="text-[#ff4040]">DEPLOYMENT NOT APPROVED</span></DmH1>
+      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI 2.23 · Responsibility Fragmented · Governance signals above normal parameters</p>
       <div className="grid grid-cols-4 gap-3 mb-5">
-        <LossCell label="Assessment Signal" value="ESCALATE" src="Committee review required" color="#ff4040" />
-        <LossCell label="Base Risk" value="Elevated" src="Structural governance exposure" color="#9c6200" />
-        <LossCell label="Critical Risk Band" value="High" src="Provider concentration · Continuation risk" color="#b53020" />
-        <LossCell label="Systemic Exposure" value="Critical" src="Correlated dependency · Multi-entity cluster" color="#f87070" />
+        <LossCell label="Authorization Status" value="NOT APPROVED" src="Unresolved governance risk" color="#ff4040" />
+        <LossCell label="Consequence Range" value="€80M–€250M" src="Indicative · structural patterns" color="#9c6200" />
+        <LossCell label="Accountability" value="FRAGMENTED" src="No clearly assigned owner" color="#b53020" />
+        <LossCell label="Systemic Exposure" value="Critical" src="Correlated dependency cluster" color="#f87070" />
       </div>
       <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
@@ -312,7 +330,7 @@ function Slide4() {
         </div>
         <MeridianChart />
       </div>
-      <InsightBox color="red" title="What This Engine Found — That No Audit Did" text="Meridian passes all compliance checks. But: autonomous trading execution without re-authorisation since Q3 2023, single-provider OpenAI dependency creating critical correlation risk, Responsibility Fragmentation Score 84, Stewardship Clarity 18 — system is effectively unowned. Art. 72 post-market monitoring: not conducted." />
+      <InsightBox color="red" title="What This Engine Found — That No Audit Did" text="Meridian passes all compliance checks. But: autonomous trading execution without re-authorisation since Q3 2023, single-provider dependency creating critical concentration risk. The Deployment Authorization System classifies this as NOT APPROVED. The Consequence Engine projects €80M–€250M exposure range. The Responsibility Detector flags FRAGMENTED accountability — no clearly assigned governance owner." />
     </div>
   );
 }
@@ -331,17 +349,18 @@ function Slide5() {
     { num: '⑥', label: 'Model Governance', value: 'Methodology', color: '#80b8e0', bg: '#0e1828', border: '#1a3858' },
     { num: '⑦', label: 'Portfolio View', value: 'Multi-entity', color: '#b8a060', bg: '#1a1808', border: '#5a4818' },
     { num: '⑧', label: 'Evidence Log', value: 'Audit trail', color: '#ff4040', bg: '#1a0808', border: '#800808' },
+    { num: '⑨', label: 'Integration Hub', value: 'APIs · Ecosystem', color: '#70c0d0', bg: '#0a1820', border: '#1a4858' },
   ];
 
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow>The Process · From Input to Binding Verdict in Under 3 Minutes</Eyebrow>
-      <DmH1>One structured profile.<br /><span className="text-[#9088e0]">Eight computed outputs.</span></DmH1>
+      <Eyebrow>The Process · From Input to Deployment Verdict in Under 3 Minutes</Eyebrow>
+      <DmH1>One structured profile.<br /><span className="text-[#9088e0]">Nine computed outputs.</span></DmH1>
       <BodyText>
-        The engine takes a single structured exposure profile and generates eight independent risk outputs across a full
-        underwriting workflow. Nothing is pre-filled. Every number is computed from the profile. Adjust one input: all outputs recalculate in real-time.
+        The engine takes a single structured exposure profile and generates nine independent risk outputs across a full
+        underwriting workflow — culminating in a binding Deployment Authorization verdict. Adjust one input: all outputs recalculate in real-time.
       </BodyText>
-      <div className="grid grid-cols-8 gap-0 mb-5">
+      <div className="grid grid-cols-9 gap-0 mb-5">
         {steps.map((s, i) => (
           <div key={i} className="text-center px-0.5 relative py-3">
             {i < steps.length - 1 && <span className="absolute right-[-6px] top-[38%] text-[#9e9a90] text-[11px]">→</span>}
@@ -447,16 +466,16 @@ function Slide8({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow>The Value Proposition · Why AGAF is Acquisition-Ready Infrastructure</Eyebrow>
-      <DmH1>The governance assessment layer<br /><span className="text-[#9088e0]">your teams need today.</span></DmH1>
+      <DmH1>The governance decision layer<br /><span className="text-[#9088e0]">your teams need today.</span></DmH1>
       <BodyText>
         The organisations that structure AI governance intake today will have the most defensible position when regulatory scrutiny
         reaches critical mass — and when the first major AI governance claims reach litigation.
       </BodyText>
       <div className="grid grid-cols-2 gap-[10px] mb-5">
-        <ActionCard num={1} numColor="#b53020" title="Reinsurance & Large Insurance" desc="Munich Re, Swiss Re, Lloyd's syndicates — the AFI engine gives you the structural pricing signal that lets you quote AI governance risk for the first time." />
-        <ActionCard num={2} numColor="#b53020" title="Enterprise Risk & Compliance" desc="For any organisation deploying AI at scale: this is the governance layer that proves you know what you own, who is responsible for it, and what it would cost to stop it." />
+        <ActionCard num={1} numColor="#b53020" title="Reinsurance & Large Insurance" desc="Munich Re, Swiss Re, Lloyd's syndicates — the AFI engine delivers Deployment Authorization verdicts and structural pricing signals for AI governance risk." />
+        <ActionCard num={2} numColor="#b53020" title="Enterprise Risk & Compliance" desc="For any organisation deploying AI at scale: the Deployment Authorization, Consequence Engine, and Responsibility Detector prove you know what you own and who is accountable." />
         <ActionCard num={3} numColor="#9c6200" title="Regulatory & Policy Bodies" desc="The EU AI Act creates obligations but no measurement framework for continuation risk or responsibility fragmentation. This engine operationalises what the regulation requires." />
-        <ActionCard num={4} numColor="#9c6200" title="Risk & Governance Consulting" desc="The first client conversation that ends with a binding operational verdict — NOT APPROVED — is a conversation that redefines the engagement scope immediately." />
+        <ActionCard num={4} numColor="#9c6200" title="Risk & Governance Consulting" desc="The first client conversation that ends with a deployment verdict — NOT APPROVED — with consequence projections and accountability analysis redefines the engagement immediately." />
       </div>
       <div className="flex gap-[10px] justify-center mt-5 flex-wrap">
         <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
@@ -467,7 +486,7 @@ function Slide8({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       <div className="text-center text-[10px] text-[#a8a49c] mt-2">
-        Loads the full NOT APPROVED scenario · Real-time structural analysis · All 6 outputs computed live
+        Loads the full NOT APPROVED scenario · Real-time structural analysis · All 9 outputs computed live
       </div>
     </div>
   );
@@ -480,41 +499,51 @@ function Slide8({ onClose }: { onClose: () => void }) {
 function Slide9({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow dotColor="#60d090">Company View · Financial Decision Engine</Eyebrow>
-      <DmH1>Your AI risk.<br /><span className="text-[#60d090]">What it costs.<br />What grows if you do nothing.</span></DmH1>
+      <Eyebrow dotColor="#60d090">Company View · Standalone Insurance Premium Calculator</Eyebrow>
+      <DmH1>Your AI risk.<br /><span className="text-[#60d090]">What it costs.<br />Where you save.</span></DmH1>
       <BodyText>
-        The Company View is a complete financial risk operating layer — AI Risk Index (0–100), annual loss exposure envelope,
-        industry benchmark, 12-month growth trajectory, parametric policy triggers, and one-click ORSA export.
+        The Company View is a standalone premium calculator — full 29+ slider input system, real-time AFI scoring,
+        live premium estimation with category-level cost breakdown. Organizations see exactly which governance adjustments reduce their insurance costs.
       </BodyText>
       <div className="grid grid-cols-3 gap-[10px] mb-3">
         <div className="p-3 bg-[#0a1a0a] border border-[#1a4028] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">AI Risk Index</div>
-          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">72 / 100</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">High Risk · Meridian Financial</div>
+          <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">Estimated Premium</div>
+          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">€420k–€680k</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Meridian Financial · Live calculation</div>
         </div>
         <div className="p-3 bg-[#1a0a06] border border-[#5a1810] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">Annual Loss Exposure</div>
-          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">€4.2M</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Tail risk: €14.3M</div>
+          <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">AFI Score</div>
+          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">2.23</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Fragile · Above 1.35 threshold</div>
         </div>
         <div className="p-3 bg-[#0e100e] border border-[#2a2820] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">12-Month Growth</div>
-          <div className="text-[22px] font-bold font-mono text-[#ffc040]">+35%</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">If nothing changes</div>
+          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">Cost Impact</div>
+          <div className="text-[22px] font-bold font-mono text-[#ffc040]">Per Category</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">See which changes reduce premium</div>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4">
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-[#a8a49c] mb-2">Full Input System</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.55]">All 6 slider categories from the Exposure Analysis — Core AFI, Agent Architecture, Liability Exposure, Oversight & Governance, Systemic Concentration, and Emerging Threat Vectors — available as collapsible accordions with real-time premium recalculation.</div>
+        </div>
+        <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4">
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-[#a8a49c] mb-2">Premium Breakdown</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.55]">Sticky cost panel shows how each slider category contributes to the total premium. Organizations instantly see where governance improvements translate to cost reductions — making risk management economically actionable.</div>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4 text-[9px]">
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">AGRI — Agentic</div>
-          <div className="text-[#ffc040] font-bold font-mono">61 · Elevated</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">Demo Profiles</div>
+          <div className="text-[#60d090] font-bold font-mono">5 · Preloaded</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">ALRI — Liability</div>
-          <div className="text-[#ff6b5b] font-bold font-mono">74 · Critical</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">Global Sync</div>
+          <div className="text-[#9088e0] font-bold font-mono">All 9 Views</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">SCRI — Systemic</div>
-          <div className="text-[#ff6b5b] font-bold font-mono">68 · Critical</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">Decision Layers</div>
+          <div className="text-[#ffc040] font-bold font-mono">Authorization + Consequences</div>
         </div>
       </div>
       <div className="flex gap-[9px] flex-wrap">
