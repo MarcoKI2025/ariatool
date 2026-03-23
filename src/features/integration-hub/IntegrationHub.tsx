@@ -130,6 +130,20 @@ export function IntegrationHub() {
   const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
 
+  // Live cloud provider status
+  const [cloudStatus, setCloudStatus] = useState<CloudProviderStatus[]>([]);
+  const [cloudStatusLoading, setCloudStatusLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCloudProviderStatus()
+      .then(setCloudStatus)
+      .finally(() => setCloudStatusLoading(false));
+    const interval = setInterval(() => {
+      fetchCloudProviderStatus().then(setCloudStatus);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const filtered = category === 'all' ? INTEGRATIONS : INTEGRATIONS.filter(i => i.category === category);
   const connected = INTEGRATIONS.filter(i => i.status === 'connected');
   const available = INTEGRATIONS.filter(i => i.status === 'available');
