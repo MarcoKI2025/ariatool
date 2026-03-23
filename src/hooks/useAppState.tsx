@@ -39,6 +39,7 @@ function persistState(state: AppState) {
       inputs: state.inputs,
       iatState: state.iatState,
       darkMode: state.darkMode,
+      auditLog: state.auditLog,
     }));
   } catch (e) {
     // silent
