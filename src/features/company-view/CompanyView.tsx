@@ -666,11 +666,20 @@ export function CompanyView() {
           </div>
 
           {/* Regulatory card */}
-          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: '4px solid hsl(var(--amb))' }}>
+          {(() => {
+            const euaiaLabel = simEuaia >= 2.0 ? 'Unacceptable / Prohibited' : simEuaia >= 1.6 ? 'High-Risk (Annex I)' : simEuaia >= 1.4 ? 'High-Risk (Annex III)' : simEuaia >= 1.15 ? 'Limited Risk' : 'Minimal Risk';
+            const euaiaColor = simEuaia >= 1.4 ? 'hsl(var(--red))' : simEuaia >= 1.15 ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
+            const euaiaBorder = simEuaia >= 1.4 ? 'hsl(var(--red))' : simEuaia >= 1.15 ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
+            const euaiaDesc = simEuaia >= 2.0 ? 'Prohibited under EU AI Act Art. 5. Deployment must cease immediately. Maximum penalty exposure.' :
+              simEuaia >= 1.4 ? 'EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.' :
+              simEuaia >= 1.15 ? 'Transparency obligations apply. Limited compliance burden but documentation required.' :
+              'No specific EU AI Act obligations. Standard product liability applies.';
+            return (
+          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid ${euaiaBorder}` }}>
             <div className="p-4 sm:p-7">
               <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Regulatory Exposure</div>
-              <div className="text-[24px] font-bold text-sensitive mt-3 mb-3">High-Risk (Annex III)</div>
-              <div className="text-[12px] text-secondary-foreground leading-relaxed">EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.</div>
+              <div className="text-[24px] font-bold mt-3 mb-3" style={{ color: euaiaColor }}>{euaiaLabel}</div>
+              <div className="text-[12px] text-secondary-foreground leading-relaxed">{euaiaDesc}</div>
               <div className="mt-5 pt-5 border-t border-border">
                 <div className="text-[10px] text-muted-foreground uppercase tracking-[0.08em] mb-3">Compliance window</div>
                 <div className="bg-secondary rounded-md overflow-hidden h-2">
