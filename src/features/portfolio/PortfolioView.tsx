@@ -205,6 +205,9 @@ export function PortfolioView() {
         </div>
       </div>
 
+      {/* Dependency Network & Correlation */}
+      <DependencyNetwork entities={normalizedEntities} portfolioAFI={portfolioAFI} />
+
       {/* Interpretation */}
       <div className="bg-card border border-border rounded-xl p-6">
         <h3 className="text-sm font-semibold text-foreground mb-3">Portfolio Interpretation</h3>
