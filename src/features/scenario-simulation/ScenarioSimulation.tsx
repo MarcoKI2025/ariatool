@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { LockedState } from '@/components/shared/UIComponents';
 import { formatCurrency } from '@/lib/formatters';
+import { computeFullAnalysis } from '@/lib/scoring';
+import { ExposureInputs } from '@/lib/types';
 
 interface ScenarioData {
   id: string;
@@ -471,12 +473,179 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
+      {/* ═══ ROBUSTNESS TESTING ═══ */}
+      <RobustnessTestingPanel inputs={inputs} baseAfi={afi} />
+
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(2)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Decision Intelligence</button>
         <span className="text-[10px] text-muted-foreground italic hidden sm:inline">Step 3 of 6 · Scenario stress testing</span>
         <button onClick={() => setActiveStep(4)} className="view-nav-next">Insurance Decision →</button>
       </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ROBUSTNESS TESTING PANEL
+// ═══════════════════════════════════════════════════════════════
+
+interface RobustnessVariation {
+  parameter: string;
+  current: number;
+  downAFI: string;
+  upAFI: string;
+  maxDelta: string;
+  impact: 'High' | 'Medium' | 'Low';
+  crossesThreshold: boolean;
+}
+
+function RobustnessTestingPanel({ inputs, baseAfi }: { inputs: ExposureInputs; baseAfi: number }) {
+  const [showResults, setShowResults] = useState(false);
+
+  const parameters: { key: keyof ExposureInputs; label: string }[] = [
+    { key: 'automation', label: 'Automation Level' },
+    { key: 'executionAuthority', label: 'Execution Authority' },
+    { key: 'oversightLevel', label: 'Oversight Quality' },
+    { key: 'switchingCost', label: 'Switching Cost' },
+    { key: 'integrationDepth', label: 'Integration Depth' },
+    { key: 'cloudConcentration', label: 'Cloud Concentration' },
+    { key: 'modelConcentration', label: 'Model Concentration' },
+  ];
+
+  const results = useMemo(() => {
+    const variations: RobustnessVariation[] = parameters.map(param => {
+      const currentVal = inputs[param.key] as number;
+
+      const upInputs = { ...inputs, [param.key]: Math.min(5, currentVal * 1.1) };
+      const downInputs = { ...inputs, [param.key]: Math.max(1, currentVal * 0.9) };
+
+      const upAFI = computeFullAnalysis(upInputs).afi;
+      const downAFI = computeFullAnalysis(downInputs).afi;
+
+      const upDelta = Math.abs(upAFI - baseAfi);
+      const downDelta = Math.abs(downAFI - baseAfi);
+      const maxDelta = Math.max(upDelta, downDelta);
+
+      const crossesThreshold =
+        (baseAfi < 0.85 && (upAFI >= 0.85 || downAFI >= 0.85)) ||
+        (baseAfi >= 0.85 && baseAfi < 1.35 && (upAFI >= 1.35 || downAFI < 0.85)) ||
+        (baseAfi >= 1.35 && downAFI < 1.35);
+
+      return {
+        parameter: param.label,
+        current: currentVal,
+        downAFI: downAFI.toFixed(3),
+        upAFI: upAFI.toFixed(3),
+        maxDelta: maxDelta.toFixed(3),
+        impact: maxDelta > 0.15 ? 'High' as const : maxDelta > 0.08 ? 'Medium' as const : 'Low' as const,
+        crossesThreshold,
+      };
+    });
+
+    variations.sort((a, b) => parseFloat(b.maxDelta) - parseFloat(a.maxDelta));
+
+    const stability = variations.filter(v => v.impact === 'Low').length >= 5 ? 'Stable' :
+      variations.filter(v => v.impact === 'High').length >= 3 ? 'Volatile' : 'Moderate';
+
+    return { variations, stability };
+  }, [inputs, baseAfi]);
+
+  const stabilityColor = results.stability === 'Volatile' ? 'text-fragile' : results.stability === 'Moderate' ? 'text-sensitive' : 'text-stable';
+
+  return (
+    <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
+      <div className="mb-4">
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">⟲ Parameter Robustness Testing · AFI Sensitivity Analysis</div>
+        <div className="text-[11px] text-secondary-foreground leading-[1.55]">
+          Test how stable the AFI score is by applying ±10% variation to each input parameter. Identifies which governance dimensions most strongly influence risk classification.
+        </div>
+      </div>
+
+      {!showResults ? (
+        <div className="text-center py-6">
+          <button
+            onClick={() => setShowResults(true)}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] text-white rounded-xl font-semibold text-[13px] shadow-lg hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] transition-all"
+          >
+            🎲 Run Robustness Test
+          </button>
+          <div className="text-[10px] text-muted-foreground mt-2">Applies ±10% variation to each parameter · Shows maximum AFI delta</div>
+        </div>
+      ) : (
+        <div>
+          {/* Summary */}
+          <div className="grid grid-cols-2 gap-3 mb-5">
+            <div className="bg-secondary border border-border rounded-lg p-4">
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Baseline AFI Score</div>
+              <div className="text-[28px] font-bold font-mono text-foreground">{baseAfi.toFixed(3)}</div>
+            </div>
+            <div className="bg-secondary border border-border rounded-lg p-4">
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Overall Stability</div>
+              <div className={`text-[28px] font-bold font-mono ${stabilityColor}`}>{results.stability}</div>
+            </div>
+          </div>
+
+          {/* Results Table */}
+          <div className="overflow-x-auto mb-5">
+            <table className="w-full text-[11px]">
+              <thead>
+                <tr className="border-b-2 border-border">
+                  <th className="text-left py-2 pr-3 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Parameter</th>
+                  <th className="text-center py-2 px-2 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Current</th>
+                  <th className="text-center py-2 px-2 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">AFI −10%</th>
+                  <th className="text-center py-2 px-2 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">AFI +10%</th>
+                  <th className="text-center py-2 px-2 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Max Δ</th>
+                  <th className="text-center py-2 px-2 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Impact</th>
+                  <th className="text-center py-2 pl-2 text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Threshold</th>
+                </tr>
+              </thead>
+              <tbody>
+                {results.variations.map((v, i) => (
+                  <tr key={i} className="border-b border-border">
+                    <td className="py-2 pr-3 font-medium text-foreground">{v.parameter}</td>
+                    <td className="py-2 px-2 text-center font-mono text-muted-foreground">{v.current.toFixed(1)}</td>
+                    <td className="py-2 px-2 text-center font-mono text-muted-foreground">{v.downAFI}</td>
+                    <td className="py-2 px-2 text-center font-mono text-muted-foreground">{v.upAFI}</td>
+                    <td className={`py-2 px-2 text-center font-mono font-bold ${
+                      v.impact === 'High' ? 'text-fragile' : v.impact === 'Medium' ? 'text-sensitive' : 'text-stable'
+                    }`}>{v.maxDelta}</td>
+                    <td className="py-2 px-2 text-center">
+                      <span className={`px-2 py-[2px] rounded text-[8px] font-bold tracking-wider uppercase ${
+                        v.impact === 'High' ? 'badge-fragile' : v.impact === 'Medium' ? 'badge-sensitive' : 'badge-stable'
+                      }`}>{v.impact}</span>
+                    </td>
+                    <td className="py-2 pl-2 text-center">
+                      {v.crossesThreshold ? (
+                        <span className="text-fragile font-bold text-[10px]">⚠ Yes</span>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Interpretation */}
+          <div className="bg-secondary border border-border rounded-lg p-4 mb-4">
+            <div className="text-[10px] font-bold text-foreground mb-2">How to Interpret Robustness Results</div>
+            <div className="space-y-1.5 text-[10px] text-secondary-foreground leading-[1.55]">
+              <div><strong className="text-fragile">High Impact (Δ &gt; 0.15):</strong> Small changes cause significant AFI movement. These are critical governance levers — monitor closely.</div>
+              <div><strong className="text-sensitive">Threshold Crossings (⚠):</strong> Parameter variation pushes AFI across risk band boundary (0.85 or 1.35). System is close to reclassification.</div>
+              <div><strong className="text-stable">Stable Overall:</strong> Most parameters show Low impact — AFI is robust to minor drift. <strong className="text-fragile">Volatile:</strong> 3+ High impact parameters — governance posture requires active management.</div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setShowResults(false)}
+            className="px-4 py-2 border border-border rounded-lg font-semibold text-[11px] hover:bg-secondary transition-colors"
+          >
+            ← Back to Scenarios
+          </button>
+        </div>
+      )}
     </div>
   );
 }
