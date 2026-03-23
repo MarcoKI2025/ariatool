@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { LockedState } from '@/components/shared/UIComponents';
 import { formatCurrency } from '@/lib/formatters';
+import { computeFullAnalysis } from '@/lib/scoring';
+import { ExposureInputs } from '@/lib/types';
 
 interface ScenarioData {
   id: string;
