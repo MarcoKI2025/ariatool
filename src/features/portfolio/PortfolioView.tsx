@@ -193,7 +193,7 @@ export function PortfolioView() {
         </div>
 
         {/* Portfolio Components */}
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
           <ComponentCell label="DR" value={portfolioComponents.dr} />
           <ComponentCell label="JD" value={portfolioComponents.jd} />
           <ComponentCell label="RC" value={portfolioComponents.rc} />
