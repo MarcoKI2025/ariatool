@@ -484,6 +484,9 @@ export function ScenarioSimulation() {
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
 
+      {/* Agent Coordination Analysis */}
+      <AgentCoordinationView />
+
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(2)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Decision Intelligence</button>
