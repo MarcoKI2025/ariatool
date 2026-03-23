@@ -544,7 +544,7 @@ export function ExposureResults() {
         <button
           onClick={() => {
             document.dispatchEvent(new CustomEvent('show-exposure-form'));
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelector('.app-content')?.scrollTo(0, 0);
           }}
           className="flex-1 flex items-center justify-center gap-2 px-5 py-3.5 border border-border rounded-xl font-semibold text-[13px] text-foreground hover:bg-secondary transition-all"
         >
@@ -553,7 +553,7 @@ export function ExposureResults() {
         <button
           onClick={() => {
             setActiveStep(2);
-            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+            setTimeout(() => document.querySelector('.app-content')?.scrollTo(0, 0), 50);
           }}
           className="flex-1 flex items-center justify-center gap-2 px-5 py-3.5 bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white rounded-xl font-semibold text-[13px] shadow-lg transition-all"
         >

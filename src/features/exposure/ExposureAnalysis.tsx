@@ -20,6 +20,11 @@ export function ExposureAnalysis() {
   const [showForm, setShowForm] = useState(!analysisComplete);
   const [isLoading, setIsLoading] = useState(false);
 
+  const scrollToTop = useCallback(() => {
+    const main = document.querySelector('.app-content');
+    if (main) main.scrollTo(0, 0);
+  }, []);
+
   const handleRunAnalysis = useCallback(() => {
     setIsLoading(true);
     setTimeout(() => {
@@ -27,15 +32,19 @@ export function ExposureAnalysis() {
       setTimeout(() => {
         setIsLoading(false);
         setShowForm(false);
+        scrollToTop();
       }, 500);
     }, 5000);
-  }, [runAnalysis]);
+  }, [runAnalysis, scrollToTop]);
 
   const preview = useMemo(() => computeLivePreview(inputs), [inputs]);
 
   // Listen for "show form" event from results view
   useEffect(() => {
-    const handler = () => setShowForm(true);
+    const handler = () => {
+      setShowForm(true);
+      setTimeout(() => document.querySelector('.app-content')?.scrollTo(0, 0), 50);
+    };
     document.addEventListener('show-exposure-form', handler);
     return () => document.removeEventListener('show-exposure-form', handler);
   }, []);
