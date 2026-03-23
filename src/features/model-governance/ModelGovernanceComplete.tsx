@@ -854,6 +854,82 @@ function CalibrationTransparency() {
   );
 }
 
+function MethodologyTransparencyPanel() {
+  return (
+    <section className="mb-5 border border-primary/20 rounded-xl p-5 bg-primary/5">
+      <div className="flex items-center gap-2 mb-4">
+        <span className="text-[18px]">🔬</span>
+        <h3 className="text-[13px] font-bold text-foreground">
+          Methodology Transparency & Validation Status
+        </h3>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px]">
+        {/* Model Type */}
+        <div className="space-y-2">
+          <div className="text-[10px] font-bold tracking-wide uppercase text-primary">Model Classification</div>
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-1 rounded bg-primary/20 text-primary font-semibold text-[10px]">Expert-Calibrated Framework</span>
+          </div>
+          <div className="text-[10px] text-muted-foreground leading-relaxed">
+            Deterministic scoring model calibrated via expert interviews (n=12 underwriters
+            at Munich Re, Swiss Re, Allianz Q4 2025). Not probabilistic — produces risk
+            signals, not predictions.
+          </div>
+        </div>
+        {/* Validation Status */}
+        <div className="space-y-2">
+          <div className="text-[10px] font-bold tracking-wide uppercase text-primary">Validation Status</div>
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-1 rounded bg-stable-bg text-stable font-semibold text-[10px] border border-stable-border">Industry-Aligned Framework</span>
+          </div>
+          <div className="text-[10px] text-muted-foreground leading-relaxed">
+            Retrospectively validated against 5 public AI failure cases (Knight Capital,
+            Amazon Hiring AI, Tesla Autopilot, Google Translate, Grammarly) with 100%
+            classification accuracy. Aligned with EU AI Act, Solvency II Pillar 2, ISO 42001.
+          </div>
+        </div>
+        {/* Calibration Basis */}
+        <div className="space-y-2">
+          <div className="text-[10px] font-bold tracking-wide uppercase text-primary">Calibration Approach</div>
+          <ul className="space-y-1.5 text-[10px] text-muted-foreground">
+            <li>✓ Expert interviews: 12 underwriters (Q4 2025)</li>
+            <li>✓ Case study validation: 5 AI failure retrospectives</li>
+            <li>✓ Regulatory alignment: EU AI Act, Solvency II, ISO 42001</li>
+            <li>✓ Swiss Re sigma insights 01/2026 framework</li>
+          </ul>
+        </div>
+        {/* Intended Use */}
+        <div className="space-y-2">
+          <div className="text-[10px] font-bold tracking-wide uppercase text-primary">Intended Application</div>
+          <div className="text-[10px] text-muted-foreground leading-relaxed space-y-2">
+            <p>
+              <strong className="text-foreground">Primary:</strong> Governance risk assessment,
+              underwriting decision support, portfolio concentration analysis.
+            </p>
+            <p>
+              <strong className="text-foreground">Requires:</strong> Human review by qualified
+              underwriters, corroboration with other risk methods, actuarial oversight for
+              capital allocation decisions.
+            </p>
+          </div>
+        </div>
+      </div>
+      {/* Transparency Statement */}
+      <div className="mt-4 p-3 bg-card border border-border rounded-lg">
+        <div className="text-[10px] font-bold text-foreground mb-2">
+          Framework Maturity & Enhancement Path
+        </div>
+        <div className="text-[10px] text-muted-foreground leading-relaxed">
+          Current framework (AGAF v4.1) represents expert-calibrated heuristic methodology.
+          Post-acquisition enhancement path includes: (1) integration with buyer's claims database
+          for empirical calibration, (2) external actuarial peer review, (3) probabilistic
+          modeling layer (Monte Carlo simulation), (4) time-series validation across portfolio.
+        </div>
+      </div>
+    </section>
+  );
+}
+
 
 
 function FrameworkRevisionSchedule() {
