@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
@@ -7,12 +7,10 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
 import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
 import { AppFooter } from '@/components/shared/AppFooter';
-import { ViewTabs } from '@/components/shared/ViewTabs';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
-  const [activeTab, setActiveTab] = useState('underwriting');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Insurance Decision Locked" description="Complete the Exposure Analysis to view the underwriting decision console with loss envelope and committee signals." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
@@ -25,17 +23,10 @@ export function InsuranceDecision() {
   // Threshold bar position (0-100 scale, AFI mapped to position)
   const thresholdPos = Math.min(100, Math.round((afi / 3.0) * 100));
 
-  const insTabs = [
-    { id: 'underwriting', label: 'Underwriting Decision', icon: '⚖' },
-    { id: 'exposure', label: 'Financial Exposure', icon: '💰' },
-    { id: 'parametric', label: 'Parametric Triggers', icon: '⚡' },
-    { id: 'premium', label: 'Premium Calculator', icon: '💳' },
-  ];
-
   return (
     <div>
       {/* Page header */}
-      <div className="mb-4">
+      <div className="mb-6">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 4 of 6 · Underwriting Decision</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
@@ -44,11 +35,6 @@ export function InsuranceDecision() {
       </div>
 
       <UseRestrictionBanner />
-
-      <ViewTabs tabs={insTabs} activeTab={activeTab} onChange={setActiveTab} />
-
-      {/* ═══ TAB: UNDERWRITING ═══ */}
-      {activeTab === 'underwriting' && (<>
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
       <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${
@@ -489,10 +475,8 @@ export function InsuranceDecision() {
           ))}
         </div>
       </SectionCard>
-      </>)}
 
-      {/* ═══ TAB: FINANCIAL EXPOSURE ═══ */}
-      {activeTab === 'exposure' && (<>
+      {/* ═══ 13. REINSURANCE TREATY IMPLICATIONS ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Excess-of-Loss XL Treaty</div>
@@ -894,26 +878,17 @@ export function InsuranceDecision() {
         </div>
       </div>
 
-      </>)}
-
-      {/* ═══ TAB: PREMIUM CALCULATOR ═══ */}
-      {activeTab === 'premium' && (<>
+      {/* ═══ PREMIUM CALCULATOR ═══ */}
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg">💰</span>
           <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">Actuarial Pricing</div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">New · Actuarial Pricing</div>
             <div className="text-[15px] font-bold text-foreground">Premium Calculator</div>
           </div>
         </div>
         <PremiumCalculator />
       </div>
-      </>)}
-
-      {/* ═══ TAB: PARAMETRIC TRIGGERS ═══ */}
-      {activeTab === 'parametric' && (<>
-      <EducationalParametricSimulator />
-      </>)}
 
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">

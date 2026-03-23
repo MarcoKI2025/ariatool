@@ -9,7 +9,6 @@ import { ParametricTriggerLab } from '@/features/parametric/ParametricTriggerLab
 import { formatCurrency } from '@/lib/formatters';
 import { computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
-import { ViewTabs } from '@/components/shared/ViewTabs';
 
 interface ScenarioData {
   id: string;
@@ -40,7 +39,6 @@ export function ScenarioSimulation() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
   const [activeScenario, setActiveScenario] = useState(0);
-  const [activeTab, setActiveTab] = useState('builder');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Scenario Simulation Locked" description="Complete the Exposure Analysis to run scenario stress tests against your AI deployment profile." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
@@ -232,14 +230,9 @@ export function ScenarioSimulation() {
   const tierColor = (v: number) => v >= 70 ? 'text-fragile' : v >= 40 ? 'text-sensitive' : 'text-stable';
   const tierBg = (v: number) => v >= 70 ? 'bg-fragile' : v >= 40 ? 'bg-sensitive' : 'bg-stable';
 
-  const scenTabs = [
-    { id: 'builder', label: 'Scenario Builder', icon: '🔧' },
-    { id: 'advanced', label: 'Advanced Tools', icon: '⚡' },
-  ];
-
   return (
     <div>
-      <div className="mb-4">
+      <div className="mb-6">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 3 · Stress Testing</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Scenario Simulation</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[620px] leading-relaxed">
@@ -248,11 +241,6 @@ export function ScenarioSimulation() {
       </div>
 
       <UseRestrictionBanner />
-
-      <ViewTabs tabs={scenTabs} activeTab={activeTab} onChange={setActiveTab} />
-
-      {/* ═══ TAB: BUILDER ═══ */}
-      {activeTab === 'builder' && (<>
 
       {/* How to interpret */}
       <div className="bg-secondary border border-border rounded-lg p-4 mb-5 text-[11px] text-muted-foreground leading-[1.55]">
@@ -492,10 +480,6 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
-      </>)}
-
-      {/* ═══ TAB: ADVANCED ═══ */}
-      {activeTab === 'advanced' && (<>
       {/* ═══ ROBUSTNESS TESTING ═══ */}
       <RobustnessTestingPanel inputs={inputs} baseAfi={afi} />
 
@@ -507,7 +491,6 @@ export function ScenarioSimulation() {
 
       {/* Parametric Trigger Lab */}
       <ParametricTriggerLab />
-      </>)}
 
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
