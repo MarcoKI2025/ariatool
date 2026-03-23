@@ -53,7 +53,7 @@ Reversibility Cost (RC):     ${(components.rc * 100).toFixed(0)}%
 Continuation Density (CD):   ${(components.cd * 100).toFixed(0)}%
 
 ───────────────────────────────────────────────────────────────
-LOSS ENVELOPE (qualitative Einschätzung)
+LOSS ENVELOPE (qualitative assessment)
 ───────────────────────────────────────────────────────────────
 
 Expected Loss Band:     ${lossEnvelope.expected}
