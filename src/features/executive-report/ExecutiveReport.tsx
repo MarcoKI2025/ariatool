@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge } from '@/components/shared/UIComponents';
+import { ViewTabs } from '@/components/shared/ViewTabs';
 import { buildExecutiveReport, buildORSAExport } from '@/lib/reportBuilder';
 import { exportORSA } from '@/lib/orsaExport';
 import { formatDate, formatCurrency } from '@/lib/formatters';
