@@ -396,7 +396,7 @@ export function InsuranceDecision() {
           {(band === 'Fragile' ? [
             { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading significantly understates required reserves. Expected loss band: ${lossEnvelope.expected}. Tail risk band: ${lossEnvelope.tail}.` },
             { ic: '⚖', title: 'Regulatory Penalty Exposure', body: 'Active Art. 26 §2 and Art. 72 obligations create immediate Art. 99 §4 exposure of up to €15M or 3% global turnover — independent of any loss event.' },
-            { ic: '🌐', title: `Portfolio Contagion: ${lossEnvelope.portfolio}+`, body: `Correlated dependency structures amplify individual loss ${amplificationFactor} across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure.` },
+            { ic: '🌐', title: `Portfolio Contagion: ${lossEnvelope.portfolio}`, body: `Correlated dependency structures amplify individual loss across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk."` },
           ] : band === 'Sensitive' ? [
             { ic: '↗', title: 'Trajectory to NOT APPROVED', body: 'Without structural intervention within 90 days, this profile escalates to NOT APPROVED at next assessment cycle. Governance gaps compound non-linearly.' },
             { ic: '€', title: 'Conditional Reserve Gap', body: `Current structural exposure of ${lossEnvelope.expected} is priced under conditional terms. If governance improvements are not delivered, the reserve basis is invalidated.` },
