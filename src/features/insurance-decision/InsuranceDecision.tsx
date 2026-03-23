@@ -508,9 +508,9 @@ export function InsuranceDecision() {
         <div className="text-[14px] font-bold text-foreground mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { label: 'Cyber / Tech E&O', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
-            { label: 'Professional Indemnity', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
-            { label: 'D&O / Management Liability', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-fragile', desc: 'Directors & Officers — governance failure liability' },
+            { label: 'Cyber / Tech E&O', value: 'Elevated Exposure', color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
+            { label: 'Professional Indemnity', value: 'Elevated Exposure', color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
+            { label: 'D&O / Management Liability', value: 'Elevated Exposure', color: 'text-fragile', desc: 'Directors & Officers — governance failure liability' },
           ].map((m, i) => (
             <div key={i} className="bg-secondary border border-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
