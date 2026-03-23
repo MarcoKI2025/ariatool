@@ -248,19 +248,20 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Scenario tabs */}
-      <div className="flex gap-2 mb-5 flex-wrap">
+      <div className="flex gap-2 mb-5 overflow-x-auto pb-1 -mx-1 px-1">
         {scenarios.map((sc, i) => (
           <button
             key={sc.id}
             onClick={() => setActiveScenario(i)}
-            className={`flex items-center gap-2 px-4 py-[10px] rounded-lg border text-[12px] font-medium transition-all ${
+            className={`flex items-center gap-1.5 px-3 sm:px-4 py-[10px] rounded-lg border text-[11px] sm:text-[12px] font-medium transition-all flex-shrink-0 ${
               activeScenario === i
                 ? 'bg-primary text-primary-foreground border-primary'
                 : 'bg-card border-border text-muted-foreground hover:border-primary/50 hover:text-foreground'
             }`}
           >
             <span>{sc.icon}</span>
-            {sc.name}
+            <span className="hidden sm:inline">{sc.name}</span>
+            <span className="sm:hidden">{sc.name.split(' ')[0]}</span>
           </button>
         ))}
       </div>
