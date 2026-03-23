@@ -269,21 +269,23 @@ function Slide2() {
 function Slide3() {
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow>The Engine · Six Proprietary Assessment Constructs</Eyebrow>
+      <Eyebrow>The Engine · Eight Proprietary Assessment Constructs</Eyebrow>
       <DmH1>Not a dashboard.<br /><span className="text-[#4038b8]">A structured governance assessment engine.</span></DmH1>
       <BodyText>
-        Six independent risk constructs — each grounded in published academic research, each computing a distinct governance signal.
+        Eight independent risk constructs — each grounded in published academic research, each computing a distinct governance signal.
         No other product combines these into a single structured committee intake flow.
       </BodyText>
-      <div className="grid grid-cols-3 gap-3 mb-5">
-        <ConstructBox code="AFI" name="Authority Fragility Index" desc="Core structural metric. (DR × RC × CD) / (JD × NA). Measures governance stability — not compliance. >1.35 = Fragile. >0.85 = Sensitive." />
-        <ConstructBox code="ECI" name="Existence Cost of Intelligence" desc="At what point is continued operation no longer a neutral technical state but a governance decision? ECI-3 = Critical Infrastructure. Exit is no longer feasible." />
-        <ConstructBox code="MDR" name="Meaning Drift Risk" desc="Behavioral alignment decay. A system can pass all audits while gradually shifting its optimization target. Standard models: undetectable. This engine: quantified." />
-        <ConstructBox code="RFSI" name="Reference Frame Stability" desc="How long is a governance assessment actually valid? An assessment made 18 months ago under different conditions is structurally invalid." />
-        <ConstructBox code="RFS" name="Responsibility Fragmentation" desc='Quantifies "no clear owner" as a liability number. When RFS > 65 and stewardship clarity < 35, the system is operationally unowned.' />
-        <ConstructBox code="IAT" name="Infrastructural AI Trigger" desc="7-criterion structured intake check for AI deployment lock-in patterns. Grounded in EU AI Act Art. 26/72 scope criteria." />
+      <div className="grid grid-cols-4 gap-3 mb-5">
+        <ConstructBox code="AFI" name="Authority Fragility Index" desc="Core structural metric. (DR × RC × CD) / (JD × NA). Measures governance stability — not compliance. >1.35 = Fragile." />
+        <ConstructBox code="ECI" name="Existence Cost of Intelligence" desc="At what point is continued operation a governance decision? ECI-3 = Critical Infrastructure. Exit is no longer feasible." />
+        <ConstructBox code="MDR" name="Meaning Drift Risk" desc="Behavioral alignment decay. A system can pass all audits while gradually shifting its optimization target." />
+        <ConstructBox code="RFSI" name="Reference Frame Stability" desc="How long is a governance assessment actually valid? Quantifies evaluation decay over time." />
+        <ConstructBox code="AGRI" name="Agentic Risk Index" desc="Quantifies autonomous agent risk: multi-agent orchestration, tool-call authority, persistent memory, and human oversight gaps." />
+        <ConstructBox code="ALRI" name="AI Liability Risk Index" desc="Weighted liability exposure across 9 vectors: hallucination, deepfake, prompt injection, model drift, bias, shadow AI, and more." />
+        <ConstructBox code="SCRI" name="Systemic Concentration Risk" desc="Inverse diversification metric: cloud, model, GPU provider concentration and cross-vendor contagion risk." />
+        <ConstructBox code="IAT" name="Infrastructural AI Trigger" desc="7-criterion structured intake check for AI deployment lock-in patterns. Grounded in EU AI Act Art. 26/72." />
       </div>
-      <InsightBox color="purple" title="Real Research Basis · Proprietary Operationalisation" text="Six structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. The academic concepts are real. The operationalisation into measurable governance signals is the proprietary IP." />
+      <InsightBox color="purple" title="Real Research Basis · Proprietary Operationalisation" text="Eight structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. The academic concepts are real. The operationalisation into measurable governance signals is the proprietary IP." />
     </div>
   );
 }
