@@ -375,16 +375,24 @@ export function CompanyView() {
 
 
 
-  // Derive live AFI from simulator sliders so the summary reacts to changes
+  // Derive live AFI from simulator sliders AND actual inputs (useCases, providers, etc.)
+  // We create a modified inputs object that merges simulator slider values with real inputs
   const liveComponents = useMemo(() => {
-    if (!results) return { dr: 0, jd: 0.5, rc: 0, cd: 0, na: 0.5 };
-    const dr = (simAuto / 5);
-    const jd = ((6 - simOvst) / 5);
-    const rc = (simDep / 5);
-    const cd = (simCrit / 5);
-    const na = results.components.na;
-    return { dr, jd, rc, cd, na };
-  }, [simAuto, simOvst, simDep, simCrit, results]);
+    if (!results || !inputs) return { dr: 0, jd: 0.5, rc: 0, cd: 0, na: 0.5 };
+    // Build a modified inputs object using simulator values but keeping useCases/providers/etc. from real inputs
+    const modifiedInputs = {
+      ...inputs,
+      automation: simAuto,
+      executionAuthority: simAuto, // Map simulator autonomy to execution authority
+      oversightLevel: 6 - simOvst, // Invert: high oversight slider = low oversight level
+      reviewCadence: 6 - simOvst,
+      criticality: simCrit,
+      // Provider dependency slider maps back to providers array length effect
+      switchingCost: simDep,
+      integrationDepth: simCrit,
+    };
+    return computeAFIComponents(modifiedInputs);
+  }, [simAuto, simOvst, simDep, simCrit, inputs, results]);
 
   const liveAfi = useMemo(() => calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na), [liveComponents]);
   const liveBand = useMemo(() => getBand(liveAfi), [liveAfi]);
