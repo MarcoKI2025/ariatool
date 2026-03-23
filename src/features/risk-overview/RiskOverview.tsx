@@ -133,8 +133,8 @@ export function RiskOverview() {
       <SectionCard title="Required Underwriting Actions" icon="⚠" subtitle="All conditions must be met before standard coverage applies.">
         <div className="space-y-3">
           {(band === 'Fragile' ? [
-            { title: 'Apply premium loading 150–180% above standard', body: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor.' },
-            { title: 'Require dependency diversification within 90 days', body: 'Mandatory — minimum 3 providers. Reduces aggregate tail exposure 40–60%. Reinsurance treaty review required.' },
+            { title: 'Apply significant premium loading above standard', body: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor.' },
+            { title: 'Require dependency diversification within 90 days', body: 'Mandatory — minimum 3 providers. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic risk." Reinsurance treaty review required.' },
             { title: 'Mandate quarterly governance re-authorisation', body: 'Condition of coverage — without re-authorisation cadence, risk accumulates indefinitely.' },
             { title: 'Limit coverage to operational layers only', body: 'Recommended — full-stack coverage uneconomic at current lock-in depth. Exclude autonomous execution liability.' },
           ] : band === 'Sensitive' ? [

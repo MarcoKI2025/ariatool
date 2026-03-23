@@ -265,11 +265,11 @@ export function ExecutiveReport() {
               {(band === 'Fragile' ? [
                 { color: 'bg-fragile', title: 'Above underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — exceeds Fragile threshold (1.35)` },
                 { color: 'bg-fragile', title: 'Standard coverage not justified', sub: 'Structural change required before standard rates apply' },
-                { color: 'bg-sensitive', title: 'Premium loading mandatory', sub: '150–180% above standard — mandatory pricing adjustment' },
+                { color: 'bg-sensitive', title: 'Premium loading mandatory', sub: 'Significant loading above standard — mandatory pricing adjustment' },
               ] : band === 'Sensitive' ? [
                 { color: 'bg-sensitive', title: 'Approaching underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — within Sensitive range (0.85–1.35)` },
                 { color: 'bg-sensitive', title: 'Conditional coverage available', sub: 'Structural improvements required within 90 days' },
-                { color: 'bg-sensitive', title: 'Precautionary premium loading', sub: '80–120% above standard — recommended pricing adjustment' },
+                { color: 'bg-sensitive', title: 'Precautionary premium loading', sub: 'Elevated loading above standard — recommended pricing adjustment' },
               ] : [
                 { color: 'bg-stable', title: 'Within underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — below Stable threshold (0.85)` },
                 { color: 'bg-stable', title: 'Standard coverage terms apply', sub: 'No structural remediation required' },
