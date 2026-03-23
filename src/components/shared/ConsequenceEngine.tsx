@@ -58,9 +58,8 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             {range.lo} – {range.hi}
           </div>
           <div className="text-[10px] text-muted-foreground mt-2 leading-[1.55]">
-            Estimated aggregate loss exposure under correlated failure scenario.
-            Range reflects structural uncertainty and concentration risk.
-            Actual exposure depends on entity-specific infrastructure dependencies.
+            Estimated exposure range reflects potential impact under uncertainty.
+            (Indicative range based on structural risk patterns, not actuarial modeling)
           </div>
         </div>
 
