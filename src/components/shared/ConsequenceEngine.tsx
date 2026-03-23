@@ -114,12 +114,12 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             <div className="flex items-start gap-2">
               <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${components.cd > 0.5 ? 'bg-fragile' : 'bg-sensitive'}`} />
               <div>
-                <div className="text-[11px] font-semibold text-foreground">
-                  {components.cd > 0.5 ? 'Failure propagation across interconnected systems' : 'Moderate cross-system coupling'}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  Correlation density of {Math.round(components.cd * 100)}% creates {components.cd > 0.5 ? 'cascading failure pathways' : 'limited contagion vectors'}
-                </div>
+                 <div className="text-[11px] font-semibold text-foreground">
+                   {components.cd > 0.5 ? 'Local failures may propagate across connected systems' : 'Moderate cross-system coupling'}
+                 </div>
+                 <div className="text-[10px] text-muted-foreground">
+                   Correlation density of {Math.round(components.cd * 100)}% — {components.cd > 0.5 ? 'increasing overall impact potential' : 'limited propagation vectors'}
+                 </div>
               </div>
             </div>
             <div className="flex items-start gap-2">
