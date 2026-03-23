@@ -59,14 +59,14 @@ export const SIM_REV_M: Record<number, number> = { 1: 1.4, 2: 1.2, 3: 1.0, 4: 0.
 export const SIM_OVST_R: Record<number, number> = { 1: 0, 2: 0.05, 3: 0.12, 4: 0.22, 5: 0.35 };
 
 export const SECTOR_MULTIPLIERS: Record<string, number> = {
-  'Financial Services': 1.4,
-  'Healthcare': 1.5,
-  'Insurance': 1.3,
-  'Legal': 1.35,
+  'Financial Services': 1.0,
+  'Healthcare': 1.2,
+  'Insurance': 1.15,
+  'Legal': 1.1,
   'Technology': 1.1,
-  'Retail / E-Commerce': 1.0,
-  'Manufacturing': 1.2,
-  'Government': 0.9,
+  'Retail / E-Commerce': 0.9,
+  'Manufacturing': 0.85,
+  'Government': 0.7,
 };
 
 export const DEFAULT_INPUTS = {
