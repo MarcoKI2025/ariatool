@@ -561,6 +561,8 @@ export function InsuranceDecision() {
         </div>
       </SectionCard>
 
+      <SectionDivider title="Market Position & Portfolio" icon="🌍" subtitle="Market context, portfolio exposure, and provider dependency" />
+
       {/* ═══ 17. WHAT THE MARKET SEES ═══ */}
       <div className="bg-card border border-border rounded-xl p-7 mb-5">
         <div className="mb-5">
