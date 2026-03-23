@@ -30,23 +30,43 @@ const VIEW_SUBTITLES: Record<string, string> = {
 
 export function AppHeader() {
   const { state, setPerspective, resetAnalysis } = useApp();
-  const { perspective, activeStep, analysisComplete } = state;
+  const { perspective, activeStep, analysisComplete, results, inputs } = state;
   const [methodologyOpen, setMethodologyOpen] = useState(false);
 
   const key = perspective === 'company' ? 'company' : String(activeStep);
   const title = VIEW_TITLES[key] || VIEW_TITLES['1'];
   const subtitle = VIEW_SUBTITLES[key] || '';
 
+  const companyName = inputs.companyName || 'No Company Selected';
+  const afi = results?.afi;
+  const band = results?.band;
+  const bandColor = band === 'Stable' ? 'bg-stable text-stable' : band === 'Sensitive' ? 'bg-sensitive text-sensitive' : band === 'Fragile' ? 'bg-fragile text-fragile' : 'bg-muted-foreground/20 text-muted-foreground';
+  const bandBg = band === 'Stable' ? 'bg-stable/10 border-stable/30' : band === 'Sensitive' ? 'bg-sensitive/10 border-sensitive/30' : band === 'Fragile' ? 'bg-fragile/10 border-fragile/30' : 'bg-secondary border-border';
+
   return (
     <header className="h-auto min-h-[56px] bg-card border-b border-border px-4 sm:px-6 lg:px-8 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 flex-shrink-0">
-      {/* Left: Title */}
+      {/* Left: Company context + View title */}
       <div className="flex items-center gap-3 min-w-0">
-        <div className="min-w-0">
-          <h1 className="text-[14px] font-semibold text-foreground truncate leading-tight">{title}</h1>
-          <p className="text-[11px] text-muted-foreground truncate">{subtitle}</p>
+        {/* Company & AFI badge */}
+        <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border ${bandBg} flex-shrink-0`}>
+          <div className="min-w-0">
+            <div className="text-[11px] font-bold text-foreground truncate max-w-[140px] sm:max-w-[200px]">{companyName}</div>
+            {afi != null ? (
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="text-[10px] font-mono font-bold text-foreground">AFI {afi.toFixed(2)}</span>
+                <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded-full ${bandColor}/10 ${band === 'Stable' ? 'text-stable' : band === 'Sensitive' ? 'text-sensitive' : 'text-fragile'}`}>
+                  {band}
+                </span>
+              </div>
+            ) : (
+              <div className="text-[9px] text-muted-foreground mt-0.5">Pending Analysis</div>
+            )}
+          </div>
         </div>
-        <div className="px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20 flex-shrink-0">
-          <span className="text-[9px] font-bold text-primary">v4.2</span>
+        <div className="hidden sm:block w-px h-8 bg-border" />
+        <div className="min-w-0 hidden sm:block">
+          <h1 className="text-[13px] font-semibold text-foreground truncate leading-tight">{title}</h1>
+          <p className="text-[10px] text-muted-foreground truncate">{subtitle}</p>
         </div>
       </div>
 
