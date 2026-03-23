@@ -25,10 +25,17 @@ export function InsuranceDecision() {
   // Threshold bar position (0-100 scale, AFI mapped to position)
   const thresholdPos = Math.min(100, Math.round((afi / 3.0) * 100));
 
+  const insTabs = [
+    { id: 'underwriting', label: 'Underwriting Decision', icon: '⚖' },
+    { id: 'exposure', label: 'Financial Exposure', icon: '💰' },
+    { id: 'parametric', label: 'Parametric Triggers', icon: '⚡' },
+    { id: 'premium', label: 'Premium Calculator', icon: '💳' },
+  ];
+
   return (
     <div>
       {/* Page header */}
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 4 of 6 · Underwriting Decision</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
@@ -37,6 +44,11 @@ export function InsuranceDecision() {
       </div>
 
       <UseRestrictionBanner />
+
+      <ViewTabs tabs={insTabs} activeTab={activeTab} onChange={setActiveTab} />
+
+      {/* ═══ TAB: UNDERWRITING ═══ */}
+      {activeTab === 'underwriting' && (<>
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
       <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${
