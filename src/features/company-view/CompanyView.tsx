@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { SECTOR_MULTIPLIERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES, USE_CASES, PROVIDERS, DEFAULT_INPUTS } from '@/lib/constants';
+import { SECTOR_MULTIPLIERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES, USE_CASES, PROVIDERS, DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, SIM_BASE as CONSTANTS_SIM_BASE } from '@/lib/constants';
 import { formatCurrency } from '@/lib/formatters';
 import { getBand, calcAFI, computeAFIComponents } from '@/lib/scoring';
 import { Chart, ArcElement, DoughnutController } from 'chart.js';
