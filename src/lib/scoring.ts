@@ -163,15 +163,25 @@ function computeFrameDriftAlerts(components: AFIComponents, band: Band, inputs: 
 export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   const components = computeAFIComponents(inputs);
   const { dr, jd, rc, cd, na } = components;
-  const afi = calcAFI(dr, jd, rc, cd, na);
+  const baseAfi = calcAFI(dr, jd, rc, cd, na);
+  
+  // Apply size and revenue adjustments to AFI
+  const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
+  const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
+  const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
+  
   const band = getBand(afi);
   const structuralScore = Math.min(99, Math.round(afi * 60));
   const ses = (dr + rc + cd) / 3;
 
   const govPremium = 1 + Math.min(0.8, afi * 0.45);
   const sectorMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
+  const sizeMult = SIZE_MULTIPLIERS[inputs.size] || 1.0;
+  const revMult = REVENUE_MULTIPLIERS[inputs.revenue] || 1.0;
 
-  const expected = parseFloat((ANCHOR_LOSS * afi * govPremium * sectorMult).toFixed(1));
+  // Size and revenue scale absolute loss exposure
+  const scaleMultiplier = sizeMult * revMult;
+  const expected = parseFloat((ANCHOR_LOSS * afi * govPremium * sectorMult * scaleMultiplier).toFixed(1));
   const stress = parseFloat((expected * 3.4).toFixed(1));
   const tail = parseFloat((expected * 10.8).toFixed(1));
   const portfolio = Math.round(tail * 6.2);
