@@ -178,5 +178,9 @@ export function applyDemoProfile(profile: DemoProfile): ExposureInputs {
     modelConcentration: profile.sliders.modelConcentration ?? 3,
     gpuConcentration: profile.sliders.gpuConcentration ?? 3,
     crossVendorContagion: profile.sliders.crossVendorContagion ?? 3,
+    dataPoisoning: profile.sliders.dataPoisoning ?? 1,
+    adversarialAttack: profile.sliders.adversarialAttack ?? 1,
+    privacyBreach: profile.sliders.privacyBreach ?? 1,
+    ipInfringement: profile.sliders.ipInfringement ?? 1,
   } as ExposureInputs;
 }
