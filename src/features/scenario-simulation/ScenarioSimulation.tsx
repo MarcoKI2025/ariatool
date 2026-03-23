@@ -115,10 +115,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '🔗', name: 'Provider Down', value: 'Origin', layer: 'Layer 0' },
-        { icon: '⚡', name: 'API Failure', value: '+50%', layer: 'Layer 1' },
-        { icon: '🔧', name: 'Stack Unavailable', value: '+120%', layer: 'Layer 2' },
-        { icon: '📉', name: 'Business Halt', value: '+250%', layer: 'Layer 3' },
-        { icon: '🌐', name: 'Portfolio Impact', value: '+380%', layer: 'Layer 4' },
+        { icon: '⚡', name: 'API Failure', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '🔧', name: 'Stack Unavailable', value: 'Critical', layer: 'Layer 2' },
+        { icon: '📉', name: 'Business Halt', value: 'Critical', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Portfolio Impact', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'No governance action possible — dependency is external. Waiting state with no mitigation lever.',
