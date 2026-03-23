@@ -51,6 +51,7 @@ function AppContent() {
       case 6: return <ModelGovernance />;
       case 7: return <PortfolioView />;
       case 8: return <EvidenceLog />;
+      case 9: return <IntegrationHub />;
       default: return <ExposureAnalysis />;
     }
   };
