@@ -767,7 +767,7 @@ export function InsuranceDecision() {
             { title: 'Solvency II — ORSA Integration', desc: 'EU insurers must integrate AI governance risk into the Own Risk and Solvency Assessment (ORSA) under Solvency II Art. 45. AFI scores from your own AI deployments are directly relevant ORSA inputs.' },
             { title: 'Solvency II Art. 44/46 — Internal Control & Audit', desc: 'Art. 44 requires an effective internal control system — which must cover AI-assisted decision-making. Art. 46 requires internal audit independence.' },
             { title: 'DORA — Digital Operational Resilience', desc: 'As of Jan 2025, DORA applies to EU insurers — requiring ICT risk management, third-party provider oversight, and incident reporting. AI provider concentration is a direct DORA ICT third-party concentration risk.' },
-            { title: 'Reserving Implications', desc: 'Issuing AI liability coverage without a structural governance assessment creates reserve risk. AFI-based underwriting protects reserve adequacy — standard cyber pricing systematically underestimates AI governance exposure by 3–5×.' },
+            { title: 'Reserving Implications', desc: 'Issuing AI liability coverage without a structural governance assessment creates reserve risk. AFI-based underwriting protects reserve adequacy — standard cyber pricing systematically underestimates AI governance exposure.' },
           ].map((item, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-3">
               <div className="text-[10px] font-bold text-foreground mb-1">{item.title}</div>
