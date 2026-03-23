@@ -10,6 +10,7 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { ExposureInputs } from '@/lib/types';
 import { IATAssessmentPanel } from '@/features/iat/IATAssessmentPanel';
 import { LoadingOverlay } from '@/components/shared/LoadingOverlay';
+import { RealCaseFactsCard } from '@/features/demo/RealCaseFactsCard';
 
 const PROGRESS_STEPS = ['Company', 'Core AFI', 'Agent', 'Liability', 'Governance', 'Systemic'];
 
