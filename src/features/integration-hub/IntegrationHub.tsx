@@ -142,6 +142,23 @@ export function IntegrationHub() {
 
   return (
     <div className="space-y-8 max-w-5xl">
+      {/* Demo Disclaimer */}
+      <div className="rounded-xl p-4 border border-sensitive-border bg-sensitive-bg">
+        <div className="flex items-start gap-3">
+          <span className="text-sensitive text-lg flex-shrink-0 mt-[1px]">🎭</span>
+          <div>
+            <div className="text-[10px] font-bold tracking-[0.1em] uppercase text-sensitive mb-1">
+              DEMONSTRATION ENVIRONMENT
+            </div>
+            <div className="text-[11px] text-muted-foreground leading-[1.55]">
+              All integrations shown are <strong className="text-foreground">simulated for demonstration purposes</strong>. 
+              No real API connections, data feeds, or external services are active. 
+              "Connected" status indicators and data point counts represent mock data to illustrate platform capabilities.
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Header */}
       <div>
         <div className="text-[10px] font-semibold tracking-[0.12em] uppercase text-primary/70 mb-2">
