@@ -5,6 +5,7 @@ import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/share
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
+import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
 import { AppFooter } from '@/components/shared/AppFooter';
 
 export function InsuranceDecision() {
@@ -875,6 +876,18 @@ export function InsuranceDecision() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* ═══ PREMIUM CALCULATOR ═══ */}
+      <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-lg">💰</span>
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">New · Actuarial Pricing</div>
+            <div className="text-[15px] font-bold text-foreground">Premium Calculator</div>
+          </div>
+        </div>
+        <PremiumCalculator />
       </div>
 
       {/* View nav footer */}
