@@ -108,8 +108,8 @@ ORSA-STYLE AI GOVERNANCE RISK ASSESSMENT EXTRACT
 ${date}
 
 GOVERNANCE INTELLIGENCE LAYER – USE RESTRICTION
-Dieses Tool erzeugt KEINE Wahrscheinlichkeiten, KEINE Preisfestsetzungen,
-KEINE bindenden Underwriting-Entscheidungen.
+This tool does NOT produce probabilities, pricing determinations,
+or binding underwriting decisions.
 
 Entity: ${inputs.companyName || 'Unknown'}
 Classification: ${results.band} (AFI ${results.afi.toFixed(2)})
