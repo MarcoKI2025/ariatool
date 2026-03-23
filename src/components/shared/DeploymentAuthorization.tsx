@@ -47,7 +47,7 @@ const STATUS_CONFIG: Record<AuthStatus, { bg: string; border: string; text: stri
     border: 'border-fragile',
     text: 'text-fragile',
     icon: '⛔',
-    sentence: (name) => `Deployment of ${name} is PROHIBITED — critical governance failures and systemic exposure exceed all tolerance thresholds.`,
+    sentence: (name) => `Deployment of ${name} should be avoided as current conditions indicate systemic exposure risk.`,
   },
 };
 
