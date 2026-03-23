@@ -41,7 +41,10 @@ export function ExposureAnalysis() {
 
   // Listen for "show form" event from results view
   useEffect(() => {
-    const handler = () => setShowForm(true);
+    const handler = () => {
+      setShowForm(true);
+      setTimeout(() => document.querySelector('.app-content')?.scrollTo(0, 0), 50);
+    };
     document.addEventListener('show-exposure-form', handler);
     return () => document.removeEventListener('show-exposure-form', handler);
   }, []);
