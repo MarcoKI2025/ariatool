@@ -289,6 +289,8 @@ export function InsuranceDecision() {
         </div>
       </div>
 
+      <SectionDivider title="Underwriting Decision" icon="⚖" subtitle="Risk position, required actions, and operational decision" />
+
       {/* ═══ 9. RISK POSITION + REQUIRED ACTIONS ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <SectionCard title="Risk Position" icon="📋">
