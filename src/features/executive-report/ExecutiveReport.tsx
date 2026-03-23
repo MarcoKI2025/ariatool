@@ -736,8 +736,8 @@ export function ExecutiveReport() {
                   {band === 'Fragile' ? '⊘ If This Decision Is Ignored — Structural Consequences' : band === 'Sensitive' ? '⚠ If Remediation Is Deferred — Escalation Consequences' : '↗ Structural Drift Risk'}
                 </div>
                 {(band === 'Fragile' ? [
-                  { t: 'Reserve Understatement', s: `Expected loss ${lossEnvelope.expected} alone understates required reserves by 3–5× without premium loading.` },
-                  { t: `Portfolio Contagion: €${Math.round(lossEnvelope.portfolio)}M+`, s: `${amplificationFactor} cascade amplification across correlated infrastructure.` },
+                  { t: 'Reserve Understatement', s: `Expected loss band: ${lossEnvelope.expected} — understates required reserves without premium loading.` },
+                  { t: `Portfolio Contagion: ${lossEnvelope.portfolio}`, s: `${amplificationFactor} — cascade amplification across correlated infrastructure.` },
                   { t: 'Statutory Penalty Exposure', s: 'Active Art. 26 + Art. 72 violations: up to €15M or 3% global turnover (Art. 99 §4).' },
                 ] : band === 'Sensitive' ? [
                   { t: 'Trajectory to NOT APPROVED', s: 'Without intervention within 90 days, automatic escalation at next assessment.' },
