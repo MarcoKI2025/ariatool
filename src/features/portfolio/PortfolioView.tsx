@@ -193,9 +193,7 @@ export function PortfolioView() {
 
         <div className="space-y-3">
           {normalizedEntities.map((entity) => {
-            const components = computeAFIComponents(entity.inputs);
-            const afi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
-            const band = getBand(afi);
+            const { components, afi, band } = computeEntityAFI(entity.inputs);
 
             return (
               <div key={entity.id} className="bg-card border border-border rounded-xl p-5 space-y-3">
