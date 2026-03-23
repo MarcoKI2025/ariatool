@@ -24,6 +24,7 @@ const VIEW_SUBTITLES: Record<string, string> = {
   '6': 'Methodology & Assumptions',
   '7': 'Multi-Entity Aggregation',
   '8': 'Audit Trail & Compliance',
+  '9': 'Data Feeds · APIs · Ecosystem',
   company: 'AI Risk Executive Summary',
 };
 
