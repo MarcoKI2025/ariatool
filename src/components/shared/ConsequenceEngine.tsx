@@ -125,9 +125,9 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             <div className="flex items-start gap-2">
               <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${scri >= 50 ? 'bg-fragile' : 'bg-stable'}`} />
               <div>
-                <div className="text-[11px] font-semibold text-foreground">
-                  {scri >= 65 ? 'Dependency amplification — single-point failure risk' : scri >= 35 ? 'Moderate concentration — diversification advisable' : 'Adequate provider diversification'}
-                </div>
+                 <div className="text-[11px] font-semibold text-foreground">
+                   {scri >= 65 ? 'Dependency concentration may amplify single-point failures' : scri >= 35 ? 'Moderate concentration — diversification advisable' : 'Adequate provider diversification'}
+                 </div>
                 <div className="text-[10px] text-muted-foreground">
                   SCRI score of {scri} indicates {scri >= 65 ? 'systemic concentration' : 'manageable concentration'}
                 </div>
