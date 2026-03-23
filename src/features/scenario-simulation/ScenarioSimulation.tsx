@@ -159,10 +159,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '🏛', name: 'Enforcement', value: 'Origin', layer: 'Layer 0' },
-        { icon: '⛔', name: 'Full Halt', value: '+60%', layer: 'Layer 1' },
-        { icon: '⚖', name: 'Legal Exposure', value: '+140%', layer: 'Layer 2' },
-        { icon: '📉', name: 'Revenue Collapse', value: '+280%', layer: 'Layer 3' },
-        { icon: '🌐', name: 'Market Signal', value: '+400%', layer: 'Layer 4' },
+        { icon: '⛔', name: 'Full Halt', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '⚖', name: 'Legal Exposure', value: 'Critical', layer: 'Layer 2' },
+        { icon: '📉', name: 'Revenue Collapse', value: 'Critical', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Market Signal', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'Full governance remediation required. Re-authorisation cycle: 14–30 days minimum. Board-level intervention mandatory.',
