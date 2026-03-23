@@ -18,6 +18,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
       multiAgent: 3, toolCallAuthority: 4, persistentMemory: 2, humanCheckpoints: 2,
       hallucinationLiability: 4, deepfakeFraud: 3, promptInjection: 3, modelDrift: 4, algorithmicBias: 3,
       shadowAI: 4, explainabilityGap: 4, dataIntegrity: 4, esgLiability: 3,
+      dataPoisoning: 3, adversarialAttack: 4, privacyBreach: 3, ipInfringement: 3,
       cloudConcentration: 2, modelConcentration: 2, gpuConcentration: 2, crossVendorContagion: 2,
     },
     dependencies: ['OpenAI', 'Azure OpenAI'],
