@@ -312,8 +312,17 @@ export function CompanyView() {
   }, [analysisComplete, globalInputs]);
 
   const updateLocal = useCallback((patch: Partial<ExposureInputs>) => {
-    setLocalInputs(prev => ({ ...prev, ...patch }));
-  }, []);
+    setLocalInputs(prev => {
+      const updated = { ...prev, ...patch };
+      // Debounced sync to global state
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+      syncTimerRef.current = setTimeout(() => {
+        setInputs(updated);
+        runAnalysis();
+      }, 600);
+      return updated;
+    });
+  }, [setInputs, runAnalysis]);
 
   const toggleChip = (list: string[], item: string) => {
     return list.includes(item) ? list.filter(i => i !== item) : [...list, item];
