@@ -10,6 +10,7 @@ import { ExposureInputs } from '@/lib/types';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { DeploymentAuthorization } from '@/components/shared/DeploymentAuthorization';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
@@ -83,6 +84,17 @@ export function ExposureResults() {
 
   return (
     <div>
+      {/* ═══ DEPLOYMENT AUTHORIZATION STATUS ═══ */}
+      <DeploymentAuthorization
+        band={band}
+        afi={afi}
+        structuralScore={structuralScore}
+        components={components}
+        agri={results.agri}
+        alri={results.alri}
+        companyName={inputs.companyName || 'Entity'}
+      />
+
       {/* Result reward banner */}
       <div className="flex items-start gap-[10px] p-3 px-4 rounded-lg mb-[18px] border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--secondary)))' }}>
         <span className="text-[16px] flex-shrink-0 text-primary">◈</span>

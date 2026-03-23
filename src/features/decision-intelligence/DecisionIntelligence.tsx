@@ -6,6 +6,8 @@ import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisual
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
+import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
+import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
@@ -963,6 +965,28 @@ export function DecisionIntelligence() {
           </table>
         </div>
       </SectionCard>
+
+      {/* ═══ CONSEQUENCE ENGINE ═══ */}
+      <ConsequenceEngine
+        band={band}
+        afi={afi}
+        components={components}
+        agri={agri}
+        alri={alri}
+        scri={scri}
+        companyName={inputs.companyName || 'Entity'}
+        revenue={inputs.revenue}
+      />
+
+      {/* ═══ RESPONSIBILITY COLLAPSE DETECTOR ═══ */}
+      <ResponsibilityCollapseDetector
+        band={band}
+        components={components}
+        agri={agri}
+        humanCheckpoints={inputs.humanCheckpoints}
+        oversightLevel={inputs.oversightLevel}
+        multiAgent={inputs.multiAgent}
+      />
 
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
