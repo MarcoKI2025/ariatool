@@ -38,6 +38,7 @@ function MetricCell({ label, value }: { label: string; value: string }) {
 
 export function PortfolioView() {
   const { state } = useApp();
+  const [portfolioTab, setPortfolioTab] = useState('overview');
   const analysisInputs = state.inputs;
   const hasAnalysis = state.analysisComplete;
 
