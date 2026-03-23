@@ -328,12 +328,19 @@ export function ExecutiveReport() {
           <div className="p-4 sm:p-5">
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Required Action</div>
             <div className="space-y-[10px]">
-              {[
+              {(band === 'Fragile' ? [
                 { color: 'bg-fragile', title: 'Apply premium loading (150–180%)', sub: 'Mandatory — structural risk exceeds standard pricing' },
                 { color: 'bg-fragile', title: 'Require dependency diversification', sub: 'Mandatory within 90 days — minimum 3 providers' },
                 { color: 'bg-sensitive', title: 'Enforce governance cadence', sub: 'Condition of coverage — quarterly re-authorisation minimum' },
                 { color: 'bg-sensitive', title: 'Limit coverage to operational layers', sub: 'Recommended — full-stack coverage uneconomic at current lock-in' },
-              ].map((item, i) => (
+              ] : band === 'Sensitive' ? [
+                { color: 'bg-sensitive', title: 'Increase governance review cadence', sub: 'Required — quarterly review minimum recommended' },
+                { color: 'bg-sensitive', title: 'Document exit paths', sub: 'Required — verify dependency exit capability before renewal' },
+                { color: 'bg-primary', title: 'Apply precautionary loading (80–120%)', sub: 'Recommended — trajectory warrants proactive pricing' },
+              ] : [
+                { color: 'bg-stable', title: 'Maintain governance cadence', sub: 'Re-assess annually — structural changes require re-assessment' },
+                { color: 'bg-primary', title: 'Monitor delegation density', sub: 'Key drift vector — tends to increase silently over time' },
+              ]).map((item, i) => (
                 <div key={i} className="flex items-start gap-[10px]">
                   <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
                   <div>
