@@ -439,6 +439,8 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
+      <SectionDivider title="Scenario Comparison" icon="📋" subtitle="All scenarios side-by-side" />
+
       {/* ═══ Scenario Comparison Matrix ═══ */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="px-5 py-3 border-b border-border">
