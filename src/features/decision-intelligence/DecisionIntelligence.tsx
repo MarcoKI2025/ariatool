@@ -445,6 +445,8 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
+      <SectionDivider title="Deep Dive Analysis" icon="🔬" subtitle="AFI components, financial exposure, responsibility structure" />
+
       {/* ═══ AFI COMPONENT ANALYSIS — HORIZONTAL BARS (matches HTML) ═══ */}
       <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
         {[
