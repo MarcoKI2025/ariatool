@@ -227,7 +227,7 @@ export function InsuranceDecision() {
         </div>
 
         <div className="p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground">
-          ⚠ Tail risk amplification: Correlated AI infrastructure creates {amplificationFactor} aggregate exposure vs. isolated incidents. Portfolio loss assumes 5 entities with similar AI infrastructure stack.
+          ⚠ Tail risk amplification: Correlated AI infrastructure creates significant non-linear aggregate exposure vs. isolated incidents. Swiss Re sigma insights 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk."
         </div>
       </SectionCard>
 
