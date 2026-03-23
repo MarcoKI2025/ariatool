@@ -349,17 +349,18 @@ function Slide5() {
     { num: '⑥', label: 'Model Governance', value: 'Methodology', color: '#80b8e0', bg: '#0e1828', border: '#1a3858' },
     { num: '⑦', label: 'Portfolio View', value: 'Multi-entity', color: '#b8a060', bg: '#1a1808', border: '#5a4818' },
     { num: '⑧', label: 'Evidence Log', value: 'Audit trail', color: '#ff4040', bg: '#1a0808', border: '#800808' },
+    { num: '⑨', label: 'Integration Hub', value: 'APIs · Ecosystem', color: '#70c0d0', bg: '#0a1820', border: '#1a4858' },
   ];
 
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow>The Process · From Input to Binding Verdict in Under 3 Minutes</Eyebrow>
-      <DmH1>One structured profile.<br /><span className="text-[#9088e0]">Eight computed outputs.</span></DmH1>
+      <Eyebrow>The Process · From Input to Deployment Verdict in Under 3 Minutes</Eyebrow>
+      <DmH1>One structured profile.<br /><span className="text-[#9088e0]">Nine computed outputs.</span></DmH1>
       <BodyText>
-        The engine takes a single structured exposure profile and generates eight independent risk outputs across a full
-        underwriting workflow. Nothing is pre-filled. Every number is computed from the profile. Adjust one input: all outputs recalculate in real-time.
+        The engine takes a single structured exposure profile and generates nine independent risk outputs across a full
+        underwriting workflow — culminating in a binding Deployment Authorization verdict. Adjust one input: all outputs recalculate in real-time.
       </BodyText>
-      <div className="grid grid-cols-8 gap-0 mb-5">
+      <div className="grid grid-cols-9 gap-0 mb-5">
         {steps.map((s, i) => (
           <div key={i} className="text-center px-0.5 relative py-3">
             {i < steps.length - 1 && <span className="absolute right-[-6px] top-[38%] text-[#9e9a90] text-[11px]">→</span>}
