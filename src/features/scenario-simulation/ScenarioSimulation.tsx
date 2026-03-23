@@ -203,10 +203,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '🌐', name: 'Shared Infra Fail', value: 'Origin', layer: 'Layer 0' },
-        { icon: '⚡', name: 'Multi-Entity Hit', value: '+70%', layer: 'Layer 1' },
-        { icon: '📉', name: 'Portfolio Loss', value: '+180%', layer: 'Layer 2' },
-        { icon: '🔗', name: 'Treaty Breach', value: '+340%', layer: 'Layer 3' },
-        { icon: '💥', name: 'Systemic Event', value: '+560%', layer: 'Layer 4' },
+        { icon: '⚡', name: 'Multi-Entity Hit', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '📉', name: 'Portfolio Loss', value: 'Critical', layer: 'Layer 2' },
+        { icon: '🔗', name: 'Treaty Breach', value: 'Critical', layer: 'Layer 3' },
+        { icon: '💥', name: 'Systemic Event', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'Individual entity governance irrelevant — systemic stabilisation required first. Cross-entity coordination mandatory.',

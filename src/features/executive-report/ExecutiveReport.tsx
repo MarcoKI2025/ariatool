@@ -596,7 +596,7 @@ export function ExecutiveReport() {
 
               {/* Disclaimers */}
               <div style={{ padding: '10px 14px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 4, fontSize: 8, color: '#96938c', lineHeight: 1.6, marginBottom: 18 }}>
-                <strong style={{ color: '#5a5850' }}>Epistemic Status:</strong> Structural governance signal — not actuarially certified. Loss figures are market-calibrated proxies (Lloyd's, Munich Re Q4 2025). Self-attested inputs. Not legal advice.
+                <strong style={{ color: '#5a5850' }}>Epistemic Status:</strong> Structural governance signal — not actuarially certified. Risk bands are qualitative indicators based on Swiss Re sigma insights 01/2026. Self-attested inputs. Not legal advice.
               </div>
 
               {/* Footer */}
