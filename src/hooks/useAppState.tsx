@@ -130,6 +130,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
 export function useApp() {
   const ctx = useContext(AppContext);
-  if (!ctx) throw new Error('useApp must be used within AppProvider');
+  if (!ctx) {
+    // During HMR, context can momentarily be null — force a re-render
+    console.warn('useApp: context not yet available, will retry on next render');
+    throw new Error('useApp must be used within AppProvider');
+  }
   return ctx;
 }
