@@ -5,6 +5,7 @@ import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/share
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
+import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
 import { AppFooter } from '@/components/shared/AppFooter';
 
 export function InsuranceDecision() {
