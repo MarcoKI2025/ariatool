@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
 
 export function ModelGovernanceComplete() {
   const { state, setActiveStep } = useApp();
@@ -37,6 +38,19 @@ export function ModelGovernanceComplete() {
       </div>
 
       <AGAFMethodologyStatement />
+
+      {/* ═══ EU AI ACT COMPLIANCE DASHBOARD ═══ */}
+      <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-lg">🇪🇺</span>
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">Regulatory · EU AI Act 2024/1689</div>
+            <div className="text-[15px] font-bold text-foreground">Compliance Assessment</div>
+          </div>
+        </div>
+        <ComplianceDashboard />
+      </div>
+
       <AssessmentScopeDeclaration />
       <CalibrationParameters />
       <FrameworkAssumptions />
