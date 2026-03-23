@@ -262,11 +262,19 @@ export function ExecutiveReport() {
           <div className="p-4 sm:p-5 sm:border-r border-b sm:border-b-0 border-border">
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Risk Position</div>
             <div className="space-y-[10px]">
-              {[
-                { color: 'bg-fragile', title: `Above underwriting tolerance`, sub: `AFI ${afi.toFixed(2)} — exceeds Fragile threshold (1.35)` },
+              {(band === 'Fragile' ? [
+                { color: 'bg-fragile', title: 'Above underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — exceeds Fragile threshold (1.35)` },
                 { color: 'bg-fragile', title: 'Standard coverage not justified', sub: 'Structural change required before standard rates apply' },
                 { color: 'bg-sensitive', title: 'Premium loading mandatory', sub: '150–180% above standard — mandatory pricing adjustment' },
-              ].map((item, i) => (
+              ] : band === 'Sensitive' ? [
+                { color: 'bg-sensitive', title: 'Approaching underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — within Sensitive range (0.85–1.35)` },
+                { color: 'bg-sensitive', title: 'Conditional coverage available', sub: 'Structural improvements required within 90 days' },
+                { color: 'bg-sensitive', title: 'Precautionary premium loading', sub: '80–120% above standard — recommended pricing adjustment' },
+              ] : [
+                { color: 'bg-stable', title: 'Within underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — below Stable threshold (0.85)` },
+                { color: 'bg-stable', title: 'Standard coverage terms apply', sub: 'No structural remediation required' },
+                { color: 'bg-stable', title: 'Standard pricing', sub: 'No mandatory loading — routine governance monitoring' },
+              ]).map((item, i) => (
                 <div key={i} className="flex items-start gap-[10px]">
                   <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
                   <div>
@@ -320,12 +328,19 @@ export function ExecutiveReport() {
           <div className="p-4 sm:p-5">
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Required Action</div>
             <div className="space-y-[10px]">
-              {[
+              {(band === 'Fragile' ? [
                 { color: 'bg-fragile', title: 'Apply premium loading (150–180%)', sub: 'Mandatory — structural risk exceeds standard pricing' },
                 { color: 'bg-fragile', title: 'Require dependency diversification', sub: 'Mandatory within 90 days — minimum 3 providers' },
                 { color: 'bg-sensitive', title: 'Enforce governance cadence', sub: 'Condition of coverage — quarterly re-authorisation minimum' },
                 { color: 'bg-sensitive', title: 'Limit coverage to operational layers', sub: 'Recommended — full-stack coverage uneconomic at current lock-in' },
-              ].map((item, i) => (
+              ] : band === 'Sensitive' ? [
+                { color: 'bg-sensitive', title: 'Increase governance review cadence', sub: 'Required — quarterly review minimum recommended' },
+                { color: 'bg-sensitive', title: 'Document exit paths', sub: 'Required — verify dependency exit capability before renewal' },
+                { color: 'bg-primary', title: 'Apply precautionary loading (80–120%)', sub: 'Recommended — trajectory warrants proactive pricing' },
+              ] : [
+                { color: 'bg-stable', title: 'Maintain governance cadence', sub: 'Re-assess annually — structural changes require re-assessment' },
+                { color: 'bg-primary', title: 'Monitor delegation density', sub: 'Key drift vector — tends to increase silently over time' },
+              ]).map((item, i) => (
                 <div key={i} className="flex items-start gap-[10px]">
                   <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
                   <div>
@@ -339,19 +354,30 @@ export function ExecutiveReport() {
         </div>
       </div>
 
-      {/* Required Underwriting Actions */}
+      {/* Required Underwriting Actions — dynamic by band */}
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Required Underwriting Actions</div>
-        <div className="text-[14px] font-bold text-foreground mb-4">Mandatory conditions before standard coverage terms apply</div>
+        <div className="text-[14px] font-bold text-foreground mb-4">
+          {band === 'Fragile' ? 'Mandatory conditions before standard coverage terms apply' :
+           band === 'Sensitive' ? 'Conditional requirements for coverage renewal' :
+           'Standard governance maintenance requirements'}
+        </div>
         <div className="space-y-3">
-          {[
+          {(band === 'Fragile' ? [
             { num: 1, title: 'Apply mandatory premium loading (150–180%)', desc: 'Structural risk exceeds standard pricing assumptions. AFI-derived loading must be applied before any coverage is offered.' },
             { num: 2, title: 'Require dependency diversification within 90 days', desc: 'Single-provider concentration creates uninsurable systemic risk. Minimum 3 independent providers across model, compute, and orchestration layers.' },
             { num: 3, title: 'Enforce quarterly re-authorisation cadence', desc: 'Condition of coverage — each deployed AI system must undergo formal re-authorisation at least quarterly with explicit sign-off from named oversight actor.' },
             { num: 4, title: 'Limit coverage scope to operational layers', desc: 'Full-stack coverage is uneconomic at current structural lock-in levels. Recommended to limit coverage to operational impact layers only.' },
-          ].map((action, i) => (
+          ] : band === 'Sensitive' ? [
+            { num: 1, title: 'Increase governance review cadence to quarterly', desc: 'Current oversight density is insufficient given dependency trajectory. Quarterly structured reviews required.' },
+            { num: 2, title: 'Document and test dependency exit paths', desc: 'Reversibility cost is elevated — exit capability must be verified and documented before next renewal.' },
+            { num: 3, title: 'Apply precautionary premium loading (80–120%)', desc: 'Below Fragile threshold but trajectory warrants proactive pricing adjustment to reflect emerging structural risk.' },
+          ] : [
+            { num: 1, title: 'Maintain current governance cadence', desc: 'Continue annual re-assessment cycle. Any material change in AI deployment scope, provider dependencies, or delegation authority triggers mandatory re-assessment.' },
+            { num: 2, title: 'Monitor key drift vectors', desc: 'Delegation density and provider concentration tend to increase silently. Establish threshold alerts for proactive governance intervention.' },
+          ]).map((action, i) => (
             <div key={i} className="flex items-start gap-3 p-4 bg-secondary border border-border rounded-lg">
-              <div className="w-[24px] h-[24px] rounded-full bg-fragile text-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px]">{action.num}</div>
+              <div className={`w-[24px] h-[24px] rounded-full text-foreground flex items-center justify-center text-[11px] font-bold flex-shrink-0 mt-[2px] ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>{action.num}</div>
               <div>
                 <div className="text-[12px] font-semibold text-foreground">{action.title}</div>
                 <div className="text-[11px] text-muted-foreground leading-[1.55] mt-[2px]">{action.desc}</div>

@@ -38,8 +38,8 @@ export function DecisionIntelligence() {
       <UseRestrictionBanner />
 
       {/* ═══ HERO BOARD STATEMENT ═══ */}
-      <div className="bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">
-        <div className="w-1 h-1 rounded-full bg-fragile flex-shrink-0 mt-[7px] opacity-70" />
+      <div className={`bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 flex items-start gap-3 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
+        <div className={`w-1 h-1 rounded-full flex-shrink-0 mt-[7px] opacity-70 ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`} />
         <div className="text-[13px] font-semibold text-foreground leading-[1.45]">
           {band === 'Fragile' ? 'This system creates structural AI risk that is not captured by compliance frameworks, point-in-time audits, or standard underwriting models — and that accumulates without a triggering incident.' :
            band === 'Sensitive' ? 'This system introduces moderate structural risk approaching underwriting tolerance. Conditional coverage available with mandatory governance improvement timeline.' :
@@ -144,11 +144,19 @@ export function DecisionIntelligence() {
       }`}>
         <div className={`text-[9px] font-bold tracking-wider uppercase mb-2 ${bandColor}`}>Key Structural Signals</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {[
-            'System persists without explicit re-authorisation',
-            'Dependency cannot be reversed without operational disruption',
-            'Shared model infrastructure creates correlated portfolio exposure',
-          ].map((sig, i) => (
+          {(band === 'Fragile' ? [
+            'System persists without explicit re-authorisation — liability accumulates',
+            'Dependency cannot be reversed without major operational disruption',
+            'Shared infrastructure creates correlated portfolio-level exposure',
+          ] : band === 'Sensitive' ? [
+            'Governance gaps emerging in re-authorisation cadence',
+            'Dependency exit paths exist but are not documented or tested',
+            'Moderate infrastructure correlation — monitor for concentration drift',
+          ] : [
+            'Re-authorisation cadence is adequate for current deployment',
+            'Dependency exit paths are available — low structural lock-in',
+            'Infrastructure diversification reduces correlated exposure',
+          ]).map((sig, i) => (
             <div key={i} className={`flex items-start gap-2 p-2 rounded-md border ${
               band === 'Fragile' ? 'border-fragile-border' : band === 'Sensitive' ? 'border-sensitive-border' : 'border-stable-border'
             }`}>
@@ -242,7 +250,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ "THIS MEANS" CALLOUT ═══ */}
-      <div className="bg-card rounded-xl p-5 mb-4 border-l-4 border-l-fragile border border-border flex items-start gap-[14px]">
+      <div className={`bg-card rounded-xl p-5 mb-4 border-l-4 border border-border flex items-start gap-[14px] ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
         <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
           band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
         }`}>
