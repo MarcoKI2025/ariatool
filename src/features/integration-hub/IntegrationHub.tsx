@@ -4,6 +4,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from '@/components/ui/dialog';
 import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, ExternalLink, Zap, Database, Eye } from 'lucide-react';
+import { LiveIndicator } from '@/components/shared/LiveIndicator';
 
 /* ── Integration Data ── */
 interface Integration {
