@@ -91,6 +91,12 @@
     --shadow-card: 0 1px 3px rgba(0,0,0,0.04);
     --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.06);
     --shadow-elevated: 0 8px 30px rgba(0,0,0,0.08);
+
+    /* Deep-tech glassmorphism tokens */
+    --glass-purple: 262 80% 50%;
+    --glass-purple-light: 262 70% 65%;
+    --glass-bg: 262 50% 98%;
+    --glass-border: 262 30% 85%;
     --shadow-chrome: 0 1px 3px rgba(0,0,0,0.04);
 
     /* Sidebar */
