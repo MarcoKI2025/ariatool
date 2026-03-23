@@ -56,6 +56,7 @@ interface AppContextType {
   resetAnalysis: () => void;
   toggleIAT: (criterion: number) => void;
   toggleDarkMode: () => void;
+  clearAuditLog: () => void;
   results: AnalysisResults | null;
   inputs: ExposureInputs;
 }
