@@ -9,6 +9,7 @@ import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
+import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 interface PortfolioEntity {
   id: string;
   name: string;
