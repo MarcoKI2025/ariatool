@@ -394,10 +394,32 @@ export function CompanyView() {
     );
   }
 
-  const { band, afi, structuralScore, eciTier, eciName, components, lossEnvelope, premium } = results;
-  const bandColor = band === 'Fragile' ? 'hsl(var(--red))' : band === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
+  const { eciTier, eciName, lossEnvelope, premium } = results;
+
+  // Derive live AFI from simulator sliders so the summary reacts to changes
+  const liveComponents = useMemo(() => {
+    const dr = (simAuto / 5);                      // Delegation Ratio from autonomy
+    const jd = ((6 - simOvst) / 5);               // Justificatory Density (inverted oversight)
+    const rc = (simDep / 5);                       // Reversibility Cost from dependency
+    const cd = (simCrit / 5);                      // Continuation Density from criticality
+    const na = results.components.na;
+    return { dr, jd, rc, cd, na };
+  }, [simAuto, simOvst, simDep, simCrit, results.components.na]);
+
+  const liveAfi = useMemo(() => calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na), [liveComponents]);
+  const liveBand = useMemo(() => getBand(liveAfi), [liveAfi]);
+  const liveStructuralScore = useMemo(() => Math.min(100, Math.round(liveAfi / 3.0 * 100)), [liveAfi]);
+  const liveBandColor = liveBand === 'Fragile' ? 'hsl(var(--red))' : liveBand === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
+
   const companyName = inputs.companyName || 'Your Organisation';
   const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  // Use live values for display
+  const afi = liveAfi;
+  const band = liveBand;
+  const bandColor = liveBandColor;
+  const structuralScore = liveStructuralScore;
+  const components = liveComponents;
 
   // Cost drivers
   const drivers = [
