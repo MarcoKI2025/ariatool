@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
@@ -7,6 +7,7 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
 import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { ViewTabs } from '@/components/shared/ViewTabs';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
