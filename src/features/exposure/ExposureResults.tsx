@@ -415,7 +415,7 @@ export function ExposureResults() {
           { icon: '🌐', label: 'SCRI — Systemic Concentration', score: scri, tier: scriTier, color: scriColor, desc: 'Cloud · Model · GPU provider concentration risk', tooltip: TOOLTIPS.scri },
         ].map((panel, i) => (
           <div key={i} className="bg-card border border-border rounded-[10px] p-4">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{panel.icon} {panel.label}</div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{panel.icon} {panel.label}{(panel as any).tooltip && <InfoTip text={(panel as any).tooltip} />}</div>
             <div className="flex items-end gap-2 mb-2">
               <span className={`text-[28px] font-bold font-mono leading-none ${panel.color}`}>{panel.score}</span>
               <span className="text-[10px] text-muted-foreground mb-1">/100</span>
