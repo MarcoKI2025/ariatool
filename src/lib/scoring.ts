@@ -302,7 +302,16 @@ export function computeLivePreview(inputs: ExposureInputs) {
   if (inputs.hallucinationLiability >= 3) signals.push({ text: 'Hallucination liability exposure — unverified AI outputs', color: 'fragile' });
   if (inputs.shadowAI >= 3) signals.push({ text: 'Shadow AI risk — uncontrolled AI deployments', color: 'sensitive' });
   if (inputs.useCases.includes('Autonomous Operations')) signals.push({ text: 'Autonomous operations selected — elevated delegation risk', color: 'fragile' });
-  if (inputs.useCases.length >= 5) signals.push({ text: 'Broad AI use case portfolio — increased attack surface', color: 'sensitive' });
+  if (inputs.useCases.includes('Risk Assessment')) signals.push({ text: 'Risk assessment use case — high-stakes decision delegation', color: 'sensitive' });
+  if (inputs.useCases.includes('Fraud Detection')) signals.push({ text: 'Fraud detection — false positive/negative liability exposure', color: 'sensitive' });
+  if (inputs.useCases.includes('Compliance Monitoring')) signals.push({ text: 'Compliance monitoring — regulatory reliance on AI outputs', color: 'sensitive' });
+  if (inputs.useCases.includes('Code Generation')) signals.push({ text: 'Code generation — IP and supply chain integrity risk', color: 'sensitive' });
+  if (inputs.useCases.length >= 5) signals.push({ text: `${inputs.useCases.length} AI use cases — broad attack surface and operational footprint`, color: 'sensitive' });
+  if (inputs.useCases.length >= 7) signals.push({ text: 'Extensive AI portfolio — systemic integration risk elevated', color: 'fragile' });
+  if (inputs.providers.length <= 1) signals.push({ text: 'Single provider dependency — concentration risk', color: 'fragile' });
+  if (inputs.providers.length === 2) signals.push({ text: 'Limited provider diversity — moderate concentration risk', color: 'sensitive' });
+  if (inputs.providers.length >= 4) signals.push({ text: 'Multi-provider diversification — reduced concentration', color: 'stable' });
+  if (inputs.providers.length >= 6) signals.push({ text: 'Broad provider portfolio — strong diversification but integration complexity', color: 'stable' });
   if (['Enterprise (1000–10000)', 'Large Enterprise (10000+)'].includes(inputs.size)) signals.push({ text: 'Large organisation — elevated systemic exposure and regulatory scrutiny', color: 'sensitive' });
   if (['€500M–€5B', 'Over €5B'].includes(inputs.revenue)) signals.push({ text: 'High revenue — amplified absolute loss exposure', color: 'sensitive' });
   if (signals.length === 0) signals.push({ text: 'Governance signals within normal range', color: 'stable' });
