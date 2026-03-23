@@ -231,8 +231,8 @@ export function ExecutiveReport() {
           </div>
           <div className="space-y-3">
             {[
-              { num: '1', title: 'Apply premium loading 150–180% above standard', desc: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor, not target. Standard actuarial models do not capture continuation governance exposure.', source: "Lloyd's AI Underwriting Framework 2025" },
-              { num: '2', title: 'Require dependency diversification within 90 days', desc: 'Mandatory — minimum 3 providers across critical model endpoints. Reduces aggregate tail exposure 40–60% (Swiss Re sigma 01/2026). Single-provider concentration creates systemic cascade risk.', source: 'Munich Re AI Risk Guidelines Q4 2025' },
+              { num: '1', title: 'Apply significant premium loading above standard', desc: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor, not target. Standard actuarial models do not capture continuation governance exposure.', source: "Lloyd's AI Underwriting Framework 2025" },
+              { num: '2', title: 'Require dependency diversification within 90 days', desc: 'Mandatory — minimum 3 providers across critical model endpoints. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic risk." Single-provider concentration creates cascade risk.', source: 'Munich Re AI Risk Guidelines Q4 2025' },
               { num: '3', title: 'Enforce quarterly governance re-authorisation cadence', desc: 'Condition of coverage — system persists by default without explicit continuation decision. Art. 72 post-market monitoring insufficient without re-authorisation trigger.', source: 'EU AI Act Art. 72 / EIOPA Opinion Aug 2025' },
               { num: '4', title: 'Limit coverage scope to operational layers only', desc: 'Recommended — full-stack coverage uneconomic at current lock-in depth. Exclude autonomous execution liability, model drift cascade exposure, and cross-entity correlation risk.', source: 'LMA E&O Guidelines 2025' },
             ].map((action, i) => (
