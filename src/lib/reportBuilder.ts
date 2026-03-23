@@ -121,13 +121,13 @@ RISK DRIVERS:
 - Reversibility Cost: ${(results.components.rc * 100).toFixed(0)}%
 - Continuation Density: ${(results.components.cd * 100).toFixed(0)}%
 
-LOSS ENVELOPE (qualitative Einschätzung):
+LOSS ENVELOPE (qualitative assessment):
 - Expected: ${results.lossEnvelope.expected}
 - Stress: ${results.lossEnvelope.stress}
 - Tail: ${results.lossEnvelope.tail}
 
-Quelle: Swiss Re sigma insights 01/2026 – qualitative Einschätzung
-neuer systemischer Abhängigkeiten und Akkumulationsrisiken.
+Source: Swiss Re sigma insights 01/2026 – qualitative assessment
+of emerging systemic dependencies and accumulation risks.
 
 This extract is for Own Risk and Solvency Assessment discussion purposes.
 Not a regulatory filing. Self-attested inputs. Qualitative signals only.
