@@ -46,6 +46,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
       multiAgent: 1, toolCallAuthority: 2, persistentMemory: 1, humanCheckpoints: 4,
       hallucinationLiability: 3, deepfakeFraud: 1, promptInjection: 2, modelDrift: 3, algorithmicBias: 4,
       shadowAI: 2, explainabilityGap: 3, dataIntegrity: 2, esgLiability: 2,
+      dataPoisoning: 2, adversarialAttack: 2, privacyBreach: 4, ipInfringement: 1,
       cloudConcentration: 3, modelConcentration: 3, gpuConcentration: 3, crossVendorContagion: 3,
     },
     dependencies: ['Anthropic', 'Google DeepMind'],
