@@ -75,8 +75,6 @@ export function ExposureAnalysis() {
 
   return (
     <div>
-      {/* Real Case Facts Card */}
-      <RealCaseFactsCard />
 
       {/* Welcome banner */}
       {!dismissedWelcome && !analysisComplete && (
