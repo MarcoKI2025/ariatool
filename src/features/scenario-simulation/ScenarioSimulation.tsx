@@ -492,6 +492,10 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
+      </>)}
+
+      {/* ═══ TAB: ADVANCED ═══ */}
+      {activeTab === 'advanced' && (<>
       {/* ═══ ROBUSTNESS TESTING ═══ */}
       <RobustnessTestingPanel inputs={inputs} baseAfi={afi} />
 
@@ -503,6 +507,7 @@ export function ScenarioSimulation() {
 
       {/* Parametric Trigger Lab */}
       <ParametricTriggerLab />
+      </>)}
 
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
