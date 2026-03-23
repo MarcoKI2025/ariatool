@@ -11,6 +11,7 @@ import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { RealCaseFactsCard } from '@/features/demo/RealCaseFactsCard';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 
 // ═══════════════════════════════════════════════════════════════
 // RESPONSIBILITY & OWNERSHIP STRUCTURE PANEL
