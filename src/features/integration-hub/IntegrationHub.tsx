@@ -150,10 +150,12 @@ export function IntegrationHub() {
         <h1 className="text-2xl font-bold text-foreground tracking-tight mb-2">
           Integration Hub
         </h1>
-        <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-          Connect to market data feeds, regulatory monitors, and reinsurance networks. Transform isolated assessments into connected intelligence.
-        </p>
-      </div>
+        <div className="flex items-center gap-3 mb-2">
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Connect to market data feeds, regulatory monitors, and reinsurance networks. Transform isolated assessments into connected intelligence.
+          </p>
+          <LiveIndicator label="Platform active" size="sm" />
+        </div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
