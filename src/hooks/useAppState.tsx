@@ -92,7 +92,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const runAnalysis = useCallback(() => {
     const results = computeFullAnalysis(state.inputs);
-    setState(s => ({ ...s, analysisComplete: true, results, activeStep: 2 }));
+    setState(s => ({ ...s, analysisComplete: true, results }));
   }, [state.inputs]);
 
   const resetAnalysis = useCallback(() => {
