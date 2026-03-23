@@ -48,6 +48,7 @@ export function ModelGovernanceComplete() {
       <EpistemicLimitations />
       <RegulatoryAlignment />
       <ResearchFoundation />
+      <CalibrationTransparency />
       <CompetitivePositioning />
       <APIIntegrationReference />
       <FrameworkRevisionSchedule />
