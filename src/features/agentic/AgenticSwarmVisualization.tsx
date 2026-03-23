@@ -24,10 +24,10 @@ export function AgenticSwarmVisualization({ agri }: { agri: number }) {
   const agriCritical = agri >= 75;
 
   return (
-    <div className="bg-card border border-sensitive rounded-xl p-5 mb-4 relative">
+    <div className="glass-card glass-glow rounded-xl p-5 mb-4 relative">
       {/* BETA badge */}
       <div className="absolute top-3 right-3">
-        <span className="px-2 py-1 text-[9px] font-bold tracking-wider uppercase bg-sensitive-bg text-sensitive border border-sensitive-border rounded">BETA</span>
+        <span className="px-2 py-1 text-[9px] font-bold tracking-wider uppercase glass-badge rounded">BETA</span>
       </div>
 
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">

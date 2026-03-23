@@ -2,10 +2,10 @@ import React from 'react';
 
 export function EducationalParametricSimulator() {
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-4 relative">
+    <div className="glass-card glass-glow rounded-xl p-5 mb-4 relative">
       {/* BETA badge */}
       <div className="absolute top-3 right-3">
-        <span className="px-2 py-1 text-[9px] font-bold tracking-wider uppercase bg-sensitive-bg text-sensitive border border-sensitive-border rounded">EDUCATIONAL</span>
+        <span className="px-2 py-1 text-[9px] font-bold tracking-wider uppercase glass-badge rounded">EDUCATIONAL</span>
       </div>
 
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">
