@@ -34,10 +34,10 @@ Normalisation Anchor (NA): ${components.na.toFixed(3)}
 LOSS ENVELOPE — MARKET-CALIBRATED PROXY ESTIMATES
 ══════════════════════════════════════════════════════════════════
 
-Expected Loss (Base Scenario):     ${formatCurrency(lossEnvelope.expected)}
-Stress Risk Band:                  €${lossEnvelope.stress.toFixed(1)}M
-Tail Risk Band (Provider Cascade): €${lossEnvelope.tail.toFixed(1)}M
-Portfolio Exposure (Correlated):   €${Math.round(lossEnvelope.portfolio)}M
+Expected Loss (Base Scenario):     ${lossEnvelope.expected}
+Stress Risk Band:                  ${lossEnvelope.stress}
+Tail Risk Band (Provider Cascade): ${lossEnvelope.tail}
+Portfolio Exposure (Correlated):   ${lossEnvelope.portfolio}
 
 ⚠ CRITICAL DISCLAIMER: These are structural proxy signals, not actuarially 
 certified loss estimates. Anchored to published market guidance (Lloyd's CRI 

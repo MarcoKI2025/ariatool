@@ -28,7 +28,7 @@ interface ScenarioData {
   stressMultipliers: { metric: string; best: number; expected: number; stress: number }[];
   cascadeLayers: { icon: string; name: string; value: string; layer: string }[];
   whatChanges: { governance: string; financial: string; operational: string };
-  lossShift: { expected: number; stress: number; tail: number };
+  lossShift: { expected: string; stress: string; tail: string };
 }
 
 export function ScenarioSimulation() {
@@ -391,19 +391,18 @@ export function ScenarioSimulation() {
             { label: 'Stress Loss', baseline: lossEnvelope.stress, shifted: s.lossShift.stress, color: 'text-sensitive' },
             { label: 'Tail Loss', baseline: lossEnvelope.tail, shifted: s.lossShift.tail, color: 'text-fragile' },
           ].map((cell, i) => {
-            const pctChange = Math.round(((cell.shifted - cell.baseline) / cell.baseline) * 100);
             return (
               <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''}`}>
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
                 <div className="flex items-end gap-2 mb-1">
-                  <span className={`text-[28px] font-bold font-mono leading-none ${cell.color}`}>{formatCurrency(cell.shifted)}</span>
+                  <span className={`text-[20px] font-bold font-mono leading-none ${cell.color}`}>{cell.shifted}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-muted-foreground line-through">{formatCurrency(cell.baseline)}</span>
-                  <span className="text-[10px] font-bold text-fragile">+{pctChange}%</span>
+                  <span className="text-[10px] text-muted-foreground line-through">{cell.baseline}</span>
+                  <span className="text-[10px] font-bold text-fragile">↑ Elevated</span>
                 </div>
                 <div className="mt-2 h-[5px] bg-secondary rounded overflow-hidden">
-                  <div className={`h-full rounded ${i === 2 ? 'bg-fragile' : i === 1 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.min(100, (cell.shifted / ('Systemic Exposure')) * 100)}%` }} />
+                  <div className={`h-full rounded ${i === 2 ? 'bg-fragile' : i === 1 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.min(100, (i + 1) * 30)}%` }} />
                 </div>
               </div>
             );

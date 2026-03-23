@@ -201,7 +201,7 @@ export function InsuranceDecision() {
           ].map((cell, i) => (
             <div key={i} className={`rounded-xl p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
               <div className={`text-[9px] tracking-[0.08em] uppercase font-bold mb-2 ${cell.highlight ? 'text-fragile' : 'text-muted-foreground'}`}>{cell.label}</div>
-              <div className={`text-[32px] font-bold font-mono leading-none ${cell.color}`}>{formatCurrency(cell.value)}</div>
+              <div className={`text-[24px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
               <div className="text-[10px] text-muted-foreground mt-2">{cell.sub}</div>
             </div>
           ))}
@@ -215,11 +215,10 @@ export function InsuranceDecision() {
             { label: 'Tail', value: lossEnvelope.tail, color: 'bg-fragile' },
             { label: 'Portfolio', value: lossEnvelope.portfolio, color: 'bg-purple' },
           ].map((bar, i) => {
-            const maxVal = 'Systemic';
             const height = Math.max(8, (i + 1) * 35);
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[9px] font-mono font-bold text-muted-foreground">{formatCurrency(bar.value)}</span>
+                <span className="text-[9px] font-mono font-bold text-muted-foreground">{bar.value}</span>
                 <div className={`w-full rounded-t-md ${bar.color}`} style={{ height: `${height}px` }} />
                 <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{bar.label}</span>
               </div>
@@ -509,9 +508,9 @@ export function InsuranceDecision() {
         <div className="text-[14px] font-bold text-foreground mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { label: 'Cyber / Tech E&O', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
-            { label: 'Professional Indemnity', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
-            { label: 'D&O / Management Liability', value: `€${Math.round('Elevated Exposure')}M`, color: 'text-fragile', desc: 'Directors & Officers — governance failure liability' },
+            { label: 'Cyber / Tech E&O', value: 'Elevated Exposure', color: 'text-sensitive', desc: 'Existing cyber policy — partial coverage of AI-related incidents' },
+            { label: 'Professional Indemnity', value: 'Elevated Exposure', color: 'text-fragile', desc: 'PI policy — AI-influenced advice and decisions' },
+            { label: 'D&O / Management Liability', value: 'Elevated Exposure', color: 'text-fragile', desc: 'Directors & Officers — governance failure liability' },
           ].map((m, i) => (
             <div key={i} className="bg-secondary border border-border rounded-lg p-4">
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>

@@ -290,9 +290,9 @@ export function ExecutiveReport() {
             <div className="space-y-[10px]">
               {[
                 { color: 'bg-stable', title: `Base risk band: ${lossEnvelope.expected}`, sub: 'Structural baseline — AFI-derived characterization' },
-                { color: 'bg-sensitive', title: `Elevated risk band: €${lossEnvelope.stress.toFixed(1)}M`, sub: 'Provider concentration and delegation factors' },
-                { color: 'bg-fragile', title: `Critical risk band: €${lossEnvelope.tail.toFixed(1)}M`, sub: 'Tail exposure — correlated dependency structures' },
-                { color: 'bg-fragile', title: `Systemic exposure: €${Math.round(lossEnvelope.portfolio)}M`, sub: 'If 8–15 entities share similar AI infrastructure' },
+                { color: 'bg-sensitive', title: `Elevated risk band: ${lossEnvelope.stress}`, sub: 'Provider concentration and delegation factors' },
+                { color: 'bg-fragile', title: `Critical risk band: ${lossEnvelope.tail}`, sub: 'Tail exposure — correlated dependency structures' },
+                { color: 'bg-fragile', title: `Systemic exposure: ${lossEnvelope.portfolio}`, sub: 'If 8–15 entities share similar AI infrastructure' },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-[10px]">
                   <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
@@ -562,7 +562,7 @@ export function ExecutiveReport() {
                   ].map((m, i) => (
                     <div key={i} style={{ padding: '8px 10px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 4, textAlign: 'center' }}>
                       <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#96938c', marginBottom: 3 }}>{m.l}</div>
-                      <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
+                      <div style={{ fontSize: 11, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
                     </div>
                   ))}
                 </div>
@@ -688,11 +688,11 @@ export function ExecutiveReport() {
                     { l: 'Expected Loss', v: lossEnvelope.expected, s: 'Base scenario' },
                     { l: 'Stress Scenario', v: lossEnvelope.stress, s: 'Governance exposure' },
                     { l: 'Tail Risk', v: lossEnvelope.tail, s: '99th percentile' },
-                    { l: 'Portfolio', v: lossEnvelope.portfolio, s: `${amplificationFactor} amplification` },
+                    { l: 'Portfolio', v: lossEnvelope.portfolio, s: `${amplificationFactor}` },
                   ].map((m, i) => (
                     <div key={i} style={{ padding: '10px 12px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 6, textAlign: 'center' }}>
                       <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#96938c', marginBottom: 4 }}>{m.l}</div>
-                      <div style={{ fontSize: 18, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
+                      <div style={{ fontSize: 12, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
                       <div style={{ fontSize: 8, color: '#96938c', marginTop: 2 }}>{m.s}</div>
                     </div>
                   ))}
@@ -707,7 +707,7 @@ export function ExecutiveReport() {
                   { cls: 'r', t: 'Require dependency diversification within 90 days', s: 'Minimum 3 providers required. Reduces aggregate tail exposure 40–60%.' },
                   { cls: 'r', t: 'Commission exit feasibility assessment', s: 'ECI tier indicates institutional dependency — exit path must be documented.' },
                   { cls: 'a', t: 'Institute quarterly governance re-authorisation', s: 'Without re-authorisation cadence, structural risk accumulates without upper bound.' },
-                  { cls: 'a', t: 'Reinsurance treaty review required', s: `Portfolio aggregate €${Math.round(lossEnvelope.portfolio)}M+ under correlated cascade.` },
+                  { cls: 'a', t: 'Reinsurance treaty review required', s: `Portfolio aggregate: ${lossEnvelope.portfolio} under correlated cascade.` },
                 ] : band === 'Sensitive' ? [
                   { cls: 'a', t: 'Apply precautionary premium loading (80–120%)', s: 'Below Fragile threshold but trajectory warrants adjustment.' },
                   { cls: 'a', t: 'Increase governance review cadence to quarterly', s: 'Current oversight insufficient given dependency trajectory.' },
@@ -736,8 +736,8 @@ export function ExecutiveReport() {
                   {band === 'Fragile' ? '⊘ If This Decision Is Ignored — Structural Consequences' : band === 'Sensitive' ? '⚠ If Remediation Is Deferred — Escalation Consequences' : '↗ Structural Drift Risk'}
                 </div>
                 {(band === 'Fragile' ? [
-                  { t: 'Reserve Understatement', s: `Expected loss ${lossEnvelope.expected} alone understates required reserves by 3–5× without premium loading.` },
-                  { t: `Portfolio Contagion: €${Math.round(lossEnvelope.portfolio)}M+`, s: `${amplificationFactor} cascade amplification across correlated infrastructure.` },
+                  { t: 'Reserve Understatement', s: `Expected loss band: ${lossEnvelope.expected} — understates required reserves without premium loading.` },
+                  { t: `Portfolio Contagion: ${lossEnvelope.portfolio}`, s: `${amplificationFactor} — cascade amplification across correlated infrastructure.` },
                   { t: 'Statutory Penalty Exposure', s: 'Active Art. 26 + Art. 72 violations: up to €15M or 3% global turnover (Art. 99 §4).' },
                 ] : band === 'Sensitive' ? [
                   { t: 'Trajectory to NOT APPROVED', s: 'Without intervention within 90 days, automatic escalation at next assessment.' },
