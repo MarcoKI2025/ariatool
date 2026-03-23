@@ -1,6 +1,8 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
+import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
