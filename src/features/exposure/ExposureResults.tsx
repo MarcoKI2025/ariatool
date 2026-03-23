@@ -258,7 +258,7 @@ export function ExposureResults() {
       {/* COR + ARI */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Cognitive Offloading Ratio</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Cognitive Offloading Ratio<InfoTip text={TOOLTIPS.cor} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${corVal > 65 ? 'text-fragile' : corVal > 40 ? 'text-sensitive' : 'text-stable'}`}>{corVal}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">{corVal > 65 ? 'Human judgment substantially offloaded' : corVal > 40 ? 'Moderate offloading — intervention required' : 'Human judgment remains primary'}</div>
         </div>
