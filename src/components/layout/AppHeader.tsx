@@ -31,6 +31,7 @@ const VIEW_SUBTITLES: Record<string, string> = {
 export function AppHeader() {
   const { state, setPerspective, resetAnalysis } = useApp();
   const { perspective, activeStep, analysisComplete } = state;
+  const [methodologyOpen, setMethodologyOpen] = useState(false);
 
   const key = perspective === 'company' ? 'company' : String(activeStep);
   const title = VIEW_TITLES[key] || VIEW_TITLES['1'];
