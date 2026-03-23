@@ -138,6 +138,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState(s => ({ ...s, darkMode: !s.darkMode }));
   }, []);
 
+  const clearAuditLog = useCallback(() => {
+    setState(s => ({ ...s, auditLog: [] }));
+  }, []);
+
   const value = useMemo(() => ({
     state,
     setActiveStep,

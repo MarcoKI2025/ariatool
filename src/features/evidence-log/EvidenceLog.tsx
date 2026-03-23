@@ -67,6 +67,7 @@ export function EvidenceLog() {
             ⬇ Export Log (.csv)
           </button>
         </div>
+      </div>
 
       {/* Log Table */}
       <div className="bg-card border border-border rounded-xl overflow-hidden">
