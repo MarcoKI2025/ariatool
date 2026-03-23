@@ -306,6 +306,8 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
+      <SectionDivider title="Stress Analysis" icon="⟲" subtitle="Stress multiplier table and cascade propagation" />
+
       {/* ═══ Stress Multiplier Table ═══ */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="px-5 py-3 border-b border-border">
