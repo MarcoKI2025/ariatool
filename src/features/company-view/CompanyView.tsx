@@ -692,6 +692,8 @@ export function CompanyView() {
               </div>
             </div>
           </div>
+            );
+          })()}
         </div>
       </div>
 
