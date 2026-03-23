@@ -61,8 +61,8 @@ Stress Scenario Band:   ${lossEnvelope.stress}
 Tail / Systemic Band:   ${lossEnvelope.tail}
 Portfolio Cluster:       ${lossEnvelope.portfolio}
 
-Quelle: Swiss Re sigma insights 01/2026 – qualitative Einschätzung
-neuer systemischer Abhängigkeiten und Akkumulationsrisiken.
+Source: Swiss Re sigma insights 01/2026 – qualitative assessment
+of emerging systemic dependencies and accumulation risks.
 "AI adoption creates emerging risk dimensions that do not fit neatly
 within traditional insurance boundaries."
 
