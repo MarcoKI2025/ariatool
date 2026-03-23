@@ -516,6 +516,28 @@ export function ExposureResults() {
           </div>
         </div>
       </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex flex-col sm:flex-row gap-3 mt-8 mb-4">
+        <button
+          onClick={() => {
+            document.dispatchEvent(new CustomEvent('show-exposure-form'));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="flex-1 flex items-center justify-center gap-2 px-5 py-3.5 border border-border rounded-xl font-semibold text-[13px] text-foreground hover:bg-secondary transition-all"
+        >
+          <span>←</span> Edit Profile
+        </button>
+        <button
+          onClick={() => {
+            setActiveStep(2);
+            setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+          }}
+          className="flex-1 flex items-center justify-center gap-2 px-5 py-3.5 bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white rounded-xl font-semibold text-[13px] shadow-lg transition-all"
+        >
+          Decision Intelligence <span>→</span>
+        </button>
+      </div>
     </div>
   );
 }
