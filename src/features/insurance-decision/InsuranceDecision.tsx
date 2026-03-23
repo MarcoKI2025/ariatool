@@ -394,7 +394,7 @@ export function InsuranceDecision() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-[10px]">
           {(band === 'Fragile' ? [
-            { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading understates required reserves by 3–5×. Expected loss: ${lossEnvelope.expected}. Tail risk: ${lossEnvelope.tail}+.` },
+            { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading significantly understates required reserves. Expected loss band: ${lossEnvelope.expected}. Tail risk band: ${lossEnvelope.tail}.` },
             { ic: '⚖', title: 'Regulatory Penalty Exposure', body: 'Active Art. 26 §2 and Art. 72 obligations create immediate Art. 99 §4 exposure of up to €15M or 3% global turnover — independent of any loss event.' },
             { ic: '🌐', title: `Portfolio Contagion: ${lossEnvelope.portfolio}+`, body: `Correlated dependency structures amplify individual loss ${amplificationFactor} across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure.` },
           ] : band === 'Sensitive' ? [
