@@ -150,6 +150,8 @@ export function ExecutiveReport() {
         </p>
       </div>
 
+      <UseRestrictionBanner />
+
       {/* Main verdict */}
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-3">AI Systemic Risk Assessment · Governance Exposure Engine v3.0</div>

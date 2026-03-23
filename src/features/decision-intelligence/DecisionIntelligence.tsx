@@ -35,6 +35,8 @@ export function DecisionIntelligence() {
         </p>
       </div>
 
+      <UseRestrictionBanner />
+
       {/* ═══ HERO BOARD STATEMENT ═══ */}
       <div className="bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">
         <div className="w-1 h-1 rounded-full bg-fragile flex-shrink-0 mt-[7px] opacity-70" />

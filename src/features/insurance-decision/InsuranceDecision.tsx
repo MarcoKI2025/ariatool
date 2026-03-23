@@ -31,6 +31,8 @@ export function InsuranceDecision() {
         </p>
       </div>
 
+      <UseRestrictionBanner />
+
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
       <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${
         band === 'Fragile' ? 'bg-card border-fragile' :

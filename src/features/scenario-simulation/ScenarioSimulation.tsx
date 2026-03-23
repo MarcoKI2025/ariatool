@@ -236,6 +236,8 @@ export function ScenarioSimulation() {
         </p>
       </div>
 
+      <UseRestrictionBanner />
+
       {/* How to interpret */}
       <div className="bg-secondary border border-border rounded-lg p-4 mb-5 text-[11px] text-muted-foreground leading-[1.55]">
         <strong className="text-foreground">How to interpret scenarios:</strong> Each scenario applies stress multipliers to your AFI parameters. The resulting metrics show how exposure escalates across failure types. Best Case = controlled degradation. Expected = typical failure profile. Stress = correlated cascade conditions.
