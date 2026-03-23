@@ -43,6 +43,8 @@ export function DecisionIntelligence() {
 
       <UseRestrictionBanner />
 
+      <SectionDivider title="Board-Level Assessment" icon="◈" subtitle="Executive summary and risk classification" />
+
       {/* ═══ HERO BOARD STATEMENT ═══ */}
       <div className={`bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 flex items-start gap-3 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
         <div className={`w-1 h-1 rounded-full flex-shrink-0 mt-[7px] opacity-70 ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`} />
