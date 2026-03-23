@@ -8,6 +8,8 @@ import { AFIRadar } from '@/components/charts/AFIRadar';
 import { computeFullAnalysis, calcAFI, getBand, getDecisionClass } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
+import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
@@ -182,6 +184,9 @@ export function ExposureResults() {
         </SectionCard>
       </div>
 
+      {/* ═══ QUANTUM VULNERABILITY ASSESSMENT ═══ */}
+      <QuantumVulnerabilityAssessment />
+
       {/* ═══ STEP 1: Diagnosis Banner ═══ */}
       <div className="flex items-center gap-3 mb-4">
         <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">1</div>
@@ -196,7 +201,7 @@ export function ExposureResults() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Risk Status</div><div className="text-[12px] text-foreground leading-[1.55]">{band === 'Fragile' ? 'Committee review required' : band === 'Sensitive' ? 'Conditional review process' : 'Standard underwriting process'}</div></div>
-          <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Required Action</div><div className="text-[12px] text-foreground leading-[1.55]">{band === 'Fragile' ? 'Apply 150–180% premium loading immediately. Structural change required within 90 days.' : band === 'Sensitive' ? 'Apply precautionary loading 80–120%. Governance review required.' : 'Standard terms. Maintain governance cadence.'}</div></div>
+          <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Required Action</div><div className="text-[12px] text-foreground leading-[1.55]">{band === 'Fragile' ? 'Apply significant premium loading immediately. Structural change required within 90 days.' : band === 'Sensitive' ? 'Apply precautionary loading. Governance review required.' : 'Standard terms. Maintain governance cadence.'}</div></div>
           <div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Financial Consequence</div><div className="text-[12px] text-foreground leading-[1.55]">Exposure creates non-linear risk amplification. Tail scenarios materially elevated under correlated failure.</div></div>
         </div>
       </div>
@@ -280,7 +285,7 @@ export function ExposureResults() {
             <div className="text-[12px] text-secondary-foreground">Each operational layer amplifies the preceding disruption.</div>
           </div>
           <div className="flex gap-4 text-left sm:text-right">
-            <div><div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div></div>
+            <div><div className="text-[14px] sm:text-[18px] font-bold font-mono text-fragile">Non-linear</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Amplification Type</div></div>
             <div><div className="text-[14px] sm:text-[18px] font-bold font-mono text-fragile">6–48h</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Propagation Time</div></div>
           </div>
         </div>
@@ -288,10 +293,10 @@ export function ExposureResults() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
-            { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },
-            { icon: '⚖', name: 'Decision Errors', value: '+110%', layer: 'Layer 2', color: 'text-sensitive' },
-            { icon: '📉', name: 'Revenue Impact', value: '+220%', layer: 'Layer 3', color: 'text-fragile' },
-            { icon: '🌐', name: 'Portfolio Contagion', value: '+380%', layer: 'Layer 4', color: 'text-fragile' },
+            { icon: '🔧', name: 'Workflow Disruption', value: 'Elevated', layer: 'Layer 1', color: 'text-sensitive' },
+            { icon: '⚖', name: 'Decision Errors', value: 'Critical', layer: 'Layer 2', color: 'text-sensitive' },
+            { icon: '📉', name: 'Revenue Impact', value: 'Critical', layer: 'Layer 3', color: 'text-fragile' },
+            { icon: '🌐', name: 'Portfolio Contagion', value: 'Systemic', layer: 'Layer 4', color: 'text-fragile' },
           ].map((node, i) => (
             <div key={i} className="text-center px-2 py-3 relative">
               {i < 4 && <span className="absolute right-[-11px] top-[38%] text-muted-foreground text-sm z-[1]">→</span>}
@@ -518,7 +523,7 @@ export function ExposureResults() {
               'Assume reversibility — do not quantify exit costs or switching friction',
               'Ignore shared model dependencies — portfolio-level aggregation never modelled',
               'Stop at point-in-time compliance — continuation without re-authorisation not priced',
-              'Cannot price non-linear loss amplification — standard models underestimate tail risk 3–5×',
+              'Cannot price non-linear loss amplification — standard models underestimate tail risk significantly',
             ].map((t, i) => (
               <div key={i} className="flex items-start gap-2 py-[6px] text-[12px] text-secondary-foreground leading-[1.5]">
                 <span className="text-fragile font-bold flex-shrink-0">✗</span>{t}
@@ -562,6 +567,8 @@ export function ExposureResults() {
           Decision Intelligence <span>→</span>
         </button>
       </div>
+
+      <AppFooter />
     </div>
   );
 }

@@ -4,6 +4,8 @@ import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
+import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
@@ -131,7 +133,7 @@ export function InsuranceDecision() {
             { label: 'Loss Risk Band', value: lossEnvelope.expected, sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
             { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
-            { label: 'Amplification', value: amplificationFactor, sub: 'Non-linear risk signal' },
+            { label: 'Amplification', value: 'Non-linear', sub: 'Not fully captured in traditional models' },
           ].map((m, i) => (
             <div key={i}>
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
@@ -227,7 +229,7 @@ export function InsuranceDecision() {
         </div>
 
         <div className="p-3 bg-secondary border border-border rounded-lg text-[10px] text-muted-foreground">
-          ⚠ Tail risk amplification: Correlated AI infrastructure creates {amplificationFactor} aggregate exposure vs. isolated incidents. Portfolio loss assumes 5 entities with similar AI infrastructure stack.
+          ⚠ Tail risk amplification: Correlated AI infrastructure creates significant non-linear aggregate exposure vs. isolated incidents. Swiss Re sigma insights 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk."
         </div>
       </SectionCard>
 
@@ -240,10 +242,10 @@ export function InsuranceDecision() {
             <div className="text-[14px] sm:text-[16px] font-bold text-foreground mt-[3px] mb-[3px]">How failure travels across systems — and amplifies at each layer</div>
             <div className="text-[12px] text-secondary-foreground">Each operational layer amplifies the preceding disruption.</div>
           </div>
-          <div className="flex gap-4 text-left sm:text-right">
+         <div className="flex gap-4 text-left sm:text-right">
             <div>
-              <div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor}</div>
-              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div>
+              <div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">Non-linear</div>
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Amplification Type</div>
             </div>
             <div>
               <div className="text-[14px] sm:text-[18px] font-bold font-mono text-fragile">6–48h</div>
@@ -288,13 +290,13 @@ export function InsuranceDecision() {
             {band === 'Fragile' ? (<>
               <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
               <div>• <strong className="text-foreground">Standard coverage not justified</strong> — Structural change required before standard rates apply</div>
-              <div>• <strong className="text-foreground">Premium loading mandatory</strong> — 150–180% above standard</div>
+              <div>• <strong className="text-foreground">Premium loading mandatory</strong> — Significant loading above standard required</div>
               <div>• <strong className="text-foreground">Critical risk band: {lossEnvelope.tail}</strong> — Provider concentration and automation factors</div>
               <div>• <strong className="text-foreground">Systemic exposure: {lossEnvelope.portfolio}</strong> — If 5 entities share similar AI infrastructure</div>
             </>) : band === 'Sensitive' ? (<>
               <div>• <strong className="text-foreground">Approaching underwriting threshold</strong> — Elevated structural signals detected</div>
               <div>• <strong className="text-foreground">Conditional coverage available</strong> — With mandatory improvement timeline</div>
-              <div>• <strong className="text-foreground">Premium loading 110–130%</strong> — Above standard baseline</div>
+              <div>• <strong className="text-foreground">Premium loading elevated</strong> — Precautionary loading above standard baseline</div>
               <div>• <strong className="text-foreground">Stress loss band: {lossEnvelope.stress}</strong> — Governance drift scenario</div>
             </>) : (<>
               <div>• <strong className="text-foreground">Within underwriting tolerance</strong> — Standard structural exposure profile</div>
@@ -307,12 +309,12 @@ export function InsuranceDecision() {
         <SectionCard title="Required Actions" icon="⚠">
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
             {band === 'Fragile' ? (<>
-              <div>• <strong className="text-foreground">Apply premium loading (150–180%)</strong> — Mandatory · structural risk exceeds standard pricing</div>
+              <div>• <strong className="text-foreground">Apply significant premium loading</strong> — Mandatory · structural risk exceeds standard pricing</div>
               <div>• <strong className="text-foreground">Require dependency diversification</strong> — Mandatory within 90 days · minimum 3 providers</div>
               <div>• <strong className="text-foreground">Enforce governance cadence</strong> — Condition of coverage · quarterly re-authorisation</div>
               <div>• <strong className="text-foreground">Limit coverage to operational layers</strong> — Recommended · full-stack coverage uneconomic</div>
             </>) : band === 'Sensitive' ? (<>
-              <div>• <strong className="text-foreground">Apply premium loading (110–130%)</strong> — Conditional · elevated structural signals</div>
+              <div>• <strong className="text-foreground">Apply precautionary premium loading</strong> — Conditional · elevated structural signals</div>
               <div>• <strong className="text-foreground">Require governance improvement plan</strong> — Within 90 days · documented milestones</div>
               <div>• <strong className="text-foreground">Monitor structural drift</strong> — Quarterly reassessment mandatory</div>
             </>) : (<>
@@ -715,8 +717,8 @@ export function InsuranceDecision() {
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="space-y-0">
           {[
-            { num: 1, title: 'Apply premium loading 150–180% above standard', badge: 'Required', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', numBg: 'bg-fragile-bg text-fragile', desc: 'Structural risk exceeds standard pricing assumptions. Dependency structures do not compensate for co-activation and aggregation exposure.' },
-            { num: 2, title: 'Require dependency diversification plan within 90 days', badge: 'Required', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', numBg: 'bg-fragile-bg text-fragile', desc: 'Dependency concentration creates correlated loss potential. Diversification across minimum 3 providers reduces aggregate tail risk by 40–60%.' },
+            { num: 1, title: 'Apply significant premium loading above standard', badge: 'Required', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', numBg: 'bg-fragile-bg text-fragile', desc: 'Structural risk exceeds standard pricing assumptions. Dependency structures do not compensate for co-activation and aggregation exposure.' },
+            { num: 2, title: 'Require dependency diversification plan within 90 days', badge: 'Required', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', numBg: 'bg-fragile-bg text-fragile', desc: 'Dependency concentration creates correlated loss potential. Diversification across minimum 3 providers reduces aggregate tail risk. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic risk."' },
             { num: 3, title: 'Limit coverage to operational layers only', badge: 'Recommended', badgeColor: 'bg-sensitive-bg text-sensitive border-sensitive-border', numBg: 'bg-sensitive-bg text-sensitive', desc: 'Lock-in depth makes full-stack coverage uneconomic. Limiting scope to operational disruption reduces reserve requirements.' },
             { num: 4, title: 'Mandate governance cadence as coverage condition', badge: 'Condition', badgeColor: 'bg-sensitive-bg text-sensitive border-sensitive-border', numBg: 'bg-sensitive-bg text-sensitive', desc: 'Without re-authorisation cadence, risk accumulates indefinitely. Formal quarterly review required to maintain coverage terms.' },
             { num: 5, title: 'Exclude autonomous execution liability', badge: 'Exclusion', badgeColor: 'bg-secondary text-muted-foreground border-border', numBg: 'bg-secondary text-muted-foreground', desc: 'Agentic exposure exceeds conventional governance frameworks. Autonomous actions require separate liability classification.' },
@@ -767,7 +769,7 @@ export function InsuranceDecision() {
             { title: 'Solvency II — ORSA Integration', desc: 'EU insurers must integrate AI governance risk into the Own Risk and Solvency Assessment (ORSA) under Solvency II Art. 45. AFI scores from your own AI deployments are directly relevant ORSA inputs.' },
             { title: 'Solvency II Art. 44/46 — Internal Control & Audit', desc: 'Art. 44 requires an effective internal control system — which must cover AI-assisted decision-making. Art. 46 requires internal audit independence.' },
             { title: 'DORA — Digital Operational Resilience', desc: 'As of Jan 2025, DORA applies to EU insurers — requiring ICT risk management, third-party provider oversight, and incident reporting. AI provider concentration is a direct DORA ICT third-party concentration risk.' },
-            { title: 'Reserving Implications', desc: 'Issuing AI liability coverage without a structural governance assessment creates reserve risk. AFI-based underwriting protects reserve adequacy — standard cyber pricing systematically underestimates AI governance exposure by 3–5×.' },
+            { title: 'Reserving Implications', desc: 'Issuing AI liability coverage without a structural governance assessment creates reserve risk. AFI-based underwriting protects reserve adequacy — standard cyber pricing systematically underestimates AI governance exposure.' },
           ].map((item, i) => (
             <div key={i} className="bg-card border border-border rounded-lg p-3">
               <div className="text-[10px] font-bold text-foreground mb-1">{item.title}</div>

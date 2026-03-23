@@ -293,15 +293,15 @@ export function DecisionIntelligence() {
             {/* Action items */}
             <div className="flex flex-col gap-[7px]">
               {(band === 'Fragile' ? [
-                { cls: 'bg-fragile-bg border-fragile-border', badge: 'Critical', badgeCls: 'bg-fragile-bg text-fragile border border-fragile-border', t: 'Apply mandatory premium loading (150–180%)', s: 'Below this loading, reserves are structurally understated by 3–5×.' },
-                { cls: 'bg-fragile-bg border-fragile-border', badge: 'Critical', badgeCls: 'bg-fragile-bg text-fragile border border-fragile-border', t: 'Require dependency diversification within 90 days', s: `Current provider concentration creates single points of failure — correlated exposure ${amplificationFactor}.` },
+                { cls: 'bg-fragile-bg border-fragile-border', badge: 'Critical', badgeCls: 'bg-fragile-bg text-fragile border border-fragile-border', t: 'Apply mandatory premium loading', s: 'Below adequate loading, reserves are structurally understated.' },
+                { cls: 'bg-fragile-bg border-fragile-border', badge: 'Critical', badgeCls: 'bg-fragile-bg text-fragile border border-fragile-border', t: 'Require dependency diversification within 90 days', s: 'Current provider concentration creates single points of failure — significant non-linear amplification across operational layers.' },
                 { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Condition', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Institute quarterly governance re-authorisation', s: 'Without re-authorisation cadence, structural risk accumulates without upper bound.' },
                 { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Required', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Commission exit feasibility assessment', s: `ECI tier indicates institutional dependency — exit path must be documented before next renewal.` },
-                { cls: 'bg-purple-bg border-purple-border', badge: 'Recommended', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Initiate cross-system cascade impact study', s: `Amplification factor ${amplificationFactor} suggests non-linear portfolio exposure. Reinsurance treaty review warranted.` },
+                { cls: 'bg-purple-bg border-purple-border', badge: 'Recommended', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Initiate cross-system cascade impact study', s: 'Significant non-linear amplification across operational layers — not fully captured in traditional risk models (Swiss Re sigma insights 01/2026). Reinsurance treaty review warranted.' },
               ] : band === 'Sensitive' ? [
                 { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Required', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Increase governance review cadence to quarterly', s: 'Current oversight level is insufficient given dependency concentration trajectory.' },
                 { cls: 'bg-sensitive-bg border-sensitive-border', badge: 'Required', badgeCls: 'bg-sensitive-bg text-sensitive border border-sensitive-border', t: 'Document and test dependency exit paths', s: 'Reversibility cost is elevated — exit capability must be verified before it becomes operationally infeasible.' },
-                { cls: 'bg-purple-bg border-purple-border', badge: 'Recommended', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Apply precautionary premium loading (80–120%)', s: 'Below Fragile threshold, but trajectory warrants proactive pricing adjustment.' },
+                { cls: 'bg-purple-bg border-purple-border', badge: 'Recommended', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Apply precautionary premium loading', s: 'Below Fragile threshold, but trajectory warrants proactive pricing adjustment.' },
               ] : [
                 { cls: 'bg-purple-bg border-purple-border', badge: 'Maintain', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Continue governance cadence — re-assess annually', s: 'Current profile is within tolerance. Structural changes require re-assessment.' },
                 { cls: 'bg-purple-bg border-purple-border', badge: 'Monitor', badgeCls: 'bg-purple-bg text-primary border border-purple-border', t: 'Monitor delegation density and dependency concentration', s: 'Key drift vectors to watch — both tend to increase silently over time.' },
@@ -412,7 +412,7 @@ export function DecisionIntelligence() {
             { label: 'Loss Risk Band', value: lossEnvelope.expected, sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
             { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
-            { label: 'Amplification', value: amplificationFactor, sub: 'Non-linear risk signal' },
+            { label: 'Amplification', value: 'Non-linear', sub: 'Not fully captured in traditional models' },
           ].map((m, i) => (
             <div key={i}>
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
@@ -492,7 +492,7 @@ export function DecisionIntelligence() {
         <div className="bg-card border border-border rounded-[10px] p-4">
           <div className="text-[11px] font-bold text-foreground mb-2">Portfolio Contagion</div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
-            Shared AI infrastructure creates correlated exposure — {amplificationFactor} cascade amplification across 5 layers.
+            Shared AI infrastructure creates correlated exposure — significant non-linear amplification across operational layers (Swiss Re sigma insights 01/2026).
           </div>
         </div>
       </SectionCard>
