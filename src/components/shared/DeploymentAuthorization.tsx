@@ -33,7 +33,7 @@ const STATUS_CONFIG: Record<AuthStatus, { bg: string; border: string; text: stri
     border: 'border-sensitive',
     text: 'text-sensitive',
     icon: '⚠',
-    sentence: (name) => `Deployment of ${name} is CONDITIONALLY AUTHORIZED — mandatory governance improvements required within 90 days.`,
+    sentence: (name) => `Deployment of ${name} is conditionally acceptable with additional oversight and control mechanisms.`,
   },
   'NOT APPROVED': {
     bg: 'bg-fragile-bg',
