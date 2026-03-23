@@ -7,6 +7,7 @@ import { AFIGauge } from '@/components/charts/AFIGauge';
 import { AFIRadar } from '@/components/charts/AFIRadar';
 import { computeFullAnalysis, calcAFI, getBand, getDecisionClass } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
+import { LiveIndicator } from '@/components/shared/LiveIndicator';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
