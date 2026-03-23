@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { calcAFI, getBand, computeAFIComponents, getBandClass } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
-import { DEFAULT_INPUTS } from '@/lib/constants';
+import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
 import { DependencyNetwork } from './DependencyNetwork';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
