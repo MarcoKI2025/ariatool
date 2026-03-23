@@ -156,6 +156,7 @@ export function IntegrationHub() {
           </p>
           <LiveIndicator label="Platform active" size="sm" />
         </div>
+      </div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
