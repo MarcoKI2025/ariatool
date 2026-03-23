@@ -33,14 +33,14 @@ export function CompanyDemoOverlay() {
   return (
     <div className="fixed inset-0 z-[1200] bg-black/60 backdrop-blur-sm overflow-y-auto flex flex-col" onClick={() => setOpen(false)}>
       <div className="max-w-[960px] w-full mx-auto p-10 pb-16" onClick={e => e.stopPropagation()}>
-        <div className="bg-card border border-border rounded-2xl p-8 shadow-xl">
-          <div className="flex items-start justify-between mb-9">
+        <div className="bg-card border border-border rounded-2xl p-6 sm:p-8 shadow-xl">
+          <div className="flex items-start justify-between mb-6 sm:mb-9">
             <div>
               <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-stable mb-2 flex items-center gap-2">
                 <div className="w-[6px] h-[6px] rounded-full bg-stable animate-pulse-dot" />
-                Company Demo · 3 Scenarios
+                Company Demo · {demoProfiles.length} Scenarios
               </div>
-              <div className="text-4xl font-bold text-foreground tracking-tight leading-[1.1] mb-[10px]">
+              <div className="text-2xl sm:text-4xl font-bold text-foreground tracking-tight leading-[1.1] mb-[10px]">
                 See the <span className="text-stable">Executive View</span> in action
               </div>
               <div className="text-sm text-muted-foreground max-w-[520px] leading-relaxed">
@@ -50,30 +50,84 @@ export function CompanyDemoOverlay() {
             <button onClick={() => setOpen(false)} className="w-9 h-9 rounded-lg bg-secondary border border-border text-muted-foreground hover:text-foreground flex items-center justify-center text-base">✕</button>
           </div>
 
-          <div className="grid grid-cols-3 gap-[14px] mb-8">
-            {demoProfiles.map((p, i) => (
-              <button
-                key={i}
-                onClick={() => setSelected(i)}
-                className={`text-left bg-secondary border rounded-xl p-5 transition-all hover:border-primary/40 hover:shadow-md hover:-translate-y-[2px] flex flex-col gap-[10px] relative overflow-hidden ${
-                  selected === i ? 'border-stable bg-stable-bg' : 'border-border'
-                }`}
-              >
-                <div className={`absolute top-0 left-0 right-0 h-[3px] rounded-t-xl opacity-60 ${
-                  p.band === 'Fragile' ? 'bg-gradient-to-r from-fragile to-fragile/50' :
-                  p.band === 'Sensitive' ? 'bg-gradient-to-r from-sensitive to-sensitive/50' :
-                  'bg-gradient-to-r from-stable to-stable/50'
-                }`} />
-                <div className="text-sm font-bold text-foreground">{p.name}</div>
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{p.industry}</div>
-                <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1">{p.description}</div>
-                <div className={`text-[9px] font-bold uppercase tracking-wider px-2 py-[3px] rounded w-fit ${
-                  p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
-                }`}>{p.band}</div>
-                <div className="text-[11px] font-bold font-mono text-muted-foreground">{p.premiumEstimate}</div>
-              </button>
-            ))}
+          {/* Fictional Profiles */}
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2 px-1">Fictional Scenarios</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+            {demoProfiles.filter(p => !p.caseStudy).map((p, i) => {
+              const idx = demoProfiles.indexOf(p);
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setSelected(idx)}
+                  className={`text-left bg-secondary border rounded-xl p-4 transition-all hover:border-primary/40 hover:shadow-md flex flex-col gap-2 relative overflow-hidden ${
+                    selected === idx ? 'border-stable bg-stable-bg' : 'border-border'
+                  }`}
+                >
+                  <div className={`absolute top-0 left-0 right-0 h-[3px] rounded-t-xl opacity-60 ${
+                    p.band === 'Fragile' ? 'bg-gradient-to-r from-fragile to-fragile/50' :
+                    p.band === 'Sensitive' ? 'bg-gradient-to-r from-sensitive to-sensitive/50' :
+                    'bg-gradient-to-r from-stable to-stable/50'
+                  }`} />
+                  <div className="text-sm font-bold text-foreground">{p.name}</div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{p.industry}</div>
+                  <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1 line-clamp-2">{p.description}</div>
+                  <div className="flex items-center gap-2">
+                    <div className={`text-[9px] font-bold uppercase tracking-wider px-2 py-[3px] rounded w-fit ${
+                      p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
+                    }`}>{p.band}</div>
+                    <div className="text-[11px] font-bold font-mono text-muted-foreground">{p.premiumEstimate}</div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
+
+          {/* Real Case Studies */}
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2 px-1 flex items-center gap-2">
+            <span className="text-fragile">◆</span> Real-World Case Studies — Retrospective Validation
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+            {demoProfiles.filter(p => p.caseStudy).map((p) => {
+              const idx = demoProfiles.indexOf(p);
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setSelected(idx)}
+                  className={`text-left bg-secondary border rounded-xl p-4 transition-all hover:border-fragile/40 hover:shadow-md flex flex-col gap-2 relative overflow-hidden ${
+                    selected === idx ? 'border-fragile bg-fragile/5' : 'border-border'
+                  }`}
+                >
+                  <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-xl bg-gradient-to-r from-fragile to-fragile/50 opacity-80" />
+                  <div className="flex items-center gap-2">
+                    <div className="text-sm font-bold text-foreground">{p.name}</div>
+                    <span className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-fragile/10 text-fragile border border-fragile/20">Case Study</span>
+                  </div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{p.industry} · {p.caseStudy!.incidentDate}</div>
+                  <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1 line-clamp-2">{p.description}</div>
+                  <div className="text-[9px] text-fragile font-semibold">Actual Loss: {p.caseStudy!.actualLoss}</div>
+                  <div className="text-[9px] text-muted-foreground font-mono">ARIA: {p.caseStudy!.ariaPrediction}</div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Case Study Banner (shown when a real case is selected) */}
+          {selected !== null && demoProfiles[selected]?.caseStudy && (
+            <div className="mb-5 p-4 rounded-xl border border-fragile/30 bg-fragile/5">
+              <div className="flex items-start gap-3">
+                <div className="text-fragile text-lg">⚠</div>
+                <div>
+                  <div className="text-[11px] font-bold text-foreground mb-1">Retrospective Case Study — {demoProfiles[selected].name}</div>
+                  <div className="text-[10px] text-muted-foreground leading-relaxed mb-2">
+                    Actual Loss: <span className="font-semibold text-fragile">{demoProfiles[selected].caseStudy!.actualLoss}</span>
+                    <span className="mx-2">·</span>
+                    ARIA Prediction: <span className="font-semibold text-foreground">{demoProfiles[selected].caseStudy!.ariaPrediction}</span>
+                  </div>
+                  <div className="text-[9px] text-muted-foreground italic">Source: {demoProfiles[selected].caseStudy!.source}</div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="flex justify-center">
             <button
