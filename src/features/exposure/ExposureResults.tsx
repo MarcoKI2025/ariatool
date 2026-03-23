@@ -288,10 +288,10 @@ export function ExposureResults() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
-            { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },
-            { icon: '⚖', name: 'Decision Errors', value: '+110%', layer: 'Layer 2', color: 'text-sensitive' },
-            { icon: '📉', name: 'Revenue Impact', value: '+220%', layer: 'Layer 3', color: 'text-fragile' },
-            { icon: '🌐', name: 'Portfolio Contagion', value: '+380%', layer: 'Layer 4', color: 'text-fragile' },
+            { icon: '🔧', name: 'Workflow Disruption', value: 'Elevated', layer: 'Layer 1', color: 'text-sensitive' },
+            { icon: '⚖', name: 'Decision Errors', value: 'Critical', layer: 'Layer 2', color: 'text-sensitive' },
+            { icon: '📉', name: 'Revenue Impact', value: 'Critical', layer: 'Layer 3', color: 'text-fragile' },
+            { icon: '🌐', name: 'Portfolio Contagion', value: 'Systemic', layer: 'Layer 4', color: 'text-fragile' },
           ].map((node, i) => (
             <div key={i} className="text-center px-2 py-3 relative">
               {i < 4 && <span className="absolute right-[-11px] top-[38%] text-muted-foreground text-sm z-[1]">→</span>}
