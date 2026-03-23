@@ -894,17 +894,26 @@ export function InsuranceDecision() {
         </div>
       </div>
 
-      {/* ═══ PREMIUM CALCULATOR ═══ */}
+      </>)}
+
+      {/* ═══ TAB: PREMIUM CALCULATOR ═══ */}
+      {activeTab === 'premium' && (<>
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg">💰</span>
           <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">New · Actuarial Pricing</div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary">Actuarial Pricing</div>
             <div className="text-[15px] font-bold text-foreground">Premium Calculator</div>
           </div>
         </div>
         <PremiumCalculator />
       </div>
+      </>)}
+
+      {/* ═══ TAB: PARAMETRIC TRIGGERS ═══ */}
+      {activeTab === 'parametric' && (<>
+      <EducationalParametricSimulator />
+      </>)}
 
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
