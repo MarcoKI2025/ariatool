@@ -156,12 +156,12 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             <div className="flex items-start gap-2">
               <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${components.jd < 0.5 ? 'bg-fragile' : 'bg-stable'}`} />
               <div>
-                <div className="text-[11px] font-semibold text-foreground">
-                  {components.jd < 0.4 ? 'Audit trail insufficient for regulatory defense' : 'Audit trail partially established'}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  Current justificatory density would {components.jd < 0.4 ? 'not withstand regulatory examination' : 'require strengthening for formal examination'}
-                </div>
+                 <div className="text-[11px] font-semibold text-foreground">
+                   {components.jd < 0.4 ? 'Audit trail may not support regulatory examination' : 'Audit trail partially established'}
+                 </div>
+                 <div className="text-[10px] text-muted-foreground">
+                   Current justificatory density would {components.jd < 0.4 ? 'likely require strengthening for formal examination' : 'benefit from strengthening for formal examination'}
+                 </div>
               </div>
             </div>
           </div>
