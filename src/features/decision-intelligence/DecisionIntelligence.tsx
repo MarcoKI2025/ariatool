@@ -251,23 +251,33 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      {/* ═══ "THIS MEANS" CALLOUT ═══ */}
-      <div className={`bg-card rounded-xl p-5 mb-4 border-l-4 border border-border flex items-start gap-[14px] ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
-        <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
-          band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
-        }`}>
-          <span className="text-[11px] text-foreground font-bold">!</span>
+      {/* ═══ GOVERNANCE DECISION SIGNAL ═══ */}
+      <div className={`p-4 rounded-xl border-2 mb-4 ${
+        results.decisionClass === 'Approved' ? 'bg-stable-bg border-stable' :
+        results.decisionClass === 'Conditional Review' ? 'bg-sensitive-bg border-sensitive' :
+        'bg-fragile-bg border-fragile'
+      }`}>
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-[11px] font-bold tracking-wide uppercase text-muted-foreground">
+            Governance Decision Signal
+          </div>
+          <span className={`px-3 py-1 rounded-full text-[11px] font-bold ${
+            results.decisionClass === 'Approved' ? 'bg-stable text-white' :
+            results.decisionClass === 'Conditional Review' ? 'bg-sensitive text-white' :
+            'bg-fragile text-white'
+          }`}>
+            {results.decisionClass}
+          </span>
         </div>
-        <div>
-          <div className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground font-bold mb-[5px]">This Means</div>
-          <div className="text-[16px] font-bold text-foreground leading-[1.3]">
-            {band === 'Fragile' ? 'Standard coverage is not justified. Apply mandatory premium loading and require structural remediation before renewal.' :
-             band === 'Sensitive' ? 'Conditional coverage — structural improvements required within 90 days.' :
-             'Standard coverage terms apply. Maintain governance cadence.'}
-          </div>
-          <div className="text-[12px] text-muted-foreground mt-2 leading-[1.5]">
-            Risk characterization based on structural governance factors: AFI score, delegation depth, provider concentration, continuation risk, justificatory density. Swiss Re sigma insights 01/2026: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries." EU AI Act Art. 99 penalty exposure shown separately. Framework ≠ guarantee.
-          </div>
+        <div className="text-[11px] text-foreground font-semibold mb-2">
+          {results.decisionClass === 'Approved' && 'Structural risk within acceptable governance parameters'}
+          {results.decisionClass === 'Conditional Review' && 'Governance drift detected — enhanced monitoring recommended'}
+          {results.decisionClass === 'Escalate to Committee' && 'High structural fragility — committee review required'}
+        </div>
+        <div className="text-[10px] text-muted-foreground">
+          This signal is derived from governance risk factors (delegation depth, audit density,
+          reversibility cost, provider concentration). Requires human review by qualified underwriters
+          and corroboration with actuarial risk assessment for final coverage decisions.
         </div>
       </div>
 
