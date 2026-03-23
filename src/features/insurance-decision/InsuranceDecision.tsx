@@ -307,12 +307,12 @@ export function InsuranceDecision() {
         <SectionCard title="Required Actions" icon="⚠">
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
             {band === 'Fragile' ? (<>
-              <div>• <strong className="text-foreground">Apply premium loading (150–180%)</strong> — Mandatory · structural risk exceeds standard pricing</div>
+              <div>• <strong className="text-foreground">Apply significant premium loading</strong> — Mandatory · structural risk exceeds standard pricing</div>
               <div>• <strong className="text-foreground">Require dependency diversification</strong> — Mandatory within 90 days · minimum 3 providers</div>
               <div>• <strong className="text-foreground">Enforce governance cadence</strong> — Condition of coverage · quarterly re-authorisation</div>
               <div>• <strong className="text-foreground">Limit coverage to operational layers</strong> — Recommended · full-stack coverage uneconomic</div>
             </>) : band === 'Sensitive' ? (<>
-              <div>• <strong className="text-foreground">Apply premium loading (110–130%)</strong> — Conditional · elevated structural signals</div>
+              <div>• <strong className="text-foreground">Apply precautionary premium loading</strong> — Conditional · elevated structural signals</div>
               <div>• <strong className="text-foreground">Require governance improvement plan</strong> — Within 90 days · documented milestones</div>
               <div>• <strong className="text-foreground">Monitor structural drift</strong> — Quarterly reassessment mandatory</div>
             </>) : (<>
