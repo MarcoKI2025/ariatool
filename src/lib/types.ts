@@ -117,6 +117,7 @@ export interface DemoProfile {
   name: string;
   industry: string;
   size: string;
+  revenue?: string;
   description: string;
   afi: number;
   band: Band;
