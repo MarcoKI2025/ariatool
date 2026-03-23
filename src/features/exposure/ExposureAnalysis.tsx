@@ -123,11 +123,10 @@ export function ExposureAnalysis() {
             <button
               key={i}
               onClick={() => setInputs(applyDemoProfile(p))}
-              className="text-center p-3 rounded-[9px] border border-border bg-secondary-hover hover:bg-secondary-active hover:border-primary transition-all cursor-pointer flex flex-col items-center gap-1"
+              className="text-center p-3 rounded-[9px] border border-border bg-card shadow-sm hover:border-primary hover:shadow-md hover:-translate-y-[1px] transition-all cursor-pointer flex flex-col items-center gap-1"
             >
-              <div className="text-[10px] font-bold text-foreground leading-[1.3] text-center mb-[2px]">{p.id}</div>
-              <div className="text-[10px] font-bold text-foreground leading-[1.3] text-center">{p.name}</div>
-              <div className="text-[9px] text-secondary-foreground font-medium mt-[1px]">{p.industry}</div>
+              <div className="text-[11px] font-bold text-foreground leading-[1.3] text-center">{p.name}</div>
+              <div className="text-[9px] text-muted-foreground font-medium mt-[1px]">{p.industry}</div>
               <div className={`mt-[3px] text-[8px] font-bold uppercase tracking-[0.06em] px-[7px] py-[2px] rounded-[3px] ${
                 p.band === 'Fragile' ? 'badge-fragile' :
                 p.band === 'Sensitive' ? 'badge-sensitive' :

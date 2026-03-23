@@ -121,6 +121,7 @@ export interface DemoProfile {
   afi: number;
   band: Band;
   premiumEstimate: string;
+  useCases?: string[];
   sliders: Record<string, number>;
   dependencies: string[];
   signals: string[];

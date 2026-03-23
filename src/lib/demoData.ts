@@ -11,6 +11,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
     afi: 2.23,
     band: 'Fragile',
     premiumEstimate: '€420k–€680k',
+    useCases: ['Autonomous Operations', 'Fraud Detection', 'Risk Assessment', 'Predictive Analytics'],
     sliders: {
       automation: 4, criticality: 5, integrationDepth: 4, workflowBreadth: 4,
       executionAuthority: 4, actionDensity: 3, toolCallScope: 4,
@@ -39,6 +40,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
     afi: 1.08,
     band: 'Sensitive',
     premiumEstimate: '€210k–€340k',
+    useCases: ['Decision Support', 'Predictive Analytics', 'Risk Assessment'],
     sliders: {
       automation: 4, criticality: 5, integrationDepth: 3, workflowBreadth: 3,
       executionAuthority: 3, actionDensity: 3, toolCallScope: 3,
@@ -66,6 +68,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
     afi: 1.85,
     band: 'Fragile',
     premiumEstimate: '€350k–€550k',
+    useCases: ['Document Processing', 'Decision Support', 'Compliance Monitoring'],
     sliders: {
       automation: 4, criticality: 4, integrationDepth: 5, workflowBreadth: 3,
       executionAuthority: 3, actionDensity: 4, toolCallScope: 3,
@@ -93,6 +96,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
     afi: 0.92,
     band: 'Sensitive',
     premiumEstimate: '€140k–€220k',
+    useCases: ['Predictive Analytics', 'Customer Service Automation', 'Decision Support'],
     sliders: {
       automation: 3, criticality: 3, integrationDepth: 3, workflowBreadth: 4,
       executionAuthority: 3, actionDensity: 3, toolCallScope: 3,
@@ -119,6 +123,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
     afi: 0.47,
     band: 'Stable',
     premiumEstimate: '€80k–€140k',
+    useCases: ['Decision Support', 'Document Processing', 'Compliance Monitoring'],
     sliders: {
       automation: 2, criticality: 3, integrationDepth: 2, workflowBreadth: 2,
       executionAuthority: 1, actionDensity: 1, toolCallScope: 2,
@@ -147,7 +152,7 @@ export function applyDemoProfile(profile: DemoProfile): ExposureInputs {
     industry: profile.industry,
     size: profile.size,
     revenue: '',
-    useCases: [],
+    useCases: profile.useCases || [],
     providers: profile.dependencies,
     automation: profile.sliders.automation ?? 3,
     criticality: profile.sliders.criticality ?? 3,
