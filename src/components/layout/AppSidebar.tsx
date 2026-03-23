@@ -87,6 +87,11 @@ export function AppSidebar() {
         })}
       </nav>
 
+      {/* Live Risk Feed */}
+      <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block border-t border-border`}>
+        <LiveRiskFeed />
+      </div>
+
       {/* Session status - bottom of sidebar */}
       <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-4 py-3 border-t border-border`}>
         <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border ${
