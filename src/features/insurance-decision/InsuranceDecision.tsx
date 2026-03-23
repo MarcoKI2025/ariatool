@@ -283,19 +283,41 @@ export function InsuranceDecision() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         <SectionCard title="Risk Position" icon="📋">
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
-            <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
-            <div>• <strong className="text-foreground">Standard coverage not justified</strong> — Structural change required before standard rates apply</div>
-            <div>• <strong className="text-foreground">Premium loading mandatory</strong> — 150–180% above standard</div>
-            <div>• <strong className="text-foreground">Critical risk band: {formatCurrency(lossEnvelope.tail)}</strong> — Provider concentration and automation factors</div>
-            <div>• <strong className="text-foreground">Systemic exposure: {formatCurrency(lossEnvelope.portfolio)}</strong> — If 5 entities share similar AI infrastructure</div>
+            {band === 'Fragile' ? (<>
+              <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
+              <div>• <strong className="text-foreground">Standard coverage not justified</strong> — Structural change required before standard rates apply</div>
+              <div>• <strong className="text-foreground">Premium loading mandatory</strong> — 150–180% above standard</div>
+              <div>• <strong className="text-foreground">Critical risk band: {formatCurrency(lossEnvelope.tail)}</strong> — Provider concentration and automation factors</div>
+              <div>• <strong className="text-foreground">Systemic exposure: {formatCurrency(lossEnvelope.portfolio)}</strong> — If 5 entities share similar AI infrastructure</div>
+            </>) : band === 'Sensitive' ? (<>
+              <div>• <strong className="text-foreground">Approaching underwriting threshold</strong> — Elevated structural signals detected</div>
+              <div>• <strong className="text-foreground">Conditional coverage available</strong> — With mandatory improvement timeline</div>
+              <div>• <strong className="text-foreground">Premium loading 110–130%</strong> — Above standard baseline</div>
+              <div>• <strong className="text-foreground">Stress loss band: {formatCurrency(lossEnvelope.stress)}</strong> — Governance drift scenario</div>
+            </>) : (<>
+              <div>• <strong className="text-foreground">Within underwriting tolerance</strong> — Standard structural exposure profile</div>
+              <div>• <strong className="text-foreground">Standard coverage terms apply</strong> — No mandatory premium loading</div>
+              <div>• <strong className="text-foreground">Expected loss band: {formatCurrency(lossEnvelope.expected)}</strong> — Standard scenario</div>
+              <div>• <strong className="text-foreground">Routine monitoring</strong> — Annual reassessment at renewal</div>
+            </>)}
           </div>
         </SectionCard>
         <SectionCard title="Required Actions" icon="⚠">
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
-            <div>• <strong className="text-foreground">Apply premium loading (150–180%)</strong> — Mandatory · structural risk exceeds standard pricing</div>
-            <div>• <strong className="text-foreground">Require dependency diversification</strong> — Mandatory within 90 days · minimum 3 providers</div>
-            <div>• <strong className="text-foreground">Enforce governance cadence</strong> — Condition of coverage · quarterly re-authorisation</div>
-            <div>• <strong className="text-foreground">Limit coverage to operational layers</strong> — Recommended · full-stack coverage uneconomic</div>
+            {band === 'Fragile' ? (<>
+              <div>• <strong className="text-foreground">Apply premium loading (150–180%)</strong> — Mandatory · structural risk exceeds standard pricing</div>
+              <div>• <strong className="text-foreground">Require dependency diversification</strong> — Mandatory within 90 days · minimum 3 providers</div>
+              <div>• <strong className="text-foreground">Enforce governance cadence</strong> — Condition of coverage · quarterly re-authorisation</div>
+              <div>• <strong className="text-foreground">Limit coverage to operational layers</strong> — Recommended · full-stack coverage uneconomic</div>
+            </>) : band === 'Sensitive' ? (<>
+              <div>• <strong className="text-foreground">Apply premium loading (110–130%)</strong> — Conditional · elevated structural signals</div>
+              <div>• <strong className="text-foreground">Require governance improvement plan</strong> — Within 90 days · documented milestones</div>
+              <div>• <strong className="text-foreground">Monitor structural drift</strong> — Quarterly reassessment mandatory</div>
+            </>) : (<>
+              <div>• <strong className="text-foreground">Maintain governance cadence</strong> — Annual reassessment at renewal</div>
+              <div>• <strong className="text-foreground">Monitor for structural changes</strong> — Report material changes to underwriter</div>
+              <div>• <strong className="text-foreground">Standard monitoring applies</strong> — No immediate remediation required</div>
+            </>)}
           </div>
         </SectionCard>
       </div>
