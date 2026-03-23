@@ -268,7 +268,9 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
 
 export function computeLivePreview(inputs: ExposureInputs) {
   const components = computeAFIComponents(inputs);
-  const afi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
+  const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
+  const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
+  const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
   const band = getBand(afi);
   const score = Math.min(99, Math.round(afi * 60));
 
@@ -284,6 +286,8 @@ export function computeLivePreview(inputs: ExposureInputs) {
   if (inputs.shadowAI >= 3) signals.push({ text: 'Shadow AI risk — uncontrolled AI deployments', color: 'sensitive' });
   if (inputs.useCases.includes('Autonomous Operations')) signals.push({ text: 'Autonomous operations selected — elevated delegation risk', color: 'fragile' });
   if (inputs.useCases.length >= 5) signals.push({ text: 'Broad AI use case portfolio — increased attack surface', color: 'sensitive' });
+  if (['Enterprise (1000–10000)', 'Large Enterprise (10000+)'].includes(inputs.size)) signals.push({ text: 'Large organisation — elevated systemic exposure and regulatory scrutiny', color: 'sensitive' });
+  if (['€500M–€5B', 'Over €5B'].includes(inputs.revenue)) signals.push({ text: 'High revenue — amplified absolute loss exposure', color: 'sensitive' });
   if (signals.length === 0) signals.push({ text: 'Governance signals within normal range', color: 'stable' });
 
   return { afi, band, score, signals, components };
