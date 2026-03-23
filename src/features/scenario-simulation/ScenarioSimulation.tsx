@@ -277,7 +277,7 @@ export function ScenarioSimulation() {
         ].map((m, i) => (
           <div key={i} className="bg-card border border-border rounded-xl p-4 text-center">
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{m.label}</div>
-            <div className={`text-[36px] font-bold font-mono leading-none ${tierColor(m.value)}`}>{m.value}</div>
+            <div className={`text-[28px] sm:text-[36px] font-bold font-mono leading-none ${tierColor(m.value)}`}>{m.value}</div>
             <div className="text-[10px] text-muted-foreground mt-1">{m.sub}</div>
           </div>
         ))}
