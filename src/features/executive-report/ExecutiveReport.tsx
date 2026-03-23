@@ -654,8 +654,7 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           </button>
         </div>
       </div>
-
-      {/* ═══ ONE-PAGER PDF PREVIEW OVERLAY ═══ */}
+      </>)}
       {showOnePager && (
         <div className="fixed inset-0 bg-black/70 z-[3000] flex items-start justify-center p-6 overflow-y-auto" onClick={() => setShowOnePager(false)}>
           <div className="bg-white w-[820px] max-w-full rounded shadow-2xl" onClick={e => e.stopPropagation()} style={{ fontFamily: 'Inter, sans-serif', color: '#141410' }}>
