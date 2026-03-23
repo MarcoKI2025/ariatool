@@ -487,6 +487,8 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
+      <SectionDivider title="Advanced Stress Testing" icon="🧪" subtitle="Robustness testing, agentic risk, parametric triggers" />
+
       {/* ═══ ROBUSTNESS TESTING ═══ */}
       <RobustnessTestingPanel inputs={inputs} baseAfi={afi} />
 
