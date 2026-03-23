@@ -7,6 +7,7 @@ import { Chart, ArcElement, DoughnutController } from 'chart.js';
 import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
 import { SliderRow, SectionCard, InfoTip } from '@/components/shared/UIComponents';
 import { TOOLTIPS } from '@/lib/tooltips';
+import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
 import type { ExposureInputs } from '@/lib/types';
 
 Chart.register(ArcElement, DoughnutController);
