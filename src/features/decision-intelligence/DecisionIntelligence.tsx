@@ -144,11 +144,19 @@ export function DecisionIntelligence() {
       }`}>
         <div className={`text-[9px] font-bold tracking-wider uppercase mb-2 ${bandColor}`}>Key Structural Signals</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {[
-            'System persists without explicit re-authorisation',
-            'Dependency cannot be reversed without operational disruption',
-            'Shared model infrastructure creates correlated portfolio exposure',
-          ].map((sig, i) => (
+          {(band === 'Fragile' ? [
+            'System persists without explicit re-authorisation — liability accumulates',
+            'Dependency cannot be reversed without major operational disruption',
+            'Shared infrastructure creates correlated portfolio-level exposure',
+          ] : band === 'Sensitive' ? [
+            'Governance gaps emerging in re-authorisation cadence',
+            'Dependency exit paths exist but are not documented or tested',
+            'Moderate infrastructure correlation — monitor for concentration drift',
+          ] : [
+            'Re-authorisation cadence is adequate for current deployment',
+            'Dependency exit paths are available — low structural lock-in',
+            'Infrastructure diversification reduces correlated exposure',
+          ]).map((sig, i) => (
             <div key={i} className={`flex items-start gap-2 p-2 rounded-md border ${
               band === 'Fragile' ? 'border-fragile-border' : band === 'Sensitive' ? 'border-sensitive-border' : 'border-stable-border'
             }`}>
