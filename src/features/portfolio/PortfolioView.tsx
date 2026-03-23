@@ -35,11 +35,23 @@ function MetricCell({ label, value }: { label: string; value: string }) {
 
 export function PortfolioView() {
   const { state } = useApp();
+  const analysisInputs = state.inputs;
+  const hasAnalysis = state.analysisComplete;
+
   const [entities, setEntities] = useState<PortfolioEntity[]>([
-    { id: '1', name: 'Client A', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
+    { id: '1', name: hasAnalysis && analysisInputs.companyName ? analysisInputs.companyName : 'Client A', inputs: hasAnalysis ? { ...analysisInputs } : { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
     { id: '2', name: 'Client B', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
     { id: '3', name: 'Client C', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 34 },
   ]);
+
+  // Sync first entity with current analysis inputs when analysis changes
+  useEffect(() => {
+    if (hasAnalysis) {
+      setEntities(prev => prev.map((e, i) => 
+        i === 0 ? { ...e, name: analysisInputs.companyName || e.name, inputs: { ...analysisInputs } } : e
+      ));
+    }
+  }, [hasAnalysis, analysisInputs]);
 
   const addEntity = () => {
     const newId = Date.now().toString();
@@ -62,6 +74,16 @@ export function PortfolioView() {
 
   const updateEntityName = (id: string, name: string) => {
     setEntities(entities.map(e => e.id === id ? { ...e, name } : e));
+  };
+
+  // Helper: compute entity AFI including size/revenue adjustments (same as computeFullAnalysis)
+  const computeEntityAFI = (inputs: ExposureInputs) => {
+    const components = computeAFIComponents(inputs);
+    const baseAfi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
+    const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
+    const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
+    const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
+    return { components, afi, band: getBand(afi) };
   };
 
   // Calculate portfolio-weighted AFI
@@ -92,11 +114,10 @@ export function PortfolioView() {
 
   const portfolioBand = getBand(portfolioAFI);
 
-  // Capital Efficiency Calculator
+  // Capital Efficiency Calculator — uses full AFI with size/revenue adjustments
   const stableCount = normalizedEntities.filter(e => {
-    const components = computeAFIComponents(e.inputs);
-    const afi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
-    return getBand(afi) === 'Stable';
+    const { band } = computeEntityAFI(e.inputs);
+    return band === 'Stable';
   }).length;
 
   return (
