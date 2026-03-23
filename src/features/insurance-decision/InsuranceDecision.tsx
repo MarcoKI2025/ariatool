@@ -340,8 +340,8 @@ export function InsuranceDecision() {
           band === 'Sensitive' ? 'Conditional coverage with mandatory governance improvements within 90 days. Failure to meet conditions results in escalation to NOT APPROVED.' :
           'Structural exposure within manageable bounds. Standard coverage terms with routine monitoring apply.';
         const consIcon = band === 'Fragile' ? '⊘' : band === 'Sensitive' ? '↗' : '✓';
-        const consTxt = band === 'Fragile' ? `Issuing standard coverage at current AFI would understate required reserves by a factor of 3–5×. Premium loading is mandatory. Dependency diversification and governance re-authorisation are conditions of any coverage offer.` :
-          band === 'Sensitive' ? 'Without governance improvements within 90 days, this profile escalates to NOT APPROVED at next assessment.' :
+          const consTxt = band === 'Fragile' ? `Issuing standard coverage at current AFI would significantly understate required reserves. Premium loading is mandatory. Dependency diversification and governance re-authorisation are conditions of any coverage offer.` :
+           band === 'Sensitive' ? 'Without governance improvements within 90 days, this profile escalates to NOT APPROVED at next assessment.' :
           'Governance cadence must be maintained. Structural changes require re-assessment.';
 
         return (
