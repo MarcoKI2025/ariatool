@@ -145,12 +145,12 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             <div className="flex items-start gap-2">
               <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`} />
               <div>
-                <div className="text-[11px] font-semibold text-foreground">
-                  {band === 'Fragile' ? 'Potential compliance breach under EU AI Act' : band === 'Sensitive' ? 'Compliance gaps emerging — remediation timeline required' : 'Within current regulatory tolerance'}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  {band === 'Fragile' ? 'Article 13 (transparency) and Article 14 (human oversight) requirements are structurally unmet' : band === 'Sensitive' ? 'Partial alignment — documentation and oversight cadence require strengthening' : 'Current governance cadence satisfies baseline regulatory requirements'}
-                </div>
+                 <div className="text-[11px] font-semibold text-foreground">
+                   {band === 'Fragile' ? 'Limited governance visibility may create challenges under emerging regulatory requirements' : band === 'Sensitive' ? 'Compliance gaps emerging — remediation timeline advisable' : 'Within current regulatory tolerance'}
+                 </div>
+                 <div className="text-[10px] text-muted-foreground">
+                   {band === 'Fragile' ? 'Article 13 (transparency) and Article 14 (human oversight) requirements may not be fully met' : band === 'Sensitive' ? 'Partial alignment — documentation and oversight cadence may require strengthening' : 'Current governance cadence satisfies baseline regulatory requirements'}
+                 </div>
               </div>
             </div>
             <div className="flex items-start gap-2">
