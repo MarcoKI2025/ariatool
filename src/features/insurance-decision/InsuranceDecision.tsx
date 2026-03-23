@@ -440,7 +440,7 @@ export function InsuranceDecision() {
             <div className="text-[9px] text-muted-foreground mt-1">Annual indicative premium band</div>
           </div>
           <div>
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Composite Risk Index</div>
+             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Composite Risk Index<InfoTip text={TOOLTIPS.compositeRisk} /></div>
             <div className={`text-[28px] font-bold font-mono leading-none ${compositeRiskIndex >= 60 ? 'text-fragile' : compositeRiskIndex >= 35 ? 'text-sensitive' : 'text-stable'}`}>{compositeRiskIndex}</div>
             <div className="text-[9px] text-muted-foreground mt-1">AFI 50% + ALRI 30% + AGRI 20%</div>
           </div>
