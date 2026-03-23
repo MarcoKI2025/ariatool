@@ -458,6 +458,8 @@ export function InsuranceDecision() {
 
 
 
+      <SectionDivider title="Coverage Conditions" icon="📋" subtitle="Underwriting conditions, anti-stacking, and reinsurance" />
+
       {/* ═══ 12. UNDERWRITING CONDITIONS (numbered) ═══ */}
       <SectionCard title="Underwriting Conditions for AI Coverage" icon="📋" subtitle="Required structural conditions before standard terms apply.">
         <div className="space-y-3">
