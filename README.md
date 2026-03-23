@@ -79,6 +79,8 @@ Comprehensive risk index suite:
 - Parameter robustness testing (±10% sensitivity)
 - Stress scenario modelling
 - Qualitative loss envelope shifts
+- **Agent Coordination Analysis** — Multi-agent delegation chain mapping (BETA)
+- Agentic Swarm & Delegation Depth visualization
 
 ### 4. Insurance Decision
 - Decision class routing (Approved / Conditional Review / Escalate to Committee)
