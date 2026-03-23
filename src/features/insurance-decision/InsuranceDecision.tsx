@@ -1,4 +1,5 @@
 import React from 'react';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
