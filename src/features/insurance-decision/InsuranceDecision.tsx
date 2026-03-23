@@ -201,7 +201,7 @@ export function InsuranceDecision() {
           ].map((cell, i) => (
             <div key={i} className={`rounded-xl p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
               <div className={`text-[9px] tracking-[0.08em] uppercase font-bold mb-2 ${cell.highlight ? 'text-fragile' : 'text-muted-foreground'}`}>{cell.label}</div>
-              <div className={`text-[32px] font-bold font-mono leading-none ${cell.color}`}>{formatCurrency(cell.value)}</div>
+              <div className={`text-[24px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
               <div className="text-[10px] text-muted-foreground mt-2">{cell.sub}</div>
             </div>
           ))}
@@ -215,11 +215,10 @@ export function InsuranceDecision() {
             { label: 'Tail', value: lossEnvelope.tail, color: 'bg-fragile' },
             { label: 'Portfolio', value: lossEnvelope.portfolio, color: 'bg-purple' },
           ].map((bar, i) => {
-            const maxVal = 'Systemic';
             const height = Math.max(8, (i + 1) * 35);
             return (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[9px] font-mono font-bold text-muted-foreground">{formatCurrency(bar.value)}</span>
+                <span className="text-[9px] font-mono font-bold text-muted-foreground">{bar.value}</span>
                 <div className={`w-full rounded-t-md ${bar.color}`} style={{ height: `${height}px` }} />
                 <span className="text-[8px] text-muted-foreground uppercase tracking-wider">{bar.label}</span>
               </div>
