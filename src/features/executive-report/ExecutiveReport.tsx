@@ -122,6 +122,81 @@ export function ExecutiveReport() {
     toast.success('Executive summary copied to clipboard');
   };
 
+  const exportBoardPDF = () => {
+    // Build a printable HTML document and trigger print dialog (browser PDF)
+    const html = `
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ARIA Board Report</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;font-size:11px;color:#1e2430;margin:40px;line-height:1.6}
+h1{font-size:22px;margin-bottom:4px}h2{font-size:14px;margin-top:24px;border-bottom:2px solid #1e2430;padding-bottom:4px}
+.badge{display:inline-block;padding:4px 12px;border-radius:4px;font-weight:700;font-size:12px}
+.fragile{background:#fef3f1;color:#c9392a;border:1px solid #edc4bd}
+.sensitive{background:#fef9ee;color:#b87400;border:1px solid #dfc98e}
+.stable{background:#eff7f2;color:#227a44;border:1px solid #a8d2b8}
+.metric{display:inline-block;margin-right:24px}.metric-label{font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:#6b7280}
+.metric-value{font-size:20px;font-weight:700;font-family:monospace}
+table{width:100%;border-collapse:collapse;margin:12px 0}td,th{padding:6px 10px;border:1px solid #e1e4e8;text-align:left;font-size:10px}
+th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;letter-spacing:0.05em}
+.disclaimer{background:#fef3f1;border:1px solid #edc4bd;padding:12px;border-radius:4px;font-size:9px;color:#c9392a;margin:16px 0}
+.footer{border-top:2px solid #1e2430;padding-top:8px;margin-top:32px;font-size:8px;color:#6b7280;display:flex;justify-content:space-between}
+@media print{body{margin:20px}@page{margin:1cm}}
+</style></head><body>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+<div><div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#6b7280">Governance Intelligence Report</div>
+<h1>AI Risk Assessment Summary</h1>
+<div style="font-size:11px;color:#6b7280">Entity: ${entity} · Industry: ${industry} · ${dateStr}</div></div>
+<div style="text-align:right"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6b7280">Report ID</div>
+<div style="font-size:14px;font-weight:700;font-family:monospace">${reportId}</div></div></div>
+
+<div class="disclaimer">⚠ GOVERNANCE INTELLIGENCE PLATFORM — This report provides decision-support signals only. Not binding underwriting decisions, not actuarial loss predictions, not regulatory certifications. All outputs require human review.</div>
+
+<h2>Assessment Verdict</h2>
+<div style="margin:12px 0"><span class="badge ${band.toLowerCase()}">${band.toUpperCase()} — ${decisionClass}</span></div>
+<div style="margin:12px 0">
+<span class="metric"><span class="metric-label">AFI Score</span><br><span class="metric-value">${afi.toFixed(2)}</span></span>
+<span class="metric"><span class="metric-label">Band</span><br><span class="metric-value">${band}</span></span>
+<span class="metric"><span class="metric-label">Structural Score</span><br><span class="metric-value">${structuralScore}</span></span>
+<span class="metric"><span class="metric-label">Decision</span><br><span class="metric-value" style="font-size:14px">${decisionClass}</span></span>
+</div>
+
+<h2>AFI Components</h2>
+<table><tr><th>Component</th><th>Value</th><th>Assessment</th></tr>
+<tr><td>Delegation Ratio (DR)</td><td>${dr100}%</td><td>${dr100 > 70 ? 'High' : dr100 > 40 ? 'Moderate' : 'Low'}</td></tr>
+<tr><td>Justificatory Density (JD)</td><td>${jd100}%</td><td>${jd100 < 40 ? 'Low (risk)' : jd100 < 60 ? 'Moderate' : 'Adequate'}</td></tr>
+<tr><td>Reversibility Cost (RC)</td><td>${rc100}%</td><td>${rc100 > 70 ? 'High' : rc100 > 40 ? 'Moderate' : 'Low'}</td></tr>
+<tr><td>Continuation Density (CD)</td><td>${cd100}%</td><td>${cd100 > 70 ? 'High' : cd100 > 40 ? 'Moderate' : 'Low'}</td></tr>
+</table>
+
+<h2>Loss Envelope (Qualitative Assessment)</h2>
+<table><tr><th>Scenario</th><th>Assessment</th></tr>
+<tr><td>Expected Loss Band</td><td>${lossEnvelope.expected}</td></tr>
+<tr><td>Stress Scenario Band</td><td>${lossEnvelope.stress}</td></tr>
+<tr><td>Tail / Systemic Band</td><td>${lossEnvelope.tail}</td></tr>
+<tr><td>Portfolio Cluster</td><td>${lossEnvelope.portfolio}</td></tr>
+</table>
+
+<h2>Risk Indices</h2>
+<table><tr><th>Index</th><th>Score</th><th>Assessment</th></tr>
+<tr><td>AGRI (Agentic Risk)</td><td>${results.agri}</td><td>${results.agri >= 60 ? 'High' : results.agri >= 35 ? 'Moderate' : 'Low'}</td></tr>
+<tr><td>ALRI (AI Liability Risk)</td><td>${results.alri}</td><td>${results.alri >= 60 ? 'High' : results.alri >= 35 ? 'Moderate' : 'Low'}</td></tr>
+<tr><td>SCRI (Systemic Concentration)</td><td>${results.scri}</td><td>${results.scri >= 60 ? 'High' : results.scri >= 35 ? 'Moderate' : 'Low'}</td></tr>
+</table>
+
+<div class="disclaimer">Epistemic Status: This assessment is a structural governance signal — not actuarially certified. All loss figures are market-calibrated proxies. Self-attested inputs. Not legal advice. Framework: AGAF v4.2.0</div>
+
+<div class="footer"><span>ARIA AI Governance Engine v4.2.0 · AGAF Framework · ${dateStr}</span><span>CONFIDENTIAL — Board & Committee Use Only</span></div>
+</body></html>`;
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(html);
+      printWindow.document.close();
+      setTimeout(() => printWindow.print(), 500);
+    }
+    toast.success('Board report opened for PDF export');
+  };
+
   const reportId = `ARIA-${Date.now().toString(36).toUpperCase()}`;
 
    return (
@@ -493,6 +568,9 @@ export function ExecutiveReport() {
           </button>
           <button onClick={() => exportORSA(results, inputs)} className="px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-[13px] font-semibold hover:bg-primary/90 transition-colors">
             📄 Export ORSA Section
+          </button>
+          <button onClick={exportBoardPDF} className="px-5 py-2.5 bg-foreground text-background rounded-lg text-[13px] font-semibold hover:bg-foreground/90 transition-colors">
+            🖨 Export Board PDF
           </button>
         </div>
       </div>

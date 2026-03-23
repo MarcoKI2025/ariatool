@@ -91,6 +91,12 @@
     --shadow-card: 0 1px 3px rgba(0,0,0,0.04);
     --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.06);
     --shadow-elevated: 0 8px 30px rgba(0,0,0,0.08);
+
+    /* Deep-tech glassmorphism tokens */
+    --glass-purple: 262 80% 50%;
+    --glass-purple-light: 262 70% 65%;
+    --glass-bg: 262 50% 98%;
+    --glass-border: 262 30% 85%;
     --shadow-chrome: 0 1px 3px rgba(0,0,0,0.04);
 
     /* Sidebar */
@@ -239,6 +245,39 @@ input[type="range"]::-webkit-slider-thumb:hover {
 /* Gradient bar */
 .gradient-bar {
   background: linear-gradient(to right, hsl(var(--grn)) 0%, hsl(var(--amb)) 50%, hsl(var(--red)) 100%);
+}
+
+/* ═══ GLASSMORPHISM — Deep-Tech BETA modules ═══ */
+.glass-card {
+  background: linear-gradient(135deg, hsl(var(--glass-bg)) 0%, hsl(var(--sf)) 100%);
+  border: 1px solid hsl(var(--glass-border));
+  box-shadow: 0 2px 16px hsl(var(--glass-purple) / 0.06), inset 0 1px 0 hsl(0 0% 100% / 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.glass-card:hover {
+  box-shadow: 0 4px 24px hsl(var(--glass-purple) / 0.1), inset 0 1px 0 hsl(0 0% 100% / 0.5);
+}
+.glass-glow {
+  box-shadow: 0 0 20px hsl(var(--glass-purple) / 0.08), 0 0 60px hsl(var(--glass-purple) / 0.04);
+}
+.glass-badge {
+  background: hsl(var(--glass-purple) / 0.1);
+  color: hsl(var(--glass-purple));
+  border: 1px solid hsl(var(--glass-purple) / 0.2);
+}
+.glass-accent {
+  color: hsl(var(--glass-purple));
+}
+body.dark .glass-card {
+  background: linear-gradient(135deg, hsl(262 30% 12%) 0%, hsl(var(--sf)) 100%);
+  border-color: hsl(262 30% 25%);
+  box-shadow: 0 2px 16px hsl(262 80% 50% / 0.1), inset 0 1px 0 hsl(0 0% 100% / 0.03);
+}
+body.dark .glass-badge {
+  background: hsl(262 80% 50% / 0.15);
+  color: hsl(262 70% 70%);
+  border-color: hsl(262 60% 40% / 0.3);
 }
 
 /* ═══ ANIMATION ═══ */

@@ -5,6 +5,7 @@ import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { AgentCoordinationView } from '@/features/agent-coordination/AgentCoordinationView';
+import { ParametricTriggerLab } from '@/features/parametric/ParametricTriggerLab';
 import { formatCurrency } from '@/lib/formatters';
 import { computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
@@ -486,6 +487,9 @@ export function ScenarioSimulation() {
 
       {/* Agent Coordination Analysis */}
       <AgentCoordinationView />
+
+      {/* Parametric Trigger Lab */}
+      <ParametricTriggerLab />
 
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { NAV_STEPS } from '@/lib/constants';
+import { LiveRiskFeed } from '@/components/shared/LiveRiskFeed';
 
 export function AppSidebar() {
   const { state, setActiveStep, setPerspective } = useApp();
@@ -84,6 +85,11 @@ export function AppSidebar() {
 
         })}
       </nav>
+
+      {/* Live Risk Feed */}
+      <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block border-t border-border`}>
+        <LiveRiskFeed />
+      </div>
 
       {/* Session status - bottom of sidebar */}
       <div className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-4 py-3 border-t border-border`}>
