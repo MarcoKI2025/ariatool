@@ -94,12 +94,12 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             <div className="flex items-start gap-2">
               <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${alri >= 35 ? 'bg-fragile' : 'bg-stable'}`} />
               <div>
-                <div className="text-[11px] font-semibold text-foreground">
-                  {alri >= 60 ? 'Active legal exposure vectors' : alri >= 35 ? 'Emerging legal exposure' : 'Controlled legal exposure'}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  ALRI score of {alri} indicates {alri >= 60 ? 'multiple active claim vectors' : alri >= 35 ? 'emerging claim pathways' : 'manageable claim profile'}
-                </div>
+                 <div className="text-[11px] font-semibold text-foreground">
+                   {alri >= 60 ? 'Elevated potential legal exposure' : alri >= 35 ? 'Emerging legal exposure pathways' : 'Controlled legal exposure'}
+                 </div>
+                 <div className="text-[10px] text-muted-foreground">
+                   ALRI score of {alri} indicates {alri >= 60 ? 'potential exposure across multiple claim dimensions' : alri >= 35 ? 'emerging claim pathways' : 'manageable claim profile'}
+                 </div>
               </div>
             </div>
           </div>
