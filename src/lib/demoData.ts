@@ -156,7 +156,7 @@ export function applyDemoProfile(profile: DemoProfile): ExposureInputs {
     companyName: profile.name,
     industry: profile.industry,
     size: profile.size,
-    revenue: '',
+    revenue: profile.revenue || '',
     useCases: profile.useCases || [],
     providers: profile.dependencies,
     automation: profile.sliders.automation ?? 3,
