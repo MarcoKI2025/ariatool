@@ -5,6 +5,8 @@ import {
 } from '@/components/ui/dialog';
 import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, ExternalLink, Zap, Database, Eye } from 'lucide-react';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 /* ── Integration Data ── */
 interface Integration {

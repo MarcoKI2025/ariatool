@@ -128,6 +128,8 @@ export function EvidenceLog() {
           <div className="text-[10px] text-muted-foreground mt-1">Parameter Changes</div>
         </div>
       </div>
+
+      <AppFooter />
     </div>
   );
 }

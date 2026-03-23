@@ -775,6 +775,8 @@ export function ExecutiveReport() {
         <span className="text-[10px] text-muted-foreground italic">Step 5 of 6 · Board-level documentation</span>
         <button onClick={() => setActiveStep(6)} className="view-nav-next">Model Governance →</button>
       </div>
+
+      <AppFooter />
     </div>
   );
 }
