@@ -8,6 +8,8 @@ import { ScenarioSimulation } from '@/features/scenario-simulation/ScenarioSimul
 import { InsuranceDecision } from '@/features/insurance-decision/InsuranceDecision';
 import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
+import { PortfolioView } from '@/features/portfolio/PortfolioView';
+import { EvidenceLog } from '@/features/evidence-log/EvidenceLog';
 import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
 
