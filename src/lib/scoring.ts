@@ -255,7 +255,7 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     // Qualitative premium band
     premium: {
       band: band === 'Fragile' ? 'Critical' : band === 'Sensitive' ? 'Elevated' : 'Base',
-      label: band === 'Fragile' ? 'Erhöhte finanzielle Exposure — Band: Critical' : band === 'Sensitive' ? 'Erhöhte finanzielle Exposure — Band: Elevated' : 'Standard Exposure — Band: Base',
+      label: band === 'Fragile' ? 'Elevated financial exposure — Band: Critical' : band === 'Sensitive' ? 'Elevated financial exposure — Band: Elevated' : 'Standard exposure — Band: Base',
     },
     mdr,
     mdrTier,
