@@ -707,7 +707,7 @@ export function ExecutiveReport() {
                   { cls: 'r', t: 'Require dependency diversification within 90 days', s: 'Minimum 3 providers required. Reduces aggregate tail exposure 40–60%.' },
                   { cls: 'r', t: 'Commission exit feasibility assessment', s: 'ECI tier indicates institutional dependency — exit path must be documented.' },
                   { cls: 'a', t: 'Institute quarterly governance re-authorisation', s: 'Without re-authorisation cadence, structural risk accumulates without upper bound.' },
-                  { cls: 'a', t: 'Reinsurance treaty review required', s: `Portfolio aggregate €${Math.round(lossEnvelope.portfolio)}M+ under correlated cascade.` },
+                  { cls: 'a', t: 'Reinsurance treaty review required', s: `Portfolio aggregate: ${lossEnvelope.portfolio} under correlated cascade.` },
                 ] : band === 'Sensitive' ? [
                   { cls: 'a', t: 'Apply precautionary premium loading (80–120%)', s: 'Below Fragile threshold but trajectory warrants adjustment.' },
                   { cls: 'a', t: 'Increase governance review cadence to quarterly', s: 'Current oversight insufficient given dependency trajectory.' },
