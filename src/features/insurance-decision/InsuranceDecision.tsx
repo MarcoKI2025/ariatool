@@ -111,6 +111,8 @@ export function InsuranceDecision() {
         </div>
       </div>
 
+      <SectionDivider title="Financial Exposure Model" icon="💰" subtitle="Loss envelope, threshold position, and AFI component analysis" />
+
       {/* ═══ 4. INSURANCE & FINANCIAL EXPOSURE TITLE + COMMITTEE PANEL ═══ */}
       <h2 className="text-[18px] font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h2>
       <p className="text-[12px] text-muted-foreground mb-4 leading-[1.5]">Structural risk characterization for underwriting and financial exposure modelling.</p>
