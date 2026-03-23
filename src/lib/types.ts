@@ -154,6 +154,14 @@ export interface AgentCoordinationGraph {
 
 export type IATStatus = 'none' | 'approaching' | 'triggered' | 'infrastructural';
 
+export interface CaseStudyMeta {
+  isRealCase: true;
+  incidentDate: string;
+  actualLoss: string;
+  ariaPrediction: string;
+  source: string;
+}
+
 export interface DemoProfile {
   id: string;
   name: string;
@@ -168,6 +176,7 @@ export interface DemoProfile {
   sliders: Record<string, number>;
   dependencies: string[];
   signals: string[];
+  caseStudy?: CaseStudyMeta;
 }
 
 export interface DemoSlide {
