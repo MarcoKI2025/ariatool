@@ -135,12 +135,12 @@ export function ResponsibilityCollapseDetector({ band, components, agri, humanCh
       {status !== 'CLEARLY ASSIGNED' && (
         <div className={`rounded-lg p-3 border ${config.border} ${config.bg}`}>
           <div className={`text-[11px] font-bold ${config.color} mb-1`}>
-            {status === 'NO ACCOUNTABLE ENTITY' ? '⛔ Critical Governance Gap' : '⚠ Governance Structure Warning'}
+            {status === 'NO ACCOUNTABLE ENTITY' ? '⛔ Accountability Structure Gap' : '⚠ Accountability Structure Observation'}
           </div>
           <div className="text-[10px] text-muted-foreground leading-[1.6]">
             {status === 'NO ACCOUNTABLE ENTITY'
-              ? 'This deployment operates without a clearly assigned governance owner. In the event of AI-related loss, liability cannot be reliably assigned to any single entity. This introduces systemic risk for insurers and creates regulatory exposure under EU AI Act Article 14 (human oversight) requirements.'
-              : 'Responsibility is partially distributed across teams and systems. While some oversight exists, governance ownership is not consolidated. This creates ambiguity in liability assignment and weakens regulatory defense posture.'}
+              ? 'Governance ownership does not appear to be clearly assigned. In the event of AI-related loss, liability attribution may be difficult to establish. This increases uncertainty for insurers and may create challenges under EU AI Act Article 14 (human oversight) requirements.'
+              : 'Responsibility appears partially distributed across teams and systems. While some oversight exists, consolidated governance ownership may be difficult to establish, which could complicate liability assignment.'}
           </div>
         </div>
       )}
