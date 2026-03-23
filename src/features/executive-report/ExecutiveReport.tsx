@@ -290,9 +290,9 @@ export function ExecutiveReport() {
             <div className="space-y-[10px]">
               {[
                 { color: 'bg-stable', title: `Base risk band: ${lossEnvelope.expected}`, sub: 'Structural baseline — AFI-derived characterization' },
-                { color: 'bg-sensitive', title: `Elevated risk band: €${lossEnvelope.stress.toFixed(1)}M`, sub: 'Provider concentration and delegation factors' },
-                { color: 'bg-fragile', title: `Critical risk band: €${lossEnvelope.tail.toFixed(1)}M`, sub: 'Tail exposure — correlated dependency structures' },
-                { color: 'bg-fragile', title: `Systemic exposure: €${Math.round(lossEnvelope.portfolio)}M`, sub: 'If 8–15 entities share similar AI infrastructure' },
+                { color: 'bg-sensitive', title: `Elevated risk band: ${lossEnvelope.stress}`, sub: 'Provider concentration and delegation factors' },
+                { color: 'bg-fragile', title: `Critical risk band: ${lossEnvelope.tail}`, sub: 'Tail exposure — correlated dependency structures' },
+                { color: 'bg-fragile', title: `Systemic exposure: ${lossEnvelope.portfolio}`, sub: 'If 8–15 entities share similar AI infrastructure' },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-[10px]">
                   <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
