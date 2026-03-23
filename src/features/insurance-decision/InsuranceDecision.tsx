@@ -242,7 +242,7 @@ export function InsuranceDecision() {
           </div>
           <div className="flex gap-4 text-left sm:text-right">
             <div>
-              <div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div>
+              <div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor}</div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div>
             </div>
             <div>
