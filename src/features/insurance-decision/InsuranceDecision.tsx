@@ -114,10 +114,14 @@ export function InsuranceDecision() {
         'bg-stable-bg border-stable'
       }`}>
         <div className={`text-[16px] font-extrabold tracking-wider uppercase mb-3 ${bandColor}`}>
-          Committee Review Required
+          {band === 'Fragile' ? 'Committee Review Required' :
+           band === 'Sensitive' ? 'Conditional Review — Elevated Exposure' :
+           'Standard Terms — Within Tolerance'}
         </div>
         <div className="text-[11px] text-muted-foreground leading-[1.55] mb-4">
-          AFI {afi.toFixed(2)} exceeds standard underwriting threshold. Structural risk requires committee-level review before coverage terms can be offered.
+          {band === 'Fragile' ? `AFI ${afi.toFixed(2)} exceeds standard underwriting threshold. Structural risk requires committee-level review before coverage terms can be offered.` :
+           band === 'Sensitive' ? `AFI ${afi.toFixed(2)} indicates elevated structural exposure. Coverage available with mandatory improvement timeline and premium loading.` :
+           `AFI ${afi.toFixed(2)} is within standard underwriting tolerance. Standard coverage terms apply with routine monitoring.`}
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {[
