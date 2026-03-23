@@ -26,7 +26,7 @@ const STATUS_CONFIG: Record<AuthStatus, { bg: string; border: string; text: stri
     border: 'border-stable',
     text: 'text-stable',
     icon: '✓',
-    sentence: (name) => `Deployment of ${name} is AUTHORIZED under current governance parameters.`,
+    sentence: (name) => `Deployment of ${name} is acceptable under current governance structure.`,
   },
   'CONDITIONALLY APPROVED': {
     bg: 'bg-sensitive-bg',
