@@ -259,6 +259,8 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
+      <SectionDivider title="Governance Decision" icon="⚖" subtitle="Required actions and committee signals" />
+
       {/* ═══ GOVERNANCE DECISION SIGNAL ═══ */}
       <div className={`p-4 rounded-xl border-2 mb-4 ${
         results.decisionClass === 'Approved' ? 'bg-stable-bg border-stable' :
