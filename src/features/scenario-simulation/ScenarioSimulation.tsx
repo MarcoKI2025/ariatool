@@ -5,6 +5,7 @@ import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { AgentCoordinationView } from '@/features/agent-coordination/AgentCoordinationView';
+import { ParametricTriggerLab } from '@/features/parametric/ParametricTriggerLab';
 import { formatCurrency } from '@/lib/formatters';
 import { computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
