@@ -105,9 +105,7 @@ export function DeploymentAuthorization({ band, afi, structuralScore, components
 
       {/* Explanation */}
       <div className="text-[10px] text-muted-foreground leading-[1.6] p-3 bg-card/40 rounded-lg border border-border">
-        <strong className="text-foreground">Basis:</strong> This decision is derived from governance risk signals
-        (delegation intensity, justificatory density, reversibility cost, dependency concentration) —
-        not actuarial validation. Requires corroboration with qualified underwriter review for final coverage decisions.
+        <strong className="text-foreground">Basis:</strong> This assessment reflects governance-related risk signals derived from system structure, delegation patterns, and dependency factors. It does not represent actuarial validation or pricing. Values are indicative and subject to uncertainty.
       </div>
     </div>
   );

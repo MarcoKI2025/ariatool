@@ -171,8 +171,8 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
       {/* Disclaimer */}
       <div className="mt-4 p-3 bg-secondary/30 rounded-lg text-[9px] text-muted-foreground leading-[1.6]">
         ℹ️ Financial ranges reflect structural uncertainty and are not actuarial projections.
-        Actual exposure depends on entity-specific infrastructure, contractual arrangements,
-        and operational resilience measures. Requires qualified underwriter corroboration.
+        Values are indicative and subject to uncertainty. Actual exposure depends on entity-specific
+        infrastructure, contractual arrangements, and operational resilience measures.
       </div>
     </div>
   );
