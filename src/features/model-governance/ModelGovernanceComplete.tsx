@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
 
 export function ModelGovernanceComplete() {
   const { state, setActiveStep } = useApp();
