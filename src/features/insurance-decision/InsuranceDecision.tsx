@@ -617,7 +617,7 @@ export function InsuranceDecision() {
       <div className="bg-fragile-bg border border-fragile-border rounded-xl p-5 mb-4">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <div className="text-[13px] font-bold text-foreground">📊 Portfolio-Level Exposure Signal<InfoTip text="Estimated aggregate loss across multiple entities with similar dependency profiles. If entities share AI infrastructure, losses can cluster non-linearly — exceeding individual assessments by 3–5×." /></div>
+            <div className="text-[13px] font-bold text-foreground">📊 Portfolio-Level Exposure Signal<InfoTip text="Estimated aggregate exposure across multiple entities with similar dependency profiles. Swiss Re sigma 01/2026: Provider concentration creates accumulation risk." /></div>
             <div className="text-[11px] text-secondary-foreground mt-1">If multiple entities share similar dependency structures, losses cluster non-linearly and exceed individual assessments.</div>
           </div>
           <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase badge-fragile">Systemic Cluster Detected</span>
