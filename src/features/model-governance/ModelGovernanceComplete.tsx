@@ -3,6 +3,7 @@ import { useApp } from '@/hooks/useAppState';
 import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 
 export function ModelGovernanceComplete() {
   const { state, setActiveStep } = useApp();
