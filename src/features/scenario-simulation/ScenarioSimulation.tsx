@@ -28,7 +28,7 @@ interface ScenarioData {
   stressMultipliers: { metric: string; best: number; expected: number; stress: number }[];
   cascadeLayers: { icon: string; name: string; value: string; layer: string }[];
   whatChanges: { governance: string; financial: string; operational: string };
-  lossShift: { expected: number; stress: number; tail: number };
+  lossShift: { expected: string; stress: string; tail: string };
 }
 
 export function ScenarioSimulation() {
