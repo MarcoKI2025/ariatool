@@ -12,7 +12,7 @@ import type { ExposureInputs } from '@/lib/types';
 
 Chart.register(ArcElement, DoughnutController);
 
-const SIM_BASE = 120;
+const SIM_BASE = CONSTANTS_SIM_BASE;
 
 const fmtK = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
