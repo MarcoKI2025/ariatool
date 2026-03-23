@@ -72,12 +72,12 @@ export function ConsequenceEngine({ band, afi, components, agri, alri, scri, com
             <div className="flex items-start gap-2">
               <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${components.dr > 0.5 ? 'bg-fragile' : 'bg-sensitive'}`} />
               <div>
-                <div className="text-[11px] font-semibold text-foreground">
-                  {components.dr > 0.5 ? 'Unclear accountability structure' : 'Partially distributed accountability'}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  Delegation density of {Math.round(components.dr * 100)}% introduces ambiguity in liability assignment
-                </div>
+                 <div className="text-[11px] font-semibold text-foreground">
+                   {components.dr > 0.5 ? 'Responsibility may be distributed across system layers' : 'Partially distributed accountability'}
+                 </div>
+                 <div className="text-[10px] text-muted-foreground">
+                   Delegation density of {Math.round(components.dr * 100)}% — accountability may be difficult to assign in case of failure
+                 </div>
               </div>
             </div>
             <div className="flex items-start gap-2">
