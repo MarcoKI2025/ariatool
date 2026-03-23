@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { SECTOR_MULTIPLIERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES, USE_CASES, PROVIDERS, DEFAULT_INPUTS } from '@/lib/constants';
+import { SECTOR_MULTIPLIERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES, USE_CASES, PROVIDERS, DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, SIM_BASE as CONSTANTS_SIM_BASE } from '@/lib/constants';
 import { formatCurrency } from '@/lib/formatters';
 import { getBand, calcAFI, computeAFIComponents } from '@/lib/scoring';
 import { Chart, ArcElement, DoughnutController } from 'chart.js';
@@ -12,7 +12,7 @@ import type { ExposureInputs } from '@/lib/types';
 
 Chart.register(ArcElement, DoughnutController);
 
-const SIM_BASE = 120;
+const SIM_BASE = CONSTANTS_SIM_BASE;
 
 const fmtK = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
@@ -293,10 +293,11 @@ function StrategicInterpretation({ band, components }: { band: string; component
 /* ══════════════════════════════════════════════════════════ */
 
 export function CompanyView() {
-  const { state, setInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
+  const { state, setInputs, updateInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
   const { results, inputs: globalInputs, analysisComplete } = state;
   const heroRef = useRef<HTMLDivElement>(null);
   const [showSticky, setShowSticky] = useState(false);
+  const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Local standalone inputs (mirrors ExposureInputs) ──
   const [localInputs, setLocalInputs] = useState<ExposureInputs>(() => ({
@@ -311,8 +312,18 @@ export function CompanyView() {
   }, [analysisComplete, globalInputs]);
 
   const updateLocal = useCallback((patch: Partial<ExposureInputs>) => {
-    setLocalInputs(prev => ({ ...prev, ...patch }));
-  }, []);
+    setLocalInputs(prev => {
+      const updated = { ...prev, ...patch };
+      // Debounced sync to global state
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+      syncTimerRef.current = setTimeout(() => {
+        setInputs(updated);
+        // runAnalysis needs the updated inputs to be in state first
+        setTimeout(() => runAnalysis(), 50);
+      }, 600);
+      return updated;
+    });
+  }, [setInputs, runAnalysis]);
 
   const toggleChip = (list: string[], item: string) => {
     return list.includes(item) ? list.filter(i => i !== item) : [...list, item];
@@ -330,6 +341,9 @@ export function CompanyView() {
 
   const toggleCat = (key: string) => setExpandedCats(prev => ({ ...prev, [key]: !prev[key] }));
 
+  // Cleanup sync timer
+  useEffect(() => { return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); }; }, []);
+
   // Sticky header
   useEffect(() => {
     const handleScroll = () => {
@@ -345,9 +359,14 @@ export function CompanyView() {
     }
   }, []);
 
-  // ── Derive AFI from local inputs ──
+  // ── Derive AFI from local inputs (with size/revenue adjustments matching scoring.ts) ──
   const liveComponents = useMemo(() => computeAFIComponents(localInputs), [localInputs]);
-  const liveAfi = useMemo(() => calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na), [liveComponents]);
+  const liveAfi = useMemo(() => {
+    const baseAfi = calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na);
+    const sizeAdj = SIZE_AFI_ADJUSTMENT[localInputs.size] || 0;
+    const revAdj = REVENUE_AFI_ADJUSTMENT[localInputs.revenue] || 0;
+    return Math.max(0.01, baseAfi + sizeAdj + revAdj);
+  }, [liveComponents, localInputs.size, localInputs.revenue]);
   const liveBand = useMemo(() => getBand(liveAfi), [liveAfi]);
   const liveStructuralScore = useMemo(() => Math.min(100, Math.round(liveAfi / 3.0 * 100)), [liveAfi]);
 
