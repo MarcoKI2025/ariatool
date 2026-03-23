@@ -796,6 +796,39 @@ export function ExecutiveReport() {
         </div>
       )}
 
+      {/* Audit & Traceability Metadata */}
+      <div className="mt-8 pt-6 border-t border-border">
+        <div className="text-[10px] font-bold tracking-wide uppercase text-muted-foreground mb-3">
+          Assessment Metadata
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-[10px]">
+          <div>
+            <div className="text-muted-foreground mb-1">Framework Version</div>
+            <div className="font-mono font-semibold text-foreground">AGAF v4.1.0</div>
+          </div>
+          <div>
+            <div className="text-muted-foreground mb-1">Assessment Date</div>
+            <div className="font-mono font-semibold text-foreground">
+              {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+            </div>
+          </div>
+          <div>
+            <div className="text-muted-foreground mb-1">Assessment ID</div>
+            <div className="font-mono font-semibold text-foreground">{reportId}</div>
+          </div>
+          <div>
+            <div className="text-muted-foreground mb-1">Entity Profile</div>
+            <div className="font-mono font-semibold text-foreground">
+              {inputs.industry || 'Not specified'}
+            </div>
+          </div>
+        </div>
+        <div className="mt-3 text-[9px] text-muted-foreground">
+          This assessment snapshot is exportable for compliance and audit purposes.
+          All input parameters and calculation logic are traceable via Evidence Log.
+        </div>
+      </div>
+
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(4)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Insurance Decision</button>
