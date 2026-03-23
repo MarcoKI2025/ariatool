@@ -30,10 +30,20 @@ export function DecisionIntelligence() {
   const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
   const bandBg = band === 'Fragile' ? 'bg-fragile-bg border-fragile' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' : 'bg-stable-bg border-stable';
 
+  const [activeTab, setActiveTab] = useState('overview');
+
+  const diTabs = [
+    { id: 'overview', label: 'Overview', icon: '📊' },
+    { id: 'indices', label: 'Risk Indices', icon: '📈' },
+    { id: 'benchmarking', label: 'Peer Benchmarking', icon: '🏆' },
+    { id: 'agentic', label: 'Agentic Systems', icon: '🤖' },
+    { id: 'diagnostics', label: 'Diagnostics', icon: '🔬' },
+  ];
+
   return (
     <div>
       {/* Page header */}
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 6 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Decision Intelligence</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
@@ -42,6 +52,8 @@ export function DecisionIntelligence() {
       </div>
 
       <UseRestrictionBanner />
+
+      <ViewTabs tabs={diTabs} activeTab={activeTab} onChange={setActiveTab} />
 
       {/* ═══ HERO BOARD STATEMENT ═══ */}
       <div className={`bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 flex items-start gap-3 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
