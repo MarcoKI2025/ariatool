@@ -271,6 +271,50 @@ export const LIABILITY_SLIDERS: SliderConfig[] = [
     min: 1, max: 5, defaultValue: 2,
     labels: { 1: 'Low ESG Risk', 2: 'Moderate ESG Risk', 3: 'Some ESG Exposure', 4: 'High ESG Risk', 5: 'Critical ESG Risk' }
   },
+  {
+    id: 'dataPoisoning',
+    fieldKey: 'dataPoisoning',
+    category: 'Liability Risk',
+    name: 'Data Poisoning Risk',
+    description: 'Training data integrity compromise exposure',
+    tooltip: 'Risk of adversarial manipulation of training data. 1 = Controlled data pipelines with integrity checks. 5 = No provenance tracking, open training data, vulnerable to backdoor injection.',
+    explainText: 'Data poisoning attacks compromise the model at the training stage — before deployment. A poisoned model can produce systematically biased or harmful outputs that pass all standard evaluation checks. This is qualitatively different from inference-time attacks because the corruption is embedded in the model itself.',
+    min: 1, max: 5, defaultValue: 1,
+    labels: { 1: 'Controlled Pipeline', 2: 'Verified Sources', 3: 'Partial Provenance', 4: 'Open Sources', 5: 'No Provenance' }
+  },
+  {
+    id: 'adversarialAttack',
+    fieldKey: 'adversarialAttack',
+    category: 'Liability Risk',
+    name: 'Adversarial Attack Surface',
+    description: 'Inference-time adversarial input vulnerability',
+    tooltip: 'Exposure to crafted inputs designed to trigger misclassification. 1 = Robust input validation, adversarial testing. 5 = No input validation, direct model access, no adversarial testing.',
+    explainText: 'Adversarial attacks exploit model vulnerabilities at inference time — evasion attacks, model extraction, membership inference. Production systems exposed to user-crafted inputs face continuous attack surface that standard security tools cannot detect.',
+    min: 1, max: 5, defaultValue: 1,
+    labels: { 1: 'Hardened', 2: 'Tested', 3: 'Basic Filtering', 4: 'Minimal Defense', 5: 'Unprotected' }
+  },
+  {
+    id: 'privacyBreach',
+    fieldKey: 'privacyBreach',
+    category: 'Liability Risk',
+    name: 'Privacy Breach Exposure',
+    description: 'PII leakage and re-identification risk from AI outputs',
+    tooltip: 'Risk of model memorizing or leaking sensitive personal data. 1 = No PII in training data, differential privacy applied. 5 = PII in training data, no privacy controls, GDPR Art. 22 exposure.',
+    explainText: 'Model memorization of sensitive training data creates GDPR Art. 22 automated decision exposure. Inference attacks can reveal protected attributes from model outputs alone. Healthcare and financial services face highest exposure due to data sensitivity.',
+    min: 1, max: 5, defaultValue: 1,
+    labels: { 1: 'No PII Exposure', 2: 'De-identified', 3: 'Partial Controls', 4: 'Minimal Controls', 5: 'Uncontrolled PII' }
+  },
+  {
+    id: 'ipInfringement',
+    fieldKey: 'ipInfringement',
+    category: 'Liability Risk',
+    name: 'IP Infringement Risk',
+    description: 'Copyright and IP litigation exposure from AI outputs',
+    tooltip: 'Risk of AI generating content that infringes copyright or IP rights. 1 = In-house models, clean training data. 5 = Public models, code generation reproducing licensed content, no IP review.',
+    explainText: 'AI models trained on copyrighted works face growing litigation risk. Code generation reproducing licensed content, style mimicry claims, and content attribution disputes are active claim categories in 2025–2026. Regulatory environment in flux (EU AI Act, US pending legislation).',
+    min: 1, max: 5, defaultValue: 1,
+    labels: { 1: 'Clean IP', 2: 'Licensed Sources', 3: 'Mixed Sources', 4: 'Public Models', 5: 'No IP Review' }
+  },
 ];
 
 // ══════════════════════════════════════════════════════════
@@ -386,7 +430,7 @@ export const SLIDER_CATEGORIES = [
     title: 'AI-Specific Liability Exposure',
     icon: '⚠',
     subtitle: 'These dimensions reflect actual AI liability claim patterns emerging in 2025–2026. Each maps to a realized or imminent loss vector with documented precedent.',
-    badge: '7 inputs · 2025–26 Claim Vectors',
+    badge: '11 inputs · 2025–26 Claim Vectors',
     confidenceBadge: '2025–2026 Claim Patterns',
     sliders: LIABILITY_SLIDERS,
   },

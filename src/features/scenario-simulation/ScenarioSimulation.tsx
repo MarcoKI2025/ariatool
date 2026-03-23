@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { LockedState } from '@/components/shared/UIComponents';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { formatCurrency } from '@/lib/formatters';
 import { computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
@@ -234,6 +235,8 @@ export function ScenarioSimulation() {
           Models exposure impact under adverse conditions. Each scenario stresses different structural failure vectors — calibrated against your deployment profile.
         </p>
       </div>
+
+      <UseRestrictionBanner />
 
       {/* How to interpret */}
       <div className="bg-secondary border border-border rounded-lg p-4 mb-5 text-[11px] text-muted-foreground leading-[1.55]">

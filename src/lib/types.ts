@@ -49,6 +49,11 @@ export interface ExposureInputs {
   explainabilityGap: number;
   dataIntegrity: number;
   esgLiability: number;
+  // Non-linear risk vectors (1-5)
+  dataPoisoning: number;
+  adversarialAttack: number;
+  privacyBreach: number;
+  ipInfringement: number;
   // Systemic & Concentration (1-5)
   cloudConcentration: number;
   modelConcentration: number;

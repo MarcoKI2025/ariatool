@@ -1,4 +1,5 @@
 import React from 'react';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
@@ -29,6 +30,8 @@ export function InsuranceDecision() {
           Financial exposure modelling and underwriting decision framework for {inputs.companyName || 'the assessed entity'}.
         </p>
       </div>
+
+      <UseRestrictionBanner />
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
       <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${

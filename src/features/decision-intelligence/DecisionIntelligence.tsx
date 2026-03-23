@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
@@ -33,6 +34,8 @@ export function DecisionIntelligence() {
           Multi-dimensional risk characterization using AFI, ECI, AGRI, ALRI, and SCRI indices — calibrated to {inputs.companyName || 'the assessed entity'}.
         </p>
       </div>
+
+      <UseRestrictionBanner />
 
       {/* ═══ HERO BOARD STATEMENT ═══ */}
       <div className="bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 border-l-fragile flex items-start gap-3">

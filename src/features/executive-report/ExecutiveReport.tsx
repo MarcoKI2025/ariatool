@@ -6,6 +6,7 @@ import { exportORSA } from '@/lib/orsaExport';
 import { formatDate, formatCurrency } from '@/lib/formatters';
 import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 
 // ═══════════════════════════════════════════════════════════════
 // RESPONSIBILITY & OWNERSHIP STRUCTURE PANEL
@@ -148,6 +149,8 @@ export function ExecutiveReport() {
           Decision-oriented summary based on structural systemic risk modelling. Structured for risk committees, boards, and reinsurers.
         </p>
       </div>
+
+      <UseRestrictionBanner />
 
       {/* Main verdict */}
       <div className="bg-card border border-border rounded-xl p-6 mb-4">
