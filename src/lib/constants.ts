@@ -41,7 +41,17 @@ export const NAV_STEPS = [
   { id: 4, title: 'Insurance Decision', sublabel: 'Loss envelope · Underwriting signals', viewId: 'insurance-decision' },
   { id: 5, title: 'Executive Report', sublabel: 'Board summary · ORSA export', viewId: 'executive-report' },
   { id: 6, title: 'Model Governance', sublabel: 'Methodology · Assumptions · Roadmap', viewId: 'model-governance' },
+  { id: 7, title: 'Portfolio View', sublabel: 'Multi-entity · Aggregate AFI', viewId: 'portfolio' },
+  { id: 8, title: 'Evidence Log', sublabel: 'Audit trail · Compliance', viewId: 'evidence-log' },
 ];
+
+export const DEFAULT_ELASTICITIES = {
+  w_DR: 1.0,
+  w_JD: 1.0,
+  w_RC: 1.0,
+  w_CD: 1.0,
+  w_NA: 1.0,
+};
 
 // AFI thresholds
 export const AFI_STABLE_MAX = 0.85;
