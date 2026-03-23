@@ -492,7 +492,7 @@ export function DecisionIntelligence() {
         <div className="bg-card border border-border rounded-[10px] p-4">
           <div className="text-[11px] font-bold text-foreground mb-2">Portfolio Contagion</div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
-            Shared AI infrastructure creates correlated exposure — {amplificationFactor} cascade amplification across 5 layers.
+            Shared AI infrastructure creates correlated exposure — significant non-linear amplification across operational layers (Swiss Re sigma insights 01/2026).
           </div>
         </div>
       </SectionCard>

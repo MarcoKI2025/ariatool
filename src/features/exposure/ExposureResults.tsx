@@ -523,7 +523,7 @@ export function ExposureResults() {
               'Assume reversibility — do not quantify exit costs or switching friction',
               'Ignore shared model dependencies — portfolio-level aggregation never modelled',
               'Stop at point-in-time compliance — continuation without re-authorisation not priced',
-              'Cannot price non-linear loss amplification — standard models underestimate tail risk 3–5×',
+              'Cannot price non-linear loss amplification — standard models underestimate tail risk significantly',
             ].map((t, i) => (
               <div key={i} className="flex items-start gap-2 py-[6px] text-[12px] text-secondary-foreground leading-[1.5]">
                 <span className="text-fragile font-bold flex-shrink-0">✗</span>{t}
