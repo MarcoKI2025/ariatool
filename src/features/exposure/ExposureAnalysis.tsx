@@ -20,6 +20,11 @@ export function ExposureAnalysis() {
   const [showForm, setShowForm] = useState(!analysisComplete);
   const [isLoading, setIsLoading] = useState(false);
 
+  const scrollToTop = useCallback(() => {
+    const main = document.querySelector('.app-content');
+    if (main) main.scrollTo(0, 0);
+  }, []);
+
   const handleRunAnalysis = useCallback(() => {
     setIsLoading(true);
     setTimeout(() => {
@@ -27,9 +32,10 @@ export function ExposureAnalysis() {
       setTimeout(() => {
         setIsLoading(false);
         setShowForm(false);
+        scrollToTop();
       }, 500);
     }, 5000);
-  }, [runAnalysis]);
+  }, [runAnalysis, scrollToTop]);
 
   const preview = useMemo(() => computeLivePreview(inputs), [inputs]);
 
