@@ -7,6 +7,7 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
 import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { SectionDivider } from '@/components/shared/SectionDivider';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
