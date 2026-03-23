@@ -294,7 +294,7 @@ export function InsuranceDecision() {
             </>) : band === 'Sensitive' ? (<>
               <div>• <strong className="text-foreground">Approaching underwriting threshold</strong> — Elevated structural signals detected</div>
               <div>• <strong className="text-foreground">Conditional coverage available</strong> — With mandatory improvement timeline</div>
-              <div>• <strong className="text-foreground">Premium loading 110–130%</strong> — Above standard baseline</div>
+              <div>• <strong className="text-foreground">Premium loading elevated</strong> — Precautionary loading above standard baseline</div>
               <div>• <strong className="text-foreground">Stress loss band: {lossEnvelope.stress}</strong> — Governance drift scenario</div>
             </>) : (<>
               <div>• <strong className="text-foreground">Within underwriting tolerance</strong> — Standard structural exposure profile</div>
