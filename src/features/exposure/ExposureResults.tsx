@@ -184,6 +184,9 @@ export function ExposureResults() {
         </SectionCard>
       </div>
 
+      {/* ═══ QUANTUM VULNERABILITY ASSESSMENT ═══ */}
+      <QuantumVulnerabilityAssessment />
+
       {/* ═══ STEP 1: Diagnosis Banner ═══ */}
       <div className="flex items-center gap-3 mb-4">
         <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[10px] font-bold">1</div>
