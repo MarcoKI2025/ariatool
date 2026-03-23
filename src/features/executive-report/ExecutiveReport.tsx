@@ -262,11 +262,19 @@ export function ExecutiveReport() {
           <div className="p-4 sm:p-5 sm:border-r border-b sm:border-b-0 border-border">
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Risk Position</div>
             <div className="space-y-[10px]">
-              {[
-                { color: 'bg-fragile', title: `Above underwriting tolerance`, sub: `AFI ${afi.toFixed(2)} — exceeds Fragile threshold (1.35)` },
+              {(band === 'Fragile' ? [
+                { color: 'bg-fragile', title: 'Above underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — exceeds Fragile threshold (1.35)` },
                 { color: 'bg-fragile', title: 'Standard coverage not justified', sub: 'Structural change required before standard rates apply' },
                 { color: 'bg-sensitive', title: 'Premium loading mandatory', sub: '150–180% above standard — mandatory pricing adjustment' },
-              ].map((item, i) => (
+              ] : band === 'Sensitive' ? [
+                { color: 'bg-sensitive', title: 'Approaching underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — within Sensitive range (0.85–1.35)` },
+                { color: 'bg-sensitive', title: 'Conditional coverage available', sub: 'Structural improvements required within 90 days' },
+                { color: 'bg-sensitive', title: 'Precautionary premium loading', sub: '80–120% above standard — recommended pricing adjustment' },
+              ] : [
+                { color: 'bg-stable', title: 'Within underwriting tolerance', sub: `AFI ${afi.toFixed(2)} — below Stable threshold (0.85)` },
+                { color: 'bg-stable', title: 'Standard coverage terms apply', sub: 'No structural remediation required' },
+                { color: 'bg-stable', title: 'Standard pricing', sub: 'No mandatory loading — routine governance monitoring' },
+              ]).map((item, i) => (
                 <div key={i} className="flex items-start gap-[10px]">
                   <div className={`w-[6px] h-[6px] rounded-full ${item.color} flex-shrink-0 mt-[5px]`} />
                   <div>
