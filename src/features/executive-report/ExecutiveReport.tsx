@@ -210,7 +210,7 @@ export function ExecutiveReport() {
         <div className="bg-fragile-bg border border-fragile-border rounded-lg p-3 flex items-start gap-3">
           <span className="text-fragile text-sm flex-shrink-0 mt-[1px]">⚠</span>
           <div className="text-[11px] text-secondary-foreground leading-[1.55]">
-            <strong className="text-fragile">Correlated AI infrastructure</strong> amplifies aggregate exposure {amplificationFactor} vs. isolated incidents. Reinsurance treaty review required above AFI 1.35 (Lloyd's AI Underwriting Framework 2025).
+            <strong className="text-fragile">Correlated AI infrastructure</strong> creates significant non-linear risk amplification vs. isolated incidents. Swiss Re sigma insights 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk." Reinsurance treaty review required above AFI 1.35.
           </div>
         </div>
       </div>
@@ -567,7 +567,7 @@ export function ExecutiveReport() {
                   ))}
                 </div>
                 <div style={{ fontSize: 8, color: '#96938c', marginTop: 6, lineHeight: 1.5 }}>
-                  ⚠ Amplification factor: {amplificationFactor}. Portfolio loss assumes 5 entities with similar AI infrastructure stack.
+                  ⚠ Non-linear amplification across correlated AI infrastructure. Portfolio loss assumes 5 entities with similar AI infrastructure stack. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic and accumulation risk."
                 </div>
               </div>
 
@@ -596,7 +596,7 @@ export function ExecutiveReport() {
 
               {/* Disclaimers */}
               <div style={{ padding: '10px 14px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 4, fontSize: 8, color: '#96938c', lineHeight: 1.6, marginBottom: 18 }}>
-                <strong style={{ color: '#5a5850' }}>Epistemic Status:</strong> Structural governance signal — not actuarially certified. Loss figures are market-calibrated proxies (Lloyd's, Munich Re Q4 2025). Self-attested inputs. Not legal advice.
+                <strong style={{ color: '#5a5850' }}>Epistemic Status:</strong> Structural governance signal — not actuarially certified. Risk bands are qualitative indicators based on Swiss Re sigma insights 01/2026. Self-attested inputs. Not legal advice.
               </div>
 
               {/* Footer */}

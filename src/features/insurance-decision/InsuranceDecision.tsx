@@ -242,7 +242,7 @@ export function InsuranceDecision() {
           </div>
           <div className="flex gap-4 text-left sm:text-right">
             <div>
-              <div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div>
+              <div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor}</div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div>
             </div>
             <div>
@@ -255,10 +255,10 @@ export function InsuranceDecision() {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
-            { icon: '🔧', name: 'Workflow Disruption', value: '+40%', layer: 'Layer 1', color: 'text-sensitive' },
-            { icon: '⚖', name: 'Decision Errors', value: '+110%', layer: 'Layer 2', color: 'text-sensitive' },
-            { icon: '📉', name: 'Revenue Impact', value: '+220%', layer: 'Layer 3', color: 'text-fragile' },
-            { icon: '🌐', name: 'Portfolio Contagion', value: '+380%', layer: 'Layer 4', color: 'text-fragile' },
+            { icon: '🔧', name: 'Workflow Disruption', value: 'Elevated', layer: 'Layer 1', color: 'text-sensitive' },
+            { icon: '⚖', name: 'Decision Errors', value: 'Critical', layer: 'Layer 2', color: 'text-sensitive' },
+            { icon: '📉', name: 'Revenue Impact', value: 'Critical', layer: 'Layer 3', color: 'text-fragile' },
+            { icon: '🌐', name: 'Portfolio Contagion', value: 'Systemic', layer: 'Layer 4', color: 'text-fragile' },
           ].map((node, i) => (
             <div key={i} className="text-center px-2 py-3 relative">
               {i < 4 && <span className="absolute right-[-11px] top-[38%] text-muted-foreground text-sm z-[1]">→</span>}
@@ -340,8 +340,8 @@ export function InsuranceDecision() {
           band === 'Sensitive' ? 'Conditional coverage with mandatory governance improvements within 90 days. Failure to meet conditions results in escalation to NOT APPROVED.' :
           'Structural exposure within manageable bounds. Standard coverage terms with routine monitoring apply.';
         const consIcon = band === 'Fragile' ? '⊘' : band === 'Sensitive' ? '↗' : '✓';
-        const consTxt = band === 'Fragile' ? `Issuing standard coverage at current AFI would understate required reserves by a factor of 3–5×. Premium loading is mandatory. Dependency diversification and governance re-authorisation are conditions of any coverage offer.` :
-          band === 'Sensitive' ? 'Without governance improvements within 90 days, this profile escalates to NOT APPROVED at next assessment.' :
+          const consTxt = band === 'Fragile' ? `Issuing standard coverage at current AFI would significantly understate required reserves. Premium loading is mandatory. Dependency diversification and governance re-authorisation are conditions of any coverage offer.` :
+           band === 'Sensitive' ? 'Without governance improvements within 90 days, this profile escalates to NOT APPROVED at next assessment.' :
           'Governance cadence must be maintained. Structural changes require re-assessment.';
 
         return (
@@ -394,9 +394,9 @@ export function InsuranceDecision() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-[10px]">
           {(band === 'Fragile' ? [
-            { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading understates required reserves by 3–5×. Expected loss: ${lossEnvelope.expected}. Tail risk: ${lossEnvelope.tail}+.` },
+            { ic: '€', title: 'Reserve Understatement', body: `Issuing standard coverage without premium loading significantly understates required reserves. Expected loss band: ${lossEnvelope.expected}. Tail risk band: ${lossEnvelope.tail}.` },
             { ic: '⚖', title: 'Regulatory Penalty Exposure', body: 'Active Art. 26 §2 and Art. 72 obligations create immediate Art. 99 §4 exposure of up to €15M or 3% global turnover — independent of any loss event.' },
-            { ic: '🌐', title: `Portfolio Contagion: ${lossEnvelope.portfolio}+`, body: `Correlated dependency structures amplify individual loss ${amplificationFactor} across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure.` },
+            { ic: '🌐', title: `Portfolio Contagion: ${lossEnvelope.portfolio}`, body: `Correlated dependency structures amplify individual loss across portfolio cluster. 8–15 entities sharing similar AI infrastructure create systemic exposure. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk."` },
           ] : band === 'Sensitive' ? [
             { ic: '↗', title: 'Trajectory to NOT APPROVED', body: 'Without structural intervention within 90 days, this profile escalates to NOT APPROVED at next assessment cycle. Governance gaps compound non-linearly.' },
             { ic: '€', title: 'Conditional Reserve Gap', body: `Current structural exposure of ${lossEnvelope.expected} is priced under conditional terms. If governance improvements are not delivered, the reserve basis is invalidated.` },
@@ -559,9 +559,9 @@ export function InsuranceDecision() {
           <div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[14px] pb-[10px] border-b-2 border-border">Emerging AI Market Consensus</div>
             {[
-              { text: 'Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic and accumulation risk."', source: 'Swiss Re' },
-              { text: 'Lloyd\'s Market Bulletin Y5478: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."', source: 'Lloyd\'s' },
-              { text: 'Munich Re Q4 2025: "AI risk correlation amplifies tail scenarios 3–5× beyond standard actuarial assumptions."', source: 'Munich Re' },
+              { text: 'Swiss Re sigma insights 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk."', source: 'Swiss Re' },
+              { text: 'Swiss Re sigma insights 01/2026: "AI adoption creates emerging risk dimensions that do not fit neatly within traditional insurance boundaries."', source: 'Swiss Re' },
+              { text: 'Swiss Re sigma insights 01/2026: "Reallocation rather than pure growth of insurable demand."', source: 'Swiss Re' },
               { text: 'EU AI Act Art. 99: Penalties of up to €35M or 7% of global turnover for non-compliance.', source: 'EU AI Act' },
             ].map((item, i) => (
               <div key={i} className="py-[6px] text-[11px] text-secondary-foreground leading-[1.55]">
@@ -617,7 +617,7 @@ export function InsuranceDecision() {
       <div className="bg-fragile-bg border border-fragile-border rounded-xl p-5 mb-4">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <div className="text-[13px] font-bold text-foreground">📊 Portfolio-Level Exposure Signal<InfoTip text="Estimated aggregate loss across multiple entities with similar dependency profiles. If entities share AI infrastructure, losses can cluster non-linearly — exceeding individual assessments by 3–5×." /></div>
+            <div className="text-[13px] font-bold text-foreground">📊 Portfolio-Level Exposure Signal<InfoTip text="Estimated aggregate exposure across multiple entities with similar dependency profiles. Swiss Re sigma 01/2026: Provider concentration creates accumulation risk." /></div>
             <div className="text-[11px] text-secondary-foreground mt-1">If multiple entities share similar dependency structures, losses cluster non-linearly and exceed individual assessments.</div>
           </div>
           <span className="px-[7px] py-[2px] rounded text-[9px] font-bold tracking-wider uppercase badge-fragile">Systemic Cluster Detected</span>

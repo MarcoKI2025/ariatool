@@ -71,10 +71,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '⚡', name: 'System Failure', value: 'Origin', layer: 'Layer 0' },
-        { icon: '🔧', name: 'Workflow Halt', value: '+30%', layer: 'Layer 1' },
-        { icon: '⚖', name: 'Decision Backlog', value: '+80%', layer: 'Layer 2' },
-        { icon: '📉', name: 'Revenue Loss', value: '+150%', layer: 'Layer 3' },
-        { icon: '🌐', name: 'Reputation', value: '+220%', layer: 'Layer 4' },
+        { icon: '🔧', name: 'Workflow Halt', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '⚖', name: 'Decision Backlog', value: 'Critical', layer: 'Layer 2' },
+        { icon: '📉', name: 'Revenue Loss', value: 'Critical', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Reputation', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'Manual fallback activated. Re-authorisation backlog accumulates. Oversight capacity degrades under volume.',
@@ -115,10 +115,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '🔗', name: 'Provider Down', value: 'Origin', layer: 'Layer 0' },
-        { icon: '⚡', name: 'API Failure', value: '+50%', layer: 'Layer 1' },
-        { icon: '🔧', name: 'Stack Unavailable', value: '+120%', layer: 'Layer 2' },
-        { icon: '📉', name: 'Business Halt', value: '+250%', layer: 'Layer 3' },
-        { icon: '🌐', name: 'Portfolio Impact', value: '+380%', layer: 'Layer 4' },
+        { icon: '⚡', name: 'API Failure', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '🔧', name: 'Stack Unavailable', value: 'Critical', layer: 'Layer 2' },
+        { icon: '📉', name: 'Business Halt', value: 'Critical', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Portfolio Impact', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'No governance action possible — dependency is external. Waiting state with no mitigation lever.',
@@ -159,10 +159,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '🏛', name: 'Enforcement', value: 'Origin', layer: 'Layer 0' },
-        { icon: '⛔', name: 'Full Halt', value: '+60%', layer: 'Layer 1' },
-        { icon: '⚖', name: 'Legal Exposure', value: '+140%', layer: 'Layer 2' },
-        { icon: '📉', name: 'Revenue Collapse', value: '+280%', layer: 'Layer 3' },
-        { icon: '🌐', name: 'Market Signal', value: '+400%', layer: 'Layer 4' },
+        { icon: '⛔', name: 'Full Halt', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '⚖', name: 'Legal Exposure', value: 'Critical', layer: 'Layer 2' },
+        { icon: '📉', name: 'Revenue Collapse', value: 'Critical', layer: 'Layer 3' },
+        { icon: '🌐', name: 'Market Signal', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'Full governance remediation required. Re-authorisation cycle: 14–30 days minimum. Board-level intervention mandatory.',
@@ -203,10 +203,10 @@ export function ScenarioSimulation() {
       ],
       cascadeLayers: [
         { icon: '🌐', name: 'Shared Infra Fail', value: 'Origin', layer: 'Layer 0' },
-        { icon: '⚡', name: 'Multi-Entity Hit', value: '+70%', layer: 'Layer 1' },
-        { icon: '📉', name: 'Portfolio Loss', value: '+180%', layer: 'Layer 2' },
-        { icon: '🔗', name: 'Treaty Breach', value: '+340%', layer: 'Layer 3' },
-        { icon: '💥', name: 'Systemic Event', value: '+560%', layer: 'Layer 4' },
+        { icon: '⚡', name: 'Multi-Entity Hit', value: 'Elevated', layer: 'Layer 1' },
+        { icon: '📉', name: 'Portfolio Loss', value: 'Critical', layer: 'Layer 2' },
+        { icon: '🔗', name: 'Treaty Breach', value: 'Critical', layer: 'Layer 3' },
+        { icon: '💥', name: 'Systemic Event', value: 'Systemic', layer: 'Layer 4' },
       ],
       whatChanges: {
         governance: 'Individual entity governance irrelevant — systemic stabilisation required first. Cross-entity coordination mandatory.',

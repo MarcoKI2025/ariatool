@@ -4,6 +4,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from '@/components/ui/dialog';
 import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, ExternalLink, Zap, Database, Eye } from 'lucide-react';
+import { LiveIndicator } from '@/components/shared/LiveIndicator';
 
 /* ── Integration Data ── */
 interface Integration {
@@ -149,9 +150,12 @@ export function IntegrationHub() {
         <h1 className="text-2xl font-bold text-foreground tracking-tight mb-2">
           Integration Hub
         </h1>
-        <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-          Connect to market data feeds, regulatory monitors, and reinsurance networks. Transform isolated assessments into connected intelligence.
-        </p>
+        <div className="flex items-center gap-3 mb-2">
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Connect to market data feeds, regulatory monitors, and reinsurance networks. Transform isolated assessments into connected intelligence.
+          </p>
+          <LiveIndicator label="Platform active" size="sm" />
+        </div>
       </div>
 
       {/* Stats Row */}
