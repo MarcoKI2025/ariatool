@@ -9,6 +9,7 @@ import { ParametricTriggerLab } from '@/features/parametric/ParametricTriggerLab
 import { formatCurrency } from '@/lib/formatters';
 import { computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
+import { ViewTabs } from '@/components/shared/ViewTabs';
 
 interface ScenarioData {
   id: string;
