@@ -1,9 +1,9 @@
-# ARIA — AI Governance Exposure Engine v3.2
+# ARIA — AI Governance Exposure Engine v4.2
 
 > **Structural risk assessment for AI-dependent organisations.**
 > Underwriting-grade governance intelligence for insurers, reinsurers, and risk managers.
 
-[![Version](https://img.shields.io/badge/version-3.2.1-blue)]()
+[![Version](https://img.shields.io/badge/version-4.2.0-blue)]()
 [![Status](https://img.shields.io/badge/status-Production_Ready-green)]()
 [![License](https://img.shields.io/badge/license-Proprietary-red)]()
 
@@ -79,6 +79,8 @@ Comprehensive risk index suite:
 - Parameter robustness testing (±10% sensitivity)
 - Stress scenario modelling
 - Qualitative loss envelope shifts
+- **Agent Coordination Analysis** — Multi-agent delegation chain mapping (BETA)
+- Agentic Swarm & Delegation Depth visualization
 
 ### 4. Insurance Decision
 - Decision class routing (Approved / Conditional Review / Escalate to Committee)
@@ -167,6 +169,6 @@ Proprietary — All rights reserved
 
 ---
 
-**Version:** 3.2.1
+**Version:** 4.2.0
 **Status:** Production Ready
 **Last Updated:** March 2026

@@ -4,6 +4,7 @@ import { LockedState } from '@/components/shared/UIComponents';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
+import { AgentCoordinationView } from '@/features/agent-coordination/AgentCoordinationView';
 import { formatCurrency } from '@/lib/formatters';
 import { computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
@@ -482,6 +483,9 @@ export function ScenarioSimulation() {
 
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
+
+      {/* Agent Coordination Analysis */}
+      <AgentCoordinationView />
 
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
