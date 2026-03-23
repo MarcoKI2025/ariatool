@@ -1,23 +1,17 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { SECTOR_MULTIPLIERS } from '@/lib/constants';
+import { SECTOR_MULTIPLIERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES, USE_CASES, PROVIDERS, DEFAULT_INPUTS } from '@/lib/constants';
 import { formatCurrency } from '@/lib/formatters';
 import { getBand, calcAFI, computeAFIComponents } from '@/lib/scoring';
 import { Chart, ArcElement, DoughnutController } from 'chart.js';
+import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
+import { SliderRow, SectionCard, InfoTip } from '@/components/shared/UIComponents';
+import { TOOLTIPS } from '@/lib/tooltips';
+import type { ExposureInputs } from '@/lib/types';
 
 Chart.register(ArcElement, DoughnutController);
 
 const SIM_BASE = 120;
-const SIM_AUTO_M = [0, 1.0, 1.2, 1.5, 1.9, 2.5];
-const SIM_CRIT_M = [0, 1.0, 1.25, 1.55, 1.8, 2.1];
-const SIM_DEP_M  = [0, 1.0, 1.15, 1.3, 1.55, 1.85];
-const SIM_OVST_R = [0, 0.40, 0.28, 0.16, 0.06, 0.0];
-const SIM_REV_M  = [0, 1.0, 1.3, 1.7, 2.4, 3.5];
-const SIM_AUTO_LABELS  = ['','Manual only','Mostly manual','Hybrid','Mostly autonomous','Fully autonomous'];
-const SIM_OVST_LABELS  = ['','Comprehensive','Strong','Moderate','Limited','Minimal / None'];
-const SIM_CRIT_LABELS  = ['','Support / Advisory','Operational support','Core operations','Business-critical','Mission-critical'];
-const SIM_DEP_LABELS   = ['','Multi-provider, low lock-in','Multi-provider','Mixed dependency','Single provider','Single provider, locked in'];
-const SIM_REV_LABELS   = ['','Under €10M (SME)','€10M–€50M','€50M–€500M','€500M–€5B','Over €5B'];
 
 const fmtK = (v: number) => v >= 1000 ? `€${(v/1000).toFixed(1)}M` : `€${Math.round(v)}k`;
 
@@ -66,28 +60,23 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
   const elevBand = getRiskBand(afi * 0.9);
   const critBand = getRiskBand(afi * 1.2);
 
-  // Risk Index (simplified)
   const afiNorm = Math.min(100, Math.round(afi / 3.0 * 100));
-  const riskIdx = Math.round(afiNorm * 0.50 + 25 * 0.30 + 20 * 0.20); // simplified without full slider access
+  const riskIdx = Math.round(afiNorm * 0.50 + 25 * 0.30 + 20 * 0.20);
   const riskColor = riskIdx >= 65 ? 'hsl(4 72% 46%)' : riskIdx >= 40 ? 'hsl(32 90% 38%)' : 'hsl(152 55% 30%)';
   const riskLabel = riskIdx >= 65 ? 'High Risk' : riskIdx >= 40 ? 'Moderate Risk' : 'Low Risk';
   const riskSub = riskIdx >= 65 ? 'Immediate governance action required' : riskIdx >= 40 ? 'Governance improvements recommended' : 'Profile within acceptable parameters';
-  const ringOffset = Math.round(226 - (riskIdx / 100) * 226);
 
-  // Industry comparison
   const secAvgs: Record<string, number> = { 'Financial Services': 48, 'Healthcare': 55, 'Insurance': 44, 'Legal / RegTech': 50, 'Technology': 38, 'Retail / E-Commerce': 32, 'Manufacturing': 35, 'Government / Public': 28 };
   const sectorAvg = secAvgs[inputs.industry] || 45;
   const diff = riskIdx - sectorAvg;
   const diffPct = Math.round(Math.abs(diff) / sectorAvg * 100);
 
-  // Scenarios
   const scenarios = [
     { icon: '⚡', label: 'Autonomous decision error', risk: band === 'Fragile' ? 'High' : 'Medium', col: band === 'Fragile' ? 'hsl(var(--red))' : 'hsl(var(--amb))' },
     { icon: '🔗', label: 'System cascade / infrastructure failure', risk: 'High', col: 'hsl(var(--red))' },
     { icon: '⚖', label: 'Regulatory / compliance breach', risk: 'Medium', col: 'hsl(var(--amb))' },
   ];
 
-  // Trajectory
   const growthRate = band === 'Fragile' ? 0.35 : band === 'Sensitive' ? 0.20 : 0.10;
   const trend6m = band === 'Fragile' ? elevBand : baseBand;
   const trend12m = band === 'Fragile' ? critBand : band === 'Sensitive' ? elevBand : baseBand;
@@ -97,12 +86,9 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
 
   return (
     <div className="mx-2 sm:mx-8 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
-      {/* Gradient top bar */}
       <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
       
-      {/* Row 1: Risk Index + Characterization + Industry */}
       <div className="grid grid-cols-1 md:grid-cols-3 border-b border-border" style={{ paddingTop: 4 }}>
-        {/* AI Risk Index */}
         <div className="flex flex-col items-center justify-center text-center p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-4">AI Risk Index</div>
           <div className="relative mb-4" style={{ width: 110, height: 110 }}>
@@ -119,7 +105,6 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
           <div className="text-[11px] text-muted-foreground mt-1 max-w-[180px]">{riskSub}</div>
         </div>
 
-        {/* Risk Characterization */}
         <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Risk Characterization</div>
           <div className="flex flex-col gap-5">
@@ -141,7 +126,6 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
           </div>
         </div>
 
-        {/* Industry Comparison */}
         <div className="p-4 sm:p-8">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-6">Industry Comparison · Your Sector</div>
           <div className="mb-5">
@@ -170,9 +154,7 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
         </div>
       </div>
 
-      {/* Row 2: Loss Scenarios + Trajectory + Do Nothing */}
       <div className="grid grid-cols-1 md:grid-cols-3">
-        {/* Top Loss Scenarios */}
         <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Top Loss Scenarios</div>
           <div className="flex flex-col gap-3">
@@ -186,7 +168,6 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
           </div>
         </div>
 
-        {/* Exposure Trajectory */}
         <div className="p-4 sm:p-8 md:border-r border-b md:border-b-0 border-border">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">Exposure Trajectory · 12 Months</div>
           <div className="flex flex-col gap-3 mb-5">
@@ -203,7 +184,6 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
               <span className="text-[16px] font-bold font-mono text-fragile">{trend12m}</span>
             </div>
           </div>
-          {/* Mini bar chart */}
           <div className="flex items-end gap-3 mb-5" style={{ height: 50 }}>
             {[
               { l: 'Now', h: 16, c: 'hsl(220 6% 52%)' },
@@ -221,7 +201,6 @@ function FinancialDecisionEngine({ afi, band, sim, inputs }: { afi: number; band
           </div>
         </div>
 
-        {/* What If You Do Nothing */}
         <div className="p-4 sm:p-8">
           <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-5">If Nothing Changes · 12 Month Impact</div>
           <div className="flex flex-col gap-5">
@@ -256,7 +235,6 @@ function StrategicInterpretation({ band, components }: { band: string; component
 
   return (
     <div className="mx-2 sm:mx-8 mt-6 rounded-2xl border border-border bg-card shadow-sm overflow-hidden relative">
-      {/* Gradient top bar */}
       <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #b53020, #e09000, #4038b8, #6058d8)' }} />
       <div className="grid grid-cols-1 sm:grid-cols-[56px_1fr] gap-3 sm:gap-5 p-4 sm:p-10 pt-6 sm:pt-8">
         <div className="text-2xl sm:text-3xl text-primary text-center pt-1 hidden sm:block">◈</div>
@@ -275,7 +253,6 @@ function StrategicInterpretation({ band, components }: { band: string; component
           <div className="text-lg font-bold text-foreground leading-snug mb-4" dangerouslySetInnerHTML={{ __html: interp[band]?.split('.').slice(0, 2).join('.') + '.' || '' }} />
           <p className="text-[13px] text-secondary-foreground leading-[1.8] mb-6" dangerouslySetInnerHTML={{ __html: interp[band] || interp.Stable }} />
           
-          {/* Action items */}
           <div className="flex flex-col gap-3 mb-6">
             {(band === 'Fragile' ? [
               { tag: 'REMEDIATE', tagCol: '#c9392a', tagBg: 'hsl(var(--rb))', title: 'Reduce execution authority and implement quarterly re-authorisation', sub: 'Current autonomy level exceeds governance capacity. Structural change required.' },
@@ -294,7 +271,6 @@ function StrategicInterpretation({ band, components }: { band: string; component
             ))}
           </div>
           
-          {/* Structural signals strip */}
           <div className="flex items-center gap-2 sm:gap-3 pt-4 sm:pt-5 border-t border-border flex-wrap">
             <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Structural Signals:</span>
             {[
@@ -311,33 +287,47 @@ function StrategicInterpretation({ band, components }: { band: string; component
   );
 }
 
+/* ══════════════════════════════════════════════════════════ */
+/* ═══ MAIN COMPANY VIEW ═══════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════ */
+
 export function CompanyView() {
   const { state, setInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
-  const { results, inputs, analysisComplete } = state;
+  const { results, inputs: globalInputs, analysisComplete } = state;
   const heroRef = useRef<HTMLDivElement>(null);
   const [showSticky, setShowSticky] = useState(false);
-  
 
-  // Simulator state
-  const [simAuto, setSimAuto] = useState(4);
-  const [simOvst, setSimOvst] = useState(2);
-  const [simCrit, setSimCrit] = useState(5);
-  const [simDep, setSimDep] = useState(4);
-  const [simRev, setSimRev] = useState(3);
-  const [simSec, setSimSec] = useState(1.4);
-  const [simEuaia, setSimEuaia] = useState(1.4);
+  // ── Local standalone inputs (mirrors ExposureInputs) ──
+  const [localInputs, setLocalInputs] = useState<ExposureInputs>(() => ({
+    ...DEFAULT_INPUTS as ExposureInputs,
+  }));
 
-  // Sync from analysis
+  // Sync from global analysis if available
   useEffect(() => {
-    if (results && inputs) {
-      setSimAuto(Math.min(5, Math.max(1, Math.round(inputs.automation))));
-      setSimOvst(Math.min(5, Math.max(1, Math.round(inputs.oversightLevel))));
-      setSimCrit(Math.min(5, Math.max(1, Math.round(inputs.criticality))));
-      setSimDep(Math.min(5, Math.max(1, inputs.providers.length <= 1 ? 5 : inputs.providers.length <= 2 ? 3 : 1)));
-      const secMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
-      setSimSec(secMult);
+    if (analysisComplete && globalInputs) {
+      setLocalInputs({ ...globalInputs });
     }
-  }, [results, inputs]);
+  }, [analysisComplete, globalInputs]);
+
+  const updateLocal = useCallback((patch: Partial<ExposureInputs>) => {
+    setLocalInputs(prev => ({ ...prev, ...patch }));
+  }, []);
+
+  const toggleChip = (list: string[], item: string) => {
+    return list.includes(item) ? list.filter(i => i !== item) : [...list, item];
+  };
+
+  // ── Collapsed category state ──
+  const [expandedCats, setExpandedCats] = useState<Record<string, boolean>>({
+    'core-afi': true,
+    'risk-profile': false,
+    'agent-arch': false,
+    'liability': false,
+    'governance': false,
+    'systemic': false,
+  });
+
+  const toggleCat = (key: string) => setExpandedCats(prev => ({ ...prev, [key]: !prev[key] }));
 
   // Sticky header
   useEffect(() => {
@@ -354,80 +344,68 @@ export function CompanyView() {
     }
   }, []);
 
-  // Calculate premium
-  const sim = useMemo(() => {
-    const rawPrem = SIM_BASE * SIM_AUTO_M[simAuto] * SIM_CRIT_M[simCrit] * SIM_DEP_M[simDep] * SIM_REV_M[simRev] * simSec * simEuaia;
-    const ovstRed = SIM_OVST_R[simOvst];
-    const mid = rawPrem * (1 - ovstRed);
-    const bandPct = simAuto >= 4 ? 0.20 : simAuto >= 3 ? 0.25 : 0.30;
-    const lo = Math.round(mid * (1 - bandPct) / 10) * 10;
-    const hi = Math.round(mid * (1 + bandPct) / 10) * 10;
-    const midR = Math.round(mid / 10) * 10;
-    const confPct = Math.min(85, 30 + (5-simAuto)*4 + simOvst*4);
-    // Benchmark
-    const worst = SIM_BASE * 2.5 * 2.1 * 1.85 * SIM_REV_M[simRev] * simSec * simEuaia;
-    const best = SIM_BASE * 1.0 * 1.0 * 1.0 * SIM_REV_M[simRev] * simSec * simEuaia * 0.6;
-    const benchPct = Math.max(5, Math.min(95, Math.round((mid - best) / (worst - best) * 100)));
-    return { lo, mid: midR, hi, confPct, benchPct, ovstRed };
-  }, [simAuto, simOvst, simCrit, simDep, simRev, simSec, simEuaia]);
-
-  const sliderFill = (val: number, min: number, max: number) => `${((val - min) / (max - min)) * 100}%`;
-
-
-
-  // Derive live AFI from simulator sliders AND actual inputs (useCases, providers, etc.)
-  // We create a modified inputs object that merges simulator slider values with real inputs
-  const liveComponents = useMemo(() => {
-    if (!results || !inputs) return { dr: 0, jd: 0.5, rc: 0, cd: 0, na: 0.5 };
-    // Build a modified inputs object using simulator values but keeping useCases/providers/etc. from real inputs
-    const modifiedInputs = {
-      ...inputs,
-      automation: simAuto,
-      executionAuthority: simAuto, // Map simulator autonomy to execution authority
-      oversightLevel: 6 - simOvst, // Invert: high oversight slider = low oversight level
-      reviewCadence: 6 - simOvst,
-      criticality: simCrit,
-      // Provider dependency slider maps back to providers array length effect
-      switchingCost: simDep,
-      integrationDepth: simCrit,
-    };
-    return computeAFIComponents(modifiedInputs);
-  }, [simAuto, simOvst, simDep, simCrit, inputs, results]);
-
+  // ── Derive AFI from local inputs ──
+  const liveComponents = useMemo(() => computeAFIComponents(localInputs), [localInputs]);
   const liveAfi = useMemo(() => calcAFI(liveComponents.dr, liveComponents.jd, liveComponents.rc, liveComponents.cd, liveComponents.na), [liveComponents]);
   const liveBand = useMemo(() => getBand(liveAfi), [liveAfi]);
   const liveStructuralScore = useMemo(() => Math.min(100, Math.round(liveAfi / 3.0 * 100)), [liveAfi]);
 
-  // Locked state
-  if (!analysisComplete || !results) {
-    return (
-      <div style={{ margin: '20px 28px', padding: '28px 32px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 14, textAlign: 'center' }}>
-        <div style={{ fontSize: 28, marginBottom: 12 }}>◈</div>
-        <div style={{ fontSize: 16, fontWeight: 700, color: 'hsl(var(--tx))', marginBottom: 6 }}>Run your AI Risk Assessment first</div>
-        <div style={{ fontSize: 12, color: 'hsl(var(--t2))', lineHeight: 1.65, marginBottom: 24, maxWidth: 460, marginLeft: 'auto', marginRight: 'auto' }}>
-          The Company View shows your executive AI risk summary — risk level, estimated insurance cost, cost drivers, and premium reduction actions. It's generated from your exposure profile in Step 1.
-        </div>
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button onClick={() => { setPerspective('underwriter'); setActiveStep(1); }} className="btn-p" style={{ fontSize: 13, padding: '12px 24px' }}>→ Start AI Risk Assessment</button>
-          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-s" style={{ fontSize: 13, padding: '12px 24px' }}>▶ Load Demo Scenario</button>
-        </div>
-        <div style={{ marginTop: 16, fontSize: 10, color: 'hsl(var(--t3))' }}>Takes 3 minutes · No account required · Results are not stored</div>
-      </div>
-    );
-  }
+  // ── Premium calculation from local inputs ──
+  const sim = useMemo(() => {
+    const secMult = SECTOR_MULTIPLIERS[localInputs.industry] || 1.0;
+    // Revenue multiplier
+    const revMap: Record<string, number> = { 'Under €10M': 1.0, '€10M–€50M': 1.3, '€50M–€500M': 1.7, '€500M–€5B': 2.4, 'Over €5B': 3.5 };
+    const revMult = revMap[localInputs.revenue] || 1.0;
+    // Autonomy multiplier (from automation slider)
+    const autoMults = [0, 1.0, 1.2, 1.5, 1.9, 2.5];
+    const autoMult = autoMults[localInputs.automation] || 1.0;
+    // Criticality multiplier
+    const critMults = [0, 1.0, 1.25, 1.55, 1.8, 2.1];
+    const critMult = critMults[localInputs.criticality] || 1.0;
+    // Dependency multiplier (from provider count)
+    const depLevel = localInputs.providers.length <= 1 ? 5 : localInputs.providers.length <= 2 ? 4 : localInputs.providers.length <= 3 ? 3 : 2;
+    const depMults = [0, 1.0, 1.15, 1.3, 1.55, 1.85];
+    const depMult = depMults[depLevel] || 1.0;
+    // Oversight reduction
+    const ovstReds = [0, 0.0, 0.06, 0.16, 0.28, 0.40];
+    const ovstRed = ovstReds[localInputs.oversightLevel] || 0;
+    // Agent risk loading
+    const agentLoading = 1 + (localInputs.multiAgent - 1) * 0.08 + (localInputs.toolCallAuthority - 1) * 0.06;
+    // Liability loading
+    const liabAvg = (localInputs.hallucinationLiability + localInputs.deepfakeFraud + localInputs.promptInjection + localInputs.modelDrift + localInputs.algorithmicBias) / 5;
+    const liabLoading = 1 + (liabAvg - 1) * 0.1;
 
-  const { eciTier, eciName, lossEnvelope, premium } = results;
-  const liveBandColor = liveBand === 'Fragile' ? 'hsl(var(--red))' : liveBand === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
+    const rawPrem = SIM_BASE * autoMult * critMult * depMult * revMult * secMult * agentLoading * liabLoading;
+    const mid = rawPrem * (1 - ovstRed);
+    const bandPct = localInputs.automation >= 4 ? 0.20 : localInputs.automation >= 3 ? 0.25 : 0.30;
+    const lo = Math.round(mid * (1 - bandPct) / 10) * 10;
+    const hi = Math.round(mid * (1 + bandPct) / 10) * 10;
+    const midR = Math.round(mid / 10) * 10;
 
-  const companyName = inputs.companyName || 'Your Organisation';
-  const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    // Benchmark
+    const worst = SIM_BASE * 2.5 * 2.1 * 1.85 * revMult * secMult * 1.4 * 1.4;
+    const best = SIM_BASE * 1.0 * 1.0 * 1.0 * revMult * secMult * 0.6;
+    const benchPct = Math.max(5, Math.min(95, Math.round((mid - best) / (worst - best) * 100)));
 
-  // Use live values for display
+    // Per-category cost impact (approximate)
+    const baselinePrem = SIM_BASE * revMult * secMult;
+    const coreImpact = Math.round((autoMult * critMult - 1) * baselinePrem);
+    const agentImpact = Math.round((agentLoading - 1) * baselinePrem);
+    const liabImpact = Math.round((liabLoading - 1) * baselinePrem);
+    const depImpact = Math.round((depMult - 1) * baselinePrem);
+    const ovstSaving = Math.round(ovstRed * rawPrem);
+
+    return { lo, mid: midR, hi, benchPct, ovstRed, coreImpact, agentImpact, liabImpact, depImpact, ovstSaving };
+  }, [localInputs]);
+
+  // ── Use live values ──
   const afi = liveAfi;
   const band = liveBand;
-  const bandColor = liveBandColor;
+  const bandColor = band === 'Fragile' ? 'hsl(var(--red))' : band === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
   const structuralScore = liveStructuralScore;
   const components = liveComponents;
+  const companyName = localInputs.companyName || 'Your Organisation';
+  const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
   // Cost drivers
   const drivers = [
@@ -444,6 +422,9 @@ export function CompanyView() {
     { rank: 3, title: 'Establish Named AI System Ownership', body: 'Assign a named individual with stop authority and accountability for each AI deployment. Clear ownership reduces the responsibility fragmentation premium.', saving: '—', before: 'Diffuse', after: 'Named owner' },
   ];
 
+  // No locked state needed — standalone mode works without running analysis
+  const showResults = localInputs.companyName.length > 0 || localInputs.industry.length > 0;
+
   return (
     <div style={{ position: 'relative' }}>
       {/* Sticky mini header */}
@@ -457,7 +438,6 @@ export function CompanyView() {
         </div>
         <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
           <span className="text-[11px] sm:text-[12px] font-bold font-mono text-primary">{fmtK(sim.lo)} – {fmtK(sim.hi)} / yr</span>
-          <button onClick={() => document.dispatchEvent(new CustomEvent('open-company-demo'))} className="btn-p hidden sm:inline-flex" style={{ padding: '6px 14px', fontSize: 11 }}>Load Demo</button>
         </div>
       </div>
 
@@ -465,9 +445,9 @@ export function CompanyView() {
       <div className="px-4 sm:px-7 pt-5">
         <div className="flex flex-col sm:flex-row items-start justify-between gap-3 pb-4 border-b border-border">
           <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Company View — Executive AI Risk Summary</div>
-            <div className="text-[15px] sm:text-[18px] font-bold text-foreground tracking-tight mb-1.5">What does your AI cost — and what can you do about it?</div>
-            <div className="text-[11px] text-secondary-foreground leading-[1.6] max-w-[600px]">This view translates the structural AI risk assessment into plain business language: your overall risk level, estimated annual insurance cost, what drives it, and three concrete actions to reduce it.</div>
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Company View — AI Insurance Cost Calculator</div>
+            <div className="text-[15px] sm:text-[18px] font-bold text-foreground tracking-tight mb-1.5">What does your AI cost to insure — and where can you save?</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.6] max-w-[600px]">Configure your AI deployment profile below. The premium estimate, risk score, and cost reduction levers update in real-time as you adjust each parameter.</div>
           </div>
           <button onClick={() => setPerspective('underwriter')} className="btn-ghost text-[11px] flex-shrink-0">⊕ Underwriter View →</button>
         </div>
@@ -475,7 +455,7 @@ export function CompanyView() {
         {/* 4 section preview cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 py-3">
           {[
-            { bg: 'hsl(var(--rb))', border: 'hsl(var(--rbr))', color: 'hsl(var(--red))', label: '① Risk Level', desc: 'Overall AI risk score, ECI tier' },
+            { bg: 'hsl(var(--rb))', border: 'hsl(var(--rbr))', color: 'hsl(var(--red))', label: '① Risk Level', desc: 'Overall AI risk score, AFI' },
             { bg: 'hsl(var(--pb))', border: 'hsl(var(--pbr))', color: 'hsl(var(--pur))', label: '② Insurance Cost', desc: 'Annual premium range & drivers' },
             { bg: 'hsl(var(--gb))', border: 'hsl(var(--gbr))', color: 'hsl(var(--grn))', label: '③ Cost Reduction', desc: 'Concrete actions & savings' },
             { bg: 'hsl(var(--ab))', border: 'hsl(var(--abr))', color: 'hsl(var(--amb))', label: '④ Regulatory', desc: 'EU AI Act & DORA signal' },
@@ -488,151 +468,252 @@ export function CompanyView() {
         </div>
       </div>
 
-      {/* LIVE PRICING SIMULATOR */}
-      <div style={{ background: 'hsl(var(--s2))', borderBottom: '1px solid hsl(var(--bd))' }}>
-        <div className="flex flex-col sm:flex-row items-start justify-between gap-4 px-4 sm:px-7 pt-5">
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>◈ AI Insurance Pricing Simulator · Live Calculation</div>
-            <div className="text-[13px] sm:text-[14px] font-bold text-foreground tracking-tight">What does your AI profile cost to insure?</div>
-            <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginTop: 3, lineHeight: 1.5 }}>Adjust the parameters below — the premium estimate updates in real time.</div>
-          </div>
-          <div className="flex-shrink-0 py-2 px-3.5 bg-purple-bg border border-purple-border rounded-lg text-center min-w-[100px]">
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 3 }}>Live Estimate</div>
-            <div className="text-[18px] sm:text-[20px] font-bold font-mono text-primary">{fmtK(sim.mid)}</div>
-            <div className="text-[9px] text-muted-foreground">per year</div>
-          </div>
+      {/* ══════════════════════════════════════════════════════ */}
+      {/* ═══ FULL INPUT CONFIGURATOR + LIVE PREMIUM PANEL ═══ */}
+      {/* ══════════════════════════════════════════════════════ */}
+      <div className="px-4 sm:px-7 py-5">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-[11px] font-bold tracking-[0.1em] uppercase text-primary">◈ AI Deployment Profile · Full Configuration</span>
+          <span className="text-[9px] font-semibold px-2 py-0.5 bg-stable-bg text-stable border border-stable-border rounded">Standalone Calculator</span>
+        </div>
+        <div className="text-[11px] text-secondary-foreground mb-5 leading-[1.6] max-w-[640px]">
+          Adjust each parameter to see how it impacts your estimated insurance premium. Categories marked with cost impact show the approximate effect on your annual premium.
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_340px] gap-0 px-4 sm:px-7 py-5">
-          {/* LEFT: Input controls */}
-          <div className="pr-0 md:pr-6 md:border-r border-b md:border-b-0 border-border pb-5 md:pb-0 flex flex-col gap-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-[14px]">
-              {/* Autonomy */}
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <span>Execution Autonomy</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_AUTO_LABELS[simAuto]}</span>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-5 items-start">
+          {/* LEFT: Full input form */}
+          <div>
+            {/* Company Profile */}
+            <SectionCard title="Company Profile" icon="🏢" subtitle="Company details determine sector multipliers and revenue-based exposure scaling.">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-3">
+                <div>
+                  <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Company Name</label>
+                  <input
+                    type="text"
+                    value={localInputs.companyName}
+                    onChange={(e) => updateLocal({ companyName: e.target.value })}
+                    placeholder="e.g. Meridian Financial Group"
+                    className="w-full px-3 py-[9px] border border-border rounded-lg bg-card text-foreground text-[13px] focus:border-primary focus:ring-1 focus:ring-primary/20 outline-none transition-colors"
+                  />
                 </div>
-                <input type="range" min={1} max={5} value={simAuto} onChange={e => setSimAuto(+e.target.value)} style={{ '--fill': sliderFill(simAuto, 1, 5) } as React.CSSProperties} />
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 3 }}>
-                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Manual</span>
-                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Fully autonomous</span>
+                <div>
+                  <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Industry</label>
+                  <select
+                    value={localInputs.industry}
+                    onChange={(e) => updateLocal({ industry: e.target.value })}
+                    className="w-full px-3 py-[9px] border border-border rounded-lg bg-card text-foreground text-[13px] focus:border-primary outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="">Select industry</option>
+                    {INDUSTRIES.map(i => <option key={i} value={i}>{i}</option>)}
+                  </select>
                 </div>
               </div>
-              {/* Oversight */}
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <span>Human Oversight</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_OVST_LABELS[simOvst]}</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[14px] mb-3">
+                <div>
+                  <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Company Size</label>
+                  <select
+                    value={localInputs.size}
+                    onChange={(e) => updateLocal({ size: e.target.value })}
+                    className="w-full px-3 py-[9px] border border-border rounded-lg bg-card text-foreground text-[13px] focus:border-primary outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="">Select size</option>
+                    {COMPANY_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
                 </div>
-                <input type="range" min={1} max={5} value={simOvst} onChange={e => setSimOvst(+e.target.value)} style={{ '--fill': sliderFill(simOvst, 1, 5) } as React.CSSProperties} />
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 3 }}>
-                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Minimal</span>
-                  <span style={{ fontSize: 8, color: 'hsl(var(--t3))' }}>Comprehensive</span>
+                <div>
+                  <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Annual Revenue</label>
+                  <select
+                    value={localInputs.revenue}
+                    onChange={(e) => updateLocal({ revenue: e.target.value })}
+                    className="w-full px-3 py-[9px] border border-border rounded-lg bg-card text-foreground text-[13px] focus:border-primary outline-none cursor-pointer appearance-none"
+                  >
+                    <option value="">Select revenue range</option>
+                    {REVENUE_RANGES.map(r => <option key={r} value={r}>{r}</option>)}
+                  </select>
                 </div>
               </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-[14px]">
-              {/* Criticality */}
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <span>Business Criticality</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_CRIT_LABELS[simCrit]}</span>
+              <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">Primary AI Use Cases</label>
+              <div className="flex flex-wrap gap-[6px] mb-3">
+                {USE_CASES.map(uc => (
+                  <span key={uc} onClick={() => updateLocal({ useCases: toggleChip(localInputs.useCases, uc) })} className={`chip ${localInputs.useCases.includes(uc) ? 'active' : ''}`}>{uc}</span>
+                ))}
+              </div>
+              <label className="text-[10px] font-bold tracking-[0.07em] uppercase text-secondary-foreground mb-[5px] block">External AI Providers</label>
+              <div className="flex flex-wrap gap-[6px]">
+                {PROVIDERS.map(p => (
+                  <span key={p} onClick={() => updateLocal({ providers: toggleChip(localInputs.providers, p) })} className={`chip ${localInputs.providers.includes(p) ? 'active' : ''}`}>{p}</span>
+                ))}
+              </div>
+            </SectionCard>
+
+            {/* Slider Categories — collapsible */}
+            {SLIDER_CATEGORIES.map((cat) => {
+              const isOpen = expandedCats[cat.key] ?? false;
+              // Cost impact per category
+              const costLabel = cat.key === 'core-afi' ? (sim.coreImpact > 0 ? `+€${sim.coreImpact}k` : '—') :
+                cat.key === 'agent-arch' ? (sim.agentImpact > 0 ? `+€${sim.agentImpact}k` : '—') :
+                cat.key === 'liability' ? (sim.liabImpact > 0 ? `+€${sim.liabImpact}k` : '—') :
+                cat.key === 'systemic' ? (sim.depImpact > 0 ? `+€${sim.depImpact}k` : '—') :
+                cat.key === 'governance' ? (sim.ovstSaving > 0 ? `-€${sim.ovstSaving}k` : '—') :
+                '—';
+              const costColor = costLabel.startsWith('-') ? 'text-stable' : costLabel.startsWith('+') ? 'text-fragile' : 'text-muted-foreground';
+
+              return (
+                <div key={cat.key} className="bg-card border border-border rounded-xl mb-4 overflow-hidden">
+                  {/* Category header — clickable */}
+                  <button
+                    onClick={() => toggleCat(cat.key)}
+                    className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-secondary/50 transition-colors"
+                  >
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-base flex-shrink-0">{cat.icon}</span>
+                      <div className="min-w-0">
+                        <div className="text-[11px] font-bold text-foreground tracking-tight">{cat.title}</div>
+                        <div className="text-[9px] text-muted-foreground mt-0.5">{cat.badge}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      {costLabel !== '—' && (
+                        <span className={`text-[10px] font-bold font-mono ${costColor}`}>
+                          {costLabel} / yr
+                        </span>
+                      )}
+                      <span className="text-[14px] text-muted-foreground transition-transform" style={{ transform: isOpen ? 'rotate(180deg)' : 'none' }}>▾</span>
+                    </div>
+                  </button>
+                  {/* Expanded sliders */}
+                  {isOpen && (
+                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 border-t border-border pt-3">
+                      {cat.subtitle && (
+                        <div className="text-[10px] text-muted-foreground mb-4 leading-[1.6]" dangerouslySetInnerHTML={{ __html: cat.subtitle }} />
+                      )}
+                      {cat.sliders.map((slider) => (
+                        <SliderRow
+                          key={slider.id}
+                          label={slider.name}
+                          value={(localInputs as Record<string, any>)[slider.fieldKey] ?? slider.defaultValue}
+                          onChange={(v) => updateLocal({ [slider.fieldKey]: v } as Partial<ExposureInputs>)}
+                          min={slider.min}
+                          max={slider.max}
+                          description={slider.description}
+                          tooltip={slider.tooltip}
+                          explainText={slider.explainText}
+                          scaleLabels={slider.labels}
+                        />
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <input type="range" min={1} max={5} value={simCrit} onChange={e => setSimCrit(+e.target.value)} style={{ '--fill': sliderFill(simCrit, 1, 5) } as React.CSSProperties} />
-              </div>
-              {/* Dependency */}
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                  <span>Provider Dependency</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, color: 'hsl(var(--tx))' }}>{SIM_DEP_LABELS[simDep]}</span>
-                </div>
-                <input type="range" min={1} max={5} value={simDep} onChange={e => setSimDep(+e.target.value)} style={{ '--fill': sliderFill(simDep, 1, 5) } as React.CSSProperties} />
-              </div>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-              {/* Revenue */}
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 6 }}>
-                  <span>Annual Revenue</span>
-                </div>
-                <select className="fi-in" value={simRev} onChange={e => setSimRev(+e.target.value)} style={{ fontSize: 12 }}>
-                  {SIM_REV_LABELS.slice(1).map((l, i) => <option key={i+1} value={i+1}>{l}</option>)}
-                </select>
-              </div>
-              {/* EU AI Act */}
-              <div>
-                <div style={{ fontSize: 10, fontWeight: 700, color: 'hsl(var(--t2))', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 6 }}>EU AI Act Classification</div>
-                <select className="fi-in" value={simEuaia} onChange={e => setSimEuaia(+e.target.value)} style={{ fontSize: 12 }}>
-                  <option value={1.0}>Minimal Risk</option>
-                  <option value={1.15}>Limited Risk (transparency)</option>
-                  <option value={1.4}>High-Risk — Annex III</option>
-                  <option value={1.6}>High-Risk — Annex I (product safety)</option>
-                  <option value={2.0}>Unacceptable / Prohibited</option>
-                </select>
-              </div>
-            </div>
-            <div style={{ fontSize: 9, color: 'hsl(var(--t3))', padding: '4px 0', lineHeight: 1.6 }}>
-              ⊙ Using standalone inputs
-            </div>
+              );
+            })}
           </div>
 
-          {/* RIGHT: Live Price Panel */}
-          <div className="pl-0 md:pl-6 flex flex-col gap-0">
-            {/* Main price */}
-            <div style={{ padding: '18px 20px', background: 'linear-gradient(135deg, hsl(var(--pb)), hsl(var(--s2)))', border: '1px solid hsl(var(--pbr))', borderRadius: 12, marginBottom: 12, position: 'relative', overflow: 'hidden' }}>
-              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'hsl(var(--pur))', marginBottom: 8 }}>Estimated Annual AI Liability Premium</div>
-              <div style={{ fontSize: 32, fontWeight: 700, fontFamily: 'var(--font-mono)', color: 'hsl(var(--tx))', letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: 3, transition: 'all .3s' }}>{fmtK(sim.mid)}</div>
-              <div style={{ fontSize: 11, color: 'hsl(var(--t2))', marginBottom: 14 }}>Range: {fmtK(sim.lo)} – {fmtK(sim.hi)} / year</div>
-              <div style={{ background: 'hsl(var(--s3))', borderRadius: 4, height: 5, marginBottom: 8, overflow: 'hidden' }}>
-                <div style={{ height: '100%', background: 'linear-gradient(90deg, hsl(var(--pur)), #7068e0)', borderRadius: 4, width: `${sim.confPct}%`, transition: 'width .4s' }} />
+          {/* RIGHT: Live Premium Panel (sticky) */}
+          <div className="lg:sticky lg:top-2 space-y-4">
+            {/* Main premium card */}
+            <div className="bg-card border border-border rounded-xl overflow-hidden">
+              <div className="p-4 bg-purple-bg border-b border-purple-border">
+                <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-1">Live Insurance Estimate</div>
+                <div className="text-[28px] font-bold font-mono text-foreground leading-none">{fmtK(sim.mid)}</div>
+                <div className="text-[11px] text-secondary-foreground mt-1">Range: {fmtK(sim.lo)} – {fmtK(sim.hi)} / year</div>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'hsl(var(--t3))' }}>
-                <span>Exploratory</span>
-                <span>{sim.confPct > 65 ? 'Directional estimate' : sim.confPct > 45 ? 'Low-medium' : 'Exploratory only'}</span>
-                <span>Validated</span>
+              <div className="p-4">
+                {/* AFI Score */}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">AFI Score</span>
+                  <span className="text-[18px] font-bold font-mono" style={{ color: bandColor }}>{afi.toFixed(2)}</span>
+                </div>
+                {/* Band */}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Risk Band</span>
+                  <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded ${band === 'Fragile' ? 'badge-fragile' : band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'}`}>{band}</span>
+                </div>
+                {/* Structural score */}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Risk Score</span>
+                  <span className="text-[14px] font-bold font-mono text-foreground">{structuralScore}/100</span>
+                </div>
+                {/* AFI meter */}
+                <div className="h-[6px] bg-secondary rounded-full overflow-hidden mb-3">
+                  <div className={`h-full rounded-full transition-all duration-500 ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.min(100, structuralScore)}%` }} />
+                </div>
+                {/* Components */}
+                <div className="space-y-2">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">AFI Components</div>
+                  {[
+                    { label: 'DR', value: components.dr, name: 'Delegation Ratio' },
+                    { label: 'JD', value: components.jd, name: 'Justificatory Density' },
+                    { label: 'RC', value: components.rc, name: 'Reversibility Cost' },
+                    { label: 'CD', value: components.cd, name: 'Continuation Density' },
+                  ].map((c, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <span className="text-[9px] font-mono text-muted-foreground w-5" title={c.name}>{c.label}</span>
+                      <div className="flex-1 h-[4px] bg-secondary rounded overflow-hidden">
+                        <div className={`h-full rounded ${c.value > 0.7 ? 'bg-fragile' : c.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(c.value * 100)}%` }} />
+                      </div>
+                      <span className="text-[9px] font-mono text-muted-foreground w-6 text-right">{Math.round(c.value * 100)}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Cost driver rows */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {[
-                { icon: '⚡', cls: simAuto >= 4 ? 'red' : simAuto >= 3 ? 'amber' : 'green', action: 'Execution Autonomy', sub: `${SIM_AUTO_LABELS[simAuto]} · Level ${simAuto}/5`, neg: simAuto >= 3 },
-                { icon: '👁', cls: simOvst <= 2 ? 'red' : simOvst <= 3 ? 'amber' : 'green', action: 'Human Oversight', sub: `${SIM_OVST_LABELS[simOvst]} · Level ${simOvst}/5`, neg: simOvst <= 2 },
-                { icon: '🔗', cls: simDep >= 4 ? 'red' : simDep >= 3 ? 'amber' : 'green', action: 'Provider Dependency', sub: `${SIM_DEP_LABELS[simDep]} · Level ${simDep}/5`, neg: simDep >= 3 },
-              ].map((r, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', background: 'hsl(var(--sf))', border: '1px solid hsl(var(--bd))', borderRadius: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0, background: r.cls === 'red' ? 'hsl(var(--rb))' : r.cls === 'amber' ? 'hsl(var(--ab))' : 'hsl(var(--gb))' }}>{r.icon}</div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 11, fontWeight: 600, color: 'hsl(var(--tx))' }}>{r.action}</div>
-                    <div style={{ fontSize: 9, color: 'hsl(var(--t3))' }}>{r.sub}</div>
+            {/* Cost impact summary */}
+            <div className="bg-card border border-border rounded-xl p-4">
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Premium Impact by Category</div>
+              <div className="space-y-2">
+                {[
+                  { label: 'Core Governance', impact: sim.coreImpact, icon: '📐' },
+                  { label: 'Agent Architecture', impact: sim.agentImpact, icon: '🤖' },
+                  { label: 'Liability Exposure', impact: sim.liabImpact, icon: '⚠' },
+                  { label: 'Concentration Risk', impact: sim.depImpact, icon: '🌐' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center justify-between">
+                    <span className="text-[10px] text-secondary-foreground flex items-center gap-1.5">
+                      <span>{item.icon}</span>{item.label}
+                    </span>
+                    <span className={`text-[10px] font-bold font-mono ${item.impact > 0 ? 'text-fragile' : 'text-muted-foreground'}`}>
+                      {item.impact > 0 ? `+€${item.impact}k` : '—'}
+                    </span>
                   </div>
-                  <div style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', color: r.neg ? 'hsl(var(--red))' : 'hsl(var(--grn))' }}>{r.neg ? '↑' : '↓'}</div>
-                </div>
-              ))}
+                ))}
+                {sim.ovstSaving > 0 && (
+                  <div className="flex items-center justify-between pt-2 border-t border-border">
+                    <span className="text-[10px] text-secondary-foreground flex items-center gap-1.5">
+                      <span>🛡</span>Oversight Discount
+                    </span>
+                    <span className="text-[10px] font-bold font-mono text-stable">-€{sim.ovstSaving}k</span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Benchmark */}
-            <div style={{ padding: '12px 14px', background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))', borderRadius: 8, marginTop: 6 }}>
-              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'hsl(var(--t3))', marginBottom: 8 }}>◈ Peer Benchmark · Similar profile in your sector</div>
-              <div style={{ height: 8, background: 'hsl(var(--bd))', borderRadius: 4, overflow: 'hidden', position: 'relative', marginBottom: 6 }}>
-                <div style={{ height: '100%', borderRadius: 4, width: `${sim.benchPct}%`, background: sim.benchPct > 65 ? 'linear-gradient(90deg, #146030, #b53020)' : 'linear-gradient(90deg, #146030, #9c6200)', transition: 'width .5s' }} />
+            <div className="bg-card border border-border rounded-xl p-4">
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Sector Benchmark</div>
+              <div className="h-2 bg-secondary rounded-full overflow-hidden mb-2">
+                <div className="h-full rounded-full" style={{ width: `${sim.benchPct}%`, background: sim.benchPct > 65 ? 'linear-gradient(90deg, #146030, #b53020)' : 'linear-gradient(90deg, #146030, #9c6200)', transition: 'width .5s' }} />
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'hsl(var(--t3))' }}>
-                <span>Best governance</span><span>Sector avg</span><span>Worst governance</span>
+              <div className="flex justify-between text-[8px] text-muted-foreground">
+                <span>Best governance</span><span>Worst governance</span>
               </div>
-              <div style={{ fontSize: 10, fontWeight: 700, marginTop: 6, textAlign: 'center', color: sim.benchPct > 65 ? 'hsl(var(--red))' : sim.benchPct > 40 ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>
-                Your profile: {sim.benchPct > 70 ? `above average risk · Top ${100-sim.benchPct}% of sector` : sim.benchPct > 40 ? 'near sector average' : 'below average risk · well-governed'}
+              <div className="text-[10px] font-bold mt-2 text-center" style={{ color: sim.benchPct > 65 ? 'hsl(var(--red))' : sim.benchPct > 40 ? 'hsl(var(--amb))' : 'hsl(var(--grn))' }}>
+                {sim.benchPct > 70 ? `Top ${100-sim.benchPct}% — above average risk` : sim.benchPct > 40 ? 'Near sector average' : 'Below average — well-governed'}
               </div>
             </div>
 
-
-
+            {/* Savings hint */}
+            <div className="bg-stable-bg border border-stable-border rounded-xl p-4">
+              <div className="text-[10px] font-bold text-stable mb-1">💡 How to reduce your premium</div>
+              <div className="text-[10px] text-secondary-foreground leading-[1.5]">
+                Increase <strong>Oversight Quality</strong> and <strong>Review Cadence</strong> in Core AFI, add more providers, and reduce execution authority. Each change updates the estimate in real-time.
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* HERO SECTION */}
+      {/* ══ HERO SECTION ══ */}
       <div ref={heroRef} className="px-4 sm:px-10 pt-6 sm:pt-10 pb-6 sm:pb-8">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3 flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full" style={{ background: bandColor, animation: 'pulse-dot 2s infinite' }} />
@@ -645,7 +726,7 @@ export function CompanyView() {
             <div className="text-[10px] text-muted-foreground mt-1 tracking-[0.06em] uppercase">Fragility Score</div>
           </div>
         </div>
-        <div className="text-sm text-secondary-foreground mb-6 sm:mb-10">{inputs.industry ? inputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
+        <div className="text-sm text-secondary-foreground mb-6 sm:mb-10">{localInputs.industry ? localInputs.industry + ' · ' : ''}AI Governance Architecture Framework · Structural Exposure Assessment</div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Premium card */}
@@ -683,11 +764,6 @@ export function CompanyView() {
                 </div>
                 <div className="w-px bg-border" />
                 <div className="flex-1 text-center">
-                  <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">ECI</div>
-                  <div className="text-lg font-bold font-mono" style={{ color: bandColor }}>ECI-{eciTier}</div>
-                </div>
-                <div className="w-px bg-border" />
-                <div className="flex-1 text-center">
                   <div className="text-[10px] text-muted-foreground uppercase tracking-[0.07em] mb-1">Band</div>
                   <div className="text-sm font-bold" style={{ color: bandColor }}>{band}</div>
                 </div>
@@ -697,38 +773,36 @@ export function CompanyView() {
 
           {/* Regulatory card */}
           {(() => {
-            const euaiaLabel = simEuaia >= 2.0 ? 'Unacceptable / Prohibited' : simEuaia >= 1.6 ? 'High-Risk (Annex I)' : simEuaia >= 1.4 ? 'High-Risk (Annex III)' : simEuaia >= 1.15 ? 'Limited Risk' : 'Minimal Risk';
-            const euaiaColor = simEuaia >= 1.4 ? 'hsl(var(--red))' : simEuaia >= 1.15 ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
-            const euaiaBorder = simEuaia >= 1.4 ? 'hsl(var(--red))' : simEuaia >= 1.15 ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
-            const euaiaDesc = simEuaia >= 2.0 ? 'Prohibited under EU AI Act Art. 5. Deployment must cease immediately. Maximum penalty exposure.' :
-              simEuaia >= 1.4 ? 'EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.' :
-              simEuaia >= 1.15 ? 'Transparency obligations apply. Limited compliance burden but documentation required.' :
+            const euRisk = localInputs.criticality >= 4 ? 'High-Risk (Annex III)' : localInputs.criticality >= 3 ? 'Limited Risk' : 'Minimal Risk';
+            const euColor = localInputs.criticality >= 4 ? 'hsl(var(--red))' : localInputs.criticality >= 3 ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
+            const euDesc = localInputs.criticality >= 4 ? 'EU AI Act obligations apply from Aug 2026. Art. 99 penalty exposure up to €15M / 3% global turnover.' :
+              localInputs.criticality >= 3 ? 'Transparency obligations apply. Limited compliance burden but documentation required.' :
               'No specific EU AI Act obligations. Standard product liability applies.';
             return (
-          <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid ${euaiaBorder}` }}>
-            <div className="p-4 sm:p-7">
-              <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Regulatory Exposure</div>
-              <div className="text-[24px] font-bold mt-3 mb-3" style={{ color: euaiaColor }}>{euaiaLabel}</div>
-              <div className="text-[12px] text-secondary-foreground leading-relaxed">{euaiaDesc}</div>
-              <div className="mt-5 pt-5 border-t border-border">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-[0.08em] mb-3">Compliance window</div>
-                <div className="bg-secondary rounded-md overflow-hidden h-2">
-                  <div className="h-full rounded-md" style={{ background: 'linear-gradient(90deg, #146030, #208040)', width: '40%' }} />
-                </div>
-                <div className="flex justify-between mt-2">
-                  <span className="text-[10px] text-muted-foreground">Today</span>
-                  <span className="text-[10px] text-muted-foreground">Aug 2026</span>
+              <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden" style={{ borderTop: `4px solid ${euColor}` }}>
+                <div className="p-4 sm:p-7">
+                  <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Regulatory Exposure</div>
+                  <div className="text-[24px] font-bold mt-3 mb-3" style={{ color: euColor }}>{euRisk}</div>
+                  <div className="text-[12px] text-secondary-foreground leading-relaxed">{euDesc}</div>
+                  <div className="mt-5 pt-5 border-t border-border">
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-[0.08em] mb-3">Compliance window</div>
+                    <div className="bg-secondary rounded-md overflow-hidden h-2">
+                      <div className="h-full rounded-md" style={{ background: 'linear-gradient(90deg, #146030, #208040)', width: '40%' }} />
+                    </div>
+                    <div className="flex justify-between mt-2">
+                      <span className="text-[10px] text-muted-foreground">Today</span>
+                      <span className="text-[10px] text-muted-foreground">Aug 2026</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
             );
           })()}
         </div>
       </div>
 
       {/* ══ FINANCIAL DECISION ENGINE ══ */}
-      <FinancialDecisionEngine afi={afi} band={band} sim={sim} inputs={inputs} />
+      <FinancialDecisionEngine afi={afi} band={band} sim={sim} inputs={localInputs} />
 
       {/* ══ STRATEGIC INTERPRETATION ══ */}
       <StrategicInterpretation band={band} components={components} />
