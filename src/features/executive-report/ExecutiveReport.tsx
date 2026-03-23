@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { RealCaseFactsCard } from '@/features/demo/RealCaseFactsCard';
 
 // ═══════════════════════════════════════════════════════════════
 // RESPONSIBILITY & OWNERSHIP STRUCTURE PANEL
@@ -254,6 +255,9 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
       </div>
 
       <UseRestrictionBanner />
+
+      {/* Real Case Facts Card */}
+      <RealCaseFactsCard />
 
       {/* Main verdict */}
       <div className="bg-card border border-border rounded-xl p-4 sm:p-6 mb-4">

@@ -9,6 +9,7 @@ import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
+import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 interface PortfolioEntity {
   id: string;
   name: string;
@@ -137,6 +138,9 @@ export function PortfolioView() {
 
   return (
     <div className="space-y-6 sm:space-y-8 max-w-5xl">
+      {/* Real Case Alert */}
+      <RealCaseAlert />
+
       {/* Portfolio Intelligence Header */}
       <div className="border-b border-border pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
