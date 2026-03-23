@@ -44,7 +44,7 @@ export function InsuranceDecision() {
         <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-muted-foreground mb-3">
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
-        <div className={`text-[20px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
+        <div className={`text-[18px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
           {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
            decisionClass === 'Conditional Review' ? 'Conditional Review' :
            'Standard Coverage'}
@@ -179,8 +179,8 @@ export function InsuranceDecision() {
             ? (pct < 40 ? 'bg-fragile' : pct < 60 ? 'bg-sensitive' : 'bg-stable')
             : (pct > 70 ? 'bg-fragile' : pct > 50 ? 'bg-sensitive' : 'bg-stable');
           return (
-            <div key={i} className="flex items-center gap-3 py-[9px] border-b border-border last:border-none">
-              <div className="w-[200px]">
+            <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 py-[9px] border-b border-border last:border-none">
+              <div className="w-full sm:w-[200px]">
                 <span className="text-[12px] text-foreground font-medium">{item.label}</span>
                 <InfoTip text={item.tooltip} />
               </div>
@@ -254,7 +254,7 @@ export function InsuranceDecision() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4 overflow-x-auto">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: 'Elevated', layer: 'Layer 1', color: 'text-sensitive' },

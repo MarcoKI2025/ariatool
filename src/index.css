@@ -1240,3 +1240,34 @@ select.fi-in {
   .sc { page-break-inside: avoid; border: 1px solid #ddd; margin-bottom: 20px; }
   .hero-card { page-break-inside: avoid; }
 }
+
+/* ═══ MOBILE OPTIMIZATIONS ═══ */
+@media (max-width: 480px) {
+  /* Tighter card padding on small screens */
+  .bg-card.p-5, .bg-card.p-6, .p-7 {
+    padding: 14px !important;
+  }
+  
+  /* Ensure tables scroll horizontally */
+  table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  thead, tbody, tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  /* Prevent text overflow in metric cells */
+  .font-mono {
+    word-break: break-all;
+  }
+  
+  /* Smaller section card padding */
+  .rounded-xl.p-7 {
+    padding: 14px !important;
+  }
+}

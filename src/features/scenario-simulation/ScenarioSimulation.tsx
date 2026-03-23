@@ -248,25 +248,26 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Scenario tabs */}
-      <div className="flex gap-2 mb-5 flex-wrap">
+      <div className="flex gap-2 mb-5 overflow-x-auto pb-1 -mx-1 px-1">
         {scenarios.map((sc, i) => (
           <button
             key={sc.id}
             onClick={() => setActiveScenario(i)}
-            className={`flex items-center gap-2 px-4 py-[10px] rounded-lg border text-[12px] font-medium transition-all ${
+            className={`flex items-center gap-1.5 px-3 sm:px-4 py-[10px] rounded-lg border text-[11px] sm:text-[12px] font-medium transition-all flex-shrink-0 ${
               activeScenario === i
                 ? 'bg-primary text-primary-foreground border-primary'
                 : 'bg-card border-border text-muted-foreground hover:border-primary/50 hover:text-foreground'
             }`}
           >
             <span>{sc.icon}</span>
-            {sc.name}
+            <span className="hidden sm:inline">{sc.name}</span>
+            <span className="sm:hidden">{sc.name.split(' ')[0]}</span>
           </button>
         ))}
       </div>
 
       {/* Score cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3 mb-4">
         {[
           { label: 'Executive Risk', value: s.executiveRisk, sub: s.executiveLabel },
           { label: 'Continuation', value: s.continuation, sub: s.continuationLabel },
@@ -276,7 +277,7 @@ export function ScenarioSimulation() {
         ].map((m, i) => (
           <div key={i} className="bg-card border border-border rounded-xl p-4 text-center">
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{m.label}</div>
-            <div className={`text-[36px] font-bold font-mono leading-none ${tierColor(m.value)}`}>{m.value}</div>
+            <div className={`text-[28px] sm:text-[36px] font-bold font-mono leading-none ${tierColor(m.value)}`}>{m.value}</div>
             <div className="text-[10px] text-muted-foreground mt-1">{m.sub}</div>
           </div>
         ))}
@@ -341,7 +342,7 @@ export function ScenarioSimulation() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4 overflow-x-auto">
           {s.cascadeLayers.map((node, i) => (
             <div key={i} className="text-center px-2 py-3 relative">
               {i < 4 && <span className="absolute right-[-11px] top-[38%] text-muted-foreground text-sm z-[1]">→</span>}
@@ -396,10 +397,10 @@ export function ScenarioSimulation() {
             { label: 'Tail Loss', baseline: lossEnvelope.tail, shifted: s.lossShift.tail, color: 'text-fragile' },
           ].map((cell, i) => {
             return (
-              <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''}`}>
+              <div key={i} className={`p-4 ${i < 2 ? 'sm:border-r border-b sm:border-b-0 border-border' : ''}`}>
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
                 <div className="flex items-end gap-2 mb-1">
-                  <span className={`text-[20px] font-bold font-mono leading-none ${cell.color}`}>{cell.shifted}</span>
+                  <span className={`text-[18px] sm:text-[20px] font-bold font-mono leading-none ${cell.color}`}>{cell.shifted}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] text-muted-foreground line-through">{cell.baseline}</span>

@@ -118,7 +118,7 @@ export function ExposureResults() {
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0<InfoTip text={TOOLTIPS.afi} /></div>
           <div className="flex flex-col md:flex-row items-start gap-4 md:gap-8">
             <div>
-              <div className={`text-[48px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
+              <div className={`text-[40px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{structuralScore}</div>
               <div className="text-[11px] text-muted-foreground mt-1">{band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}</div>
             </div>
             <div className="flex-1">
@@ -315,7 +315,7 @@ export function ExposureResults() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-0 mb-4">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-0 mb-4 overflow-x-auto">
           {[
             { icon: '⚡', name: 'AI Provider Failure', value: 'Origin', layer: 'Layer 0', color: 'text-fragile' },
             { icon: '🔧', name: 'Workflow Disruption', value: 'Elevated', layer: 'Layer 1', color: 'text-sensitive' },
@@ -370,9 +370,9 @@ export function ExposureResults() {
               { label: 'Elevated Risk Band', value: lossEnvelope.stress, sub: 'Provider concentration factors', color: 'text-sensitive', conf: 'Committee-Grade' },
               { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Tail risk — correlated structures', color: 'text-fragile', conf: 'Exploratory' },
             ].map((cell, i) => (
-              <div key={i} className={`p-4 ${i < 2 ? 'border-r border-border' : ''} ${i === 2 ? 'bg-fragile-bg/30' : ''}`}>
+              <div key={i} className={`p-3 sm:p-4 ${i < 2 ? 'sm:border-r border-b sm:border-b-0 border-border' : ''} ${i === 2 ? 'bg-fragile-bg/30' : ''}`}>
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{cell.label}</div>
-                <div className={`text-[32px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
+                <div className={`text-[22px] sm:text-[32px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
                 <div className="text-[10px] text-muted-foreground mt-1">{cell.sub}</div>
                 <span className={`inline-flex mt-2 text-[8px] font-bold tracking-[0.06em] uppercase px-[6px] py-[2px] rounded border ${
                   cell.conf === 'Directional' ? 'bg-sensitive-bg border-sensitive-border text-sensitive' :
@@ -431,7 +431,7 @@ export function ExposureResults() {
 
       {/* ═══ REAL-TIME ADJUSTMENT SLIDERS ═══ */}
       <SectionCard title="Real-Time Adjustment Controls" icon="🎛️" subtitle="Adjust AFI component weights to explore sensitivity. Changes are exploratory — they do not modify the underlying assessment.">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4">
           {[
             { key: 'dr', label: 'DR Adjustment', desc: 'Delegation Ratio modifier' },
             { key: 'jd', label: 'JD Adjustment', desc: 'Justificatory Density modifier' },

@@ -96,7 +96,7 @@ interface SectionCardProps {
 
 export function SectionCard({ title, subtitle, children, highlight, icon, badgeText, confidenceBadge }: SectionCardProps) {
   return (
-    <div className={`bg-card border rounded-xl p-7 mb-5 ${highlight ? 'border-purple-border bg-purple-bg' : 'border-border'}`}>
+    <div className={`bg-card border rounded-xl p-4 sm:p-7 mb-5 ${highlight ? 'border-purple-border bg-purple-bg' : 'border-border'}`}>
       <div className="flex items-start justify-between mb-3">
         <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-secondary-foreground flex items-center gap-[6px]">
           {icon && <span>{icon}</span>}

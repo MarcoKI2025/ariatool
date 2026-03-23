@@ -203,16 +203,16 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
     <div>
       {/* Enterprise Report Header */}
       <div className="border-b border-border pb-4 mb-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
               Governance Intelligence Report
             </div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
               AI Risk Assessment Summary
             </h1>
           </div>
-          <div className="text-right">
+          <div className="sm:text-right">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">
               REPORT ID
             </div>
@@ -256,7 +256,7 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
       <UseRestrictionBanner />
 
       {/* Main verdict */}
-      <div className="bg-card border border-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-xl p-4 sm:p-6 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-3">AI Systemic Risk Assessment · Governance Exposure Engine v3.0</div>
         <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
             <div className="flex-1">
@@ -274,7 +274,7 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
             </div>
           </div>
           <div className="text-right flex-shrink-0">
-            <div className={`text-[32px] sm:text-[48px] font-extrabold font-mono leading-none ${
+            <div className={`text-[28px] sm:text-[48px] font-extrabold font-mono leading-none ${
               band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
             }`}>{afi.toFixed(2)}</div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground">AFI Score</div>
@@ -296,16 +296,16 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">Market-Calibrated Loss Envelope</div>
           <div className="text-[11px] text-secondary-foreground">Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025 · Swiss Re sigma insights 01/2026</div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-4">
           {[
             { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Base scenario · median market outcome', bg: 'bg-stable-bg', border: 'border-stable-border', color: 'text-stable', labelColor: 'text-stable' },
             { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', bg: 'bg-sensitive-bg', border: 'border-sensitive-border', color: 'text-sensitive', labelColor: 'text-sensitive' },
             { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Provider concentration · Tail risk', bg: 'bg-fragile-bg', border: 'border-fragile-border', color: 'text-fragile', labelColor: 'text-fragile' },
             { label: 'Systemic Exposure', value: lossEnvelope.portfolio, sub: 'Correlated entity cluster (8–15 entities)', bg: 'bg-fragile-bg', border: 'border-fragile-border', color: 'text-fragile', labelColor: 'text-fragile' },
           ].map((cell, i) => (
-            <div key={i} className={`${cell.bg} border ${cell.border} rounded-xl p-4 sm:p-5`}>
+            <div key={i} className={`${cell.bg} border ${cell.border} rounded-xl p-3 sm:p-5`}>
               <div className={`text-[8px] font-bold tracking-[0.09em] uppercase ${cell.labelColor} mb-2`}>{cell.label}</div>
-              <div className={`text-[24px] sm:text-[28px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
+              <div className={`text-[18px] sm:text-[28px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
               <div className="text-[9px] text-muted-foreground mt-2">{cell.sub}</div>
             </div>
           ))}

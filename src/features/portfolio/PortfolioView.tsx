@@ -136,22 +136,22 @@ export function PortfolioView() {
   }).length;
 
   return (
-    <div className="space-y-8 max-w-5xl">
+    <div className="space-y-6 sm:space-y-8 max-w-5xl">
       {/* Portfolio Intelligence Header */}
       <div className="border-b border-border pb-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
               Portfolio Intelligence Dashboard
             </div>
-            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
               Multi-Entity Risk Aggregation
             </h1>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mt-2">
-              Assess aggregate structural risk across multiple client deployments. Portfolio AFI is computed as weighted average of entity-level components.
+            <p className="text-[11px] sm:text-sm text-muted-foreground leading-relaxed max-w-2xl mt-2">
+              Assess aggregate structural risk across multiple client deployments.
             </p>
           </div>
-          <div className="text-right flex-shrink-0 ml-4 space-y-1">
+          <div className="sm:text-right flex-shrink-0 space-y-1">
             <LiveIndicator label={`${entities.length} entities monitored`} />
             {totalIncidents > 0 && (
               <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-sensitive-bg border border-sensitive-border">
@@ -193,7 +193,7 @@ export function PortfolioView() {
         </div>
 
         {/* Portfolio Components */}
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
           <ComponentCell label="DR" value={portfolioComponents.dr} />
           <ComponentCell label="JD" value={portfolioComponents.jd} />
           <ComponentCell label="RC" value={portfolioComponents.rc} />
@@ -251,7 +251,7 @@ export function PortfolioView() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-7 gap-2">
+                <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
                   <MetricCell label="DR" value={(components.dr * 100).toFixed(0)} />
                   <MetricCell label="JD" value={(components.jd * 100).toFixed(0)} />
                   <MetricCell label="RC" value={(components.rc * 100).toFixed(0)} />
@@ -286,7 +286,7 @@ export function PortfolioView() {
                 Entities classified as Stable qualify for reduced capital reserves under Solvency II Pillar 2 risk reclassification framework (EIOPA calibration: 12–18% reduction per entity).
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
               <div className="bg-secondary/50 rounded-lg p-3 text-center">
                 <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Stable Entities</div>
                 <div className="text-lg font-bold text-stable font-mono">{stableCount} / {normalizedEntities.length}</div>
