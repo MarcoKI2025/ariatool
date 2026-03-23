@@ -1,5 +1,5 @@
 import { Band, DecisionClass, AFIComponents, AnalysisResults, ExposureInputs, FrameDriftAlert } from './types';
-import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS } from './constants';
+import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from './constants';
 
 export function calcAFI(dr: number, jd: number, rc: number, cd: number, na: number): number {
   return (dr * rc * cd) / (jd * na + 0.001);
