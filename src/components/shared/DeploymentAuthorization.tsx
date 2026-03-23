@@ -26,28 +26,28 @@ const STATUS_CONFIG: Record<AuthStatus, { bg: string; border: string; text: stri
     border: 'border-stable',
     text: 'text-stable',
     icon: '✓',
-    sentence: (name) => `Deployment of ${name} is AUTHORIZED under current governance parameters.`,
+    sentence: (name) => `Deployment of ${name} is acceptable under current governance structure.`,
   },
   'CONDITIONALLY APPROVED': {
     bg: 'bg-sensitive-bg',
     border: 'border-sensitive',
     text: 'text-sensitive',
     icon: '⚠',
-    sentence: (name) => `Deployment of ${name} is CONDITIONALLY AUTHORIZED — mandatory governance improvements required within 90 days.`,
+    sentence: (name) => `Deployment of ${name} is conditionally acceptable with additional oversight and control mechanisms.`,
   },
   'NOT APPROVED': {
     bg: 'bg-fragile-bg',
     border: 'border-fragile',
     text: 'text-fragile',
     icon: '✗',
-    sentence: (name) => `Deployment of ${name} is NOT AUTHORIZED due to unresolved governance risk and structural fragility.`,
+    sentence: (name) => `Deployment of ${name} is not advisable due to unresolved governance risks.`,
   },
   'PROHIBITED': {
     bg: 'bg-fragile-bg',
     border: 'border-fragile',
     text: 'text-fragile',
     icon: '⛔',
-    sentence: (name) => `Deployment of ${name} is PROHIBITED — critical governance failures and systemic exposure exceed all tolerance thresholds.`,
+    sentence: (name) => `Deployment of ${name} should be avoided as current conditions indicate systemic exposure risk.`,
   },
 };
 
@@ -105,9 +105,7 @@ export function DeploymentAuthorization({ band, afi, structuralScore, components
 
       {/* Explanation */}
       <div className="text-[10px] text-muted-foreground leading-[1.6] p-3 bg-card/40 rounded-lg border border-border">
-        <strong className="text-foreground">Basis:</strong> This decision is derived from governance risk signals
-        (delegation intensity, justificatory density, reversibility cost, dependency concentration) —
-        not actuarial validation. Requires corroboration with qualified underwriter review for final coverage decisions.
+        <strong className="text-foreground">Basis:</strong> This assessment reflects governance-related risk signals derived from system structure, delegation patterns, and dependency factors. It does not represent actuarial validation or pricing. Values are indicative and subject to uncertainty.
       </div>
     </div>
   );
