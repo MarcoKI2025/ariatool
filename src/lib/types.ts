@@ -150,4 +150,5 @@ export interface AppState {
   results: AnalysisResults | null;
   iatState: IATState;
   darkMode: boolean;
+  auditLog: AuditLogEntry[];
 }

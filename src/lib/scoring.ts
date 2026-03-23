@@ -1,8 +1,17 @@
 import { Band, DecisionClass, AFIComponents, AnalysisResults, ExposureInputs, FrameDriftAlert } from './types';
-import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from './constants';
+import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, DEFAULT_ELASTICITIES } from './constants';
 
-export function calcAFI(dr: number, jd: number, rc: number, cd: number, na: number): number {
-  return (dr * rc * cd) / (jd * na + 0.001);
+export function calcAFI(
+  dr: number, jd: number, rc: number, cd: number, na: number,
+  elasticities?: { w_DR: number; w_JD: number; w_RC: number; w_CD: number; w_NA: number }
+): number {
+  const w = elasticities || DEFAULT_ELASTICITIES;
+  const dr_w = Math.pow(dr, w.w_DR);
+  const jd_w = Math.pow(jd, w.w_JD);
+  const rc_w = Math.pow(rc, w.w_RC);
+  const cd_w = Math.pow(cd, w.w_CD);
+  const na_w = Math.pow(na, w.w_NA);
+  return (dr_w * rc_w * cd_w) / (jd_w * na_w + 0.001);
 }
 
 export function getBand(afi: number): Band {
