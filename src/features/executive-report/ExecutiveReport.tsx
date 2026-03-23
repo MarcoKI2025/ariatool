@@ -626,6 +626,8 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       </SectionCard>
 
+      <SectionDivider title="Export & Share" icon="📤" subtitle="Generate output for risk committee, board, or reinsurer review" />
+
       {/* Export controls */}
       <div className="bg-card border border-border rounded-[10px] p-5">
         <div className="text-[13px] font-bold text-foreground mb-[3px]">Export & Share</div>
