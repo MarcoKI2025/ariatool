@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 
 export function ModelGovernanceComplete() {
   const { state, setActiveStep } = useApp();
