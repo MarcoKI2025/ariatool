@@ -280,7 +280,7 @@ export function ExposureResults() {
             <div className="text-[12px] text-secondary-foreground">Each operational layer amplifies the preceding disruption.</div>
           </div>
           <div className="flex gap-4 text-left sm:text-right">
-            <div><div className="text-[18px] sm:text-[24px] font-bold font-mono text-fragile">{amplificationFactor.split('–')[1] || '3.8×'}</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Total Amplification</div></div>
+            <div><div className="text-[14px] sm:text-[18px] font-bold font-mono text-fragile">Non-linear</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Amplification Type</div></div>
             <div><div className="text-[14px] sm:text-[18px] font-bold font-mono text-fragile">6–48h</div><div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Propagation Time</div></div>
           </div>
         </div>
