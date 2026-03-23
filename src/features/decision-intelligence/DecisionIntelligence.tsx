@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
@@ -9,6 +9,7 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
 import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
 import { PeerBenchmarking } from '@/features/benchmarking/PeerBenchmarking';
+import { ViewTabs } from '@/components/shared/ViewTabs';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
