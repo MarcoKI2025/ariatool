@@ -35,18 +35,34 @@ export function computeAFIComponents(inputs: ExposureInputs): AFIComponents {
   const { automation, executionAuthority, oversightLevel, reviewCadence,
     sunsetPolicy, switchingCost, portability, integrationDepth, actionDensity,
     workflowBreadth, toolCallScope, multiAgent, humanCheckpoints, persistentMemory,
-    cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion } = inputs;
+    cloudConcentration, modelConcentration, gpuConcentration, crossVendorContagion,
+    useCases, providers } = inputs;
+
+  // Use cases breadth: more use cases = broader attack surface = higher delegation
+  const useCaseFactor = 1 + Math.max(0, (useCases.length - 1)) * 0.03;
+  // High-risk use cases amplify delegation ratio
+  const hasAutonomousOps = useCases.includes('Autonomous Operations');
+  const hasRiskAssessment = useCases.includes('Risk Assessment');
+  const hasFraudDetection = useCases.includes('Fraud Detection');
+  const highRiskUseCaseBoost = (hasAutonomousOps ? 0.08 : 0) + (hasRiskAssessment ? 0.04 : 0) + (hasFraudDetection ? 0.04 : 0);
 
   const agentDrFactor = 1 + (multiAgent - 1) * 0.12 - (humanCheckpoints - 1) * 0.06;
-  const dr = Math.min(1, (((automation + executionAuthority) / 2) / 5) * agentDrFactor);
+  const dr = Math.min(1, (((automation + executionAuthority) / 2) / 5) * agentDrFactor * useCaseFactor + highRiskUseCaseBoost);
+
   const jd = ((oversightLevel + reviewCadence) / 2) / 5;
+
+  // Provider concentration: fewer providers = harder to exit = higher reversibility cost
+  const providerConcentration = providers.length <= 1 ? 0.12 : providers.length <= 2 ? 0.06 : providers.length >= 5 ? -0.04 : 0;
+
   const sunAdj = switchingCost * (1 + (5 - sunsetPolicy) * 0.08);
   const pmemAdj = persistentMemory * 0.15;
-  // Concentration adds to reversibility: concentrated infra is harder to exit (from HTML)
   const concScore = ((cloudConcentration + modelConcentration + gpuConcentration + crossVendorContagion) / 4 - 1) / 4;
   const concRcAdd = (1 - concScore) * 0.20;
-  const rc = Math.min(1, ((sunAdj + portability) / 2) / 5 + pmemAdj / 5 + concRcAdd);
-  const cd = Math.min(1, ((integrationDepth + actionDensity + workflowBreadth * 0.3 + toolCallScope * 0.2 + inputs.toolCallAuthority * 0.25) / 2.75) / 5);
+  const rc = Math.min(1, ((sunAdj + portability) / 2) / 5 + pmemAdj / 5 + concRcAdd + providerConcentration);
+
+  // More use cases increases continuation density (broader operational footprint)
+  const useCaseCdBoost = Math.max(0, (useCases.length - 2)) * 0.02;
+  const cd = Math.min(1, ((integrationDepth + actionDensity + workflowBreadth * 0.3 + toolCallScope * 0.2 + inputs.toolCallAuthority * 0.25) / 2.75) / 5 + useCaseCdBoost);
   const na = 0.5;
 
   return { dr, jd, rc, cd, na };
@@ -286,7 +302,16 @@ export function computeLivePreview(inputs: ExposureInputs) {
   if (inputs.hallucinationLiability >= 3) signals.push({ text: 'Hallucination liability exposure — unverified AI outputs', color: 'fragile' });
   if (inputs.shadowAI >= 3) signals.push({ text: 'Shadow AI risk — uncontrolled AI deployments', color: 'sensitive' });
   if (inputs.useCases.includes('Autonomous Operations')) signals.push({ text: 'Autonomous operations selected — elevated delegation risk', color: 'fragile' });
-  if (inputs.useCases.length >= 5) signals.push({ text: 'Broad AI use case portfolio — increased attack surface', color: 'sensitive' });
+  if (inputs.useCases.includes('Risk Assessment')) signals.push({ text: 'Risk assessment use case — high-stakes decision delegation', color: 'sensitive' });
+  if (inputs.useCases.includes('Fraud Detection')) signals.push({ text: 'Fraud detection — false positive/negative liability exposure', color: 'sensitive' });
+  if (inputs.useCases.includes('Compliance Monitoring')) signals.push({ text: 'Compliance monitoring — regulatory reliance on AI outputs', color: 'sensitive' });
+  if (inputs.useCases.includes('Code Generation')) signals.push({ text: 'Code generation — IP and supply chain integrity risk', color: 'sensitive' });
+  if (inputs.useCases.length >= 5) signals.push({ text: `${inputs.useCases.length} AI use cases — broad attack surface and operational footprint`, color: 'sensitive' });
+  if (inputs.useCases.length >= 7) signals.push({ text: 'Extensive AI portfolio — systemic integration risk elevated', color: 'fragile' });
+  if (inputs.providers.length <= 1) signals.push({ text: 'Single provider dependency — concentration risk', color: 'fragile' });
+  if (inputs.providers.length === 2) signals.push({ text: 'Limited provider diversity — moderate concentration risk', color: 'sensitive' });
+  if (inputs.providers.length >= 4) signals.push({ text: 'Multi-provider diversification — reduced concentration', color: 'stable' });
+  if (inputs.providers.length >= 6) signals.push({ text: 'Broad provider portfolio — strong diversification but integration complexity', color: 'stable' });
   if (['Enterprise (1000–10000)', 'Large Enterprise (10000+)'].includes(inputs.size)) signals.push({ text: 'Large organisation — elevated systemic exposure and regulatory scrutiny', color: 'sensitive' });
   if (['€500M–€5B', 'Over €5B'].includes(inputs.revenue)) signals.push({ text: 'High revenue — amplified absolute loss exposure', color: 'sensitive' });
   if (signals.length === 0) signals.push({ text: 'Governance signals within normal range', color: 'stable' });
