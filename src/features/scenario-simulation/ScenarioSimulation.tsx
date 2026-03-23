@@ -652,7 +652,7 @@ function RobustnessTestingPanel({ inputs, baseAfi }: { inputs: ExposureInputs; b
       )}
 
       {/* Agentic Swarm Visualization */}
-      <AgenticSwarmVisualization agri={state.results?.agri ?? 0} />
+      <AgenticSwarmVisualization agri={stateAgri} />
 
       <AppFooter />
     </div>
