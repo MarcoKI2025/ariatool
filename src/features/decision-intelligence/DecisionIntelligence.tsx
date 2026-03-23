@@ -1012,7 +1012,10 @@ export function DecisionIntelligence() {
         multiAgent={inputs.multiAgent}
       />
 
-      {/* ═══ PEER BENCHMARKING ═══ */}
+      </>)}
+
+      {/* ═══ TAB: PEER BENCHMARKING ═══ */}
+      {activeTab === 'benchmarking' && (<>
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg">📊</span>
@@ -1023,6 +1026,7 @@ export function DecisionIntelligence() {
         </div>
         <PeerBenchmarking />
       </div>
+      </>)}
 
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
