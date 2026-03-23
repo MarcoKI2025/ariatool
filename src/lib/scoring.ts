@@ -1,5 +1,5 @@
 import { Band, DecisionClass, AFIComponents, AnalysisResults, ExposureInputs, FrameDriftAlert } from './types';
-import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS } from './constants';
+import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, ANCHOR_LOSS, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from './constants';
 
 export function calcAFI(dr: number, jd: number, rc: number, cd: number, na: number): number {
   return (dr * rc * cd) / (jd * na + 0.001);
@@ -163,15 +163,25 @@ function computeFrameDriftAlerts(components: AFIComponents, band: Band, inputs: 
 export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   const components = computeAFIComponents(inputs);
   const { dr, jd, rc, cd, na } = components;
-  const afi = calcAFI(dr, jd, rc, cd, na);
+  const baseAfi = calcAFI(dr, jd, rc, cd, na);
+  
+  // Apply size and revenue adjustments to AFI
+  const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
+  const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
+  const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
+  
   const band = getBand(afi);
   const structuralScore = Math.min(99, Math.round(afi * 60));
   const ses = (dr + rc + cd) / 3;
 
   const govPremium = 1 + Math.min(0.8, afi * 0.45);
   const sectorMult = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
+  const sizeMult = SIZE_MULTIPLIERS[inputs.size] || 1.0;
+  const revMult = REVENUE_MULTIPLIERS[inputs.revenue] || 1.0;
 
-  const expected = parseFloat((ANCHOR_LOSS * afi * govPremium * sectorMult).toFixed(1));
+  // Size and revenue scale absolute loss exposure
+  const scaleMultiplier = sizeMult * revMult;
+  const expected = parseFloat((ANCHOR_LOSS * afi * govPremium * sectorMult * scaleMultiplier).toFixed(1));
   const stress = parseFloat((expected * 3.4).toFixed(1));
   const tail = parseFloat((expected * 10.8).toFixed(1));
   const portfolio = Math.round(tail * 6.2);
@@ -213,8 +223,8 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   // Frame Drift Alerts
   const frameDriftAlerts = computeFrameDriftAlerts(components, band, inputs);
 
-  // Premium estimate
-  const basePrem = 180 * sectorMult;
+  // Premium estimate — size and revenue scale the absolute premium
+  const basePrem = 180 * sectorMult * sizeMult * revMult;
   const autoMult = [0, 0.5, 0.75, 1.0, 1.5, 2.2][inputs.automation] || 1;
   const critMult = [0, 0.5, 0.7, 1.0, 1.4, 2.0][inputs.criticality] || 1;
   const depMult = inputs.providers.length <= 1 ? 1.8 : inputs.providers.length <= 2 ? 1.3 : 1.0;
@@ -258,7 +268,10 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
 
 export function computeLivePreview(inputs: ExposureInputs) {
   const components = computeAFIComponents(inputs);
-  const afi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
+  const baseAfi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
+  const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
+  const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
+  const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
   const band = getBand(afi);
   const score = Math.min(99, Math.round(afi * 60));
 
@@ -274,6 +287,8 @@ export function computeLivePreview(inputs: ExposureInputs) {
   if (inputs.shadowAI >= 3) signals.push({ text: 'Shadow AI risk — uncontrolled AI deployments', color: 'sensitive' });
   if (inputs.useCases.includes('Autonomous Operations')) signals.push({ text: 'Autonomous operations selected — elevated delegation risk', color: 'fragile' });
   if (inputs.useCases.length >= 5) signals.push({ text: 'Broad AI use case portfolio — increased attack surface', color: 'sensitive' });
+  if (['Enterprise (1000–10000)', 'Large Enterprise (10000+)'].includes(inputs.size)) signals.push({ text: 'Large organisation — elevated systemic exposure and regulatory scrutiny', color: 'sensitive' });
+  if (['€500M–€5B', 'Over €5B'].includes(inputs.revenue)) signals.push({ text: 'High revenue — amplified absolute loss exposure', color: 'sensitive' });
   if (signals.length === 0) signals.push({ text: 'Governance signals within normal range', color: 'stable' });
 
   return { afi, band, score, signals, components };
