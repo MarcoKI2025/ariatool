@@ -263,7 +263,7 @@ export function ExposureResults() {
           <div className="text-[11px] text-secondary-foreground mt-1">{corVal > 65 ? 'Human judgment substantially offloaded' : corVal > 40 ? 'Moderate offloading — intervention required' : 'Human judgment remains primary'}</div>
         </div>
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Authority Risk Index</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Authority Risk Index<InfoTip text={TOOLTIPS.ari} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${ariVal > 65 ? 'text-fragile' : ariVal > 40 ? 'text-sensitive' : 'text-stable'}`}>{ariVal}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">{ariVal > 65 ? 'Authority substantially transferred' : ariVal > 40 ? 'Authority transfer in progress' : 'Authority appropriately retained'}</div>
         </div>
