@@ -318,7 +318,8 @@ export function CompanyView() {
       if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
       syncTimerRef.current = setTimeout(() => {
         setInputs(updated);
-        runAnalysis();
+        // runAnalysis needs the updated inputs to be in state first
+        setTimeout(() => runAnalysis(), 50);
       }, 600);
       return updated;
     });
