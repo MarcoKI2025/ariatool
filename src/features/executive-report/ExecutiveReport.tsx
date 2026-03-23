@@ -569,6 +569,9 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           <button onClick={() => exportORSA(results, inputs)} className="px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-[13px] font-semibold hover:bg-primary/90 transition-colors">
             📄 Export ORSA Section
           </button>
+          <button onClick={exportBoardPDF} className="px-5 py-2.5 bg-foreground text-background rounded-lg text-[13px] font-semibold hover:bg-foreground/90 transition-colors">
+            🖨 Export Board PDF
+          </button>
         </div>
       </div>
 
