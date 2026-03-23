@@ -412,7 +412,7 @@ export function DecisionIntelligence() {
             { label: 'Loss Risk Band', value: lossEnvelope.expected, sub: 'Expected scenario' },
             { label: 'AFI Score', value: afi.toFixed(2), sub: `${band} — ${afi >= 1.35 ? 'above threshold' : 'within range'}` },
             { label: 'Correlation Factor', value: correlationFactor.toFixed(2), sub: 'Cross-system propagation' },
-            { label: 'Amplification', value: amplificationFactor, sub: 'Non-linear risk signal' },
+            { label: 'Amplification', value: 'Non-linear', sub: 'Not fully captured in traditional models' },
           ].map((m, i) => (
             <div key={i}>
               <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
