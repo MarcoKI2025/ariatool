@@ -796,39 +796,83 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      {/* ═══ CATEGORY COMPARISON ═══ */}
-      <div className="bg-card border border-border rounded-xl p-7 mb-5">
+      {/* ═══ STANDARD UNDERWRITING PROCESS — WHERE TRADITIONAL MODELS STOP ═══ */}
+      <div className="bg-card border border-border rounded-xl p-5 sm:p-7 mb-5">
         <div className="mb-5">
-          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-[6px]">New Category · Underwriting Intelligence Layer</div>
-          <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">What this engine measures — and others cannot</div>
-          <div className="text-[13px] text-secondary-foreground max-w-[560px] leading-[1.6]">This is not a compliance tool. It is a structural risk detection layer that reveals exposure invisible to traditional underwriting models.</div>
+          <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-[6px]">Where Traditional Models Stop</div>
+          <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">Standard Underwriting Process vs. Structural Risk Detection</div>
+          <div className="text-[13px] text-secondary-foreground max-w-[600px] leading-[1.6]">Traditional underwriting covers steps 1–6. ARIA reveals the structural exposure that exists between and beyond these steps.</div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[14px] pb-[10px] border-b-2 border-border">Traditional Underwriting Models</div>
-            {['Evaluate AI systems individually — systemic network effects remain invisible',
-              'Assume reversibility — do not quantify exit costs or switching friction',
-              'Ignore shared model dependencies — portfolio-level aggregation never modelled',
-              'Stop at point-in-time compliance — continuation without re-authorisation not priced',
-              'Cannot price non-linear loss amplification — standard models underestimate tail risk 3–5×',
-            ].map((t, i) => (
-              <div key={i} className="flex items-start gap-2 py-[6px] text-[12px] text-secondary-foreground leading-[1.5]">
-                <span className="text-fragile font-bold flex-shrink-0">✗</span>{t}
+
+        {/* Process Step Badges */}
+        <div className="flex items-center justify-between mb-6 overflow-x-auto pb-2">
+          {[
+            { num: 1, label: 'Intake' },
+            { num: 2, label: 'Risk Review' },
+            { num: 3, label: 'Pricing' },
+            { num: 4, label: 'Approval' },
+            { num: 5, label: 'Binding' },
+            { num: 6, label: 'Monitoring' },
+          ].map((step, i) => (
+            <React.Fragment key={i}>
+              <div className="flex flex-col items-center gap-1 flex-shrink-0">
+                <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[12px] font-bold">{step.num}</div>
+                <span className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">{step.label}</span>
+              </div>
+              {i < 5 && <div className="text-muted-foreground text-sm mx-1 flex-shrink-0">→</div>}
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* Horizontal Bar Chart — Traditional vs ARIA */}
+        <div className="mb-5">
+          <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Coverage Depth by Risk Dimension</div>
+          <div className="space-y-3">
+            {[
+              { label: 'Compliance Posture', traditional: 85, aria: 90 },
+              { label: 'Financial Loss Estimate', traditional: 70, aria: 88 },
+              { label: 'Continuation Risk', traditional: 12, aria: 92 },
+              { label: 'Provider Lock-in', traditional: 8, aria: 87 },
+              { label: 'Responsibility Gap', traditional: 5, aria: 84 },
+              { label: 'Cascade Propagation', traditional: 3, aria: 91 },
+            ].map((dim, i) => (
+              <div key={i}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[11px] font-medium text-foreground">{dim.label}</span>
+                  <span className="text-[9px] font-mono text-muted-foreground">{dim.traditional}% / {dim.aria}%</span>
+                </div>
+                <div className="flex gap-1">
+                  <div className="flex-1 h-[6px] bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full rounded-full bg-primary/60" style={{ width: `${dim.traditional}%` }} />
+                  </div>
+                  <div className="flex-1 h-[6px] bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full rounded-full bg-fragile" style={{ width: `${dim.aria}%` }} />
+                  </div>
+                </div>
               </div>
             ))}
           </div>
+          <div className="flex items-center gap-5 mt-3">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-sm bg-primary/60" />
+              <span className="text-[10px] text-muted-foreground">Traditional Underwriting</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-sm bg-fragile" />
+              <span className="text-[10px] text-muted-foreground">ARIA Structural Detection</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Insight Box */}
+        <div className="p-4 bg-purple-bg border border-purple-border rounded-lg flex items-start gap-3">
+          <span className="text-primary text-sm flex-shrink-0 mt-[1px]">◈</span>
           <div>
-            <div className="text-[10px] font-bold tracking-wider uppercase text-primary mb-[14px] pb-[10px] border-b-2 border-primary">This Engine</div>
-            {['Detects structural dependency and quantifies lock-in depth — creates explicit reversibility cost signal',
-              'Models continuation without re-authorisation as a persistent, compounding liability state',
-              'Quantifies cross-system propagation — cascade amplification visible before it materialises',
-              'Estimates portfolio-level correlated exposure across entities sharing AI infrastructure',
-              'Produces a single AFI signal that reflects structural fragility — not compliance posture',
-            ].map((t, i) => (
-              <div key={i} className="flex items-start gap-2 py-[6px] text-[12px] text-secondary-foreground leading-[1.5]">
-                <span className="text-stable font-bold flex-shrink-0">✓</span>{t}
-              </div>
-            ))}
+            <div className="text-[11px] font-bold text-foreground mb-1">Where ARIA Operates</div>
+            <div className="text-[11px] text-secondary-foreground leading-[1.55]">
+              Traditional underwriting models score well on compliance and financial estimates — but score near zero on continuation risk, provider lock-in, and cascade propagation. These are the dimensions where structural losses originate.
+              <span className="italic text-muted-foreground ml-1">Swiss Re sigma 01/2026: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."</span>
+            </div>
           </div>
         </div>
       </div>
