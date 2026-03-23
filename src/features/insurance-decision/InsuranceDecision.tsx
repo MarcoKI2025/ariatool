@@ -559,9 +559,9 @@ export function InsuranceDecision() {
           <div>
             <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-[14px] pb-[10px] border-b-2 border-border">Emerging AI Market Consensus</div>
             {[
-              { text: 'Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic and accumulation risk."', source: 'Swiss Re' },
-              { text: 'Lloyd\'s Market Bulletin Y5478: "AI introduces emerging risk dimensions that do not fit neatly within traditional insurance boundaries."', source: 'Lloyd\'s' },
-              { text: 'Munich Re Q4 2025: "AI risk correlation amplifies tail scenarios 3–5× beyond standard actuarial assumptions."', source: 'Munich Re' },
+              { text: 'Swiss Re sigma insights 01/2026: "Growing reliance on a small number of cloud and AI service providers adds a further layer of systemic and accumulation risk."', source: 'Swiss Re' },
+              { text: 'Swiss Re sigma insights 01/2026: "AI adoption creates emerging risk dimensions that do not fit neatly within traditional insurance boundaries."', source: 'Swiss Re' },
+              { text: 'Swiss Re sigma insights 01/2026: "Reallocation rather than pure growth of insurable demand."', source: 'Swiss Re' },
               { text: 'EU AI Act Art. 99: Penalties of up to €35M or 7% of global turnover for non-compliance.', source: 'EU AI Act' },
             ].map((item, i) => (
               <div key={i} className="py-[6px] text-[11px] text-secondary-foreground leading-[1.55]">
