@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';
-import { AppState, Perspective, ExposureInputs, AnalysisResults, IATState } from '@/lib/types';
+import { AppState, Perspective, ExposureInputs, AnalysisResults, IATState, AuditLogEntry } from '@/lib/types';
 import { DEFAULT_INPUTS } from '@/lib/constants';
 import { computeFullAnalysis } from '@/lib/scoring';
 
