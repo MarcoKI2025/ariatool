@@ -267,7 +267,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Score cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3 mb-4">
         {[
           { label: 'Executive Risk', value: s.executiveRisk, sub: s.executiveLabel },
           { label: 'Continuation', value: s.continuation, sub: s.continuationLabel },
