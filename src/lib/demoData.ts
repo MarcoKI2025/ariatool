@@ -126,6 +126,7 @@ export const DEMO_PROFILES: DemoProfile[] = [
       multiAgent: 1, toolCallAuthority: 1, persistentMemory: 1, humanCheckpoints: 5,
       hallucinationLiability: 1, deepfakeFraud: 1, promptInjection: 1, modelDrift: 1, algorithmicBias: 1,
       shadowAI: 1, explainabilityGap: 1, dataIntegrity: 1, esgLiability: 1,
+      dataPoisoning: 1, adversarialAttack: 1, privacyBreach: 1, ipInfringement: 1,
       cloudConcentration: 5, modelConcentration: 4, gpuConcentration: 5, crossVendorContagion: 5,
     },
     dependencies: ['Custom / In-House'],
