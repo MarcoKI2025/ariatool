@@ -268,6 +268,7 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
 
 export function computeLivePreview(inputs: ExposureInputs) {
   const components = computeAFIComponents(inputs);
+  const baseAfi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
   const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
   const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
   const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
