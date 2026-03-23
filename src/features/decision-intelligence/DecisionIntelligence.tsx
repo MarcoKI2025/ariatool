@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
