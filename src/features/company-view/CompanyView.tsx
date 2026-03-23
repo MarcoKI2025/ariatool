@@ -475,8 +475,8 @@ export function CompanyView() {
         {/* ── Demo Profile Selector ── */}
         <div className="py-3 border-b border-border">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">▶ Quick Start — Load Demo Scenario</div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-            {DEMO_PROFILES.map((p) => {
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+            {DEMO_PROFILES.filter(p => !p.caseStudy).map((p) => {
               const isActive = localInputs.companyName === p.name;
               return (
                 <button
@@ -499,6 +499,36 @@ export function CompanyView() {
                     }`}>{p.band}</span>
                     <span className="text-[9px] font-mono text-muted-foreground">AFI {p.afi.toFixed(2)}</span>
                   </div>
+                </button>
+              );
+            })}
+          </div>
+          {/* Real-World Case Studies */}
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mt-3 mb-2 flex items-center gap-1.5">
+            <span className="text-fragile">◆</span> Case Studies — Retrospective Validation
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {DEMO_PROFILES.filter(p => p.caseStudy).map((p) => {
+              const isActive = localInputs.companyName === p.name;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => {
+                    const applied = applyDemoProfile(p);
+                    setLocalInputs(applied);
+                    setInputs(applied);
+                    setTimeout(() => runAnalysis(), 50);
+                  }}
+                  className={`text-left rounded-lg border p-2.5 transition-all hover:border-fragile/40 hover:-translate-y-[1px] ${
+                    isActive ? 'border-fragile bg-fragile/5' : 'border-border bg-card'
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5">
+                    <div className="text-[11px] font-bold text-foreground truncate">{p.name}</div>
+                    <span className="text-[7px] font-bold uppercase px-1 py-[1px] rounded bg-fragile/10 text-fragile border border-fragile/20 flex-shrink-0">Case</span>
+                  </div>
+                  <div className="text-[9px] text-muted-foreground mt-0.5">{p.caseStudy!.incidentDate}</div>
+                  <div className="text-[9px] text-fragile font-semibold mt-1">{p.caseStudy!.actualLoss}</div>
                 </button>
               );
             })}
