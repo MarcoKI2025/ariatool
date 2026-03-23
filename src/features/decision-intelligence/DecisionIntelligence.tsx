@@ -1028,8 +1028,11 @@ export function DecisionIntelligence() {
       </div>
       </>)}
 
+      {/* ═══ TAB: AGENTIC ═══ */}
+      {activeTab === 'agentic' && (<>
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />
+      </>)}
 
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
