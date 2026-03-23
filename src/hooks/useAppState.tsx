@@ -84,16 +84,40 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const updateInputs = useCallback((partial: Partial<ExposureInputs>) => {
-    setState(s => ({ ...s, inputs: { ...s.inputs, ...partial } }));
+    setState(s => {
+      const changedFields = Object.keys(partial).join(', ');
+      const entry: AuditLogEntry = {
+        timestamp: new Date().toISOString(),
+        action: 'parameter_change',
+        details: `Updated: ${changedFields}`,
+        inputs: partial,
+      };
+      return { ...s, inputs: { ...s.inputs, ...partial }, auditLog: [...s.auditLog, entry] };
+    });
   }, []);
 
   const setInputs = useCallback((inputs: ExposureInputs) => {
-    setState(s => ({ ...s, inputs }));
+    setState(s => {
+      const entry: AuditLogEntry = {
+        timestamp: new Date().toISOString(),
+        action: 'profile_load',
+        details: `Profile loaded: ${inputs.companyName || 'Custom'}`,
+      };
+      return { ...s, inputs, auditLog: [...s.auditLog, entry] };
+    });
   }, []);
 
   const runAnalysis = useCallback(() => {
     const results = computeFullAnalysis(state.inputs);
-    setState(s => ({ ...s, analysisComplete: true, results }));
+    setState(s => {
+      const entry: AuditLogEntry = {
+        timestamp: new Date().toISOString(),
+        action: 'analysis_run',
+        details: `Analysis: ${state.inputs.companyName || 'Unnamed'} — AFI ${results.afi.toFixed(2)} (${results.band})`,
+        results: { afi: results.afi, band: results.band },
+      };
+      return { ...s, analysisComplete: true, results, auditLog: [...s.auditLog, entry] };
+    });
   }, [state.inputs]);
 
   const resetAnalysis = useCallback(() => {
