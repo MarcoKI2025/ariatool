@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { NAV_STEPS } from '@/lib/constants';
+import { LiveRiskFeed } from '@/components/shared/LiveRiskFeed';
+import { NAV_STEPS } from '@/lib/constants';
 
 export function AppSidebar() {
   const { state, setActiveStep, setPerspective } = useApp();
