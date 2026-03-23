@@ -223,8 +223,8 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   // Frame Drift Alerts
   const frameDriftAlerts = computeFrameDriftAlerts(components, band, inputs);
 
-  // Premium estimate
-  const basePrem = 180 * sectorMult;
+  // Premium estimate — size and revenue scale the absolute premium
+  const basePrem = 180 * sectorMult * sizeMult * revMult;
   const autoMult = [0, 0.5, 0.75, 1.0, 1.5, 2.2][inputs.automation] || 1;
   const critMult = [0, 0.5, 0.7, 1.0, 1.4, 2.0][inputs.criticality] || 1;
   const depMult = inputs.providers.length <= 1 ? 1.8 : inputs.providers.length <= 2 ? 1.3 : 1.0;
