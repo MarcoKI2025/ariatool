@@ -232,9 +232,14 @@ export function ScenarioSimulation() {
   const tierColor = (v: number) => v >= 70 ? 'text-fragile' : v >= 40 ? 'text-sensitive' : 'text-stable';
   const tierBg = (v: number) => v >= 70 ? 'bg-fragile' : v >= 40 ? 'bg-sensitive' : 'bg-stable';
 
+  const scenTabs = [
+    { id: 'builder', label: 'Scenario Builder', icon: '🔧' },
+    { id: 'advanced', label: 'Advanced Tools', icon: '⚡' },
+  ];
+
   return (
     <div>
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 3 · Stress Testing</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Scenario Simulation</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[620px] leading-relaxed">
@@ -244,10 +249,10 @@ export function ScenarioSimulation() {
 
       <UseRestrictionBanner />
 
-      {/* How to interpret */}
-      <div className="bg-secondary border border-border rounded-lg p-4 mb-5 text-[11px] text-muted-foreground leading-[1.55]">
-        <strong className="text-foreground">How to interpret scenarios:</strong> Each scenario applies stress multipliers to your AFI parameters. The resulting metrics show how exposure escalates across failure types. Best Case = controlled degradation. Expected = typical failure profile. Stress = correlated cascade conditions.
-      </div>
+      <ViewTabs tabs={scenTabs} activeTab={activeTab} onChange={setActiveTab} />
+
+      {/* ═══ TAB: BUILDER ═══ */}
+      {activeTab === 'builder' && (<>
 
       {/* Scenario tabs */}
       <div className="flex gap-2 mb-5 overflow-x-auto pb-1 -mx-1 px-1">
