@@ -466,16 +466,16 @@ function Slide8({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow>The Value Proposition · Why AGAF is Acquisition-Ready Infrastructure</Eyebrow>
-      <DmH1>The governance assessment layer<br /><span className="text-[#9088e0]">your teams need today.</span></DmH1>
+      <DmH1>The governance decision layer<br /><span className="text-[#9088e0]">your teams need today.</span></DmH1>
       <BodyText>
         The organisations that structure AI governance intake today will have the most defensible position when regulatory scrutiny
         reaches critical mass — and when the first major AI governance claims reach litigation.
       </BodyText>
       <div className="grid grid-cols-2 gap-[10px] mb-5">
-        <ActionCard num={1} numColor="#b53020" title="Reinsurance & Large Insurance" desc="Munich Re, Swiss Re, Lloyd's syndicates — the AFI engine gives you the structural pricing signal that lets you quote AI governance risk for the first time." />
-        <ActionCard num={2} numColor="#b53020" title="Enterprise Risk & Compliance" desc="For any organisation deploying AI at scale: this is the governance layer that proves you know what you own, who is responsible for it, and what it would cost to stop it." />
+        <ActionCard num={1} numColor="#b53020" title="Reinsurance & Large Insurance" desc="Munich Re, Swiss Re, Lloyd's syndicates — the AFI engine delivers Deployment Authorization verdicts and structural pricing signals for AI governance risk." />
+        <ActionCard num={2} numColor="#b53020" title="Enterprise Risk & Compliance" desc="For any organisation deploying AI at scale: the Deployment Authorization, Consequence Engine, and Responsibility Detector prove you know what you own and who is accountable." />
         <ActionCard num={3} numColor="#9c6200" title="Regulatory & Policy Bodies" desc="The EU AI Act creates obligations but no measurement framework for continuation risk or responsibility fragmentation. This engine operationalises what the regulation requires." />
-        <ActionCard num={4} numColor="#9c6200" title="Risk & Governance Consulting" desc="The first client conversation that ends with a binding operational verdict — NOT APPROVED — is a conversation that redefines the engagement scope immediately." />
+        <ActionCard num={4} numColor="#9c6200" title="Risk & Governance Consulting" desc="The first client conversation that ends with a deployment verdict — NOT APPROVED — with consequence projections and accountability analysis redefines the engagement immediately." />
       </div>
       <div className="flex gap-[10px] justify-center mt-5 flex-wrap">
         <button onClick={() => { document.dispatchEvent(new CustomEvent('load-demo-meridian')); onClose(); }} className="px-7 py-3 bg-[#4038b8] text-white rounded-md text-[13px] font-semibold hover:bg-[#3030a0] transition-colors">
@@ -486,7 +486,7 @@ function Slide8({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       <div className="text-center text-[10px] text-[#a8a49c] mt-2">
-        Loads the full NOT APPROVED scenario · Real-time structural analysis · All 6 outputs computed live
+        Loads the full NOT APPROVED scenario · Real-time structural analysis · All 9 outputs computed live
       </div>
     </div>
   );
