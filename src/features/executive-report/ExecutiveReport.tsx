@@ -431,6 +431,10 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       )}
 
+      </>)}
+
+      {/* ═══ TAB: FINDINGS ═══ */}
+      {activeTab === 'findings' && (<>
       {/* Risk Position + Financial Exposure */}
       <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
