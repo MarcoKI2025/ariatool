@@ -60,6 +60,8 @@ export function ModelGovernanceComplete() {
       <RFSIPanel />
       <FDAPanel />
       <EvaluationLimitsPanel />
+      <SectionDivider title="Research & Methodology" icon="📚" subtitle="White paper, epistemic limitations, regulatory alignment" />
+
       <MethodologyWhitePaper />
       <EpistemicLimitations />
       <RegulatoryAlignment />
