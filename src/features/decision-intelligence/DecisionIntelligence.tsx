@@ -986,6 +986,10 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
+      </>)}
+
+      {/* ═══ TAB: DIAGNOSTICS ═══ */}
+      {activeTab === 'diagnostics' && (<>
       {/* ═══ CONSEQUENCE ENGINE ═══ */}
       <ConsequenceEngine
         band={band}
