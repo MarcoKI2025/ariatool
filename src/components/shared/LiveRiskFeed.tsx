@@ -52,7 +52,7 @@ export function LiveRiskFeed() {
       <div className="flex items-center gap-1.5 mb-2">
         <div className="w-1.5 h-1.5 rounded-full bg-stable animate-pulse" />
         <span className="text-[8px] font-bold tracking-[0.1em] uppercase text-muted-foreground">
-          Live Risk Feed
+          Live Risk Feed (DEMO)
         </span>
       </div>
       <div
