@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
@@ -7,6 +7,7 @@ import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, External
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { fetchCloudProviderStatus, type CloudProviderStatus, formatRelativeTime, getStatusColor, getStatusTextColor } from '@/lib/liveData';
 
 /* ── Integration Data ── */
 interface Integration {
