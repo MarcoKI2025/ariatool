@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { useApp } from '@/hooks/useAppState';
 import { SECTOR_MULTIPLIERS } from '@/lib/constants';
 import { formatCurrency } from '@/lib/formatters';
-import { getBand, calcAFI } from '@/lib/scoring';
+import { getBand, calcAFI, computeAFIComponents } from '@/lib/scoring';
 import { Chart, ArcElement, DoughnutController } from 'chart.js';
 
 Chart.register(ArcElement, DoughnutController);
