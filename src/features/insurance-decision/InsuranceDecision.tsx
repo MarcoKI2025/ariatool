@@ -86,14 +86,20 @@ export function InsuranceDecision() {
           <span className="text-[11px] text-foreground font-bold">!</span>
         </div>
         <div>
-          <div className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground font-bold mb-[5px]">Standard coverage is not justified without structural changes</div>
+          <div className="text-[10px] tracking-[0.1em] uppercase text-muted-foreground font-bold mb-[5px]">
+            {band === 'Fragile' ? 'Standard coverage is not justified without structural changes' :
+             band === 'Sensitive' ? 'Conditional coverage — structural improvements required' :
+             'Standard coverage terms apply'}
+          </div>
           <div className="text-[13px] font-semibold text-foreground leading-[1.4] mb-2">
             {band === 'Fragile' ? 'It is possible to fully comply with current AI regulation — EU AI Act, internal audit, third-party compliance frameworks — and still carry structural risk that exceeds underwriting tolerance.' :
              band === 'Sensitive' ? 'Conditional coverage only — structural improvements required within 90 days.' :
              'Standard coverage terms apply. Maintain governance cadence and reassess at renewal.'}
           </div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
-            A compliant system that remains fragile is a compliant system that will still generate losses.
+            {band === 'Fragile' ? 'A compliant system that remains fragile is a compliant system that will still generate losses.' :
+             band === 'Sensitive' ? 'Elevated structural signals require monitoring and improvement to prevent escalation.' :
+             'Governance posture is within tolerance. Routine monitoring applies.'}
           </div>
         </div>
       </div>
