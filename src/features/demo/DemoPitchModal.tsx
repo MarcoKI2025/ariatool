@@ -499,41 +499,51 @@ function Slide8({ onClose }: { onClose: () => void }) {
 function Slide9({ onClose }: { onClose: () => void }) {
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow dotColor="#60d090">Company View · Financial Decision Engine</Eyebrow>
-      <DmH1>Your AI risk.<br /><span className="text-[#60d090]">What it costs.<br />What grows if you do nothing.</span></DmH1>
+      <Eyebrow dotColor="#60d090">Company View · Standalone Insurance Premium Calculator</Eyebrow>
+      <DmH1>Your AI risk.<br /><span className="text-[#60d090]">What it costs.<br />Where you save.</span></DmH1>
       <BodyText>
-        The Company View is a complete financial risk operating layer — AI Risk Index (0–100), annual loss exposure envelope,
-        industry benchmark, 12-month growth trajectory, parametric policy triggers, and one-click ORSA export.
+        The Company View is a standalone premium calculator — full 29+ slider input system, real-time AFI scoring,
+        live premium estimation with category-level cost breakdown. Organizations see exactly which governance adjustments reduce their insurance costs.
       </BodyText>
       <div className="grid grid-cols-3 gap-[10px] mb-3">
         <div className="p-3 bg-[#0a1a0a] border border-[#1a4028] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">AI Risk Index</div>
-          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">72 / 100</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">High Risk · Meridian Financial</div>
+          <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">Estimated Premium</div>
+          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">€420k–€680k</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Meridian Financial · Live calculation</div>
         </div>
         <div className="p-3 bg-[#1a0a06] border border-[#5a1810] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">Annual Loss Exposure</div>
-          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">€4.2M</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Tail risk: €14.3M</div>
+          <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">AFI Score</div>
+          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">2.23</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Fragile · Above 1.35 threshold</div>
         </div>
         <div className="p-3 bg-[#0e100e] border border-[#2a2820] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">12-Month Growth</div>
-          <div className="text-[22px] font-bold font-mono text-[#ffc040]">+35%</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">If nothing changes</div>
+          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">Cost Impact</div>
+          <div className="text-[22px] font-bold font-mono text-[#ffc040]">Per Category</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">See which changes reduce premium</div>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4">
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-[#a8a49c] mb-2">Full Input System</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.55]">All 6 slider categories from the Exposure Analysis — Core AFI, Agent Architecture, Liability Exposure, Oversight & Governance, Systemic Concentration, and Emerging Threat Vectors — available as collapsible accordions with real-time premium recalculation.</div>
+        </div>
+        <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4">
+          <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-[#a8a49c] mb-2">Premium Breakdown</div>
+          <div className="text-[10px] text-[#b0aca0] leading-[1.55]">Sticky cost panel shows how each slider category contributes to the total premium. Organizations instantly see where governance improvements translate to cost reductions — making risk management economically actionable.</div>
         </div>
       </div>
       <div className="grid grid-cols-3 gap-2 mb-4 text-[9px]">
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">AGRI — Agentic</div>
-          <div className="text-[#ffc040] font-bold font-mono">61 · Elevated</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">Demo Profiles</div>
+          <div className="text-[#60d090] font-bold font-mono">5 · Preloaded</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">ALRI — Liability</div>
-          <div className="text-[#ff6b5b] font-bold font-mono">74 · Critical</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">Global Sync</div>
+          <div className="text-[#9088e0] font-bold font-mono">All 9 Views</div>
         </div>
         <div className="p-2 bg-[#0e100e] border border-[#2a2820] rounded-[7px]">
-          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">SCRI — Systemic</div>
-          <div className="text-[#ff6b5b] font-bold font-mono">68 · Critical</div>
+          <div className="text-[#9e9a90] mb-1 font-bold text-[8px] uppercase">Decision Layers</div>
+          <div className="text-[#ffc040] font-bold font-mono">Authorization + Consequences</div>
         </div>
       </div>
       <div className="flex gap-[9px] flex-wrap">
