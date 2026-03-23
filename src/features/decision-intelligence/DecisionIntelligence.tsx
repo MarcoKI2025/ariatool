@@ -8,6 +8,7 @@ import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
 import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
+import { PeerBenchmarking } from '@/features/benchmarking/PeerBenchmarking';
 
 export function DecisionIntelligence() {
   const { state, setActiveStep } = useApp();
