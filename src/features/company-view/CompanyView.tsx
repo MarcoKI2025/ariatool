@@ -410,7 +410,6 @@ export function CompanyView() {
 
   const { eciTier, eciName, lossEnvelope, premium } = results;
   const liveBandColor = liveBand === 'Fragile' ? 'hsl(var(--red))' : liveBand === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
-  const liveBandColor = liveBand === 'Fragile' ? 'hsl(var(--red))' : liveBand === 'Sensitive' ? 'hsl(var(--amb))' : 'hsl(var(--grn))';
 
   const companyName = inputs.companyName || 'Your Organisation';
   const now = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
