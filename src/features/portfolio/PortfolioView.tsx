@@ -4,7 +4,8 @@ import { calcAFI, getBand, computeAFIComponents, getBandClass } from '@/lib/scor
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS } from '@/lib/constants';
 import { DependencyNetwork } from './DependencyNetwork';
-
+import { LiveIndicator } from '@/components/shared/LiveIndicator';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 interface PortfolioEntity {
   id: string;
   name: string;
