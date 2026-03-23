@@ -86,9 +86,9 @@ export function ResponsibilityCollapseDetector({ band, components, agri, humanCh
           </span>
         </div>
         <div className={`text-[14px] font-bold leading-[1.4] ${config.color}`}>
-          {status === 'CLEARLY ASSIGNED' && 'Governance responsibility is traceable to identified owners with documented oversight authority.'}
-          {status === 'FRAGMENTED' && 'Responsibility is distributed across multiple entities without clear ownership hierarchy — liability cannot be reliably traced.'}
-          {status === 'NO ACCOUNTABLE ENTITY' && 'Responsibility is structurally unclear. No single entity bears traceable accountability for AI governance decisions. Liability cannot be reliably assigned.'}
+          {status === 'CLEARLY ASSIGNED' && 'Responsibility appears clearly assigned and traceable.'}
+          {status === 'FRAGMENTED' && 'Responsibility appears distributed across multiple system layers, which may complicate accountability in failure scenarios.'}
+          {status === 'NO ACCOUNTABLE ENTITY' && 'Responsibility is not clearly defined, making accountability difficult to establish. This increases uncertainty in liability attribution and incident response.'}
         </div>
       </div>
 
