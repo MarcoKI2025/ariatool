@@ -54,6 +54,8 @@ export function ModelGovernanceComplete() {
       <CalibrationParameters />
       <FrameworkAssumptions />
       <NonGoals />
+      <SectionDivider title="Advanced Governance Signals" icon="🧬" subtitle="Meaning drift, RFSI, frame drift, evaluation limits" />
+
       <MeaningDriftRegister />
       <RFSIPanel />
       <FDAPanel />
