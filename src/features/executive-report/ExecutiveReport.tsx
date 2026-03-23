@@ -5,6 +5,7 @@ import { buildExecutiveReport, buildORSAExport } from '@/lib/reportBuilder';
 import { exportORSA } from '@/lib/orsaExport';
 import { formatDate, formatCurrency } from '@/lib/formatters';
 import { calculatePremium, formatPremiumCurrency, formatPremiumPercentage } from '@/lib/pricing';
+import { calculatePeerComparison, getRankingLabel, getRankingColor } from '@/lib/benchmarking';
 import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
