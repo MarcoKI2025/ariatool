@@ -159,6 +159,15 @@ export function IntegrationHub() {
 
   return (
     <div className="space-y-8 max-w-5xl">
+      {/* Step header */}
+      <div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 9 · Data Feeds & Ecosystem</div>
+        <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Integration Hub</h1>
+        <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
+          Live data feeds, API connectivity, and ecosystem integrations powering the governance assessment engine.
+        </p>
+      </div>
+
       <UseRestrictionBanner />
       {/* Demo Disclaimer */}
       <div className="rounded-xl p-4 border border-sensitive-border bg-sensitive-bg">

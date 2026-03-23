@@ -258,12 +258,12 @@ export function ExposureResults() {
       {/* COR + ARI */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Cognitive Offloading Ratio</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Cognitive Offloading Ratio<InfoTip text={TOOLTIPS.cor} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${corVal > 65 ? 'text-fragile' : corVal > 40 ? 'text-sensitive' : 'text-stable'}`}>{corVal}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">{corVal > 65 ? 'Human judgment substantially offloaded' : corVal > 40 ? 'Moderate offloading — intervention required' : 'Human judgment remains primary'}</div>
         </div>
         <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Authority Risk Index</div>
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-[6px]">Authority Risk Index<InfoTip text={TOOLTIPS.ari} /></div>
           <div className={`text-[26px] font-bold font-mono leading-none ${ariVal > 65 ? 'text-fragile' : ariVal > 40 ? 'text-sensitive' : 'text-stable'}`}>{ariVal}</div>
           <div className="text-[11px] text-secondary-foreground mt-1">{ariVal > 65 ? 'Authority substantially transferred' : ariVal > 40 ? 'Authority transfer in progress' : 'Authority appropriately retained'}</div>
         </div>
@@ -410,12 +410,12 @@ export function ExposureResults() {
       {/* ═══ AGRI / ALRI / SCRI Panels ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         {[
-          { icon: '⚡', label: 'AGRI — Agentic Risk', score: agri, tier: agriTier, color: agriColor, desc: 'Multi-agent orchestration · Tool-call authority · Persistent memory' },
-          { icon: '⚠', label: 'ALRI — Liability Risk', score: alri, tier: alriTier, color: alriColor, desc: 'Hallucination · Deepfake · Prompt injection · Model drift · Bias' },
-          { icon: '🌐', label: 'SCRI — Systemic Concentration', score: scri, tier: scriTier, color: scriColor, desc: 'Cloud · Model · GPU provider concentration risk' },
+          { icon: '⚡', label: 'AGRI — Agentic Risk', score: agri, tier: agriTier, color: agriColor, desc: 'Multi-agent orchestration · Tool-call authority · Persistent memory', tooltip: TOOLTIPS.agri },
+          { icon: '⚠', label: 'ALRI — Liability Risk', score: alri, tier: alriTier, color: alriColor, desc: 'Hallucination · Deepfake · Prompt injection · Model drift · Bias', tooltip: TOOLTIPS.alri },
+          { icon: '🌐', label: 'SCRI — Systemic Concentration', score: scri, tier: scriTier, color: scriColor, desc: 'Cloud · Model · GPU provider concentration risk', tooltip: TOOLTIPS.scri },
         ].map((panel, i) => (
           <div key={i} className="bg-card border border-border rounded-[10px] p-4">
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{panel.icon} {panel.label}</div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{panel.icon} {panel.label}{(panel as any).tooltip && <InfoTip text={(panel as any).tooltip} />}</div>
             <div className="flex items-end gap-2 mb-2">
               <span className={`text-[28px] font-bold font-mono leading-none ${panel.color}`}>{panel.score}</span>
               <span className="text-[10px] text-muted-foreground mb-1">/100</span>

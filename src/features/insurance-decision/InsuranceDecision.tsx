@@ -67,7 +67,7 @@ export function InsuranceDecision() {
           </div>
           <div>
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Premium Range<InfoTip text={TOOLTIPS.premium} /></div>
-            <div className="text-[14px] font-bold text-foreground font-mono">{premium.band} – {premium.band}</div>
+            <div className="text-[14px] font-bold text-foreground font-mono">{premium.band}</div>
           </div>
         </div>
       </div>
@@ -436,11 +436,11 @@ export function InsuranceDecision() {
           </div>
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Premium Range</div>
-            <div className="text-[28px] font-bold font-mono leading-none text-foreground">{premium.band}–{premium.band}</div>
+            <div className="text-[28px] font-bold font-mono leading-none text-foreground">{premium.band}</div>
             <div className="text-[9px] text-muted-foreground mt-1">Annual indicative premium band</div>
           </div>
           <div>
-            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Composite Risk Index</div>
+             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Composite Risk Index<InfoTip text={TOOLTIPS.compositeRisk} /></div>
             <div className={`text-[28px] font-bold font-mono leading-none ${compositeRiskIndex >= 60 ? 'text-fragile' : compositeRiskIndex >= 35 ? 'text-sensitive' : 'text-stable'}`}>{compositeRiskIndex}</div>
             <div className="text-[9px] text-muted-foreground mt-1">AFI 50% + ALRI 30% + AGRI 20%</div>
           </div>
@@ -531,7 +531,7 @@ export function InsuranceDecision() {
             { num: 2, time: 'T+0', title: 'AFI calculated at {afi}', status: band.toUpperCase(), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : band === 'Sensitive' ? 'bg-sensitive text-foreground' : 'bg-stable text-foreground', desc: `Structural Exposure Score: ${structuralScore}. ECI Tier: ${eciTier} (${eciName}). Delegation ratio: ${Math.round(components.dr * 100)}%. Justificatory density: ${Math.round(components.jd * 100)}%.` },
             { num: 3, time: 'T+0', title: 'Risk indices computed', status: 'ASSESSED', statusColor: 'bg-primary text-foreground', desc: `ALRI: ${alri}. AGRI: ${agri}. SCRI: ${scri}. Composite: ${compositeRiskIndex}. MDR: ${results.mdr}% (${results.mdrLabel}).` },
             { num: 4, time: 'T+0', title: 'Financial exposure modelled', status: 'MODELLED', statusColor: 'bg-primary text-foreground', desc: `Expected: ${lossEnvelope.expected}. Stress: ${lossEnvelope.stress}. Tail: ${lossEnvelope.tail}. Portfolio aggregate: ${lossEnvelope.portfolio}.` },
-            { num: 5, time: 'T+0', title: 'Decision class determined', status: decisionClass.toUpperCase().replace(/ /g, '_'), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : 'bg-sensitive text-foreground', desc: `${decisionClass}. Premium range: ${premium.band}–${premium.band}/year. Structural loading: +${Math.round(Math.min(80, afi * 45))}%.` },
+            { num: 5, time: 'T+0', title: 'Decision class determined', status: decisionClass.toUpperCase().replace(/ /g, '_'), statusColor: band === 'Fragile' ? 'bg-fragile text-foreground' : 'bg-sensitive text-foreground', desc: `${decisionClass}. Premium band: ${premium.band}. Structural loading: +${Math.round(Math.min(80, afi * 45))}%.` },
             { num: 6, time: 'T+0', title: 'Awaiting committee review', status: 'PENDING', statusColor: 'bg-secondary text-foreground border border-border', desc: 'All signals computed. Decision requires human underwriter sign-off before coverage terms are issued. No automated binding authority.' },
           ].map((entry, i) => (
             <div key={i} className="flex items-start gap-3">

@@ -1,4 +1,16 @@
 export const TOOLTIPS = {
+  agri: `AI Governance Readiness Index (AGRI) measures the degree to which AI agents operate with structural autonomy beyond traditional software boundaries. Combines: Multi-agent orchestration depth, tool-call authority level, persistent memory scope, and human checkpoint frequency. Range: 0 (fully governed) to 100 (autonomous governance required). Thresholds: <15 Low, 15–35 Moderate, 35–60 Elevated, >60 Critical.`,
+
+  alri: `AI Liability Risk Index (ALRI) quantifies exposure across 9 liability dimensions: hallucination, deepfake fraud, prompt injection, model drift, algorithmic bias, shadow AI, explainability gap, data integrity, and ESG liability. Range: 0–100. Higher ALRI indicates more active claim vectors and greater premium loading requirement. Thresholds: <15 Low, 15–35 Moderate, 35–60 Elevated, >60 Critical.`,
+
+  cor: `Cognitive Offloading Ratio (COR) measures the extent to which human judgment has been replaced by AI-driven decision-making. Combines delegation ratio and execution authority, discounted by oversight level. High COR (>65) indicates human judgment has been substantially offloaded to AI systems, creating accountability gaps. Range: 0–100.`,
+
+  ari: `Authority Risk Index (ARI) measures the degree to which decision authority has been transferred from humans to AI. Combines delegation ratio, justificatory density (inverted), and execution authority. High ARI (>65) indicates authority has been substantially transferred, creating governance risk. Range: 0–100.`,
+
+  scri: `Systemic Concentration Risk Index (SCRI) measures provider concentration across cloud, model, and GPU infrastructure layers. High SCRI indicates dangerous reliance on few providers, creating correlated failure exposure across the portfolio. Thresholds: <35 Diversified, 35–65 Elevated, >65 Critical. Swiss Re sigma 01/2026: "Growing reliance on a small number of cloud and AI service providers adds systemic and accumulation risk."`,
+
+  compositeRisk: `Composite Risk Index combines AFI (50%), ALRI (30%), and AGRI (20%) into a single weighted score. Provides an overall risk characterization that balances structural governance fragility, liability exposure, and agentic autonomy risk. Range: 0–100.`,
+
   afi: `Authority Fragility Index (AFI) measures structural dependency, governance gaps, and continuation risk in AI deployments. Range: 0.0 (minimal dependency) to 3.0+ (extreme fragility). Thresholds: <0.85 Stable, 0.85-1.35 Sensitive, >1.35 Fragile. Formula: AFI = (DR × RC × CD) / (JD × NA). Developed by AI Governance Architecture Framework (AGAF) v3.0.`,
 
   band: `Risk classification based on AFI score. Stable (<0.85): Within normal parameters, maintain governance cadence. Sensitive (0.85-1.35): Elevated exposure, structural improvements recommended within 90 days. Fragile (>1.35): Above underwriting tolerance, mandatory governance remediation required. Band determines insurance premium loading and regulatory attention.`,
