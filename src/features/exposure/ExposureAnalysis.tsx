@@ -24,7 +24,10 @@ export function ExposureAnalysis() {
     setIsLoading(true);
     setTimeout(() => {
       runAnalysis();
-      setTimeout(() => setIsLoading(false), 500);
+      setTimeout(() => {
+        setIsLoading(false);
+        setShowForm(false);
+      }, 500);
     }, 5000);
   }, [runAnalysis]);
 
