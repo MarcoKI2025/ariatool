@@ -109,7 +109,7 @@ export function AppHeader() {
           <span>{analysisComplete ? 'Ready' : 'Pending'}</span>
         </div>
 
-        <span className="hidden md:inline font-mono text-[10px] text-muted-foreground">v3.2</span>
+        <span className="hidden md:inline font-mono text-[10px] text-muted-foreground">v4.0.1</span>
       </div>
 
       <MethodologyModal open={methodologyOpen} onOpenChange={setMethodologyOpen} />

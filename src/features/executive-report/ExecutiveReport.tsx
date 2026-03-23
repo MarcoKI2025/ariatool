@@ -122,8 +122,35 @@ export function ExecutiveReport() {
     toast.success('Executive summary copied to clipboard');
   };
 
-  return (
+  const reportId = `ARIA-${Date.now().toString(36).toUpperCase()}`;
+
+   return (
     <div>
+      {/* Enterprise Report Header */}
+      <div className="border-b border-border pb-4 mb-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
+              Governance Intelligence Report
+            </div>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+              AI Risk Assessment Summary
+            </h1>
+          </div>
+          <div className="text-right">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">
+              REPORT ID
+            </div>
+            <div className="text-[13px] font-mono font-bold text-foreground">
+              {reportId}
+            </div>
+            <div className="text-[9px] text-muted-foreground mt-1">
+              Generated: {new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Board-level finding banner */}
       <div className={`rounded-xl p-5 mb-5 border-2 ${
         band === 'Fragile' ? 'bg-fragile-bg border-fragile' :

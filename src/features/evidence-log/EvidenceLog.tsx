@@ -8,20 +8,26 @@ export function EvidenceLog() {
   const auditLog = state.auditLog || [];
 
   const exportLog = () => {
-    const csv = [
-      ['Timestamp', 'Action', 'Details'],
-      ...auditLog.map(entry => [
-        new Date(entry.timestamp).toISOString(),
-        entry.action,
-        `"${entry.details.replace(/"/g, '""')}"`
-      ])
-    ].map(row => row.join(',')).join('\n');
+    const timestamp = new Date().toISOString().split('T')[0];
+    const reportId = `ARIA-${Date.now().toString(36).toUpperCase()}`;
+
+    let csv = `"ARIA AI Governance Engine - Audit Trail Export"\n`;
+    csv += `"Report ID: ${reportId}"\n`;
+    csv += `"Export Date: ${new Date().toLocaleString()}"\n`;
+    csv += `"Total Entries: ${auditLog.length}"\n`;
+    csv += `"Assessment Period: ${auditLog.length > 0 ? new Date(auditLog[0].timestamp).toISOString() : 'N/A'} to ${auditLog.length > 0 ? new Date(auditLog[auditLog.length - 1].timestamp).toISOString() : 'N/A'}"\n`;
+    csv += `\n`;
+    csv += `"Timestamp","Action","Details"\n`;
+
+    auditLog.forEach(entry => {
+      csv += `"${new Date(entry.timestamp).toISOString()}","${entry.action}","${entry.details.replace(/"/g, '""')}"\n`;
+    });
 
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `evidence_log_${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `ARIA_Audit_Log_${reportId}_${timestamp}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };

@@ -101,20 +101,27 @@ export function PortfolioView() {
 
   return (
     <div className="space-y-8 max-w-5xl">
-      {/* Page Header */}
-      <div>
-        <div className="text-[10px] font-semibold tracking-[0.12em] uppercase text-primary/70 mb-2">
-          Advanced · Multi-Entity Analysis
-        </div>
+      {/* Portfolio Intelligence Header */}
+      <div className="border-b border-border pb-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-foreground tracking-tight mb-2">
-            Portfolio Aggregation
-          </h1>
-          <LiveIndicator label={`${entities.length} entities monitored`} />
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
+              Portfolio Intelligence Dashboard
+            </div>
+            <h1 className="text-2xl font-bold text-foreground tracking-tight">
+              Multi-Entity Risk Aggregation
+            </h1>
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl mt-2">
+              Assess aggregate structural risk across multiple client deployments. Portfolio AFI is computed as weighted average of entity-level components.
+            </p>
+          </div>
+          <div className="text-right flex-shrink-0 ml-4">
+            <LiveIndicator label={`${entities.length} entities monitored`} />
+            <div className="text-[9px] text-muted-foreground mt-1">
+              Last Updated: {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+            </div>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-          Assess aggregate structural risk across multiple client deployments. Portfolio AFI is computed as weighted average of entity-level components.
-        </p>
       </div>
 
       <UseRestrictionBanner />
