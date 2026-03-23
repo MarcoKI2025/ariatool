@@ -7,6 +7,7 @@ import { formatDate, formatCurrency } from '@/lib/formatters';
 import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 // ═══════════════════════════════════════════════════════════════
 // RESPONSIBILITY & OWNERSHIP STRUCTURE PANEL
