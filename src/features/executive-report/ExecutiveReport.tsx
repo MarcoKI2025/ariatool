@@ -562,7 +562,7 @@ export function ExecutiveReport() {
                   ].map((m, i) => (
                     <div key={i} style={{ padding: '8px 10px', background: '#f8f7f3', border: '1px solid #dedbd2', borderRadius: 4, textAlign: 'center' }}>
                       <div style={{ fontSize: 7, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#96938c', marginBottom: 3 }}>{m.l}</div>
-                      <div style={{ fontSize: 14, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
+                      <div style={{ fontSize: 11, fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: '#141410' }}>{m.v}</div>
                     </div>
                   ))}
                 </div>
