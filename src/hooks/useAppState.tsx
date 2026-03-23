@@ -39,6 +39,7 @@ function persistState(state: AppState) {
       inputs: state.inputs,
       iatState: state.iatState,
       darkMode: state.darkMode,
+      auditLog: state.auditLog,
     }));
   } catch (e) {
     // silent
@@ -55,6 +56,7 @@ interface AppContextType {
   resetAnalysis: () => void;
   toggleIAT: (criterion: number) => void;
   toggleDarkMode: () => void;
+  clearAuditLog: () => void;
   results: AnalysisResults | null;
   inputs: ExposureInputs;
 }
@@ -67,7 +69,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   // Persist on changes
   useEffect(() => {
     persistState(state);
-  }, [state.inputs, state.iatState, state.darkMode]);
+  }, [state.inputs, state.iatState, state.darkMode, state.auditLog]);
 
   // Apply dark mode class
   useEffect(() => {
@@ -136,6 +138,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState(s => ({ ...s, darkMode: !s.darkMode }));
   }, []);
 
+  const clearAuditLog = useCallback(() => {
+    setState(s => ({ ...s, auditLog: [] }));
+  }, []);
+
   const value = useMemo(() => ({
     state,
     setActiveStep,
@@ -146,9 +152,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     resetAnalysis,
     toggleIAT,
     toggleDarkMode,
+    clearAuditLog,
     results: state.results,
     inputs: state.inputs,
-  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode]);
+  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode, clearAuditLog]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

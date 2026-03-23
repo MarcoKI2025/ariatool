@@ -38,7 +38,7 @@ Decision classes follow Lloyd's AI/Tech-E&O Guidelines 2024-25:
 • Approved — Standard terms, annual review
 • Conditional Review — Enhanced monitoring, quarterly attestation
 • Escalate to Committee — Board-level review, mandatory conditions
-• Not Approved — Risk outside appetite, refer to specialty market`,
+• Escalate to Committee — Board-level review, mandatory conditions before coverage`,
   },
   {
     icon: <BarChart3 className="w-4 h-4" />,

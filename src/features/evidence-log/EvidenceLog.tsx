@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 
 export function EvidenceLog() {
-  const { state } = useApp();
+  const { state, clearAuditLog } = useApp();
   const auditLog = state.auditLog || [];
 
   const exportLog = () => {
@@ -51,13 +51,22 @@ export function EvidenceLog() {
             Complete audit trail of all parameter changes and analysis runs. Required for underwriting-grade documentation and regulatory compliance.
           </p>
         </div>
-        <button
-          onClick={exportLog}
-          disabled={auditLog.length === 0}
-          className="px-4 py-2 text-[11px] font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
-        >
-          ⬇ Export Log (.csv)
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={clearAuditLog}
+            disabled={auditLog.length === 0}
+            className="px-4 py-2 text-[11px] font-semibold rounded-lg bg-destructive/10 text-destructive hover:bg-destructive/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors whitespace-nowrap border border-destructive/20"
+          >
+            🗑 Clear Log
+          </button>
+          <button
+            onClick={exportLog}
+            disabled={auditLog.length === 0}
+            className="px-4 py-2 text-[11px] font-semibold rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+          >
+            ⬇ Export Log (.csv)
+          </button>
+        </div>
       </div>
 
       {/* Log Table */}
