@@ -49,6 +49,7 @@ export function ModelGovernanceComplete() {
       <RegulatoryAlignment />
       <ResearchFoundation />
       <CalibrationTransparency />
+      <MethodologyTransparencyPanel />
       <CompetitivePositioning />
       <APIIntegrationReference />
       <FrameworkRevisionSchedule />
