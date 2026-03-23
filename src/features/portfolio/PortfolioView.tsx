@@ -6,6 +6,8 @@ import { DEFAULT_INPUTS } from '@/lib/constants';
 import { DependencyNetwork } from './DependencyNetwork';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
+import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 interface PortfolioEntity {
   id: string;
   name: string;
@@ -261,6 +263,9 @@ export function PortfolioView() {
         </div>
       </div>
 
+      {/* Quantum Vulnerability Assessment */}
+      <QuantumVulnerabilityAssessment />
+
       {/* Interpretation */}
       <div className="bg-card border border-border rounded-xl p-6">
         <h3 className="text-sm font-semibold text-foreground mb-3">Portfolio Interpretation</h3>
@@ -274,6 +279,8 @@ export function PortfolioView() {
           Swiss Re sigma insights 01/2026: "AI adoption creates emerging risk dimensions that do not fit neatly within traditional insurance boundaries." "New exposures arising from hyperscale data centres, high-performance computing facilities and expanded power &amp; energy infrastructure."
         </p>
       </div>
+
+      <AppFooter />
     </div>
   );
 }

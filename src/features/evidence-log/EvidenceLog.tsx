@@ -1,5 +1,7 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 export function EvidenceLog() {
   const { state, clearAuditLog } = useApp();
@@ -38,6 +40,7 @@ export function EvidenceLog() {
 
   return (
     <div className="space-y-8 max-w-5xl">
+      <UseRestrictionBanner />
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -126,6 +129,8 @@ export function EvidenceLog() {
           <div className="text-[10px] text-muted-foreground mt-1">Parameter Changes</div>
         </div>
       </div>
+
+      <AppFooter />
     </div>
   );
 }

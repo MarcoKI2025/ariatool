@@ -7,6 +7,7 @@ import { formatDate, formatCurrency } from '@/lib/formatters';
 import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 // ═══════════════════════════════════════════════════════════════
 // RESPONSIBILITY & OWNERSHIP STRUCTURE PANEL
@@ -774,6 +775,8 @@ export function ExecutiveReport() {
         <span className="text-[10px] text-muted-foreground italic">Step 5 of 6 · Board-level documentation</span>
         <button onClick={() => setActiveStep(6)} className="view-nav-next">Model Governance →</button>
       </div>
+
+      <AppFooter />
     </div>
   );
 }

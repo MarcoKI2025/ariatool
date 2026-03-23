@@ -5,6 +5,8 @@ import {
 } from '@/components/ui/dialog';
 import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, ExternalLink, Zap, Database, Eye } from 'lucide-react';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 /* ── Integration Data ── */
 interface Integration {
@@ -142,6 +144,7 @@ export function IntegrationHub() {
 
   return (
     <div className="space-y-8 max-w-5xl">
+      <UseRestrictionBanner />
       {/* Demo Disclaimer */}
       <div className="rounded-xl p-4 border border-sensitive-border bg-sensitive-bg">
         <div className="flex items-start gap-3">
@@ -374,6 +377,8 @@ export function IntegrationHub() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <AppFooter />
     </div>
   );
 }

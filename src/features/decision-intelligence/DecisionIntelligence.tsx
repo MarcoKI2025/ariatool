@@ -1,6 +1,8 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
+import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
@@ -952,12 +954,17 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
+      {/* Agentic Swarm Visualization */}
+      <AgenticSwarmVisualization agri={results.agri} />
+
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(1)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Exposure Analysis</button>
         <span className="text-[10px] text-muted-foreground italic">Step 2 of 6 · Decision intelligence & AFI analysis</span>
         <button onClick={() => setActiveStep(3)} className="view-nav-next">Scenario Simulation →</button>
       </div>
+
+      <AppFooter />
     </div>
   );
 }
