@@ -16,23 +16,19 @@ export function ExposureResults() {
   const [adjustments, setAdjustments] = useState({ dr: 0, jd: 0, rc: 0, cd: 0, na: 0, ses: 0 });
   const hasAdjustments = Object.values(adjustments).some(v => v !== 0);
 
-  if (!results) return null;
-
   // Apply adjustments to components
-  const adj = (base: number, pct: number) => Math.max(0.01, Math.min(1, base * (1 + pct / 100)));
+  const adjFn = (base: number, pct: number) => Math.max(0.01, Math.min(1, base * (1 + pct / 100)));
 
-  const components = useMemo(() => ({
-    dr: adj(results.components.dr, adjustments.dr),
-    jd: adj(results.components.jd, adjustments.jd),
-    rc: adj(results.components.rc, adjustments.rc),
-    cd: adj(results.components.cd, adjustments.cd),
-    na: adj(results.components.na, adjustments.na),
-  }), [results.components, adjustments]);
-
-  const ses = useMemo(() => {
-    const baseSes = (components.dr + components.rc + components.cd) / 3;
-    return adj(baseSes, adjustments.ses);
-  }, [components, adjustments.ses]);
+  const components = useMemo(() => {
+    if (!results) return { dr: 0, jd: 0.5, rc: 0, cd: 0, na: 0.5 };
+    return {
+      dr: adjFn(results.components.dr, adjustments.dr),
+      jd: adjFn(results.components.jd, adjustments.jd),
+      rc: adjFn(results.components.rc, adjustments.rc),
+      cd: adjFn(results.components.cd, adjustments.cd),
+      na: adjFn(results.components.na, adjustments.na),
+    };
+  }, [results, adjustments]);
 
   const afi = useMemo(() => calcAFI(components.dr, components.jd, components.rc, components.cd, components.na), [components]);
   const band = useMemo(() => getBand(afi), [afi]);
@@ -40,6 +36,8 @@ export function ExposureResults() {
   const structuralScore = useMemo(() => Math.min(99, Math.round(afi * 60)), [afi]);
   const eciTier = useMemo(() => afi < 0.5 ? 0 : afi < 0.85 ? 1 : afi < 1.35 ? 2 : 3, [afi]);
   const eciName = useMemo(() => ['Reversible Tool', 'Persistent Service', 'Institutional Dependency', 'Critical Infrastructure'][eciTier], [eciTier]);
+
+  if (!results) return null;
 
   // Use original results for values not affected by component adjustments
   const { lossEnvelope, agri, alri, scri, amplificationFactor } = results;
