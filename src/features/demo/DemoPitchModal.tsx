@@ -323,29 +323,31 @@ function Slide4() {
 
 function Slide5() {
   const steps = [
-    { num: '①', label: 'Exposure Profile', value: '12 parameters', color: '#9088e0', bg: '#1a1880', border: '#3830a8' },
-    { num: '②', label: 'AFI Engine', value: 'Fragility score', color: '#ffc040', bg: '#1a1200', border: '#5a4000' },
-    { num: '③', label: 'Loss Model', value: '€M envelope', color: '#ff8070', bg: '#1a0808', border: '#5a2018' },
-    { num: '④', label: 'Responsibility', value: 'Ownership map', color: '#c080e0', bg: '#180818', border: '#4a1848' },
-    { num: '⑤', label: 'IAT Check', value: 'EU AI Act map', color: '#60d090', bg: '#0e2010', border: '#1a5030' },
-    { num: '⑥', label: 'Verdict', value: 'ESCALATE', color: '#ff4040', bg: '#1a0808', border: '#800808' },
+    { num: '①', label: 'Exposure Analysis', value: '29+ parameters', color: '#9088e0', bg: '#1a1880', border: '#3830a8' },
+    { num: '②', label: 'Decision Intelligence', value: 'AFI · AGRI · ALRI', color: '#ffc040', bg: '#1a1200', border: '#5a4000' },
+    { num: '③', label: 'Scenario Sim', value: 'Stress testing', color: '#ff8070', bg: '#1a0808', border: '#5a2018' },
+    { num: '④', label: 'Insurance Decision', value: 'Loss envelope', color: '#c080e0', bg: '#180818', border: '#4a1848' },
+    { num: '⑤', label: 'Executive Report', value: 'Board summary', color: '#60d090', bg: '#0e2010', border: '#1a5030' },
+    { num: '⑥', label: 'Model Governance', value: 'Methodology', color: '#80b8e0', bg: '#0e1828', border: '#1a3858' },
+    { num: '⑦', label: 'Portfolio View', value: 'Multi-entity', color: '#b8a060', bg: '#1a1808', border: '#5a4818' },
+    { num: '⑧', label: 'Evidence Log', value: 'Audit trail', color: '#ff4040', bg: '#1a0808', border: '#800808' },
   ];
 
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow>The Process · From Input to Binding Verdict in Under 3 Minutes</Eyebrow>
-      <DmH1>One structured profile.<br /><span className="text-[#9088e0]">Six computed outputs.</span></DmH1>
+      <DmH1>One structured profile.<br /><span className="text-[#9088e0]">Eight computed outputs.</span></DmH1>
       <BodyText>
-        The engine takes a single structured exposure profile and generates six independent risk outputs.
-        Nothing is pre-filled. Every number is computed from the profile. Adjust one input: all outputs recalculate in real-time.
+        The engine takes a single structured exposure profile and generates eight independent risk outputs across a full
+        underwriting workflow. Nothing is pre-filled. Every number is computed from the profile. Adjust one input: all outputs recalculate in real-time.
       </BodyText>
-      <div className="grid grid-cols-6 gap-0 mb-5">
+      <div className="grid grid-cols-8 gap-0 mb-5">
         {steps.map((s, i) => (
-          <div key={i} className="text-center px-1 relative py-3">
-            {i < steps.length - 1 && <span className="absolute right-[-8px] top-[38%] text-[#9e9a90] text-[13px]">→</span>}
-            <div className="w-8 h-8 rounded-full flex items-center justify-center text-[12px] mx-auto mb-[7px] border-2" style={{ background: s.bg, borderColor: s.border, color: s.color }}>{s.num}</div>
-            <div className="text-[8px] font-bold uppercase tracking-[0.03em] text-[#b8b4a8] leading-[1.3] mb-1">{s.label}</div>
-            <div className="text-[10px] font-bold font-mono" style={{ color: s.color }}>{s.value}</div>
+          <div key={i} className="text-center px-0.5 relative py-3">
+            {i < steps.length - 1 && <span className="absolute right-[-6px] top-[38%] text-[#9e9a90] text-[11px]">→</span>}
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] mx-auto mb-[6px] border-2" style={{ background: s.bg, borderColor: s.border, color: s.color }}>{s.num}</div>
+            <div className="text-[7px] font-bold uppercase tracking-[0.02em] text-[#b8b4a8] leading-[1.3] mb-1">{s.label}</div>
+            <div className="text-[9px] font-bold font-mono" style={{ color: s.color }}>{s.value}</div>
           </div>
         ))}
       </div>
