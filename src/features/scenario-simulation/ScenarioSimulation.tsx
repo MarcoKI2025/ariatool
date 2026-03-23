@@ -40,6 +40,7 @@ export function ScenarioSimulation() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
   const [activeScenario, setActiveScenario] = useState(0);
+  const [activeTab, setActiveTab] = useState('builder');
 
   if (!analysisComplete || !results) {
     return <LockedState title="Scenario Simulation Locked" description="Complete the Exposure Analysis to run scenario stress tests against your AI deployment profile." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
