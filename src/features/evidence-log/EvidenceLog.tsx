@@ -1,5 +1,7 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
+import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 
 export function EvidenceLog() {
   const { state, clearAuditLog } = useApp();
