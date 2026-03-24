@@ -9,6 +9,7 @@ import { TOOLTIPS } from '@/lib/tooltips';
 import { ConsequenceEngine } from '@/components/shared/ConsequenceEngine';
 import { ResponsibilityCollapseDetector } from '@/components/shared/ResponsibilityCollapseDetector';
 import { PeerBenchmarking } from '@/features/benchmarking/PeerBenchmarking';
+import { ExplainabilityPanel } from '@/features/explainability/ExplainabilityPanel';
 import { SectionDivider } from '@/components/shared/SectionDivider';
 
 export function DecisionIntelligence() {
@@ -1015,6 +1016,9 @@ export function DecisionIntelligence() {
         </div>
         <PeerBenchmarking />
       </div>
+
+      {/* ═══ EXPLAINABILITY ═══ */}
+      <ExplainabilityPanel />
 
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />

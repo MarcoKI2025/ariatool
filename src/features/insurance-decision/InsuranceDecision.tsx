@@ -6,6 +6,8 @@ import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
 import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
+import { CapitalImpactPanel } from '@/features/capital-impact/CapitalImpactPanel';
+import { DependencyShockPanel } from '@/features/shock-simulator/DependencyShockPanel';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { SectionDivider } from '@/components/shared/SectionDivider';
 
@@ -895,6 +897,12 @@ export function InsuranceDecision() {
       <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
         <PremiumCalculator />
       </div>
+
+      {/* ═══ CAPITAL IMPACT ═══ */}
+      <CapitalImpactPanel />
+
+      {/* ═══ DEPENDENCY SHOCK SIMULATOR ═══ */}
+      <DependencyShockPanel />
 
       {/* View nav footer */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t border-border mt-7">
