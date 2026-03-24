@@ -17,7 +17,10 @@ export function CaseStudyPanel() {
   const handleLoad = (cs: CaseStudy) => {
     setInputs(cs.inputs);
     setPerspective('underwriter');
-    setTimeout(() => runAnalysis(), 100);
+    setTimeout(() => {
+      runAnalysis();
+      setTimeout(() => document.querySelector('.app-content')?.scrollTo(0, 0), 50);
+    }, 100);
   };
 
   return (
