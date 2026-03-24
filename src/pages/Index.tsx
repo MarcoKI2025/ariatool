@@ -139,6 +139,8 @@ function AppContent() {
       case 7: return <PortfolioView />;
       case 8: return <EvidenceLog />;
       case 9: return <IntegrationHub />;
+      case 10: return <RecursiveRiskView />;
+      case 11: return <TemporalTrackingView />;
       default: return <ExposureAnalysis />;
     }
   };
