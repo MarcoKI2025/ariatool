@@ -92,7 +92,7 @@ export function AppSidebar() {
                         }
                       }}
                       disabled={isLocked || isDisabled}
-                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all relative select-none ${
+                      className={`w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-left transition-all relative select-none ${
                         isActive
                           ? 'bg-primary/8 text-primary font-semibold'
                           : isDone
