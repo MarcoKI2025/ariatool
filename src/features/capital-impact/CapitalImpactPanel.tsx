@@ -8,7 +8,7 @@ export function CapitalImpactPanel() {
   const { results, inputs } = state;
   if (!results) return null;
 
-  const impact = computeCapitalImpact(inputs, results);
+  const impact = computeCapitalImpact(inputs, results, state.recursiveRisk);
   const stressColor = impact.stressLevel === 'Severe' ? 'text-fragile' : impact.stressLevel === 'Significant' ? 'text-sensitive' : impact.stressLevel === 'Moderate' ? 'text-sensitive' : 'text-stable';
   const opsColor = impact.operationalImpact === 'Systemic' || impact.operationalImpact === 'Critical' ? 'text-fragile' : impact.operationalImpact === 'Elevated' ? 'text-sensitive' : 'text-stable';
 

@@ -3,7 +3,7 @@
  * Heuristic decision-support layer translating AFI into economic impact ranges.
  * NOT actuarial pricing — qualitative exposure characterization only.
  */
-import { AnalysisResults, ExposureInputs } from './types';
+import { AnalysisResults, ExposureInputs, RecursiveRiskState } from './types';
 import { ANCHOR_LOSS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SECTOR_MULTIPLIERS } from './constants';
 
 export interface LossRange {
@@ -77,10 +77,22 @@ export function estimateOperationalImpact(inputs: ExposureInputs, results: Analy
   return { impact, score };
 }
 
-export function computeCapitalImpact(inputs: ExposureInputs, results: AnalysisResults): CapitalImpact {
+export function computeCapitalImpact(inputs: ExposureInputs, results: AnalysisResults, recursiveRisk?: RecursiveRiskState | null): CapitalImpact {
   const lossRange = estimateLossRange(inputs, results);
   const { level: stressLevel, score: stressScore } = estimateCapitalStress(inputs, results);
   const { impact: operationalImpact, score: operationalScore } = estimateOperationalImpact(inputs, results);
+
+  // RSI/MCCI amplification on loss range
+  if (recursiveRisk) {
+    const rsiAmplifier = 1 + (recursiveRisk.rsiScore / 100) * 0.3; // up to +30%
+    const mcciAmplifier = 1 + (recursiveRisk.mcciScore / 100) * 0.2; // up to +20%
+    const combinedAmplifier = rsiAmplifier * mcciAmplifier;
+    lossRange.low = Math.round(lossRange.low * combinedAmplifier * 10) / 10;
+    lossRange.mid = Math.round(lossRange.mid * combinedAmplifier * 10) / 10;
+    lossRange.high = Math.round(lossRange.high * combinedAmplifier * 10) / 10;
+    if (lossRange.high >= 5) lossRange.label = 'Severe exposure range';
+    else if (lossRange.high >= 2) lossRange.label = 'Elevated exposure range';
+  }
 
   const drivers: CapitalImpact['drivers'] = [];
 
@@ -89,9 +101,13 @@ export function computeCapitalImpact(inputs: ExposureInputs, results: AnalysisRe
   if (results.correlationFactor > 0.5) drivers.push({ label: 'Elevated correlation factor', contribution: results.correlationFactor, direction: 'risk' });
   if (inputs.cloudConcentration >= 4) drivers.push({ label: 'Cloud concentration risk', contribution: inputs.cloudConcentration / 5, direction: 'risk' });
   if (inputs.automation >= 4) drivers.push({ label: 'High automation level', contribution: inputs.automation / 5, direction: 'risk' });
+  if (recursiveRisk && recursiveRisk.rsiScore > 30) drivers.push({ label: 'Recursive self-improvement risk (RSI)', contribution: recursiveRisk.rsiScore / 100, direction: 'risk' });
+  if (recursiveRisk && recursiveRisk.mcciScore > 30) drivers.push({ label: 'Metacognitive capability (MCCI)', contribution: recursiveRisk.mcciScore / 100, direction: 'risk' });
+  if (recursiveRisk && recursiveRisk.cgdAlert) drivers.push({ label: 'Compounding gain detected', contribution: 0.8, direction: 'risk' });
   if (results.components.jd > 0.6) drivers.push({ label: 'Strong oversight density', contribution: results.components.jd, direction: 'mitigant' });
   if (inputs.humanCheckpoints >= 4) drivers.push({ label: 'Human checkpoints in place', contribution: inputs.humanCheckpoints / 5, direction: 'mitigant' });
   if (inputs.providers.length >= 3) drivers.push({ label: 'Provider diversification', contribution: 0.6, direction: 'mitigant' });
+  if (recursiveRisk && recursiveRisk.oversightCapability > 60) drivers.push({ label: 'Strong recursive oversight', contribution: recursiveRisk.oversightCapability / 100, direction: 'mitigant' });
 
   drivers.sort((a, b) => b.contribution - a.contribution);
 
