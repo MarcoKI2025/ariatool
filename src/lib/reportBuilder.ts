@@ -1,4 +1,4 @@
-import { AnalysisResults, ExposureInputs } from './types';
+import { AnalysisResults, ExposureInputs, RecursiveRiskState } from './types';
 import { formatDate } from './formatters';
 
 export function buildExecutiveReport(inputs: ExposureInputs, results: AnalysisResults): string {
