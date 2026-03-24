@@ -71,20 +71,27 @@ function resolveIndustryKey(industry: string): string {
 }
 
 export function calculatePremium(
-  coverage: number, afi: number, industry: string, deductible: number = 0
+  coverage: number, afi: number, industry: string, deductible: number = 0,
+  recursiveRisk?: { rsiScore: number; mcciScore: number } | null
 ): PremiumCalculation {
   const industryKey = resolveIndustryKey(industry);
   const { baseRate, volatilityFactor } = INDUSTRY_BASE_RATES[industryKey];
   const afiMultiplier = getAFIMultiplier(afi);
   const deductibleFactor = getDeductibleFactor(deductible);
 
+  // RSI/MCCI surcharge: up to +15% combined
+  const rsiSurcharge = recursiveRisk ? 1 + (recursiveRisk.rsiScore / 100) * 0.10 : 1;
+  const mcciSurcharge = recursiveRisk ? 1 + (recursiveRisk.mcciScore / 100) * 0.05 : 1;
+  const recursiveSurcharge = rsiSurcharge * mcciSurcharge;
+
   const basePremium = coverage * baseRate;
   const afiAdjustedPremium = basePremium * afiMultiplier;
   const afiAdjustment = afiAdjustedPremium - basePremium;
   const industryAdjustedPremium = afiAdjustedPremium * volatilityFactor;
   const industryAdjustment = industryAdjustedPremium - afiAdjustedPremium;
-  const finalPremium = industryAdjustedPremium * deductibleFactor;
-  const deductibleDiscount = industryAdjustedPremium - finalPremium;
+  const recursiveAdjustedPremium = industryAdjustedPremium * recursiveSurcharge;
+  const finalPremium = recursiveAdjustedPremium * deductibleFactor;
+  const deductibleDiscount = recursiveAdjustedPremium - finalPremium;
   const premiumRate = (finalPremium / coverage) * 100;
   const baselinePremium = basePremium * 1.0 * volatilityFactor * deductibleFactor;
   const costOfFragility = finalPremium - baselinePremium;
