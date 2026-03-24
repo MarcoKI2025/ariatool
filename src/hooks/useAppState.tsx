@@ -59,6 +59,7 @@ interface AppContextType {
   toggleIAT: (criterion: number) => void;
   toggleDarkMode: () => void;
   clearAuditLog: () => void;
+  updateRecursiveRisk: (risk: RecursiveRiskState) => void;
   results: AnalysisResults | null;
   inputs: ExposureInputs;
 }
