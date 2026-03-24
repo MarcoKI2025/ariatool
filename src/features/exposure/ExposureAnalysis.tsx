@@ -67,11 +67,11 @@ export function ExposureAnalysis() {
 
   // Progress calculation based on categories touched
   const hasCompany = inputs.companyName.length > 0 && inputs.industry.length > 0;
-  const hasCoreAFI = inputs.automation !== 3 || inputs.executionAuthority !== 3 || inputs.oversightLevel !== 3;
-  const hasAgent = inputs.multiAgent !== 1 || inputs.toolCallAuthority !== 1;
-  const hasLiability = inputs.hallucinationLiability !== 1 || inputs.deepfakeFraud !== 1;
-  const hasGov = inputs.shadowAI !== 3 || inputs.explainabilityGap !== 3;
-  const hasSystemic = inputs.cloudConcentration !== 3 || inputs.modelConcentration !== 3;
+  const hasCoreAFI = inputs.automation > 1 || inputs.executionAuthority > 1 || inputs.oversightLevel > 1;
+  const hasAgent = inputs.multiAgent > 1 || inputs.toolCallAuthority > 1;
+  const hasLiability = inputs.hallucinationLiability > 1 || inputs.deepfakeFraud > 1;
+  const hasGov = inputs.shadowAI > 1 || inputs.explainabilityGap > 1;
+  const hasSystemic = inputs.cloudConcentration > 1 || inputs.modelConcentration > 1;
   const progressIdx = hasSystemic ? 5 : hasGov ? 4 : hasLiability ? 3 : hasAgent ? 2 : hasCoreAFI ? 1 : hasCompany ? 1 : 0;
 
   return (
