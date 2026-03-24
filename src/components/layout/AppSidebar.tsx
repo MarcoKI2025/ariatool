@@ -55,7 +55,7 @@ export function AppSidebar() {
       </div>
 
       {/* Nav steps - grouped by section */}
-      <nav className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-3 py-2 flex-1 overflow-y-auto`}>
+      <nav className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-3 py-1.5 flex-1 overflow-y-auto`}>
         {/* Company View notice */}
         {perspective === 'company' && (
           <div className="mx-2 mb-2 px-3 py-2 rounded-lg border border-stable-border bg-stable-bg text-[10px] font-medium text-stable leading-relaxed">
@@ -65,7 +65,7 @@ export function AppSidebar() {
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-2.5">
           {NAV_SECTIONS.map((section) => (
             <div key={section.label}>
               <div className="px-3 py-1 text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground/70">
@@ -92,7 +92,7 @@ export function AppSidebar() {
                         }
                       }}
                       disabled={isLocked || isDisabled}
-                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all relative select-none ${
+                      className={`w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-left transition-all relative select-none ${
                         isActive
                           ? 'bg-primary/8 text-primary font-semibold'
                           : isDone
