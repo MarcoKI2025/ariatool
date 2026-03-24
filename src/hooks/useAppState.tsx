@@ -145,6 +145,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState(s => ({ ...s, auditLog: [] }));
   }, []);
 
+  const updateRecursiveRisk = useCallback((risk: RecursiveRiskState) => {
+    setState(s => ({ ...s, recursiveRisk: risk }));
+  }, []);
+
   const value = useMemo(() => ({
     state,
     setActiveStep,
@@ -156,9 +160,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     toggleIAT,
     toggleDarkMode,
     clearAuditLog,
+    updateRecursiveRisk,
     results: state.results,
     inputs: state.inputs,
-  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode, clearAuditLog]);
+  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode, clearAuditLog, updateRecursiveRisk]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
