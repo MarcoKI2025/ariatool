@@ -3,7 +3,7 @@
  * Heuristic decision-support layer translating AFI into economic impact ranges.
  * NOT actuarial pricing — qualitative exposure characterization only.
  */
-import { AnalysisResults, ExposureInputs } from './types';
+import { AnalysisResults, ExposureInputs, RecursiveRiskState } from './types';
 import { ANCHOR_LOSS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SECTOR_MULTIPLIERS } from './constants';
 
 export interface LossRange {
