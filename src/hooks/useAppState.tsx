@@ -41,6 +41,7 @@ function persistState(state: AppState) {
       iatState: state.iatState,
       darkMode: state.darkMode,
       auditLog: state.auditLog,
+      recursiveRisk: state.recursiveRisk,
     }));
   } catch (e) {
     // silent
