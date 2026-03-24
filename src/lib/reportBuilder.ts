@@ -67,6 +67,21 @@ of emerging systemic dependencies and accumulation risks.
 within traditional insurance boundaries."
 
 ───────────────────────────────────────────────────────────────
+RECURSIVE RISK ASSESSMENT
+───────────────────────────────────────────────────────────────
+
+${recursiveRisk ? `RSI Score:                    ${recursiveRisk.rsiScore.toFixed(1)} (${recursiveRisk.rsiTier})
+MCCI Score:                   ${recursiveRisk.mcciScore.toFixed(0)} (${recursiveRisk.mcciTier})
+Meta-Modification Depth:      ${recursiveRisk.metaDepth.toFixed(0)}
+Improvement Velocity:         ${recursiveRisk.improvementVelocity.toFixed(0)}
+Oversight Capability:         ${recursiveRisk.oversightCapability.toFixed(0)}
+Compounding Gain Alert:       ${recursiveRisk.cgdAlert ? 'YES — Growth rate ' + (recursiveRisk.cgdGrowthRate * 100).toFixed(1) + '%' : 'No'}
+
+Note: RSI/MCCI scores are factored into Capital Impact (loss range
+amplification) and Premium Pricing (recursive risk surcharge).` : `Not assessed. Complete Recursive Risk Assessment (Step 10) to
+include hyperagent capability indicators.`}
+
+───────────────────────────────────────────────────────────────
 REQUIRED ACTIONS
 ───────────────────────────────────────────────────────────────
 
