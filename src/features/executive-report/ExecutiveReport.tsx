@@ -121,7 +121,7 @@ export function ExecutiveReport() {
     : 'Structural governance signals within normal parameters. Standard underwriting process applies.';
 
   const copyReport = () => {
-    const text = buildExecutiveReport(inputs, results);
+    const text = buildExecutiveReport(inputs, results, state.recursiveRisk);
     navigator.clipboard.writeText(text);
     toast.success('Executive summary copied to clipboard');
   };
