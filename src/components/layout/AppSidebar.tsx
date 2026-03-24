@@ -65,7 +65,7 @@ export function AppSidebar() {
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-2.5">
           {NAV_SECTIONS.map((section) => (
             <div key={section.label}>
               <div className="px-3 py-1 text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground/70">
