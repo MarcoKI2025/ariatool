@@ -55,7 +55,7 @@ export function AppSidebar() {
       </div>
 
       {/* Nav steps - grouped by section */}
-      <nav className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-3 py-2 flex-1 overflow-y-auto`}>
+      <nav className={`${mobileNavOpen ? 'block' : 'hidden'} lg:block px-3 py-1.5 flex-1 overflow-y-auto`}>
         {/* Company View notice */}
         {perspective === 'company' && (
           <div className="mx-2 mb-2 px-3 py-2 rounded-lg border border-stable-border bg-stable-bg text-[10px] font-medium text-stable leading-relaxed">
