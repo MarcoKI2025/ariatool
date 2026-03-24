@@ -998,7 +998,7 @@ export function CompanyView() {
           <strong className="text-base font-bold block mb-1 text-foreground">Ready to take action?</strong>
           Download the executive report for your board, or switch to the Underwriter View for the full structural analysis.
         </div>
-        <button onClick={() => setPerspective('underwriter')} className="btn-p w-full sm:w-auto" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
+        <button onClick={() => { setPerspective('underwriter'); setActiveStep(1); }} className="btn-p w-full sm:w-auto" style={{ padding: '14px 28px', fontSize: 14, borderRadius: 12, flexShrink: 0 }}>⊕ Full Underwriter Analysis →</button>
       </div>
     </div>
   );
