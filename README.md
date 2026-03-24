@@ -1,174 +1,134 @@
-# ARIA — AI Governance Exposure Engine v4.2
+# ARIA — AI Governance Exposure Engine
 
-> **Structural risk assessment for AI-dependent organisations.**
-> Underwriting-grade governance intelligence for insurers, reinsurers, and risk managers.
-
-[![Version](https://img.shields.io/badge/version-4.2.0-blue)]()
-[![Status](https://img.shields.io/badge/status-Production_Ready-green)]()
-[![License](https://img.shields.io/badge/license-Proprietary-red)]()
+> Structural risk assessment for AI-dependent organisations.
+> Heuristic governance intelligence for insurers, reinsurers, and risk managers.
 
 ---
 
-## 🎯 What Is ARIA?
+## What This Is
 
-ARIA (Advanced Risk & Intelligence Assessment) is a **governance exposure engine** that quantifies structural dependencies in AI system deployments. It transforms subjective "how much AI do you use?" conversations into measurable, comparable risk signals.
+ARIA (Advanced Risk & Intelligence Assessment) is an **advanced interactive prototype** that quantifies structural dependencies in AI system deployments. It provides a structured, repeatable framework for evaluating how deeply AI is embedded in an organisation's operations and how reversible that embedding remains.
 
-**Core output:** The **Authority Fragility Index (AFI)** — a composite score measuring how much operational authority an organisation has delegated to AI systems and how reversible that delegation remains.
+**Core output:** The **Authority Fragility Index (AFI)** — a composite heuristic score measuring operational authority delegation to AI systems and the reversibility of that delegation.
 
-### The Problem It Solves
-
-Traditional insurance underwriting cannot assess:
-- How deeply AI is embedded in critical business processes
-- Whether an organisation can operate if its AI providers fail
-- The systemic concentration risk across cloud/model/GPU providers
-- The liability exposure from hallucinations, bias, and model drift
-
-ARIA provides a structured, repeatable framework to evaluate these risks.
+**This is a decision-support tool, not a production underwriting system.**
 
 ---
 
-## 🚀 Quick Start
+## What This Is NOT
+
+- ❌ An actuarially certified risk model
+- ❌ A binding underwriting decision engine
+- ❌ A regulatory compliance certification tool
+- ❌ A replacement for professional underwriting judgment
+- ❌ Calibrated against empirical loss data
+- ❌ A Monte Carlo or probabilistic simulation engine
+
+All outputs are heuristic, qualitative signals derived from self-attested inputs. They require mandatory human review by qualified professionals before any business decision.
+
+---
+
+## Core Capabilities
+
+### Assessment
+- **Exposure Analysis** — 40+ governance parameters across 6 risk dimensions
+- **Decision Intelligence** — Composite risk indices (AFI, AGRI, ALRI, SCRI, MDR, RFSI)
+- **Explainability Layer** — Data-driven "why this score?" breakdown
+
+### Stress Testing
+- **Scenario Simulation** — 4 structural failure scenarios with cascading impact analysis
+- **Dependency Shock Simulator** — Provider failure, governance breakdown, oversight collapse
+- **Capital Impact Engine** — Heuristic loss range estimation (not actuarial)
+
+### Reporting
+- **Insurance Decision** — Decision class routing with qualitative risk bands
+- **Executive Report** — Board-level summary with ORSA-compatible export
+- **Evidence Log** — Complete audit trail with CSV export
+
+### Portfolio & Advanced
+- **Portfolio View** — Multi-entity risk aggregation
+- **EU AI Act Compliance** — Article-by-article gap assessment
+- **Peer Benchmarking** — Industry-relative positioning (synthetic benchmark data)
+- **Recursive Risk** — RSI and MCCI for hyperagent risk detection
+- **Temporal Tracking** — Risk evolution snapshots over time
+
+---
+
+## Intended Use
+
+- **Demo & Presentation** — Showcasing AI governance risk assessment methodology
+- **Research & Exploration** — Exploring structural dependency dynamics
+- **Underwriting Discussion** — Generating structured signals for committee review
+- **Governance Workshops** — Educating stakeholders on AI deployment risk factors
+
+---
+
+## Quick Start
 
 ```bash
-# Clone repository
-git clone [repository-url]
-cd ariatool
-
 # Install dependencies
-npm install
+npm ci
 
-# Run development server
+# Start development server
 npm run dev
 
-# Build for production
+# Run tests
+npm test
+
+# Production build
 npm run build
 ```
 
-### Demo Profiles
+### Environment Variables (Optional)
 
-ARIA includes 5 pre-configured demo profiles:
+Copy `.env.example` to `.env`:
 
-1. **Meridian Financial** (AFI 2.23, Fragile) — High-frequency trading AI
-2. **HealthPath AI** (AFI 1.08, Sensitive) — Clinical decision support
-3. **LexCore Systems** (AFI 1.85, Fragile) — Autonomous contract review
-4. **RetailFlow** (AFI 0.92, Sensitive) — Demand forecasting engine
-5. **CivicAI Gov** (AFI 0.47, Stable) — Public sector drafting assistant
+```bash
+cp .env.example .env
+```
 
----
-
-## 📊 Key Features
-
-### 1. Exposure Analysis
-40+ governance parameters across 6 dimensions:
-- Deployment characteristics
-- Agentic capabilities
-- AI-specific liability vectors
-- Operational integrity
-- Non-linear risk vectors
-- Systemic concentration
-
-### 2. Decision Intelligence
-Comprehensive risk index suite:
-- **AGRI:** Agentic Risk Index
-- **ALRI:** AI Liability Risk Index
-- **SCRI:** Systemic Concentration Risk Index (inverse)
-- **MDR:** Model Drift Risk
-- **RFSI:** Responsibility Frame Stability Index
-
-### 3. Scenario Simulation
-- Parameter robustness testing (±10% sensitivity)
-- Stress scenario modelling
-- Qualitative loss envelope shifts
-- **Agent Coordination Analysis** — Multi-agent delegation chain mapping (BETA)
-- Agentic Swarm & Delegation Depth visualization
-
-### 4. Insurance Decision
-- Decision class routing (Approved / Conditional Review / Escalate to Committee)
-- Qualitative risk band assessment
-- Governance improvement recommendations
-
-### 5. Executive Report
-- One-page board summary
-- ORSA-compatible export
-- Swiss Re sigma 01/2026 aligned risk narratives
-
-### 6. Portfolio View
-- Multi-entity risk aggregation
-- Weighted AFI calculation
-- Shared infrastructure dependency analysis
-- Capital efficiency calculator (Solvency II)
-
-### 7. Evidence Log
-- Complete audit trail
-- Parameter change tracking
-- Analysis run history
-- CSV export for compliance
-
-### 8. Integration Hub *(Demo)*
-- Simulated ecosystem connectors
-- Market data feed mockups
-- Compliance framework alignment
+| Variable | Purpose |
+|----------|---------|
+| `VITE_APP_PASSWORD` | Gate access with a password (leave empty for open demo) |
+| `VITE_SUPABASE_URL` | Optional backend integration |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Optional backend integration |
 
 ---
 
-## ⚠️ Important Limitations
-
-**ARIA is a governance intelligence layer. It is NOT:**
-
-❌ An actuarial loss prediction model
-❌ A binding underwriting decision engine
-❌ A regulatory compliance certification tool
-❌ A replacement for human judgment
-
-**Technical Constraints:**
-- **Heuristic scoring** (not probabilistic)
-- **No claims data integration** (not calibrated to actual losses)
-- **No Monte Carlo simulation** (deterministic calculations)
-- **Simplified portfolio correlation** (no copula models)
-- **Point-in-time assessment** (no time-series analysis)
-
-**All outputs require mandatory human review and explicit authorization by qualified underwriters.**
-
----
-
-## 🔐 Security & Privacy
-
-- **Client-side only:** 100% browser-based, no backend server
-- **Local storage:** All data persists in browser localStorage
-- **No telemetry:** Zero analytics or user tracking
-- **No PII collection:** No personally identifiable information processed
-
----
-
-## 📄 Documentation
-
-- [`TECHNICAL_DUE_DILIGENCE.md`](./TECHNICAL_DUE_DILIGENCE.md) — Architecture deep-dive & validation
-- [`METHODOLOGY.md`](./METHODOLOGY.md) — AGAF framework explanation *(planned)*
-- [`API.md`](./API.md) — Integration endpoints *(roadmap)*
-
----
-
-## 🛠 Tech Stack
+## Technical Stack
 
 | Layer | Technology |
 |-------|------------|
-| Framework | React 18.3 + TypeScript 5.8 |
-| Styling | Tailwind CSS 3.4 + shadcn/ui |
-| Charts | Recharts 2.15 |
-| State | React Context (useAppState) |
-| Storage | localStorage API |
-| Build | Vite 5.4 |
-| Deployment | Lovable Platform |
+| Framework | React 18 + TypeScript 5 |
+| Styling | Tailwind CSS + shadcn/ui |
+| Charts | Recharts |
+| State | React Context |
+| Storage | Browser localStorage |
+| Build | Vite |
+| Testing | Vitest + Testing Library |
 
 ---
 
-## 📜 License
+## Architecture
+
+100% client-side application. All data persists in browser localStorage. No backend server required for core functionality. No telemetry or analytics. No PII collection.
+
+---
+
+## Limitations
+
+| Constraint | Detail |
+|------------|--------|
+| Heuristic scoring | Not probabilistic — deterministic calculations |
+| No claims data | Not calibrated against actual insurance losses |
+| No Monte Carlo | Scenario analysis is structural, not stochastic |
+| Synthetic benchmarks | Peer comparison data is illustrative, not market data |
+| Point-in-time | Temporal tracking requires manual snapshots |
+| Self-attested inputs | No automated data ingestion or verification |
+
+---
+
+## License
 
 Proprietary — All rights reserved
 © 2026 ARIA Research Institute
-
----
-
-**Version:** 4.2.0
-**Status:** Production Ready
-**Last Updated:** March 2026
