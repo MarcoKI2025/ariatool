@@ -559,6 +559,51 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         </div>
       </div>
 
+      {/* ═══ RECURSIVE RISK ASSESSMENT ═══ */}
+      {state.recursiveRisk && (
+        <>
+          <SectionDivider title="Recursive Risk Assessment" icon="🔄" subtitle="RSI, MCCI, and compounding gain indicators" />
+          <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Hyperagent Risk Indicators</div>
+            <div className="text-[13px] font-bold text-foreground mb-3">Recursive Self-Improvement & Metacognitive Capability</div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
+              {[
+                { label: 'RSI Score', value: state.recursiveRisk.rsiScore.toFixed(1), color: state.recursiveRisk.rsiScore >= 50 ? 'text-fragile' : state.recursiveRisk.rsiScore >= 30 ? 'text-sensitive' : 'text-stable' },
+                { label: 'RSI Tier', value: state.recursiveRisk.rsiTier, color: 'text-foreground' },
+                { label: 'MCCI Score', value: state.recursiveRisk.mcciScore.toFixed(0), color: state.recursiveRisk.mcciScore >= 55 ? 'text-fragile' : state.recursiveRisk.mcciScore >= 30 ? 'text-sensitive' : 'text-stable' },
+                { label: 'MCCI Tier', value: state.recursiveRisk.mcciTier, color: 'text-foreground' },
+              ].map((m, i) => (
+                <div key={i} className="p-3 bg-secondary/30 border border-border rounded-lg">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+                  <div className={`text-[18px] font-bold font-mono ${m.color}`}>{m.value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-3">
+              {[
+                { label: 'Meta-Modification Depth', value: state.recursiveRisk.metaDepth.toFixed(0) },
+                { label: 'Improvement Velocity', value: state.recursiveRisk.improvementVelocity.toFixed(0) },
+                { label: 'Oversight Capability', value: state.recursiveRisk.oversightCapability.toFixed(0) },
+              ].map((m, i) => (
+                <div key={i} className="p-3 bg-secondary/30 border border-border rounded-lg">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
+                  <div className="text-[16px] font-bold font-mono text-foreground">{m.value}</div>
+                </div>
+              ))}
+            </div>
+            {state.recursiveRisk.cgdAlert && (
+              <div className="p-3 bg-sensitive-bg border border-sensitive-border rounded-lg mb-3">
+                <div className="text-[11px] font-bold text-sensitive">⚡ Compounding Gain Detected</div>
+                <div className="text-[10px] text-foreground/80 mt-1">Performance growth rate: {(state.recursiveRisk.cgdGrowthRate * 100).toFixed(1)}% per iteration — improvement may be outpacing oversight.</div>
+              </div>
+            )}
+            <div className="text-[10px] text-muted-foreground leading-relaxed">
+              RSI and MCCI scores are factored into Capital Impact (+30% loss range amplification at RSI 100) and Premium Pricing (+15% surcharge at maximum recursive risk). Visit the Recursive Risk view to adjust capability assessments.
+            </div>
+          </div>
+        </>
+      )}
+
       <SectionDivider title="Governance & Accountability" icon="👥" subtitle="Responsibility structure and epistemic constraints" />
 
       {/* Responsibility & Ownership Structure */}
