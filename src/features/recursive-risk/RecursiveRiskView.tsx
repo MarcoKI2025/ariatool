@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { SectionDivider } from '@/components/shared/SectionDivider';
 import {
