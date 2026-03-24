@@ -31,7 +31,7 @@ const METACOG_LABELS: Record<string, string> = {
 };
 
 export function RecursiveRiskView() {
-  const { state } = useApp();
+  const { state, updateRecursiveRisk } = useApp();
   const { inputs, results } = state;
 
   const [rsiFactors] = useState<RecursiveRiskFactors>({
