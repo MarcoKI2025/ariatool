@@ -185,6 +185,18 @@ export interface DemoSlide {
   content: React.ReactNode;
 }
 
+export interface RecursiveRiskState {
+  rsiScore: number;
+  rsiTier: string;
+  mcciScore: number;
+  mcciTier: string;
+  metaDepth: number;
+  improvementVelocity: number;
+  oversightCapability: number;
+  cgdAlert: boolean;
+  cgdGrowthRate: number;
+}
+
 export interface AppState {
   perspective: Perspective;
   activeStep: number;
@@ -194,4 +206,5 @@ export interface AppState {
   iatState: IATState;
   darkMode: boolean;
   auditLog: AuditLogEntry[];
+  recursiveRisk: RecursiveRiskState | null;
 }
