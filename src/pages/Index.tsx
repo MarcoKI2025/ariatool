@@ -17,21 +17,21 @@ import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
 
 const ACCESS_KEY = 'aria_access_granted';
-const CORRECT_PASSWORD = 'airisk';
 
 function PasswordGate({ onAuthenticated }: { onAuthenticated: () => void }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const CONFIGURED_PASSWORD = import.meta.env.VITE_APP_PASSWORD;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(false);
 
-    // Small delay for UX feel
     setTimeout(() => {
-      if (password === CORRECT_PASSWORD) {
+      if (!CONFIGURED_PASSWORD || password === CONFIGURED_PASSWORD) {
         sessionStorage.setItem(ACCESS_KEY, 'true');
         onAuthenticated();
       } else {
@@ -42,16 +42,51 @@ function PasswordGate({ onAuthenticated }: { onAuthenticated: () => void }) {
     }, 400);
   };
 
+  // If no password configured, auto-enter demo mode
+  if (!CONFIGURED_PASSWORD) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="w-full max-w-sm">
+          <div className="bg-card border border-border rounded-2xl p-8 shadow-lg text-center">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-[14px]">AI</div>
+              <div className="text-left">
+                <div className="text-[15px] font-bold text-foreground tracking-tight">ARIA</div>
+                <div className="text-[10px] text-muted-foreground">AI Governance Engine · Prototype</div>
+              </div>
+            </div>
+            <div className="inline-block px-3 py-1 rounded-full bg-accent text-accent-foreground text-[10px] font-bold tracking-wider uppercase mb-4">
+              Demo Mode
+            </div>
+            <p className="text-[11px] text-muted-foreground mb-5 leading-relaxed">
+              Interactive prototype for governance risk assessment. All outputs are heuristic decision-support signals.
+            </p>
+            <button
+              onClick={() => { sessionStorage.setItem(ACCESS_KEY, 'true'); onAuthenticated(); }}
+              className="w-full px-4 py-2.5 bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors"
+            >
+              Enter Platform
+            </button>
+            <div className="mt-5 pt-4 border-t border-border">
+              <div className="text-[9px] text-muted-foreground">
+                ARIA · Advanced Risk & Intelligence Assessment
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
-          {/* Logo */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-[14px]">AI</div>
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-[14px]">AI</div>
             <div>
               <div className="text-[15px] font-bold text-foreground tracking-tight">ARIA</div>
-              <div className="text-[10px] text-muted-foreground">AI Governance Engine v4.2.0</div>
+              <div className="text-[10px] text-muted-foreground">AI Governance Engine · Prototype</div>
             </div>
           </div>
 
@@ -94,7 +129,7 @@ function PasswordGate({ onAuthenticated }: { onAuthenticated: () => void }) {
 
           <div className="mt-5 pt-4 border-t border-border text-center">
             <div className="text-[9px] text-muted-foreground">
-              ARIA v4.2.0 · Governance Intelligence Platform
+              ARIA · Advanced Risk & Intelligence Assessment
             </div>
           </div>
         </div>
