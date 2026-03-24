@@ -6,6 +6,8 @@ import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { EducationalParametricSimulator } from '@/features/parametric/EducationalParametricSimulator';
 import { PremiumCalculator } from '@/features/pricing/PremiumCalculator';
+import { CapitalImpactPanel } from '@/features/capital-impact/CapitalImpactPanel';
+import { DependencyShockPanel } from '@/features/shock-simulator/DependencyShockPanel';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { SectionDivider } from '@/components/shared/SectionDivider';
 
