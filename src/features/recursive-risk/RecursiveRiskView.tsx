@@ -76,6 +76,21 @@ export function RecursiveRiskView() {
   ];
   const cgdResult = detectCompoundingGains(performanceHistory, 50);
 
+  // Sync to global state whenever RSI/MCCI changes
+  useEffect(() => {
+    updateRecursiveRisk({
+      rsiScore: rsiResult.rsi,
+      rsiTier: rsiResult.tier,
+      mcciScore: mcciResult.mcci,
+      mcciTier: mcciResult.tier,
+      metaDepth: rsiResult.metaDepth,
+      improvementVelocity: rsiResult.improvementVelocity,
+      oversightCapability: rsiResult.oversightCapability,
+      cgdAlert: cgdResult.alert,
+      cgdGrowthRate: cgdResult.growthRate,
+    });
+  }, [rsiResult.rsi, mcciResult.mcci, cgdResult.alert]);
+
   const confidence = assessConfidence({
     inputQuality: 'Self-Attested',
     frameworkValidation: 'Peer-Reviewed',
