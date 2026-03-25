@@ -156,6 +156,19 @@ export function ExposureResults() {
             </span>
             {band !== 'Stable' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-foreground">Structural Remediation Required</span>}
             {band === 'Fragile' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-fragile text-foreground">Dependency Diversification Required</span>}
+            {evolution && (
+              <>
+                <span className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground ml-auto">Insurability:</span>
+                <span className={`px-3 py-1 rounded text-[10px] font-bold ${
+                  evolution.insurabilityStatus === 'Uninsurable' ? 'bg-fragile text-foreground' :
+                  evolution.insurabilityStatus === 'Critical' ? 'bg-fragile text-foreground' :
+                  evolution.insurabilityStatus === 'At Risk' ? 'bg-sensitive text-foreground' :
+                  'bg-stable text-foreground'
+                }`}>
+                  {evolution.insurabilityStatus}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
