@@ -181,9 +181,10 @@ export function SystemEvolutionPanel() {
               ════════════════════════════════════════════════ */}
 
           <Collapsible open={showDrivers} onOpenChange={setShowDrivers}>
-            <CollapsibleTrigger className="w-full flex items-center gap-2 pt-2 border-t border-border cursor-pointer hover:opacity-80 transition-opacity">
-              <span className="text-[9px] font-bold tracking-wider uppercase text-primary">{showDrivers ? '▾' : '▸'} View Risk Drivers</span>
-              <div className="flex-1 h-px bg-border" />
+            <CollapsibleTrigger className="w-full flex items-center justify-center gap-2 pt-3 pb-1 border-t border-border cursor-pointer">
+              <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-colors">
+                <span className="text-[10px] font-bold tracking-wider uppercase text-primary">{showDrivers ? '▾ Hide Risk Drivers' : '▸ View Risk Drivers'}</span>
+              </button>
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-3 space-y-4">
 
@@ -302,9 +303,10 @@ export function SystemEvolutionPanel() {
               ════════════════════════════════════════════════ */}
 
           <Collapsible open={showAnalytics} onOpenChange={setShowAnalytics}>
-            <CollapsibleTrigger className="w-full flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-              <span className="text-[9px] font-bold tracking-wider uppercase text-primary">{showAnalytics ? '▾' : '▸'} View Full Analysis</span>
-              <div className="flex-1 h-px bg-border" />
+            <CollapsibleTrigger className="w-full flex items-center justify-center gap-2 cursor-pointer">
+              <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary border border-border hover:bg-secondary/80 transition-colors">
+                <span className="text-[10px] font-bold tracking-wider uppercase text-primary">{showAnalytics ? '▾ Hide Full Analysis' : '▸ View Full Analysis'}</span>
+              </button>
             </CollapsibleTrigger>
             <CollapsibleContent className="pt-3 space-y-3">
 
