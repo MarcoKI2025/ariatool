@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import {
   calculatePremium,
@@ -9,6 +9,7 @@ import {
   type PremiumCalculation,
   type PremiumScenario,
 } from '@/lib/pricing';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 
 export function PremiumCalculator() {
   const { state } = useApp();
@@ -20,13 +21,24 @@ export function PremiumCalculator() {
   const [calculation, setCalculation] = useState<PremiumCalculation | null>(null);
   const [scenarios, setScenarios] = useState<PremiumScenario[]>([]);
 
+  // Compute evolution factors for premium integration
+  const evolution = useMemo(() => {
+    if (!state.results) return null;
+    return computeEvolutionAnalysis(state.inputs, state.results);
+  }, [state.results, state.inputs]);
+
+  const evolutionFactors = useMemo(() => {
+    if (!evolution) return null;
+    return { driftFactor: evolution.driftFactor, correlationMultiplier: evolution.correlationMultiplier, cascadeMultiplier: evolution.cascadeMultiplier };
+  }, [evolution]);
+
   useEffect(() => {
     if (afi > 0) {
       const rr = state.recursiveRisk ? { rsiScore: state.recursiveRisk.rsiScore, mcciScore: state.recursiveRisk.mcciScore } : null;
-      setCalculation(calculatePremium(coverage, afi, industry, deductible, rr));
+      setCalculation(calculatePremium(coverage, afi, industry, deductible, rr, evolutionFactors));
       setScenarios(generatePremiumScenarios(coverage, afi, industry));
     }
-  }, [coverage, afi, industry, deductible, state.recursiveRisk]);
+  }, [coverage, afi, industry, deductible, state.recursiveRisk, evolutionFactors]);
 
   if (!calculation) {
     return (
