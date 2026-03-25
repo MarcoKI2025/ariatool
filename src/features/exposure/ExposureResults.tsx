@@ -11,6 +11,8 @@ import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { DeploymentAuthorization } from '@/components/shared/DeploymentAuthorization';
+import { SystemEvolutionPanel } from '@/components/shared/SystemEvolutionPanel';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
