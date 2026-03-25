@@ -579,7 +579,7 @@ export function computeEvolutionAnalysis(
     computePortfolioImpact(systemicDetail.score, cascadeAmplification.score, currentResults.afi, agiProximity);
 
   const coverageDecision = computeCoverageDecision(
-    insurabilityStatus, driftTrend, cascadeAmplification.score, systemicDetail.score, agiProximity, inputs
+    insurabilityStatus, driftTrend, cascadeAmplification.score, systemicDetail.score, agiProximity, inputs, projections
   );
 
   const { driftFactor, correlationMultiplier, cascadeMultiplier } =
