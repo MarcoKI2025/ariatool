@@ -651,7 +651,7 @@ function generateExecutiveStatements(
 // CONFIDENCE & UNCERTAINTY LAYER
 // ════════════════════════════════════════════════════════
 
-function computeConfidence(inputs: ExposureInputs, currentAfi: number, projections: DriftProjection[]): ConfidenceAssessment {
+function computeConfidence(inputs: ExposureInputs, currentAfi: number, projections: DriftProjection[], inputIntegrityScore?: number): ConfidenceAssessment {
   // Input completeness: how many fields are non-default
   const fields = [inputs.automation, inputs.criticality, inputs.integrationDepth, inputs.executionAuthority,
     inputs.oversightLevel, inputs.reviewCadence, inputs.switchingCost, inputs.cloudConcentration, inputs.modelConcentration];
@@ -672,7 +672,21 @@ function computeConfidence(inputs: ExposureInputs, currentAfi: number, projectio
   // Scenario sensitivity: variance of projections
   const scenarioSensitivity = Math.max(20, Math.round(100 - (afiRange / Math.max(0.01, currentAfi)) * 80));
 
-  const score = Math.round(inputCompleteness * 0.30 + inputConsistency * 0.25 + modelStability * 0.25 + scenarioSensitivity * 0.20);
+  // Base confidence score
+  let score = Math.round(inputCompleteness * 0.25 + inputConsistency * 0.20 + modelStability * 0.25 + scenarioSensitivity * 0.15);
+
+  // Input Integrity dependency: low integrity directly reduces confidence
+  if (inputIntegrityScore !== undefined) {
+    // Integrity contributes 15% of confidence score
+    score = Math.round(score + inputIntegrityScore * 0.15);
+    // Additional penalty: if integrity is very low, cap confidence
+    if (inputIntegrityScore < 45) {
+      score = Math.min(score, 55); // Can never be "High" with unreliable inputs
+    }
+  } else {
+    score = Math.round(score / 0.85); // Normalize if no integrity score available
+  }
+
   const level: AssessmentConfidence = score >= 70 ? 'High' : score >= 45 ? 'Medium' : 'Low';
 
   return { level, score, inputCompleteness, inputConsistency, modelStability, scenarioSensitivity };
@@ -724,9 +738,9 @@ function computeExitRisk(inputs: ExposureInputs, components: AFIComponents): Exi
   const dataEntanglement = Math.min(1, ((inputs.integrationDepth - 1) / 4 * 0.5 + (inputs.persistentMemory - 1) / 4 * 0.5));
   const replacementCost = Math.min(1, ((inputs.switchingCost - 1) / 4 * 0.4 + (inputs.integrationDepth - 1) / 4 * 0.3 + (5 - inputs.portability) / 4 * 0.3));
 
-  const score = Math.min(1, technicalReversibility * 0.10 + dependencyLockIn * 0.30 + dataEntanglement * 0.30 + replacementCost * 0.30);
-  // Invert: high score = high lock-in risk
-  const lockInScore = 1 - score;
+  // All components aligned: high = more lock-in risk
+  // technicalReversibility is inverted (high = easy to reverse = low lock-in), so use (1 - technicalReversibility)
+  const lockInScore = Math.min(1, (1 - technicalReversibility) * 0.25 + dependencyLockIn * 0.25 + dataEntanglement * 0.25 + replacementCost * 0.25);
   const level: ExitRisk = lockInScore > 0.65 ? 'Structurally Locked-In' : lockInScore > 0.35 ? 'Partially Reversible' : 'Reversible';
 
   return { level, score: lockInScore, technicalReversibility, dependencyLockIn, dataEntanglement, replacementCost };
