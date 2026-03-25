@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { calcAFI, getBand, computeAFIComponents, getBandClass } from '@/lib/scoring';
+import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
 import { DependencyNetwork } from './DependencyNetwork';
@@ -11,6 +11,7 @@ import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulner
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 import { SectionDivider } from '@/components/shared/SectionDivider';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 interface PortfolioEntity {
   id: string;
   name: string;
@@ -206,6 +207,95 @@ export function PortfolioView() {
           <ComponentCell label="NA" value={portfolioComponents.na} />
         </div>
       </div>
+
+      {/* Portfolio Insurability & Systemic Risk */}
+      {(() => {
+        // Compute evolution for each entity and aggregate
+        const entityEvolutions = normalizedEntities.map(entity => {
+          const entityResults = computeFullAnalysis(entity.inputs);
+          return computeEvolutionAnalysis(entity.inputs, entityResults);
+        });
+
+        const avgCorrelation = entityEvolutions.reduce((s, e) => s + e.systemicCorrelationScore, 0) / entityEvolutions.length;
+        const avgCascade = entityEvolutions.reduce((s, e) => s + e.cascadeRiskScore, 0) / entityEvolutions.length;
+        const maxPortfolioImpact = entityEvolutions.reduce((max, e) => e.portfolioImpactScore > max.portfolioImpactScore ? e : max, entityEvolutions[0]);
+        const worstInsurability = entityEvolutions.reduce((worst, e) => {
+          const order = { 'Insurable': 0, 'At Risk': 1, 'Critical': 2, 'Uninsurable': 3 };
+          return (order[e.insurabilityStatus] || 0) > (order[worst.insurabilityStatus] || 0) ? e : worst;
+        }, entityEvolutions[0]);
+        const hiddenCorrelationCount = entityEvolutions.filter(e => e.systemicDetail.hiddenCorrelation).length;
+
+        const portfolioInsurColor =
+          worstInsurability.insurabilityStatus === 'Uninsurable' || worstInsurability.insurabilityStatus === 'Critical' ? 'text-fragile' :
+          worstInsurability.insurabilityStatus === 'At Risk' ? 'text-sensitive' : 'text-stable';
+        const portfolioImpactColor =
+          maxPortfolioImpact.portfolioImpact === 'Systemic' || maxPortfolioImpact.portfolioImpact === 'Critical' ? 'text-fragile' :
+          maxPortfolioImpact.portfolioImpact === 'Elevated' ? 'text-sensitive' : 'text-stable';
+
+        return (
+          <div className="bg-card border border-border rounded-xl p-6 space-y-4">
+            <div>
+              <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Portfolio Insurability Assessment</div>
+              <div className="text-[15px] font-bold text-foreground">Aggregate Risk & Systemic Exposure</div>
+              <div className="text-[11px] text-muted-foreground mt-1">Cross-entity correlation clustering and shared dependency analysis.</div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="bg-secondary/50 rounded-lg p-3 text-center">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Worst Insurability</div>
+                <div className={`text-lg font-bold ${portfolioInsurColor}`}>{worstInsurability.insurabilityStatus}</div>
+              </div>
+              <div className="bg-secondary/50 rounded-lg p-3 text-center">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Portfolio Impact</div>
+                <div className={`text-lg font-bold ${portfolioImpactColor}`}>{maxPortfolioImpact.portfolioImpact}</div>
+              </div>
+              <div className="bg-secondary/50 rounded-lg p-3 text-center">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Avg Correlation</div>
+                <div className={`text-lg font-bold font-mono ${avgCorrelation > 0.65 ? 'text-fragile' : avgCorrelation > 0.35 ? 'text-sensitive' : 'text-stable'}`}>
+                  {(avgCorrelation * 100).toFixed(0)}%
+                </div>
+              </div>
+              <div className="bg-secondary/50 rounded-lg p-3 text-center">
+                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Avg Cascade Risk</div>
+                <div className={`text-lg font-bold font-mono ${avgCascade > 0.6 ? 'text-fragile' : avgCascade > 0.3 ? 'text-sensitive' : 'text-stable'}`}>
+                  {avgCascade.toFixed(2)}
+                </div>
+              </div>
+            </div>
+
+            {hiddenCorrelationCount > 0 && (
+              <div className="p-3 bg-sensitive-bg border border-sensitive-border rounded-lg">
+                <div className="text-[11px] font-bold text-sensitive mb-1">⚠ Hidden Correlation Detected in {hiddenCorrelationCount} Entit{hiddenCorrelationCount > 1 ? 'ies' : 'y'}</div>
+                <div className="text-[10px] text-sensitive/80 leading-[1.5]">
+                  Individually moderate dependency factors combine to create aggregate systemic risk. Portfolio-wide failure scenarios cannot be excluded under correlated stress conditions.
+                </div>
+              </div>
+            )}
+
+            {/* Per-entity evolution summary */}
+            <div className="space-y-2">
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Entity Evolution Summary</div>
+              {normalizedEntities.map((entity, idx) => {
+                const evo = entityEvolutions[idx];
+                return (
+                  <div key={entity.id} className="flex items-center gap-3 p-2 bg-secondary/30 rounded-lg">
+                    <span className="text-[11px] font-semibold text-foreground w-[100px] truncate">{entity.name}</span>
+                    <span className={`text-[10px] font-bold ${
+                      evo.insurabilityStatus === 'Uninsurable' || evo.insurabilityStatus === 'Critical' ? 'text-fragile' :
+                      evo.insurabilityStatus === 'At Risk' ? 'text-sensitive' : 'text-stable'
+                    }`}>{evo.insurabilityStatus}</span>
+                    <span className={`text-[10px] font-mono ${
+                      evo.driftTrend === 'Critical Acceleration' ? 'text-fragile' :
+                      evo.driftTrend === 'Increasing Risk' ? 'text-sensitive' : 'text-stable'
+                    }`}>{evo.driftTrend}</span>
+                    <span className="text-[9px] text-muted-foreground ml-auto">{evo.coverageDecision.decision}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
 
       <SectionDivider title="Entity Breakdown" icon="🏢" subtitle="Individual entity risk profiles and weights" />
 

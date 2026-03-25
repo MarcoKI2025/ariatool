@@ -72,7 +72,8 @@ function resolveIndustryKey(industry: string): string {
 
 export function calculatePremium(
   coverage: number, afi: number, industry: string, deductible: number = 0,
-  recursiveRisk?: { rsiScore: number; mcciScore: number } | null
+  recursiveRisk?: { rsiScore: number; mcciScore: number } | null,
+  evolutionFactors?: { driftFactor: number; correlationMultiplier: number; cascadeMultiplier: number } | null
 ): PremiumCalculation {
   const industryKey = resolveIndustryKey(industry);
   const { baseRate, volatilityFactor } = INDUSTRY_BASE_RATES[industryKey];
@@ -84,14 +85,21 @@ export function calculatePremium(
   const mcciSurcharge = recursiveRisk ? 1 + (recursiveRisk.mcciScore / 100) * 0.05 : 1;
   const recursiveSurcharge = rsiSurcharge * mcciSurcharge;
 
+  // Evolution engine multipliers (drift, correlation, cascade)
+  const driftFactor = evolutionFactors?.driftFactor ?? 1;
+  const correlationFactor = evolutionFactors?.correlationMultiplier ?? 1;
+  const cascadeFactor = evolutionFactors?.cascadeMultiplier ?? 1;
+  const evolutionSurcharge = driftFactor * correlationFactor * cascadeFactor;
+
   const basePremium = coverage * baseRate;
   const afiAdjustedPremium = basePremium * afiMultiplier;
   const afiAdjustment = afiAdjustedPremium - basePremium;
   const industryAdjustedPremium = afiAdjustedPremium * volatilityFactor;
   const industryAdjustment = industryAdjustedPremium - afiAdjustedPremium;
   const recursiveAdjustedPremium = industryAdjustedPremium * recursiveSurcharge;
-  const finalPremium = recursiveAdjustedPremium * deductibleFactor;
-  const deductibleDiscount = recursiveAdjustedPremium - finalPremium;
+  const evolutionAdjustedPremium = recursiveAdjustedPremium * evolutionSurcharge;
+  const finalPremium = evolutionAdjustedPremium * deductibleFactor;
+  const deductibleDiscount = evolutionAdjustedPremium - finalPremium;
   const premiumRate = (finalPremium / coverage) * 100;
   const baselinePremium = basePremium * 1.0 * volatilityFactor * deductibleFactor;
   const costOfFragility = finalPremium - baselinePremium;

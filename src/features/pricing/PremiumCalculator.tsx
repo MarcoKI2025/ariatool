@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import {
   calculatePremium,
@@ -9,6 +9,7 @@ import {
   type PremiumCalculation,
   type PremiumScenario,
 } from '@/lib/pricing';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 
 export function PremiumCalculator() {
   const { state } = useApp();
@@ -20,13 +21,24 @@ export function PremiumCalculator() {
   const [calculation, setCalculation] = useState<PremiumCalculation | null>(null);
   const [scenarios, setScenarios] = useState<PremiumScenario[]>([]);
 
+  // Compute evolution factors for premium integration
+  const evolution = useMemo(() => {
+    if (!state.results) return null;
+    return computeEvolutionAnalysis(state.inputs, state.results);
+  }, [state.results, state.inputs]);
+
+  const evolutionFactors = useMemo(() => {
+    if (!evolution) return null;
+    return { driftFactor: evolution.driftFactor, correlationMultiplier: evolution.correlationMultiplier, cascadeMultiplier: evolution.cascadeMultiplier };
+  }, [evolution]);
+
   useEffect(() => {
     if (afi > 0) {
       const rr = state.recursiveRisk ? { rsiScore: state.recursiveRisk.rsiScore, mcciScore: state.recursiveRisk.mcciScore } : null;
-      setCalculation(calculatePremium(coverage, afi, industry, deductible, rr));
+      setCalculation(calculatePremium(coverage, afi, industry, deductible, rr, evolutionFactors));
       setScenarios(generatePremiumScenarios(coverage, afi, industry));
     }
-  }, [coverage, afi, industry, deductible, state.recursiveRisk]);
+  }, [coverage, afi, industry, deductible, state.recursiveRisk, evolutionFactors]);
 
   if (!calculation) {
     return (
@@ -155,8 +167,74 @@ export function PremiumCalculator() {
               <span className="font-mono font-medium text-stable">−{formatPremiumCurrency(calculation.deductibleDiscount)}</span>
             </div>
           )}
+          {evolutionFactors && evolutionFactors.driftFactor > 1.01 && (
+            <div className="flex justify-between text-[11px]">
+              <span className="text-secondary-foreground">Drift Loading ({evolutionFactors.driftFactor.toFixed(2)}×)</span>
+              <span className="font-mono font-medium text-sensitive">+included</span>
+            </div>
+          )}
+          {evolutionFactors && evolutionFactors.correlationMultiplier > 1.01 && (
+            <div className="flex justify-between text-[11px]">
+              <span className="text-secondary-foreground">Correlation Loading ({evolutionFactors.correlationMultiplier.toFixed(2)}×)</span>
+              <span className="font-mono font-medium text-sensitive">+included</span>
+            </div>
+          )}
+          {evolutionFactors && evolutionFactors.cascadeMultiplier > 1.01 && (
+            <div className="flex justify-between text-[11px]">
+              <span className="text-secondary-foreground">Cascade Loading ({evolutionFactors.cascadeMultiplier.toFixed(2)}×)</span>
+              <span className="font-mono font-medium text-sensitive">+included</span>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Coverage Decision from Evolution Engine */}
+      {evolution && (
+        <div className={`rounded-xl p-4 border-2 ${
+          evolution.coverageDecision.decision === 'Decline' ? 'bg-fragile-bg border-fragile' :
+          evolution.coverageDecision.decision === 'Limited Coverage' ? 'bg-fragile-bg border-fragile' :
+          evolution.coverageDecision.decision === 'Accept with Conditions' ? 'bg-sensitive-bg border-sensitive' :
+          'bg-stable-bg border-stable'
+        }`}>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Coverage Decision</div>
+              <div className={`text-[18px] font-extrabold ${
+                evolution.coverageDecision.decision === 'Decline' ? 'text-fragile' :
+                evolution.coverageDecision.decision === 'Limited Coverage' ? 'text-fragile' :
+                evolution.coverageDecision.decision === 'Accept with Conditions' ? 'text-sensitive' :
+                'text-stable'
+              }`}>{evolution.coverageDecision.decision}</div>
+              {evolution.coverageDecision.maxTenor && (
+                <div className="text-[10px] text-muted-foreground mt-1">Maximum policy tenor: {evolution.coverageDecision.maxTenor} months</div>
+              )}
+            </div>
+            <div className="text-right flex-shrink-0">
+              <div className="text-[9px] text-muted-foreground uppercase tracking-wider">Insurability</div>
+              <div className={`text-[14px] font-bold ${
+                evolution.insurabilityStatus === 'Uninsurable' || evolution.insurabilityStatus === 'Critical' ? 'text-fragile' :
+                evolution.insurabilityStatus === 'At Risk' ? 'text-sensitive' : 'text-stable'
+              }`}>{evolution.insurabilityStatus}</div>
+            </div>
+          </div>
+          {evolution.coverageDecision.conditions.length > 0 && (
+            <div className="mt-3 pt-3 border-t border-border/50 space-y-1.5">
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Conditions</div>
+              {evolution.coverageDecision.conditions.map((c, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className={`text-[8px] mt-[2px] flex-shrink-0 ${c.priority === 'required' ? 'text-fragile' : 'text-muted-foreground'}`}>
+                    {c.priority === 'required' ? '⊘' : '▸'}
+                  </span>
+                  <span className="text-[10px] text-secondary-foreground leading-[1.4]">
+                    {c.action}
+                    {c.priority === 'required' && <span className="text-fragile font-bold ml-1 text-[8px]">REQUIRED</span>}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Cost of Fragility */}
       {calculation.costOfFragility > 0 && (
