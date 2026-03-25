@@ -613,11 +613,26 @@ function generateExecutiveStatements(
     stmts.push(`System classification (${analysis.agiTier}) indicates broad capability scope. Enhanced oversight and explicit capability boundaries are required for continued insurability.`);
   }
 
-  // Coverage decision
-  if (analysis.coverageDecision.decision === 'Decline') {
-    stmts.push('Underwriting recommendation: Decline coverage until structural remediation is verified and re-assessed.');
-  } else if (analysis.coverageDecision.decision === 'Limited Coverage') {
-    stmts.push(`Underwriting recommendation: Limited coverage with ${analysis.coverageDecision.maxTenor}-month maximum tenor and sublimit structures.`);
+  // Confidence & trust
+  if (analysis.confidence.level === 'Low') {
+    stmts.push('Assessment confidence is low due to incomplete or inconsistent inputs. Decision reliability is reduced — independent verification strongly recommended before capital allocation.');
+  }
+
+  // Exit risk
+  if (analysis.exitRisk.level === 'Structurally Locked-In') {
+    stmts.push('System exhibits structural lock-in: technical reversibility, data entanglement, and replacement cost exceed acceptable exit thresholds. Portability remediation required.');
+  }
+
+  // Economic loss
+  if (analysis.economicLoss.cascadeTailRisk > 20) {
+    stmts.push(`Tail risk under cascade conditions reaches €${analysis.economicLoss.cascadeTailRisk}M — exceeds standard portfolio tolerance for single-entity exposure.`);
+  }
+
+  // Time to instability
+  if (analysis.timeToInstability === '< 3 months') {
+    stmts.push('Time-to-instability estimate: less than 3 months. Immediate structural intervention required to prevent loss of controllability.');
+  } else if (analysis.timeToInstability === '3–6 months') {
+    stmts.push('Projected time-to-instability: 3–6 months. Governance intervention window is narrowing — remediation must begin within 90 days.');
   }
 
   if (stmts.length === 0) {
