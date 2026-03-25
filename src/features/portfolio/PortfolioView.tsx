@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { calcAFI, getBand, computeAFIComponents, getBandClass } from '@/lib/scoring';
+import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
 import { DependencyNetwork } from './DependencyNetwork';
@@ -11,6 +11,7 @@ import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulner
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 import { SectionDivider } from '@/components/shared/SectionDivider';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 interface PortfolioEntity {
   id: string;
   name: string;
