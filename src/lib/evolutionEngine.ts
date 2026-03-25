@@ -737,7 +737,7 @@ function computeStressScenarios(inputs: ExposureInputs, currentResults: Analysis
 
   // 1. Model Drift Event
   const driftInputs = { ...inputs, modelDrift: 5, explainabilityGap: Math.min(5, inputs.explainabilityGap + 1) as 1|2|3|4|5 };
-  const driftResults = require('./scoring').computeFullAnalysis(driftInputs);
+  const driftResults = computeFullAnalysis(driftInputs);
   const driftDelta = driftResults.afi - currentResults.afi;
   scenarios.push({
     name: 'Model Drift Event',
@@ -749,7 +749,7 @@ function computeStressScenarios(inputs: ExposureInputs, currentResults: Analysis
 
   // 2. Correlated Failure Event
   const corrInputs = { ...inputs, cloudConcentration: 5 as 1|2|3|4|5, modelConcentration: 5 as 1|2|3|4|5, crossVendorContagion: 5 as 1|2|3|4|5 };
-  const corrResults = require('./scoring').computeFullAnalysis(corrInputs);
+  const corrResults = computeFullAnalysis(corrInputs);
   const corrDelta = corrResults.afi - currentResults.afi;
   scenarios.push({
     name: 'Correlated Failure Event',
@@ -761,7 +761,7 @@ function computeStressScenarios(inputs: ExposureInputs, currentResults: Analysis
 
   // 3. Authority Shock Event
   const authInputs = { ...inputs, executionAuthority: 5 as 1|2|3|4|5, oversightLevel: 1 as 1|2|3|4|5, humanCheckpoints: 1 as 1|2|3|4|5 };
-  const authResults = require('./scoring').computeFullAnalysis(authInputs);
+  const authResults = computeFullAnalysis(authInputs);
   const authDelta = authResults.afi - currentResults.afi;
   scenarios.push({
     name: 'Authority Shock Event',
