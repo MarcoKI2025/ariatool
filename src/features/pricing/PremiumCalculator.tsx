@@ -197,6 +197,8 @@ export function PremiumCalculator() {
               <span className="font-mono font-medium text-sensitive">{evolution.exitRisk.level}</span>
             </div>
           )}
+        </div>
+      </div>
 
       {/* Coverage Decision from Evolution Engine */}
       {evolution && (
