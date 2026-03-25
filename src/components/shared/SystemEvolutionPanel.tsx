@@ -132,7 +132,7 @@ export function SystemEvolutionPanel() {
           </div>
 
           {/* Key signals row */}
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-5 gap-3">
             <div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-0.5">Time-to-Instability</div>
               <div className={`text-[14px] font-bold ${statusColor(evolution.timeToInstability)}`}>{evolution.timeToInstability}</div>
@@ -151,6 +151,10 @@ export function SystemEvolutionPanel() {
               {evolution.monthsToUninsurable !== null && evolution.monthsToUninsurable > 0 && (
                 <div className="text-[8px] text-fragile mt-0.5 font-medium">⚠ {evolution.monthsToUninsurable}m to uninsurable</div>
               )}
+            </div>
+            <div>
+              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-0.5">Capital Risk Driver</div>
+              <div className={`text-[11px] font-bold ${statusColor(unified === 'Critical' || unified === 'High' ? 'High' : 'Low')}`}>{capitalDriver}</div>
             </div>
           </div>
 
