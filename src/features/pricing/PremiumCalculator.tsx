@@ -185,6 +185,18 @@ export function PremiumCalculator() {
               <span className="font-mono font-medium text-sensitive">+included</span>
             </div>
           )}
+          {evolutionFactors && evolutionFactors.driftFactor > 1.01 && evolution?.confidence && evolution.confidence.level !== 'High' && (
+            <div className="flex justify-between text-[11px]">
+              <span className="text-secondary-foreground">Confidence Adjustment (included in Drift)</span>
+              <span className="font-mono font-medium text-sensitive">{evolution.confidence.level}</span>
+            </div>
+          )}
+          {evolution?.exitRisk && evolution.exitRisk.level !== 'Reversible' && (
+            <div className="flex justify-between text-[11px]">
+              <span className="text-secondary-foreground">Exit Risk Loading (included in Drift)</span>
+              <span className="font-mono font-medium text-sensitive">{evolution.exitRisk.level}</span>
+            </div>
+          )}
         </div>
       </div>
 

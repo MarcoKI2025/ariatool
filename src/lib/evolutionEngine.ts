@@ -6,7 +6,7 @@
  */
 
 import { ExposureInputs, AFIComponents, AnalysisResults } from './types';
-import { computeAFIComponents, calcAFI, getBand } from './scoring';
+import { computeAFIComponents, calcAFI, getBand, computeFullAnalysis } from './scoring';
 import { SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from './constants';
 
 // ════════════════════════════════════════════════════════
@@ -21,6 +21,12 @@ export type DriftConfidence = 'Low' | 'Medium' | 'High';
 export type DriftScenario = 'low' | 'medium' | 'high';
 export type PortfolioImpact = 'Minimal' | 'Elevated' | 'Critical' | 'Systemic';
 export type CoverageDecision = 'Accept' | 'Accept with Conditions' | 'Limited Coverage' | 'Decline';
+export type AssessmentConfidence = 'High' | 'Medium' | 'Low';
+export type InputIntegrity = 'Reliable' | 'Moderate Uncertainty' | 'Potentially Unreliable';
+export type ExitRisk = 'Reversible' | 'Partially Reversible' | 'Structurally Locked-In';
+export type DependencyExposure = 'Low' | 'Medium' | 'High';
+export type StressImpact = 'Contained' | 'Severe' | 'Critical';
+export type TimeToInstability = '< 3 months' | '3–6 months' | '6–12 months' | '> 12 months';
 
 export interface AGIProximityDimensions {
   autonomy: number;
@@ -69,6 +75,64 @@ export interface CoverageDecisionResult {
   sublimitRecommended: boolean;
 }
 
+export interface ConfidenceAssessment {
+  level: AssessmentConfidence;
+  score: number; // 0-100
+  inputCompleteness: number;
+  inputConsistency: number;
+  modelStability: number;
+  scenarioSensitivity: number;
+}
+
+export interface InputIntegrityAssessment {
+  level: InputIntegrity;
+  score: number; // 0-100
+  completeness: number;
+  plausibility: number;
+  consistency: number;
+  flags: string[];
+}
+
+export interface ExitRiskAssessment {
+  level: ExitRisk;
+  score: number; // 0-1
+  technicalReversibility: number;
+  dependencyLockIn: number;
+  dataEntanglement: number;
+  replacementCost: number;
+}
+
+export interface DependencyTopology {
+  exposure: DependencyExposure;
+  score: number; // 0-1
+  singlePointsOfFailure: number;
+  sharedProviders: number;
+  infraConcentration: number;
+  modelChainDepth: number;
+}
+
+export interface StressScenarioResult {
+  name: string;
+  impact: StressImpact;
+  afiShocked: number;
+  afiDelta: number;
+  description: string;
+}
+
+export interface DecisionExplainability {
+  primaryDriver: string;
+  secondaryDriver: string;
+  supportingFactor: string;
+  narrative: string;
+}
+
+export interface EconomicLossEstimate {
+  expectedLow: number; // €M
+  expectedHigh: number; // €M
+  tailRisk: number; // €M
+  cascadeTailRisk: number; // €M
+}
+
 export interface EvolutionAnalysis {
   // AGI Proximity Index (4-dimensional)
   agiProximity: number;
@@ -100,6 +164,15 @@ export interface EvolutionAnalysis {
   driftFactor: number;
   correlationMultiplier: number;
   cascadeMultiplier: number;
+  // ═══ INSTITUTIONAL TRUST LAYERS ═══
+  confidence: ConfidenceAssessment;
+  inputIntegrity: InputIntegrityAssessment;
+  exitRisk: ExitRiskAssessment;
+  dependencyTopology: DependencyTopology;
+  stressScenarios: StressScenarioResult[];
+  decisionExplainability: DecisionExplainability;
+  economicLoss: EconomicLossEstimate;
+  timeToInstability: TimeToInstability;
   // Executive statements
   executiveStatements: string[];
 }
@@ -540,11 +613,26 @@ function generateExecutiveStatements(
     stmts.push(`System classification (${analysis.agiTier}) indicates broad capability scope. Enhanced oversight and explicit capability boundaries are required for continued insurability.`);
   }
 
-  // Coverage decision
-  if (analysis.coverageDecision.decision === 'Decline') {
-    stmts.push('Underwriting recommendation: Decline coverage until structural remediation is verified and re-assessed.');
-  } else if (analysis.coverageDecision.decision === 'Limited Coverage') {
-    stmts.push(`Underwriting recommendation: Limited coverage with ${analysis.coverageDecision.maxTenor}-month maximum tenor and sublimit structures.`);
+  // Confidence & trust
+  if (analysis.confidence.level === 'Low') {
+    stmts.push('Assessment confidence is low due to incomplete or inconsistent inputs. Decision reliability is reduced — independent verification strongly recommended before capital allocation.');
+  }
+
+  // Exit risk
+  if (analysis.exitRisk.level === 'Structurally Locked-In') {
+    stmts.push('System exhibits structural lock-in: technical reversibility, data entanglement, and replacement cost exceed acceptable exit thresholds. Portability remediation required.');
+  }
+
+  // Economic loss
+  if (analysis.economicLoss.cascadeTailRisk > 20) {
+    stmts.push(`Tail risk under cascade conditions reaches €${analysis.economicLoss.cascadeTailRisk}M — exceeds standard portfolio tolerance for single-entity exposure.`);
+  }
+
+  // Time to instability
+  if (analysis.timeToInstability === '< 3 months') {
+    stmts.push('Time-to-instability estimate: less than 3 months. Immediate structural intervention required to prevent loss of controllability.');
+  } else if (analysis.timeToInstability === '3–6 months') {
+    stmts.push('Projected time-to-instability: 3–6 months. Governance intervention window is narrowing — remediation must begin within 90 days.');
   }
 
   if (stmts.length === 0) {
@@ -552,6 +640,270 @@ function generateExecutiveStatements(
   }
 
   return stmts;
+}
+
+// ════════════════════════════════════════════════════════
+// CONFIDENCE & UNCERTAINTY LAYER
+// ════════════════════════════════════════════════════════
+
+function computeConfidence(inputs: ExposureInputs, currentAfi: number, projections: DriftProjection[]): ConfidenceAssessment {
+  // Input completeness: how many fields are non-default
+  const fields = [inputs.automation, inputs.criticality, inputs.integrationDepth, inputs.executionAuthority,
+    inputs.oversightLevel, inputs.reviewCadence, inputs.switchingCost, inputs.cloudConcentration, inputs.modelConcentration];
+  const nonDefault = fields.filter(f => f !== 3).length; // 3 = midpoint default
+  const inputCompleteness = Math.min(100, Math.round((nonDefault / fields.length) * 100 + (inputs.useCases.length > 0 ? 15 : 0) + (inputs.providers.length > 0 ? 15 : 0)));
+
+  // Input consistency: check for contradictory signals
+  const contradictions = [];
+  if (inputs.automation >= 4 && inputs.oversightLevel >= 4) contradictions.push('high-auto-high-oversight');
+  if (inputs.executionAuthority >= 4 && inputs.humanCheckpoints >= 4) contradictions.push('high-exec-high-checkpoints');
+  if (inputs.switchingCost <= 2 && inputs.portability <= 2) contradictions.push('low-cost-low-portability');
+  const inputConsistency = Math.max(30, 100 - contradictions.length * 20);
+
+  // Model stability: how much AFI varies across scenarios
+  const afiRange = projections.length > 0 ? Math.abs(projections[projections.length - 1].afi - currentAfi) : 0;
+  const modelStability = Math.max(20, Math.round(100 - afiRange * 40));
+
+  // Scenario sensitivity: variance of projections
+  const scenarioSensitivity = Math.max(20, Math.round(100 - (afiRange / Math.max(0.01, currentAfi)) * 80));
+
+  const score = Math.round(inputCompleteness * 0.30 + inputConsistency * 0.25 + modelStability * 0.25 + scenarioSensitivity * 0.20);
+  const level: AssessmentConfidence = score >= 70 ? 'High' : score >= 45 ? 'Medium' : 'Low';
+
+  return { level, score, inputCompleteness, inputConsistency, modelStability, scenarioSensitivity };
+}
+
+// ════════════════════════════════════════════════════════
+// INPUT INTEGRITY LAYER
+// ════════════════════════════════════════════════════════
+
+function computeInputIntegrity(inputs: ExposureInputs): InputIntegrityAssessment {
+  const flags: string[] = [];
+
+  // Completeness
+  const hasCompany = inputs.companyName.trim().length > 0;
+  const hasIndustry = inputs.industry.trim().length > 0;
+  const hasUseCases = inputs.useCases.length > 0;
+  const hasProviders = inputs.providers.length > 0;
+  const completeness = Math.round(((hasCompany ? 25 : 0) + (hasIndustry ? 25 : 0) + (hasUseCases ? 25 : 0) + (hasProviders ? 25 : 0)));
+  if (!hasUseCases) flags.push('No AI use cases specified');
+  if (!hasProviders) flags.push('No providers specified');
+
+  // Plausibility: extreme values that seem unlikely
+  const allValues = [inputs.automation, inputs.criticality, inputs.integrationDepth, inputs.executionAuthority,
+    inputs.oversightLevel, inputs.reviewCadence, inputs.switchingCost, inputs.cloudConcentration];
+  const allMax = allValues.filter(v => v === 5).length;
+  const allMin = allValues.filter(v => v === 1).length;
+  const plausibility = allMax > 5 || allMin > 5 ? 40 : allMax > 3 || allMin > 3 ? 60 : 85;
+  if (allMax > 4) flags.push('Unusually high concentration of maximum-risk inputs');
+  if (allMin > 4) flags.push('Unusually high concentration of minimum-risk inputs');
+
+  // Consistency
+  const consistency = (inputs.automation >= 4 && inputs.oversightLevel >= 4) ? 60 :
+    (inputs.executionAuthority >= 4 && inputs.humanCheckpoints >= 4) ? 65 : 90;
+  if (consistency < 70) flags.push('Input signals show contradictory risk patterns');
+
+  const score = Math.round(completeness * 0.35 + plausibility * 0.35 + consistency * 0.30);
+  const level: InputIntegrity = score >= 70 ? 'Reliable' : score >= 45 ? 'Moderate Uncertainty' : 'Potentially Unreliable';
+
+  return { level, score, completeness, plausibility, consistency, flags };
+}
+
+// ════════════════════════════════════════════════════════
+// EXIT / LOCK-IN RISK
+// ════════════════════════════════════════════════════════
+
+function computeExitRisk(inputs: ExposureInputs, components: AFIComponents): ExitRiskAssessment {
+  const technicalReversibility = 1 - components.rc; // RC is already 0-1, high = hard to reverse
+  const dependencyLockIn = Math.min(1, ((inputs.switchingCost - 1) / 4 * 0.5 + (5 - inputs.portability) / 4 * 0.5));
+  const dataEntanglement = Math.min(1, ((inputs.integrationDepth - 1) / 4 * 0.5 + (inputs.persistentMemory - 1) / 4 * 0.5));
+  const replacementCost = Math.min(1, ((inputs.switchingCost - 1) / 4 * 0.4 + (inputs.integrationDepth - 1) / 4 * 0.3 + (5 - inputs.portability) / 4 * 0.3));
+
+  const score = Math.min(1, technicalReversibility * 0.10 + dependencyLockIn * 0.30 + dataEntanglement * 0.30 + replacementCost * 0.30);
+  // Invert: high score = high lock-in risk
+  const lockInScore = 1 - score;
+  const level: ExitRisk = lockInScore > 0.65 ? 'Structurally Locked-In' : lockInScore > 0.35 ? 'Partially Reversible' : 'Reversible';
+
+  return { level, score: lockInScore, technicalReversibility, dependencyLockIn, dataEntanglement, replacementCost };
+}
+
+// ════════════════════════════════════════════════════════
+// DEPENDENCY TOPOLOGY
+// ════════════════════════════════════════════════════════
+
+function computeDependencyTopology(inputs: ExposureInputs): DependencyTopology {
+  const singlePointsOfFailure = inputs.providers.length <= 1 ? 1 : inputs.providers.length <= 2 ? 0.6 : 0.2;
+  const sharedProviders = Math.min(1, (inputs.modelConcentration - 1) / 4);
+  const infraConcentration = Math.min(1, ((inputs.cloudConcentration - 1) / 4 * 0.5 + (inputs.gpuConcentration - 1) / 4 * 0.5));
+  const modelChainDepth = Math.min(1, ((inputs.multiAgent - 1) / 4 * 0.5 + (inputs.toolCallAuthority - 1) / 4 * 0.5));
+
+  const score = Math.min(1, singlePointsOfFailure * 0.30 + sharedProviders * 0.25 + infraConcentration * 0.25 + modelChainDepth * 0.20);
+  const exposure: DependencyExposure = score > 0.6 ? 'High' : score > 0.3 ? 'Medium' : 'Low';
+
+  return { exposure, score, singlePointsOfFailure, sharedProviders, infraConcentration, modelChainDepth };
+}
+
+// ════════════════════════════════════════════════════════
+// STRESS SCENARIOS
+// ════════════════════════════════════════════════════════
+
+function computeStressScenarios(inputs: ExposureInputs, currentResults: AnalysisResults): StressScenarioResult[] {
+  const scenarios: StressScenarioResult[] = [];
+
+  // 1. Model Drift Event
+  const driftInputs = { ...inputs, modelDrift: 5, explainabilityGap: Math.min(5, inputs.explainabilityGap + 1) as 1|2|3|4|5 };
+  const driftResults = computeFullAnalysis(driftInputs);
+  const driftDelta = driftResults.afi - currentResults.afi;
+  scenarios.push({
+    name: 'Model Drift Event',
+    impact: driftDelta > 0.5 ? 'Critical' : driftDelta > 0.2 ? 'Severe' : 'Contained',
+    afiShocked: parseFloat(driftResults.afi.toFixed(2)),
+    afiDelta: parseFloat(driftDelta.toFixed(2)),
+    description: 'Underlying model behaviour degrades beyond validation boundaries',
+  });
+
+  // 2. Correlated Failure Event
+  const corrInputs = { ...inputs, cloudConcentration: 5 as 1|2|3|4|5, modelConcentration: 5 as 1|2|3|4|5, crossVendorContagion: 5 as 1|2|3|4|5 };
+  const corrResults = computeFullAnalysis(corrInputs);
+  const corrDelta = corrResults.afi - currentResults.afi;
+  scenarios.push({
+    name: 'Correlated Failure Event',
+    impact: corrDelta > 0.5 ? 'Critical' : corrDelta > 0.2 ? 'Severe' : 'Contained',
+    afiShocked: parseFloat(corrResults.afi.toFixed(2)),
+    afiDelta: parseFloat(corrDelta.toFixed(2)),
+    description: 'Simultaneous failure across shared infrastructure dependencies',
+  });
+
+  // 3. Authority Shock Event
+  const authInputs = { ...inputs, executionAuthority: 5 as 1|2|3|4|5, oversightLevel: 1 as 1|2|3|4|5, humanCheckpoints: 1 as 1|2|3|4|5 };
+  const authResults = computeFullAnalysis(authInputs);
+  const authDelta = authResults.afi - currentResults.afi;
+  scenarios.push({
+    name: 'Authority Shock Event',
+    impact: authDelta > 0.5 ? 'Critical' : authDelta > 0.2 ? 'Severe' : 'Contained',
+    afiShocked: parseFloat(authResults.afi.toFixed(2)),
+    afiDelta: parseFloat(authDelta.toFixed(2)),
+    description: 'Complete loss of human oversight and escalation of autonomous authority',
+  });
+
+  return scenarios;
+}
+
+// ════════════════════════════════════════════════════════
+// DECISION EXPLAINABILITY
+// ════════════════════════════════════════════════════════
+
+function computeDecisionExplainability(
+  coverageDecision: CoverageDecisionResult,
+  insurabilityStatus: InsurabilityStatus,
+  cascadeScore: number,
+  correlationScore: number,
+  exitRisk: ExitRiskAssessment,
+  driftTrend: DriftTrend,
+  currentAfi: number
+): DecisionExplainability {
+  const factors: { label: string; weight: number }[] = [];
+
+  if (currentAfi > 1.35) factors.push({ label: 'AFI exceeds Fragile threshold', weight: 5 });
+  else if (currentAfi > 0.85) factors.push({ label: 'AFI in Sensitive range', weight: 3 });
+  if (cascadeScore > 0.6) factors.push({ label: 'high cascade amplification risk', weight: 4 });
+  else if (cascadeScore > 0.3) factors.push({ label: 'moderate cascade propagation potential', weight: 2 });
+  if (correlationScore > 0.65) factors.push({ label: 'systemic correlation exposure', weight: 4 });
+  else if (correlationScore > 0.35) factors.push({ label: 'elevated correlation dependencies', weight: 2 });
+  if (exitRisk.level === 'Structurally Locked-In') factors.push({ label: 'structural lock-in prevents exit', weight: 3 });
+  if (driftTrend === 'Critical Acceleration') factors.push({ label: 'critical risk trajectory acceleration', weight: 4 });
+  else if (driftTrend === 'Increasing Risk') factors.push({ label: 'increasing risk trajectory', weight: 2 });
+  if (insurabilityStatus === 'Uninsurable') factors.push({ label: 'system exceeds insurability boundary', weight: 5 });
+  else if (insurabilityStatus === 'Critical') factors.push({ label: 'insurability critically compromised', weight: 3 });
+
+  if (factors.length === 0) factors.push({ label: 'risk within standard parameters', weight: 1 });
+
+  factors.sort((a, b) => b.weight - a.weight);
+  const primary = factors[0]?.label || 'standard risk profile';
+  const secondary = factors[1]?.label || 'no secondary driver';
+  const supporting = factors[2]?.label || 'no supporting factor';
+
+  const decWord = coverageDecision.decision;
+  const narrative = `${decWord} due to ${primary}${factors.length > 1 ? ` and ${secondary}` : ''}.`;
+
+  return { primaryDriver: primary, secondaryDriver: secondary, supportingFactor: supporting, narrative };
+}
+
+// ════════════════════════════════════════════════════════
+// ECONOMIC LOSS TRANSLATION
+// ════════════════════════════════════════════════════════
+
+function computeEconomicLoss(
+  inputs: ExposureInputs,
+  currentAfi: number,
+  cascadeScore: number,
+  correlationScore: number,
+  projections: DriftProjection[]
+): EconomicLossEstimate {
+  const sizeMul = ({ 'Startup (1–50)': 0.3, 'SME (50–250)': 0.6, 'Mid-Market (250–1000)': 1.0, 'Enterprise (1000–10000)': 2.0, 'Large Enterprise (10000+)': 4.0 } as Record<string, number>)[inputs.size] || 1.0;
+  const sectorMul = ({ 'Financial Services': 1.5, 'Healthcare': 1.3, 'Insurance': 1.4, 'Legal': 1.2, 'Transportation': 1.4 } as Record<string, number>)[inputs.industry] || 1.0;
+
+  const base = 2.8 * sizeMul * sectorMul; // €M anchor
+  const afiMul = Math.max(0.3, currentAfi);
+  const expectedLow = Math.round(base * afiMul * 0.3 * 10) / 10;
+  const expectedHigh = Math.round(base * afiMul * 1.2 * 10) / 10;
+
+  // Tail risk: incorporate future AFI
+  const futureAfi = projections.length > 0 ? projections[projections.length - 1].afi : currentAfi;
+  const tailRisk = Math.round(base * Math.max(afiMul, futureAfi) * 2.5 * 10) / 10;
+
+  // Cascade tail: worst case under correlated failure
+  const cascadeTailRisk = Math.round(tailRisk * (1 + cascadeScore * 0.5) * (1 + correlationScore * 0.4) * 10) / 10;
+
+  return { expectedLow, expectedHigh, tailRisk, cascadeTailRisk };
+}
+
+// ════════════════════════════════════════════════════════
+// TIME-TO-INSTABILITY
+// ════════════════════════════════════════════════════════
+
+function computeTimeToInstability(
+  currentAfi: number,
+  projections: DriftProjection[],
+  cascadeScore: number
+): TimeToInstability {
+  // Find first projection crossing critical threshold
+  const threshold = 1.35; // Fragile boundary
+  if (currentAfi > threshold && cascadeScore > 0.5) return '< 3 months';
+
+  for (const p of projections) {
+    if (p.afi > threshold) {
+      if (p.months <= 3) return '< 3 months';
+      if (p.months <= 6) return '3–6 months';
+      return '6–12 months';
+    }
+  }
+  return '> 12 months';
+}
+
+// ════════════════════════════════════════════════════════
+// HARD INSURABILITY BOUNDARY
+// ════════════════════════════════════════════════════════
+
+function applyHardInsurabilityBoundary(
+  coverageDecision: CoverageDecisionResult,
+  projections: DriftProjection[],
+  correlationScore: number,
+  cascadeScore: number
+): CoverageDecisionResult {
+  const proj12 = projections.find(p => p.months === 12);
+  if (proj12 && proj12.afi > 2.0 && correlationScore > 0.5 && cascadeScore > 0.5) {
+    return {
+      decision: 'Decline',
+      conditions: [
+        { action: 'Hard boundary: projected AFI exceeds critical threshold under systemic conditions — no conditional coverage permitted', priority: 'required' },
+        { action: 'Structural remediation and re-assessment required before coverage eligibility', priority: 'required' },
+      ],
+      maxTenor: null,
+      sublimitRecommended: false,
+    };
+  }
+  return coverageDecision;
 }
 
 // ════════════════════════════════════════════════════════
@@ -578,12 +930,53 @@ export function computeEvolutionAnalysis(
   const { impact: portfolioImpact, score: portfolioImpactScore } =
     computePortfolioImpact(systemicDetail.score, cascadeAmplification.score, currentResults.afi, agiProximity);
 
-  const coverageDecision = computeCoverageDecision(
+  let coverageDecision = computeCoverageDecision(
     insurabilityStatus, driftTrend, cascadeAmplification.score, systemicDetail.score, agiProximity, inputs, projections
   );
 
+  // ═══ INSTITUTIONAL TRUST LAYERS ═══
+  const confidence = computeConfidence(inputs, currentResults.afi, projections);
+  const inputIntegrity = computeInputIntegrity(inputs);
+  const exitRisk = computeExitRisk(inputs, currentResults.components);
+  const dependencyTopology = computeDependencyTopology(inputs);
+  const stressScenarios = computeStressScenarios(inputs, currentResults);
+  const economicLoss = computeEconomicLoss(inputs, currentResults.afi, cascadeAmplification.score, systemicDetail.score, projections);
+  const timeToInstability = computeTimeToInstability(currentResults.afi, projections, cascadeAmplification.score);
+
+  // Hard insurability boundary
+  coverageDecision = applyHardInsurabilityBoundary(coverageDecision, projections, systemicDetail.score, cascadeAmplification.score);
+
+  // Confidence impact: low confidence downgrades decision by 1 level
+  if (confidence.level === 'Low' && coverageDecision.decision !== 'Decline') {
+    if (coverageDecision.decision === 'Accept') {
+      coverageDecision = { ...coverageDecision, decision: 'Accept with Conditions',
+        conditions: [...coverageDecision.conditions, { action: 'Low assessment confidence — additional data verification required', priority: 'required' }] };
+    } else if (coverageDecision.decision === 'Accept with Conditions') {
+      coverageDecision = { ...coverageDecision, decision: 'Limited Coverage',
+        conditions: [...coverageDecision.conditions, { action: 'Assessment confidence insufficient for full conditional coverage', priority: 'required' }] };
+    } else if (coverageDecision.decision === 'Limited Coverage') {
+      coverageDecision = { ...coverageDecision, decision: 'Decline',
+        conditions: [...coverageDecision.conditions, { action: 'Low confidence combined with limited coverage triggers automatic decline', priority: 'required' }] };
+    }
+  }
+
+  // Exit risk impact on insurability
+  if (exitRisk.level === 'Structurally Locked-In' && coverageDecision.decision === 'Accept') {
+    coverageDecision = { ...coverageDecision, decision: 'Accept with Conditions',
+      conditions: [...coverageDecision.conditions, { action: 'Structural lock-in requires exit strategy and portability plan', priority: 'required' }] };
+  }
+
   const { driftFactor, correlationMultiplier, cascadeMultiplier } =
     computePremiumMultipliers(projections, currentResults.afi, systemicDetail.score, cascadeAmplification.score);
+
+  // Confidence and exit risk premium adjustments applied via multipliers
+  const confidencePremiumMul = confidence.level === 'Low' ? 1.15 : confidence.level === 'Medium' ? 1.05 : 1.0;
+  const exitRiskPremiumMul = exitRisk.level === 'Structurally Locked-In' ? 1.10 : exitRisk.level === 'Partially Reversible' ? 1.04 : 1.0;
+  const adjustedDriftFactor = parseFloat((driftFactor * confidencePremiumMul * exitRiskPremiumMul).toFixed(3));
+
+  const decisionExplainability = computeDecisionExplainability(
+    coverageDecision, insurabilityStatus, cascadeAmplification.score, systemicDetail.score, exitRisk, driftTrend, currentResults.afi
+  );
 
   const partial = {
     agiProximity,
@@ -605,9 +998,17 @@ export function computeEvolutionAnalysis(
     cascadeRiskScore: cascadeAmplification.score,
     cascadeAmplification,
     coverageDecision,
-    driftFactor,
+    driftFactor: adjustedDriftFactor,
     correlationMultiplier,
     cascadeMultiplier,
+    confidence,
+    inputIntegrity,
+    exitRisk,
+    dependencyTopology,
+    stressScenarios,
+    decisionExplainability,
+    economicLoss,
+    timeToInstability,
   };
 
   const executiveStatements = generateExecutiveStatements(partial as any);
