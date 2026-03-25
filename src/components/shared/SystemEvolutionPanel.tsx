@@ -125,8 +125,8 @@ export function SystemEvolutionPanel() {
                 )}
               </div>
               <div className="text-right flex-shrink-0">
-                <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Risk Level</div>
-                <div className={`text-[18px] font-bold ${riskColor(risk)}`}>{risk}</div>
+                <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Unified Risk</div>
+                <div className={`text-[18px] font-bold ${riskColor(unified)}`}>{unified}</div>
               </div>
             </div>
           </div>
