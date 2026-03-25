@@ -912,8 +912,63 @@ function applyHardInsurabilityBoundary(
 }
 
 // ════════════════════════════════════════════════════════
-// MAIN EXPORT
+// UNIFIED RISK STATE
 // ════════════════════════════════════════════════════════
+
+function computeUnifiedRiskLevel(
+  currentAfi: number,
+  cascadeScore: number,
+  correlationScore: number,
+  driftTrend: DriftTrend,
+  confidenceLevel: AssessmentConfidence
+): UnifiedRiskLevel {
+  // Priority: Cascade > Correlation > Future Risk > Current AFI > Confidence modifier
+  // Score each dimension on 0-1
+  const cascadeSig = cascadeScore; // already 0-1
+  const corrSig = correlationScore; // already 0-1
+  const futureSig = driftTrend === 'Critical Acceleration' ? 1.0 : driftTrend === 'Increasing Risk' ? 0.6 : 0.2;
+  const currentSig = Math.min(1, currentAfi / 2.5);
+  const confMod = confidenceLevel === 'Low' ? 0.15 : confidenceLevel === 'Medium' ? 0.05 : 0;
+
+  // Weighted composite with priority ordering
+  const composite = 
+    cascadeSig * 0.30 +
+    corrSig * 0.25 +
+    futureSig * 0.20 +
+    currentSig * 0.15 +
+    confMod; // confidence adds uncertainty premium
+
+  // Worst-case override: if any two top signals are extreme, force upgrade
+  const extremeCount = [cascadeScore > 0.6, correlationScore > 0.6, driftTrend === 'Critical Acceleration', currentAfi > 1.5].filter(Boolean).length;
+
+  if (composite > 0.7 || extremeCount >= 3) return 'Critical';
+  if (composite > 0.5 || extremeCount >= 2) return 'High';
+  if (composite > 0.3) return 'Moderate';
+  return 'Low';
+}
+
+// ════════════════════════════════════════════════════════
+// PRIMARY CAPITAL RISK DRIVER
+// ════════════════════════════════════════════════════════
+
+function computePrimaryCapitalRiskDriver(
+  cascadeScore: number,
+  correlationScore: number,
+  currentAfi: number,
+  exitRiskLevel: ExitRisk,
+  dependencyScore: number
+): PrimaryCapitalRiskDriver {
+  const candidates: { driver: PrimaryCapitalRiskDriver; weight: number }[] = [
+    { driver: 'Cascade Amplification', weight: cascadeScore * 1.2 }, // slight priority boost
+    { driver: 'Systemic Correlation', weight: correlationScore * 1.1 },
+    { driver: 'Structural Fragility', weight: Math.min(1, currentAfi / 2.0) },
+    { driver: 'Loss of Reversibility', weight: exitRiskLevel === 'Structurally Locked-In' ? 0.85 : exitRiskLevel === 'Partially Reversible' ? 0.45 : 0.15 },
+    { driver: 'Dependency Concentration', weight: dependencyScore },
+  ];
+  candidates.sort((a, b) => b.weight - a.weight);
+  return candidates[0].driver;
+}
+
 
 export function computeEvolutionAnalysis(
   inputs: ExposureInputs,
