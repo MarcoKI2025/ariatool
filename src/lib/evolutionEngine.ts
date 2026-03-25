@@ -27,6 +27,8 @@ export type ExitRisk = 'Reversible' | 'Partially Reversible' | 'Structurally Loc
 export type DependencyExposure = 'Low' | 'Medium' | 'High';
 export type StressImpact = 'Contained' | 'Severe' | 'Critical';
 export type TimeToInstability = '< 3 months' | '3–6 months' | '6–12 months' | '> 12 months';
+export type UnifiedRiskLevel = 'Low' | 'Moderate' | 'High' | 'Critical';
+export type PrimaryCapitalRiskDriver = 'Cascade Amplification' | 'Systemic Correlation' | 'Structural Fragility' | 'Loss of Reversibility' | 'Dependency Concentration';
 
 export interface AGIProximityDimensions {
   autonomy: number;
@@ -173,6 +175,9 @@ export interface EvolutionAnalysis {
   decisionExplainability: DecisionExplainability;
   economicLoss: EconomicLossEstimate;
   timeToInstability: TimeToInstability;
+  // ═══ UNIFIED RISK STATE ═══
+  unifiedRiskLevel: UnifiedRiskLevel;
+  primaryCapitalRiskDriver: PrimaryCapitalRiskDriver;
   // Executive statements
   executiveStatements: string[];
 }
