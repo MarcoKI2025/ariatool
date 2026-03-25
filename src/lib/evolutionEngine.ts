@@ -381,16 +381,29 @@ function computeCoverageDecision(
   cascadeScore: number,
   correlationScore: number,
   agiProximity: number,
-  inputs: ExposureInputs
+  inputs: ExposureInputs,
+  projections: DriftProjection[] = []
 ): CoverageDecisionResult {
   const conditions: CoverageCondition[] = [];
   let decision: CoverageDecision;
   let maxTenor: number | null = null;
   let sublimitRecommended = false;
 
+  // Hard constraint: projected AFI_12m exceeds critical threshold → force decline/limited
+  const proj12 = projections.find(p => p.months === 12);
+  const projectedCritical = proj12 && proj12.afi > 2.0 && proj12.rc > 0.65;
+
   if (insurabilityStatus === 'Uninsurable') {
     decision = 'Decline';
     conditions.push({ action: 'Structural remediation required before re-assessment', priority: 'required' });
+  } else if (projectedCritical && insurabilityStatus !== 'Critical') {
+    // Hard constraint: projected uninsurable forces Limited Coverage even if currently okay
+    decision = 'Limited Coverage';
+    maxTenor = 6;
+    sublimitRecommended = true;
+    conditions.push({ action: '12-month projection exceeds insurability threshold — short-tenor coverage only', priority: 'required' });
+    conditions.push({ action: 'Mandatory re-assessment at 6-month mark before renewal', priority: 'required' });
+    conditions.push({ action: 'Implement drift mitigation program to reduce projected AFI trajectory', priority: 'required' });
   } else if (insurabilityStatus === 'Critical') {
     decision = 'Limited Coverage';
     maxTenor = 6;
@@ -413,6 +426,31 @@ function computeCoverageDecision(
     }
   }
 
+  // ═══ PORTFOLIO OVERRIDE LOGIC ═══
+  // High correlation + high cascade compounds risk beyond entity-level assessment
+  // Downgrade decision by 1–2 levels when both are elevated
+  if (correlationScore > 0.65 && cascadeScore > 0.6 && decision !== 'Decline') {
+    if (decision === 'Accept') {
+      decision = 'Accept with Conditions';
+      maxTenor = maxTenor ?? 12;
+      conditions.push({ action: 'Portfolio-level override: systemic correlation and cascade risk require enhanced monitoring', priority: 'required' });
+      conditions.push({ action: 'Diversify infrastructure dependencies to reduce aggregate exposure', priority: 'required' });
+    } else if (decision === 'Accept with Conditions') {
+      decision = 'Limited Coverage';
+      maxTenor = 6;
+      sublimitRecommended = true;
+      conditions.push({ action: 'Portfolio-level override: aggregate systemic exposure exceeds conditional acceptance threshold', priority: 'required' });
+    } else if (decision === 'Limited Coverage') {
+      decision = 'Decline';
+      conditions.push({ action: 'Portfolio-level override: combined correlation and cascade risk make coverage unjustifiable', priority: 'required' });
+    }
+  } else if (correlationScore > 0.5 && cascadeScore > 0.5 && decision === 'Accept') {
+    // Moderate portfolio concern — single-level downgrade
+    decision = 'Accept with Conditions';
+    maxTenor = maxTenor ?? 12;
+    conditions.push({ action: 'Elevated portfolio correlation requires dependency diversification plan', priority: 'recommended' });
+  }
+
   return { decision, conditions, maxTenor, sublimitRecommended };
 }
 
@@ -426,17 +464,23 @@ function computePremiumMultipliers(
   correlationScore: number,
   cascadeScore: number
 ): { driftFactor: number; correlationMultiplier: number; cascadeMultiplier: number } {
-  // Drift factor: based on 12-month projected AFI vs current
+  // ═══ FUTURE-DOMINANT PRICING: 40% current / 60% future ═══
+  const proj6 = projections.find(p => p.months === 6);
   const proj12 = projections.find(p => p.months === 12);
-  const futureAfi = proj12 ? proj12.afi : currentAfi;
-  const driftRatio = futureAfi / Math.max(0.01, currentAfi);
-  const driftFactor = Math.min(1.30, Math.max(1.0, 1 + (driftRatio - 1) * 0.5));
+  const futureAfi6 = proj6 ? proj6.afi : currentAfi;
+  const futureAfi12 = proj12 ? proj12.afi : currentAfi;
+  // Blended future AFI: weight 6m and 12m projections
+  const blendedFutureAfi = futureAfi6 * 0.4 + futureAfi12 * 0.6;
+  // Effective risk AFI: 40% current + 60% future
+  const effectiveAfi = currentAfi * 0.4 + blendedFutureAfi * 0.6;
+  const driftRatio = effectiveAfi / Math.max(0.01, currentAfi);
+  const driftFactor = Math.min(1.45, Math.max(1.0, driftRatio));
 
-  // Correlation multiplier: 1.0 to 1.20
-  const correlationMultiplier = 1 + correlationScore * 0.20;
+  // Correlation multiplier: 1.0 to 1.25 (increased from 1.20)
+  const correlationMultiplier = 1 + correlationScore * 0.25;
 
-  // Cascade multiplier: 1.0 to 1.15
-  const cascadeMultiplier = 1 + cascadeScore * 0.15;
+  // Cascade multiplier: 1.0 to 1.20 (increased from 1.15)
+  const cascadeMultiplier = 1 + cascadeScore * 0.20;
 
   return {
     driftFactor: parseFloat(driftFactor.toFixed(3)),
