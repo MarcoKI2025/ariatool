@@ -1017,8 +1017,8 @@ export function computeEvolutionAnalysis(
   );
 
   // ═══ INSTITUTIONAL TRUST LAYERS ═══
-  const confidence = computeConfidence(inputs, currentResults.afi, projections);
   const inputIntegrity = computeInputIntegrity(inputs);
+  const confidence = computeConfidence(inputs, currentResults.afi, projections, inputIntegrity.score);
   const exitRisk = computeExitRisk(inputs, currentResults.components);
   const dependencyTopology = computeDependencyTopology(inputs);
   const stressScenarios = computeStressScenarios(inputs, currentResults);
