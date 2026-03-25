@@ -8,6 +8,7 @@ import { calculatePremium, formatPremiumCurrency, formatPremiumPercentage } from
 import { calculatePeerComparison, getRankingLabel, getRankingColor } from '@/lib/benchmarking';
 import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { RealCaseFactsCard } from '@/features/demo/RealCaseFactsCard';
@@ -558,6 +559,71 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
           ))}
         </div>
       </div>
+
+      {/* ═══ SYSTEM EVOLUTION & INSURABILITY ═══ */}
+      {results && (() => {
+        const evo = computeEvolutionAnalysis(inputs, results);
+        const insurColor = evo.insurabilityStatus === 'Uninsurable' || evo.insurabilityStatus === 'Critical' ? 'text-fragile' : evo.insurabilityStatus === 'At Risk' ? 'text-sensitive' : 'text-stable';
+        return (
+          <>
+            <SectionDivider title="System Evolution & Insurability Outlook" icon="📈" subtitle="AGI proximity, risk trajectory, and insurability projections" />
+            <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+                <div className="bg-secondary rounded-lg p-3">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">System Classification</div>
+                  <div className={`text-[16px] font-bold ${evo.agiTier === 'Pre-ASI' || evo.agiTier === 'AGI-like' ? 'text-sensitive' : 'text-stable'}`}>{evo.agiTier}</div>
+                  <div className="text-[9px] text-muted-foreground">Proximity: {(evo.agiProximity * 100).toFixed(0)}%</div>
+                </div>
+                <div className="bg-secondary rounded-lg p-3">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Insurability</div>
+                  <div className={`text-[16px] font-bold ${insurColor}`}>{evo.insurabilityStatus}</div>
+                  {evo.monthsToUninsurable !== null && evo.monthsToUninsurable > 0 && (
+                    <div className="text-[9px] text-fragile">⚠ {evo.monthsToUninsurable}m to threshold</div>
+                  )}
+                </div>
+                <div className="bg-secondary rounded-lg p-3">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Drift Trend</div>
+                  <div className={`text-[16px] font-bold ${evo.driftTrend === 'Critical Acceleration' ? 'text-fragile' : evo.driftTrend === 'Increasing Risk' ? 'text-sensitive' : 'text-stable'}`}>{evo.driftTrend}</div>
+                </div>
+                <div className="bg-secondary rounded-lg p-3">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Cascade Risk</div>
+                  <div className={`text-[16px] font-bold font-mono ${evo.cascadeRiskScore > 0.6 ? 'text-fragile' : evo.cascadeRiskScore > 0.3 ? 'text-sensitive' : 'text-stable'}`}>{evo.cascadeRiskScore.toFixed(2)}</div>
+                </div>
+              </div>
+
+              {/* Risk Trajectory Table */}
+              <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground mb-2">AFI Risk Trajectory</div>
+              <div className="grid grid-cols-4 gap-2 mb-4">
+                <div className="bg-secondary rounded-lg p-2 text-center">
+                  <div className="text-[8px] text-muted-foreground uppercase">Current</div>
+                  <div className="text-[14px] font-bold font-mono text-foreground">{results.afi.toFixed(2)}</div>
+                  <div className={`text-[8px] font-bold ${results.band === 'Fragile' ? 'text-fragile' : results.band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>{results.band}</div>
+                </div>
+                {evo.projections.map(p => (
+                  <div key={p.months} className="bg-secondary rounded-lg p-2 text-center">
+                    <div className="text-[8px] text-muted-foreground uppercase">{p.label}</div>
+                    <div className={`text-[14px] font-bold font-mono ${p.band === 'Fragile' ? 'text-fragile' : p.band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>{p.afi.toFixed(2)} {p.afi > results.afi ? '↑' : '→'}</div>
+                    <div className={`text-[8px] font-bold ${p.band === 'Fragile' ? 'text-fragile' : p.band === 'Sensitive' ? 'text-sensitive' : 'text-stable'}`}>{p.band}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Executive Statements */}
+              {evo.executiveStatements.length > 0 && (
+                <div className="border-t border-border pt-3">
+                  <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">Executive Assessment</div>
+                  {evo.executiveStatements.map((stmt, i) => (
+                    <div key={i} className="flex items-start gap-2 mb-1.5">
+                      <span className="text-primary text-[8px] mt-[3px]">▸</span>
+                      <span className="text-[11px] text-secondary-foreground leading-[1.5]">{stmt}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </>
+        );
+      })()}
 
       {/* ═══ RECURSIVE RISK ASSESSMENT ═══ */}
       {state.recursiveRisk && (

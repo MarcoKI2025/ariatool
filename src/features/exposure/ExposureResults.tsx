@@ -11,6 +11,8 @@ import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { DeploymentAuthorization } from '@/components/shared/DeploymentAuthorization';
+import { SystemEvolutionPanel } from '@/components/shared/SystemEvolutionPanel';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
@@ -40,6 +42,8 @@ export function ExposureResults() {
   const structuralScore = useMemo(() => Math.min(99, Math.round(afi * 60)), [afi]);
   const eciTier = useMemo(() => afi < 0.5 ? 0 : afi < 0.85 ? 1 : afi < 1.35 ? 2 : 3, [afi]);
   const eciName = useMemo(() => ['Reversible Tool', 'Persistent Service', 'Institutional Dependency', 'Critical Infrastructure'][eciTier], [eciTier]);
+
+  const evolution = useMemo(() => results ? computeEvolutionAnalysis(inputs, results) : null, [results, inputs]);
 
   if (!results) return null;
 
@@ -152,9 +156,25 @@ export function ExposureResults() {
             </span>
             {band !== 'Stable' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-sensitive text-foreground">Structural Remediation Required</span>}
             {band === 'Fragile' && <span className="px-3 py-1 rounded text-[10px] font-bold bg-fragile text-foreground">Dependency Diversification Required</span>}
+            {evolution && (
+              <>
+                <span className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground ml-auto">Insurability:</span>
+                <span className={`px-3 py-1 rounded text-[10px] font-bold ${
+                  evolution.insurabilityStatus === 'Uninsurable' ? 'bg-fragile text-foreground' :
+                  evolution.insurabilityStatus === 'Critical' ? 'bg-fragile text-foreground' :
+                  evolution.insurabilityStatus === 'At Risk' ? 'bg-sensitive text-foreground' :
+                  'bg-stable text-foreground'
+                }`}>
+                  {evolution.insurabilityStatus}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
+
+      {/* ═══ SYSTEM EVOLUTION PANEL ═══ */}
+      <SystemEvolutionPanel />
 
       {/* ═══ AFI GAUGE & RADAR CHARTS ═══ */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">

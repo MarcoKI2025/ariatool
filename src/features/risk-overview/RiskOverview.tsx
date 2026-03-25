@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { Banner, MetricCard, BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
 import { TOOLTIPS } from '@/lib/tooltips';
-
+import { SystemEvolutionPanel } from '@/components/shared/SystemEvolutionPanel';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 export function RiskOverview() {
   const { state, setActiveStep } = useApp();
   const { results, inputs, analysisComplete } = state;
@@ -54,6 +55,9 @@ export function RiskOverview() {
           {band === 'Fragile' ? 'Above underwriting tolerance' : band === 'Sensitive' ? 'Approaching tolerance threshold' : 'Below tolerance threshold'}
         </div>
       </div>
+
+      {/* System Evolution Panel */}
+      <SystemEvolutionPanel />
 
       {/* This Means interpretation */}
       <div className="bg-card rounded-xl p-5 mb-4 border-l-4 border-l-fragile border border-border flex items-start gap-[14px]">
