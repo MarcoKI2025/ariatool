@@ -829,7 +829,15 @@ function computeDecisionExplainability(
   const supporting = factors[2]?.label || 'no supporting factor';
 
   const decWord = coverageDecision.decision;
-  const narrative = `${decWord} due to ${primary}${factors.length > 1 ? ` and ${secondary}` : ''}.`;
+  // Always multi-factor reasoning — combine 2-3 drivers
+  let narrative: string;
+  if (factors.length >= 3) {
+    narrative = `${decWord} due to combined effects of ${primary}, ${secondary}, and ${supporting}.`;
+  } else if (factors.length === 2) {
+    narrative = `${decWord} due to ${primary} combined with ${secondary}.`;
+  } else {
+    narrative = `${decWord} — ${primary}.`;
+  }
 
   return { primaryDriver: primary, secondaryDriver: secondary, supportingFactor: supporting, narrative };
 }

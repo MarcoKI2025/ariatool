@@ -81,6 +81,8 @@ export function SystemEvolutionPanel() {
   if (!evolution) return null;
 
   const risk = riskLevel(results!.afi);
+  const unified = evolution.unifiedRiskLevel;
+  const capitalDriver = evolution.primaryCapitalRiskDriver;
   const dim = evolution.agiDimensions;
 
   return (
