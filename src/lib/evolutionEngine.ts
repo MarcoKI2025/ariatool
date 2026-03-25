@@ -1071,7 +1071,14 @@ export function computeEvolutionAnalysis(
     timeToInstability,
   };
 
+  const unifiedRiskLevel = computeUnifiedRiskLevel(
+    currentResults.afi, cascadeAmplification.score, systemicDetail.score, driftTrend, confidence.level
+  );
+  const primaryCapitalRiskDriver = computePrimaryCapitalRiskDriver(
+    cascadeAmplification.score, systemicDetail.score, currentResults.afi, exitRisk.level, dependencyTopology.score
+  );
+
   const executiveStatements = generateExecutiveStatements(partial as any);
 
-  return { ...partial, executiveStatements };
+  return { ...partial, unifiedRiskLevel, primaryCapitalRiskDriver, executiveStatements };
 }
