@@ -21,6 +21,12 @@ export type DriftConfidence = 'Low' | 'Medium' | 'High';
 export type DriftScenario = 'low' | 'medium' | 'high';
 export type PortfolioImpact = 'Minimal' | 'Elevated' | 'Critical' | 'Systemic';
 export type CoverageDecision = 'Accept' | 'Accept with Conditions' | 'Limited Coverage' | 'Decline';
+export type AssessmentConfidence = 'High' | 'Medium' | 'Low';
+export type InputIntegrity = 'Reliable' | 'Moderate Uncertainty' | 'Potentially Unreliable';
+export type ExitRisk = 'Reversible' | 'Partially Reversible' | 'Structurally Locked-In';
+export type DependencyExposure = 'Low' | 'Medium' | 'High';
+export type StressImpact = 'Contained' | 'Severe' | 'Critical';
+export type TimeToInstability = '< 3 months' | '3–6 months' | '6–12 months' | '> 12 months';
 
 export interface AGIProximityDimensions {
   autonomy: number;
@@ -69,6 +75,64 @@ export interface CoverageDecisionResult {
   sublimitRecommended: boolean;
 }
 
+export interface ConfidenceAssessment {
+  level: AssessmentConfidence;
+  score: number; // 0-100
+  inputCompleteness: number;
+  inputConsistency: number;
+  modelStability: number;
+  scenarioSensitivity: number;
+}
+
+export interface InputIntegrityAssessment {
+  level: InputIntegrity;
+  score: number; // 0-100
+  completeness: number;
+  plausibility: number;
+  consistency: number;
+  flags: string[];
+}
+
+export interface ExitRiskAssessment {
+  level: ExitRisk;
+  score: number; // 0-1
+  technicalReversibility: number;
+  dependencyLockIn: number;
+  dataEntanglement: number;
+  replacementCost: number;
+}
+
+export interface DependencyTopology {
+  exposure: DependencyExposure;
+  score: number; // 0-1
+  singlePointsOfFailure: number;
+  sharedProviders: number;
+  infraConcentration: number;
+  modelChainDepth: number;
+}
+
+export interface StressScenarioResult {
+  name: string;
+  impact: StressImpact;
+  afiShocked: number;
+  afiDelta: number;
+  description: string;
+}
+
+export interface DecisionExplainability {
+  primaryDriver: string;
+  secondaryDriver: string;
+  supportingFactor: string;
+  narrative: string;
+}
+
+export interface EconomicLossEstimate {
+  expectedLow: number; // €M
+  expectedHigh: number; // €M
+  tailRisk: number; // €M
+  cascadeTailRisk: number; // €M
+}
+
 export interface EvolutionAnalysis {
   // AGI Proximity Index (4-dimensional)
   agiProximity: number;
@@ -100,6 +164,15 @@ export interface EvolutionAnalysis {
   driftFactor: number;
   correlationMultiplier: number;
   cascadeMultiplier: number;
+  // ═══ INSTITUTIONAL TRUST LAYERS ═══
+  confidence: ConfidenceAssessment;
+  inputIntegrity: InputIntegrityAssessment;
+  exitRisk: ExitRiskAssessment;
+  dependencyTopology: DependencyTopology;
+  stressScenarios: StressScenarioResult[];
+  decisionExplainability: DecisionExplainability;
+  economicLoss: EconomicLossEstimate;
+  timeToInstability: TimeToInstability;
   // Executive statements
   executiveStatements: string[];
 }
