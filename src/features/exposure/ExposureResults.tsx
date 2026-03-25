@@ -43,6 +43,8 @@ export function ExposureResults() {
   const eciTier = useMemo(() => afi < 0.5 ? 0 : afi < 0.85 ? 1 : afi < 1.35 ? 2 : 3, [afi]);
   const eciName = useMemo(() => ['Reversible Tool', 'Persistent Service', 'Institutional Dependency', 'Critical Infrastructure'][eciTier], [eciTier]);
 
+  const evolution = useMemo(() => results ? computeEvolutionAnalysis(inputs, results) : null, [results, inputs]);
+
   if (!results) return null;
 
   // Use original results for values not affected by component adjustments
@@ -157,6 +159,9 @@ export function ExposureResults() {
           </div>
         </div>
       </div>
+
+      {/* ═══ SYSTEM EVOLUTION PANEL ═══ */}
+      <SystemEvolutionPanel />
 
       {/* ═══ AFI GAUGE & RADAR CHARTS ═══ */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
