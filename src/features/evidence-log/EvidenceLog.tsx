@@ -2,6 +2,7 @@ import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 
 export function EvidenceLog() {
   const { state, clearAuditLog } = useApp();
@@ -161,6 +162,7 @@ export function EvidenceLog() {
         </div>
       </div>
 
+      <StepNavigation currentStep={8} />
       <AppFooter />
     </div>
   );

@@ -10,6 +10,7 @@ import {
   type PerformanceDataPoint,
 } from '@/lib/recursive-risk';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 
 export function RecursiveRiskView() {
   const { state, updateRecursiveRisk } = useApp();
@@ -359,6 +360,8 @@ export function RecursiveRiskView() {
       <div className="text-[9px] text-muted-foreground/60 text-center pt-4 border-t border-border">
         Recursive risk assessment based on AGAF v4.3.0. Hyperagent capabilities are self-reported and should be verified through technical audit.
       </div>
+
+      <StepNavigation currentStep={10} />
     </div>
   );
 }

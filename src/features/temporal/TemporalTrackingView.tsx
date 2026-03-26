@@ -2,6 +2,7 @@ import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { useTemporalTracking } from '@/lib/temporal-tracking';
 import { SectionDivider } from '@/components/shared/SectionDivider';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 
 export function TemporalTrackingView() {
@@ -229,6 +230,8 @@ export function TemporalTrackingView() {
       <div className="text-[9px] text-muted-foreground/60 text-center pt-4 border-t border-border">
         Temporal tracking uses local storage. Snapshots persist across sessions but are device-specific. Export functionality planned for v4.4.
       </div>
+
+      <StepNavigation currentStep={11} />
     </div>
   );
 }
