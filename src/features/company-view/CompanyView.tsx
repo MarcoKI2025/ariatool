@@ -296,7 +296,6 @@ export function CompanyView() {
   const { state, setInputs, updateInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
   const { results, inputs: globalInputs, analysisComplete } = state;
   const heroRef = useRef<HTMLDivElement>(null);
-  const [showSticky, setShowSticky] = useState(false);
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Local standalone inputs (mirrors ExposureInputs) ──
@@ -344,20 +343,6 @@ export function CompanyView() {
   // Cleanup sync timer
   useEffect(() => { return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); }; }, []);
 
-  // Sticky header
-  useEffect(() => {
-    const handleScroll = () => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        setShowSticky(rect.bottom < 0);
-      }
-    };
-    const main = document.querySelector('main');
-    if (main) {
-      main.addEventListener('scroll', handleScroll);
-      return () => main.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
 
   // ── Derive AFI from local inputs (with size/revenue adjustments matching scoring.ts) ──
   const liveComponents = useMemo(() => computeAFIComponents(localInputs), [localInputs]);
