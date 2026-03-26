@@ -601,6 +601,16 @@ function Slide8() {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide9() {
+  const caseProfiles = DEMO_PROFILES.filter(p => p.caseStudy);
+  const cases = [
+    { profileId: 'knight', name: 'Knight Capital', date: 'August 2012', loss: '€440M', desc: 'Dormant trading code activated during deployment. €440M lost in 45 minutes. Company collapsed within days.', source: 'SEC Report', color: '#ff4040' },
+    { profileId: 'uber', name: 'Uber Self-Driving', date: 'March 2018', loss: 'Fatal', desc: 'Autonomous vehicle struck and killed pedestrian in Tempe, AZ. Safety driver was distracted. Emergency braking disabled.', source: 'NTSB Report', color: '#b53020' },
+    { profileId: 'amazon', name: 'Amazon Hiring AI', date: '2015–2017', loss: '€150M+', desc: 'AI hiring tool systematically discriminated against women. Trained on 10 years of male-dominated hiring data.', source: 'Reuters Investigation', color: '#9c6200' },
+  ].map(c => {
+    const profile = caseProfiles.find(p => p.id === c.profileId);
+    const computed = profile ? computeDemoProfilePreview(profile) : { afi: 0, band: 'Fragile' };
+    return { ...c, afi: computed.afi.toFixed(2), band: computed.band };
+  });
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#b53020">Validation · Real-World AI Disasters — Retrospective Analysis</Eyebrow>
@@ -610,35 +620,7 @@ function Slide9() {
         that led to real-world losses. Not hindsight bias: structural pattern recognition.
       </BodyText>
       <div className="grid grid-cols-3 gap-4 mb-5">
-        {[
-          {
-            name: 'Knight Capital',
-            date: 'August 2012',
-            loss: '€440M',
-            afi: '9.85',
-            desc: 'Dormant trading code activated during deployment. €440M lost in 45 minutes. Company collapsed within days.',
-            source: 'SEC Report',
-            color: '#ff4040',
-          },
-          {
-            name: 'Uber Self-Driving',
-            date: 'March 2018',
-            loss: 'Fatal',
-            afi: '4.92',
-            desc: 'Autonomous vehicle struck and killed pedestrian in Tempe, AZ. Safety driver was distracted. Emergency braking disabled.',
-            source: 'NTSB Report',
-            color: '#b53020',
-          },
-          {
-            name: 'Amazon Hiring AI',
-            date: '2015–2017',
-            loss: '€150M+',
-            afi: '3.24',
-            desc: 'AI hiring tool systematically discriminated against women. Trained on 10 years of male-dominated hiring data.',
-            source: 'Reuters Investigation',
-            color: '#9c6200',
-          },
-        ].map((c, i) => (
+        {cases.map((c, i) => (
           <div key={i} className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4 flex flex-col">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#b53020]/20 text-[#ff8070] border border-[#b53020]/30">Case Study</span>
