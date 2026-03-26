@@ -802,6 +802,7 @@ function Slide11({ onClose }: { onClose: () => void }) {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide12({ onClose }: { onClose: () => void }) {
+  const m = useMeridianLive();
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#60d090">Company View · Standalone Insurance Premium Calculator</Eyebrow>
@@ -813,18 +814,18 @@ function Slide12({ onClose }: { onClose: () => void }) {
       <div className="grid grid-cols-3 gap-[10px] mb-3">
         <div className="p-3 bg-[#0a1a0a] border border-[#1a4028] rounded-[9px] text-center">
           <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">Estimated Premium</div>
-          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">€420k–€680k</div>
+          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">{m.premium}/yr</div>
           <div className="text-[9px] text-[#9e9a90] mt-[2px]">Meridian Financial · Live calculation</div>
         </div>
         <div className="p-3 bg-[#1a0a06] border border-[#5a1810] rounded-[9px] text-center">
           <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">AFI Score</div>
-          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">2.23</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Fragile · Above 1.35 threshold</div>
+          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">{m.afi.toFixed(2)}</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">{m.band} · Above 1.35 threshold</div>
         </div>
         <div className="p-3 bg-[#0e100e] border border-[#2a2820] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">Cost Impact</div>
-          <div className="text-[22px] font-bold font-mono text-[#ffc040]">Per Category</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">See which changes reduce premium</div>
+          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">Loss Range</div>
+          <div className="text-[22px] font-bold font-mono text-[#ffc040]">€{m.lossLow}M–€{m.lossHigh}M</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Capital Impact Engine · heuristic</div>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3 mb-4">
