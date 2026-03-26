@@ -745,24 +745,38 @@ function Slide10() {
         </div>
 
         <div className="bg-[#111108] border border-[#1a4858] rounded-[10px] p-5">
-          <div className="text-[10px] font-bold text-[#70c0d0] uppercase tracking-[0.07em] mb-2">🛡️ Quantum Vulnerability</div>
-          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Post-Quantum Readiness</div>
+          <div className="text-[10px] font-bold text-[#70c0d0] uppercase tracking-[0.07em] mb-2">⚡ Dependency Shock Simulator</div>
+          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Infrastructure Stress Testing</div>
           <div className="text-[10px] text-[#b0aca0] leading-[1.55]">
-            Assesses cryptographic exposure, quantum timeline risk, and migration readiness across five domains:
-            encryption, key management, data-at-rest, data-in-transit, and algorithm agility. NIST PQC framework aligned.
+            Simulate Model Provider Failure, Governance Breakdown, and Oversight Collapse. Computes shocked AFI,
+            delta impact, and recovery difficulty — revealing systemic resilience gaps in real-time.
           </div>
         </div>
 
         <div className="bg-[#111108] border border-[#5a4000] rounded-[10px] p-5">
-          <div className="text-[10px] font-bold text-[#ffc040] uppercase tracking-[0.07em] mb-2">🤖 Agentic Swarm Analysis</div>
-          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Multi-Agent Coordination</div>
+          <div className="text-[10px] font-bold text-[#ffc040] uppercase tracking-[0.07em] mb-2">🤖 Agentic Swarm + Quantum</div>
+          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Multi-Agent & Post-Quantum</div>
           <div className="text-[10px] text-[#b0aca0] leading-[1.55]">
-            Visual agent coordination graph with delegation depth scoring, responsibility gap detection,
-            recursive loop identification, and tool-call authority mapping. Supports complex multi-agent orchestration patterns.
+            Visual agent coordination graph with delegation depth scoring and recursive loop detection.
+            Post-quantum cryptographic readiness across 5 NIST PQC domains. Whitepaper download available directly in the platform.
           </div>
         </div>
       </div>
-      <InsightBox color="teal" title="Cutting-Edge Risk Detection" text="These capabilities position ARIA 2–3 years ahead of any competing governance platform. Recursive self-improvement risk and quantum vulnerability assessment are not available in ANY other insurance underwriting tool — making this genuine first-mover IP." />
+      <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="bg-[#111108] border border-[#b53020] rounded-lg p-3 text-center">
+          <div className="text-[18px] font-bold font-mono text-[#ff8070]">Decision Header</div>
+          <div className="text-[9px] text-[#a8a49c] mt-1">Persistent insurability status across all views</div>
+        </div>
+        <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-3 text-center">
+          <div className="text-[18px] font-bold font-mono text-[#60d090]">Capital Impact</div>
+          <div className="text-[9px] text-[#a8a49c] mt-1">Heuristic loss range + stress + operational impact</div>
+        </div>
+        <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-3 text-center">
+          <div className="text-[18px] font-bold font-mono text-[#9088e0]">Whitepaper</div>
+          <div className="text-[9px] text-[#a8a49c] mt-1">Full methodology PDF downloadable in-app</div>
+        </div>
+      </div>
+      <InsightBox color="teal" title="Cutting-Edge Risk Detection" text="These capabilities position ARIA 2–3 years ahead of any competing governance platform. The Decision Header provides 5-second insurability answers. Capital Impact translates risk into €M loss ranges. Dependency Shock reveals what happens when infrastructure fails. No other tool combines all of this." />
     </div>
   );
 }
