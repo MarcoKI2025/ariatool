@@ -3,7 +3,7 @@ import { useApp } from '@/hooks/useAppState';
 import { computeLivePreview } from '@/lib/scoring';
 import { USE_CASES, PROVIDERS, INDUSTRIES, COMPANY_SIZES, REVENUE_RANGES } from '@/lib/constants';
 import { SliderRow, SectionCard, InfoTip } from '@/components/shared/UIComponents';
-import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
+import { DEMO_PROFILES, applyDemoProfile, computeDemoProfilePreview } from '@/lib/demoData';
 import { ExposureResults } from './ExposureResults';
 import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
 import { TOOLTIPS } from '@/lib/tooltips';
@@ -131,7 +131,9 @@ export function ExposureAnalysis() {
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-          {DEMO_PROFILES.map((p, i) => (
+          {DEMO_PROFILES.map((p, i) => {
+            const preview = computeDemoProfilePreview(p);
+            return (
             <button
               key={i}
               onClick={() => setInputs(applyDemoProfile(p))}
@@ -140,12 +142,13 @@ export function ExposureAnalysis() {
               <div className="text-[11px] font-bold text-foreground leading-[1.3] text-center">{p.name}</div>
               <div className="text-[9px] text-muted-foreground font-medium mt-[1px]">{p.industry}</div>
               <div className={`mt-[3px] text-[8px] font-bold uppercase tracking-[0.06em] px-[7px] py-[2px] rounded-[3px] ${
-                p.band === 'Fragile' ? 'badge-fragile' :
-                p.band === 'Sensitive' ? 'badge-sensitive' :
+                preview.band === 'Fragile' ? 'badge-fragile' :
+                preview.band === 'Sensitive' ? 'badge-sensitive' :
                 'badge-stable'
-              }`}>{p.band}</div>
+              }`}>{preview.band}</div>
             </button>
-          ))}
+            );
+          })}
         </div>
         <div className="mt-[10px] text-[10px] text-muted-foreground italic">Each profile reflects a real-world AI deployment pattern with different risk characteristics. Adjust any slider after loading to explore scenarios.</div>
       </div>
