@@ -79,13 +79,13 @@ export function RecursiveRiskView() {
   const confidence = useMemo(() => {
     // Input Quality: derived from how many sliders user has actively adjusted (non-default)
     const filledInputs = [
-      inputs.automation, inputs.dependencyConcentration, inputs.humanOversight,
+      inputs.automation, inputs.integrationDepth, inputs.oversightLevel,
       inputs.explainabilityGap, inputs.reviewCadence
-    ].filter(v => v !== undefined && v !== 3).length; // 3 = default midpoint
+    ].filter(v => v !== undefined && v !== 3).length;
     const inputQuality = filledInputs >= 4 ? 'Verified' as const : filledInputs >= 2 ? 'Audited' as const : 'Self-Attested' as const;
 
     // Framework Validation: based on oversight & review cadence
-    const oversightScore = (inputs.humanOversight || 3) + (inputs.reviewCadence || 2);
+    const oversightScore = (inputs.oversightLevel || 3) + (inputs.reviewCadence || 2);
     const frameworkValidation = oversightScore >= 8 ? 'Regulatory-Approved' as const : oversightScore >= 5 ? 'Peer-Reviewed' as const : 'Internal-Only' as const;
 
     // Industry Calibration: based on whether industry & size are set (non-generic)
@@ -94,11 +94,11 @@ export function RecursiveRiskView() {
     const industryCalibration = (hasIndustry && hasSize) ? 'Large-Sample' as const : hasIndustry || hasSize ? 'Small-Sample' as const : 'No-Calibration' as const;
 
     // Temporal Stability: based on MCCI capabilities & persistent memory
-    const activeCaps = Object.values(capabilities).filter(Boolean).length;
+    const activeCaps = Object.values(metacogCaps).filter(Boolean).length;
     const temporalStability = activeCaps >= 8 ? 'Continuous' as const : activeCaps >= 4 ? 'Quarterly' as const : 'Snapshot' as const;
 
     return assessConfidence({ inputQuality, frameworkValidation, industryCalibration, temporalStability });
-  }, [inputs, capabilities]);
+  }, [inputs, metacogCaps]);
 
   // Determine overall severity
   const isCritical = rsiResult.tier === 'Critical' || rsiResult.tier === 'High';
