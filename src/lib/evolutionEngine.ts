@@ -7,7 +7,7 @@
 
 import { ExposureInputs, AFIComponents, AnalysisResults } from './types';
 import { computeAFIComponents, calcAFI, getBand, computeFullAnalysis } from './scoring';
-import { SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from './constants';
+import { SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, SIZE_MULTIPLIERS, SECTOR_MULTIPLIERS } from './constants';
 
 // ════════════════════════════════════════════════════════
 // TYPES
