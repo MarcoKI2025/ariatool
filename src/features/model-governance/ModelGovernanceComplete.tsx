@@ -941,7 +941,7 @@ function MethodologyTransparencyPanel() {
           Framework Maturity & Enhancement Path
         </div>
         <div className="text-[10px] text-muted-foreground leading-relaxed">
-          Current framework (AGAF v4.1) represents expert-calibrated heuristic methodology.
+          Current framework (AGAF v4.3) represents expert-calibrated heuristic methodology.
           Post-acquisition enhancement path includes: (1) integration with buyer's claims database
           for empirical calibration, (2) external actuarial peer review, (3) probabilistic
           modeling layer (Monte Carlo simulation), (4) time-series validation across portfolio.

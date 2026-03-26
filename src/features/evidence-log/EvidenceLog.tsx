@@ -79,7 +79,7 @@ export function EvidenceLog() {
             onClick={() => {
               const fullAssessment = {
                 metadata: {
-                  framework_version: 'AGAF v4.1.0',
+                  framework_version: 'AGAF v4.3.0',
                   assessment_date: new Date().toISOString(),
                   report_id: `ARIA-${Date.now().toString(36).toUpperCase()}`,
                 },

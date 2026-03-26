@@ -31,7 +31,7 @@ signals and require mandatory human review and explicit authorization.
 Entity:     ${inputs.companyName || 'Unknown Entity'}
 Industry:   ${inputs.industry}
 Date:       ${date}
-Model:      AGAF v3.2 · Governance Assessment Framework
+Model:      AGAF v4.3.0 · Governance Assessment Framework
 
 ───────────────────────────────────────────────────────────────
 VERDICT: ${verdicts[band]}
@@ -111,7 +111,7 @@ of cloud and AI service providers adds a further layer of systemic
 and accumulation risk."
 
 Generated: ${date}
-Framework: AGAF v3.2 — AI Governance Assessment Framework
+Framework: AGAF v4.3.0 — AI Governance Assessment Framework
 Classification: ${band} — ${decisionClass}
 `.trim();
 }

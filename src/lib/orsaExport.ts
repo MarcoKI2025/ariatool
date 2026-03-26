@@ -149,14 +149,14 @@ USE RESTRICTIONS
 ASSESSMENT METADATA
 ══════════════════════════════════════════════════════════════════
 
-Framework Version: AGAF v3.0 (Kindermann 2026 operationalisation)
+Framework Version: AGAF v4.3.0 (Kindermann 2026 operationalisation)
 Model Type: Structural heuristic (deterministic, non-stochastic)
 Data Basis: Self-attested inputs + published market guidance
 Calibration: Q4 2025 market data (Lloyd's, EIOPA, Munich Re)
 Next Recalibration Trigger: EIOPA Opinion implementation (est. Q3 2026)
 
 Generated: ${new Date().toLocaleString('en-GB')}
-Assessment Engine: AI Governance Engine v3.0 · Decision Intelligence System
+Assessment Engine: AI Governance Engine v4.3.0 · Decision Intelligence System
 
 ══════════════════════════════════════════════════════════════════
 END OF DOCUMENT

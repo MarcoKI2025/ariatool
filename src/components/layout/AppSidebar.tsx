@@ -23,7 +23,7 @@ export function AppSidebar() {
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-[12px] flex-shrink-0 text-white font-bold tracking-tight">AI</div>
           <div>
             <div className="text-[13px] font-semibold text-foreground tracking-tight">AI Governance</div>
-            <div className="text-[10px] text-muted-foreground font-normal">Risk Engine v4.2.0</div>
+            <div className="text-[10px] text-muted-foreground font-normal">Risk Engine v4.3.0</div>
           </div>
           <button
             onClick={() => setMobileNavOpen(!mobileNavOpen)}
