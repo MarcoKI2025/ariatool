@@ -90,21 +90,27 @@ Model assumptions are documented in the Model Governance section (Step 6) and su
 ];
 
 export function MethodologyModal({ open, onOpenChange }: Props) {
-  const handleDownloadPDF = () => {
-    // Build text content for download
+  const handleDownloadTxt = () => {
     const textContent = SECTIONS.map(s =>
       `${'='.repeat(60)}\n${s.title}\n${'='.repeat(60)}\n\n${s.content}\n\n`
     ).join('');
 
-    const fullDoc = `AI GOVERNANCE RISK ENGINE — METHODOLOGY WHITEPAPER\nVersion 3.2 · ${new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}\n\n${textContent}\n\n${'='.repeat(60)}\nDISCLAIMER\n${'='.repeat(60)}\n\nThis document is provided for informational purposes only and does not constitute actuarial advice, legal guidance, or regulatory compliance certification. All models, formulas, and thresholds are subject to annual recalibration based on emerging market data. Users should consult qualified actuaries and legal counsel before making underwriting decisions based on this framework.\n\n© ${new Date().getFullYear()} AI Governance Risk Engine. All rights reserved.`;
+    const fullDoc = `AI GOVERNANCE RISK ENGINE — METHODOLOGY WHITEPAPER\nVersion 4.3.0 · ${new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })}\n\n${textContent}\n\n${'='.repeat(60)}\nDISCLAIMER\n${'='.repeat(60)}\n\nThis document is provided for informational purposes only and does not constitute actuarial advice, legal guidance, or regulatory compliance certification. All models, formulas, and thresholds are subject to annual recalibration based on emerging market data. Users should consult qualified actuaries and legal counsel before making underwriting decisions based on this framework.\n\n© ${new Date().getFullYear()} AI Governance Risk Engine. All rights reserved.`;
 
     const blob = new Blob([fullDoc], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `AI_Governance_Methodology_v3.2_${new Date().toISOString().split('T')[0]}.txt`;
+    a.download = `AI_Governance_Methodology_v4.3.0_${new Date().toISOString().split('T')[0]}.txt`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadPDF = () => {
+    const a = document.createElement('a');
+    a.href = '/documents/ARIA_Whitepaper_Kindermann_2026.pdf';
+    a.download = 'When_AI_Becomes_Structurally_Uninsurable_Kindermann_2026.pdf';
+    a.click();
   };
 
   return (
@@ -116,7 +122,7 @@ export function MethodologyModal({ open, onOpenChange }: Props) {
             Methodology & Whitepaper
           </DialogTitle>
           <DialogDescription>
-            Complete technical documentation of the AI Governance Risk Engine v3.2
+            Complete technical documentation of the AI Governance Risk Engine v4.3.0
           </DialogDescription>
         </DialogHeader>
 
@@ -133,18 +139,25 @@ export function MethodologyModal({ open, onOpenChange }: Props) {
             </div>
           ))}
 
-          {/* Download */}
-          <div className="flex items-center gap-3 pt-2 border-t border-border">
+          {/* Downloads */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 pt-4 border-t border-border">
             <button
               onClick={handleDownloadPDF}
               className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-[12px] font-semibold hover:bg-primary/90 transition-colors"
             >
               <Download className="w-4 h-4" />
-              Download Whitepaper (.txt)
+              Download Research Paper (PDF)
             </button>
-            <span className="text-[10px] text-muted-foreground">
-              Includes all formulas, thresholds, and regulatory references
-            </span>
+            <button
+              onClick={handleDownloadTxt}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-secondary text-secondary-foreground text-[12px] font-semibold hover:bg-secondary/80 transition-colors border border-border"
+            >
+              <FileText className="w-4 h-4" />
+              Download Methodology (.txt)
+            </button>
+          </div>
+          <div className="text-[10px] text-muted-foreground">
+            Research paper: "When AI Becomes Structurally Uninsurable" — Kindermann, March 2026
           </div>
         </div>
       </DialogContent>

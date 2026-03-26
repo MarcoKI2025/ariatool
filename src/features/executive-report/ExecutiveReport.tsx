@@ -188,9 +188,9 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
 <tr><td>SCRI (Systemic Concentration)</td><td>${results.scri}</td><td>${results.scri >= 60 ? 'High' : results.scri >= 35 ? 'Moderate' : 'Low'}</td></tr>
 </table>
 
-<div class="disclaimer">Epistemic Status: This assessment is a structural governance signal — not actuarially certified. All loss figures are market-calibrated proxies. Self-attested inputs. Not legal advice. Framework: AGAF v4.2.0</div>
+<div class="disclaimer">Epistemic Status: This assessment is a structural governance signal — not actuarially certified. All loss figures are market-calibrated proxies. Self-attested inputs. Not legal advice. Framework: AGAF v4.3.0</div>
 
-<div class="footer"><span>ARIA AI Governance Engine v4.2.0 · AGAF Framework · ${dateStr}</span><span>CONFIDENTIAL — Board & Committee Use Only</span></div>
+<div class="footer"><span>ARIA AI Governance Engine v4.3.0 · AGAF Framework · ${dateStr}</span><span>CONFIDENTIAL — Board & Committee Use Only</span></div>
 </body></html>`;
 
     const printWindow = window.open('', '_blank');
@@ -1066,7 +1066,7 @@ th{background:#f4f5f7;font-weight:700;text-transform:uppercase;font-size:9px;let
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-[10px]">
           <div>
             <div className="text-muted-foreground mb-1">Framework Version</div>
-            <div className="font-mono font-semibold text-foreground">AGAF v4.1.0</div>
+            <div className="font-mono font-semibold text-foreground">AGAF v4.3.0</div>
           </div>
           <div>
             <div className="text-muted-foreground mb-1">Assessment Date</div>
