@@ -72,7 +72,7 @@ export function CapitalImpactPanel() {
                     <div className="w-full bg-border rounded-full h-1 mt-1">
                       <div
                         className={`h-1 rounded-full ${d.direction === 'risk' ? 'bg-fragile' : 'bg-stable'}`}
-                        style={{ width: `${Math.round(d.contribution * 100)}%` }}
+                        style={{ width: `${Math.min(100, Math.round(d.contribution * 100))}%` }}
                       />
                     </div>
                   </div>
