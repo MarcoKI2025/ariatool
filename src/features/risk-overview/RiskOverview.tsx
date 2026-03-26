@@ -17,7 +17,7 @@ export function RiskOverview() {
   return (
     <div>
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 6 · Core Analysis</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 11 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Risk Overview</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
           Structural AI governance risk assessment for {inputs.companyName || 'the assessed entity'}.
@@ -195,7 +195,7 @@ export function RiskOverview() {
       {/* View nav footer */}
       <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
         <button onClick={() => setActiveStep(1)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Exposure Analysis</button>
-        <span className="text-[10px] text-muted-foreground italic">Step 2 of 6 · Risk overview & governance signals</span>
+        <span className="text-[10px] text-muted-foreground italic">Step 2 of 11 · Risk overview & governance signals</span>
         <button onClick={() => setActiveStep(3)} className="view-nav-next">Scenario Simulation →</button>
       </div>
     </div>

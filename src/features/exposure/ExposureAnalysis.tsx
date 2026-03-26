@@ -100,7 +100,7 @@ export function ExposureAnalysis() {
       )}
 
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 1 of 6 · Entry Point</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 1 of 11 · Entry Point</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Exposure Analysis</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
           Configure the AI deployment profile. All downstream outputs — risk scores, financial exposure, underwriting recommendations — derive exclusively from this input.
