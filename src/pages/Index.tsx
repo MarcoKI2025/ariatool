@@ -15,6 +15,7 @@ import { RecursiveRiskView } from '@/features/recursive-risk/RecursiveRiskView';
 import { TemporalTrackingView } from '@/features/temporal/TemporalTrackingView';
 import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
+import { DecisionHeader } from '@/components/shared/DecisionHeader';
 
 const ACCESS_KEY = 'aria_access_granted';
 
@@ -185,6 +186,7 @@ function AppContent() {
       <AppSidebar />
       <div className="app-main flex-1 flex flex-col overflow-hidden min-w-0">
         <AppHeader />
+        <DecisionHeader />
         <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-3 pb-32 sm:p-6 sm:pb-32 md:p-10 md:pb-32 lg:p-14 lg:pb-32">
           {renderStep()}
         </main>
