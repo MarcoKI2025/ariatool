@@ -1,5 +1,6 @@
 import { DemoProfile, ExposureInputs } from './types';
 import { DEFAULT_INPUTS } from './constants';
+import { computeFullAnalysis } from './scoring';
 
 export const DEMO_PROFILES: DemoProfile[] = [
   {
