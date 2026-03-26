@@ -3,15 +3,16 @@ import { useApp } from '@/hooks/useAppState';
 import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalysis } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
-import { DependencyNetwork } from './DependencyNetwork';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
+import { DependencyNetwork } from './DependencyNetwork';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
-import { SectionDivider } from '@/components/shared/SectionDivider';
 import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+
 interface PortfolioEntity {
   id: string;
   name: string;
@@ -19,28 +20,39 @@ interface PortfolioEntity {
   weight: number;
 }
 
-function ComponentCell({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="bg-secondary/50 rounded-lg p-3 text-center">
-      <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{label}</div>
-      <div className="text-lg font-bold text-foreground font-mono">{(value * 100).toFixed(0)}</div>
-    </div>
-  );
+// ═══════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+function levelColor(level: string): string {
+  if (['Critical', 'Fragile', 'Uninsurable', 'Systemic', 'High'].includes(level)) return 'text-fragile';
+  if (['Elevated', 'Sensitive', 'At Risk', 'Medium'].includes(level)) return 'text-sensitive';
+  return 'text-stable';
+}
+function levelBg(level: string): string {
+  if (['Critical', 'Fragile', 'Systemic', 'High'].includes(level)) return 'bg-fragile-bg border-fragile-border';
+  if (['Elevated', 'Sensitive', 'At Risk', 'Medium'].includes(level)) return 'bg-sensitive-bg border-sensitive-border';
+  return 'bg-stable-bg border-stable-border';
 }
 
-function MetricCell({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="bg-secondary/50 rounded-lg p-3 text-center">
-      <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{label}</div>
-      <div className="text-sm font-semibold text-foreground">{value}</div>
-    </div>
-  );
-}
+const computeEntityAFI = (inputs: ExposureInputs) => {
+  const components = computeAFIComponents(inputs);
+  const baseAfi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
+  const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
+  const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
+  const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
+  return { components, afi, band: getBand(afi) };
+};
+
+// ═══════════════════════════════════════════════════════════════
+// MAIN VIEW
+// ═══════════════════════════════════════════════════════════════
 
 export function PortfolioView() {
   const { state } = useApp();
   const analysisInputs = state.inputs;
   const hasAnalysis = state.analysisComplete;
+  const [showDetail, setShowDetail] = useState(false);
 
   // Live cloud incident count
   const [totalIncidents, setTotalIncidents] = useState(0);
@@ -62,10 +74,9 @@ export function PortfolioView() {
     { id: '3', name: 'Client C', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 34 },
   ]);
 
-  // Sync first entity with current analysis inputs when analysis changes
   useEffect(() => {
     if (hasAnalysis) {
-      setEntities(prev => prev.map((e, i) => 
+      setEntities(prev => prev.map((e, i) =>
         i === 0 ? { ...e, name: analysisInputs.companyName || e.name, inputs: { ...analysisInputs } } : e
       ));
     }
@@ -80,31 +91,10 @@ export function PortfolioView() {
       weight: 0
     }]);
   };
+  const removeEntity = (id: string) => { if (entities.length <= 2) return; setEntities(entities.filter(e => e.id !== id)); };
+  const updateEntityWeight = (id: string, weight: number) => { setEntities(entities.map(e => e.id === id ? { ...e, weight } : e)); };
+  const updateEntityName = (id: string, name: string) => { setEntities(entities.map(e => e.id === id ? { ...e, name } : e)); };
 
-  const removeEntity = (id: string) => {
-    if (entities.length <= 2) return;
-    setEntities(entities.filter(e => e.id !== id));
-  };
-
-  const updateEntityWeight = (id: string, weight: number) => {
-    setEntities(entities.map(e => e.id === id ? { ...e, weight } : e));
-  };
-
-  const updateEntityName = (id: string, name: string) => {
-    setEntities(entities.map(e => e.id === id ? { ...e, name } : e));
-  };
-
-  // Helper: compute entity AFI including size/revenue adjustments (same as computeFullAnalysis)
-  const computeEntityAFI = (inputs: ExposureInputs) => {
-    const components = computeAFIComponents(inputs);
-    const baseAfi = calcAFI(components.dr, components.jd, components.rc, components.cd, components.na);
-    const sizeAdj = SIZE_AFI_ADJUSTMENT[inputs.size] || 0;
-    const revAdj = REVENUE_AFI_ADJUSTMENT[inputs.revenue] || 0;
-    const afi = Math.max(0.01, baseAfi + sizeAdj + revAdj);
-    return { components, afi, band: getBand(afi) };
-  };
-
-  // Calculate portfolio-weighted AFI
   const totalWeight = entities.reduce((sum, e) => sum + e.weight, 0);
   const normalizedEntities = entities.map(e => ({
     ...e,
@@ -122,313 +112,360 @@ export function PortfolioView() {
     };
   }, { dr: 0, jd: 0, rc: 0, cd: 0, na: 0 });
 
-  const portfolioAFI = calcAFI(
-    portfolioComponents.dr,
-    portfolioComponents.jd,
-    portfolioComponents.rc,
-    portfolioComponents.cd,
-    portfolioComponents.na
-  );
-
+  const portfolioAFI = calcAFI(portfolioComponents.dr, portfolioComponents.jd, portfolioComponents.rc, portfolioComponents.cd, portfolioComponents.na);
   const portfolioBand = getBand(portfolioAFI);
 
-  // Capital Efficiency Calculator — uses full AFI with size/revenue adjustments
-  const stableCount = normalizedEntities.filter(e => {
-    const { band } = computeEntityAFI(e.inputs);
-    return band === 'Stable';
-  }).length;
+  // Evolution analysis per entity
+  const entityEvolutions = useMemo(() =>
+    normalizedEntities.map(entity => {
+      const entityResults = computeFullAnalysis(entity.inputs);
+      return computeEvolutionAnalysis(entity.inputs, entityResults);
+    }),
+    [normalizedEntities.map(e => JSON.stringify(e.inputs)).join(',')]
+  );
+
+  const avgCorrelation = entityEvolutions.reduce((s, e) => s + e.systemicCorrelationScore, 0) / entityEvolutions.length;
+  const avgCascade = entityEvolutions.reduce((s, e) => s + e.cascadeRiskScore, 0) / entityEvolutions.length;
+  const worstInsurability = entityEvolutions.reduce((worst, e) => {
+    const order: Record<string, number> = { 'Insurable': 0, 'At Risk': 1, 'Critical': 2, 'Uninsurable': 3 };
+    return (order[e.insurabilityStatus] || 0) > (order[worst.insurabilityStatus] || 0) ? e : worst;
+  }, entityEvolutions[0]);
+  const hiddenCorrelationCount = entityEvolutions.filter(e => e.systemicDetail.hiddenCorrelation).length;
+
+  // Portfolio-level risk label
+  const portfolioRiskLevel =
+    worstInsurability.insurabilityStatus === 'Uninsurable' || avgCascade > 0.6 ? 'SYSTEMIC' :
+    worstInsurability.insurabilityStatus === 'Critical' || avgCorrelation > 0.6 ? 'ELEVATED' :
+    worstInsurability.insurabilityStatus === 'At Risk' ? 'MODERATE' : 'MANAGEABLE';
+
+  const portfolioStatement =
+    portfolioRiskLevel === 'SYSTEMIC'
+      ? 'Correlated dependencies create potential cascade failure across entities.'
+      : portfolioRiskLevel === 'ELEVATED'
+      ? 'Shared infrastructure dependencies create concentrated risk exposure.'
+      : portfolioRiskLevel === 'MODERATE'
+      ? 'Portfolio contains entities with emerging dependency risk.'
+      : 'Portfolio dependencies are sufficiently diversified.';
+
+  const riskColor = levelColor(portfolioRiskLevel === 'SYSTEMIC' ? 'Critical' : portfolioRiskLevel === 'ELEVATED' ? 'Elevated' : portfolioRiskLevel === 'MODERATE' ? 'Sensitive' : 'Stable');
+  const riskBg = levelBg(portfolioRiskLevel === 'SYSTEMIC' ? 'Critical' : portfolioRiskLevel === 'ELEVATED' ? 'Elevated' : portfolioRiskLevel === 'MODERATE' ? 'Sensitive' : 'Stable');
+
+  // Worst case impact
+  const worstTailRisk = Math.max(...entityEvolutions.map(e => e.economicLoss.tailRisk));
+
+  // Solvency stable count
+  const stableCount = normalizedEntities.filter(e => computeEntityAFI(e.inputs).band === 'Stable').length;
 
   return (
-    <div className="space-y-6 sm:space-y-8 max-w-5xl">
-      {/* Real Case Alert */}
+    <div className="space-y-6 max-w-5xl">
       <RealCaseAlert />
 
-      {/* Portfolio Intelligence Header */}
+      {/* Header */}
       <div className="border-b border-border pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">
-              Step 7 · Portfolio Intelligence
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
-              Multi-Entity Risk Aggregation
-            </h1>
-            <p className="text-[11px] sm:text-sm text-muted-foreground leading-relaxed max-w-2xl mt-2">
-              Assess aggregate structural risk across multiple client deployments.
-            </p>
+            <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">Step 7 · Portfolio Intelligence</div>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
           </div>
           <div className="sm:text-right flex-shrink-0 space-y-1">
             <LiveIndicator label={`${entities.length} entities monitored`} />
             {totalIncidents > 0 && (
               <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-sensitive-bg border border-sensitive-border">
                 <span className="w-1.5 h-1.5 rounded-full bg-sensitive animate-pulse" />
-                <span className="text-[9px] font-medium text-sensitive">
-                  {totalIncidents} Provider Incident{totalIncidents !== 1 ? 's' : ''} Active
-                </span>
+                <span className="text-[9px] font-medium text-sensitive">{totalIncidents} Provider Incident{totalIncidents !== 1 ? 's' : ''} Active</span>
               </div>
             )}
-            <div className="text-[9px] text-muted-foreground">
-              Last Updated: {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
-            </div>
           </div>
         </div>
       </div>
 
       <UseRestrictionBanner />
 
-      {/* Portfolio Summary */}
-      <div className="bg-card border border-border rounded-xl p-6 space-y-5">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-base font-semibold text-foreground">
-              Portfolio-Level Risk Assessment
-            </h2>
-            <p className="text-[11px] text-muted-foreground mt-0.5">
-              {entities.length} entities · Weighted aggregate analysis
-            </p>
-          </div>
-          <div className="text-right">
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Portfolio AFI</div>
-            <div className={`text-3xl font-bold font-mono text-${getBandClass(portfolioBand)}`}>
-              {portfolioAFI.toFixed(2)}
-            </div>
-            <div className={`text-xs font-semibold mt-1 text-${getBandClass(portfolioBand)}`}>
-              {portfolioBand}
-            </div>
-          </div>
+      {/* ══════════════════════════════════════════════════
+          STEP 1: TOP SUMMARY — Portfolio Risk Statement
+          ══════════════════════════════════════════════════ */}
+      <div className={`rounded-xl border-2 p-6 ${riskBg}`}>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground">Portfolio Risk:</span>
+          <span className={`text-[14px] font-extrabold tracking-tight ${riskColor}`}>{portfolioRiskLevel}</span>
         </div>
-
-        {/* Portfolio Components */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
-          <ComponentCell label="DR" value={portfolioComponents.dr} />
-          <ComponentCell label="JD" value={portfolioComponents.jd} />
-          <ComponentCell label="RC" value={portfolioComponents.rc} />
-          <ComponentCell label="CD" value={portfolioComponents.cd} />
-          <ComponentCell label="NA" value={portfolioComponents.na} />
+        <div className={`text-[17px] sm:text-[20px] font-extrabold leading-[1.3] tracking-tight ${riskColor}`}>
+          {portfolioStatement}
+        </div>
+        <div className="flex items-center gap-4 mt-3">
+          <div className="text-[10px] text-muted-foreground">
+            Portfolio AFI: <span className={`font-bold font-mono ${riskColor}`}>{portfolioAFI.toFixed(2)}</span> ({portfolioBand})
+          </div>
+          <div className="text-[10px] text-muted-foreground">
+            {entities.length} entities · Weighted aggregate
+          </div>
         </div>
       </div>
 
-      {/* Portfolio Insurability & Systemic Risk */}
-      {(() => {
-        // Compute evolution for each entity and aggregate
-        const entityEvolutions = normalizedEntities.map(entity => {
-          const entityResults = computeFullAnalysis(entity.inputs);
-          return computeEvolutionAnalysis(entity.inputs, entityResults);
-        });
+      {/* ══════════════════════════════════════════════════
+          STEP 2: 4 CORE METRICS
+          ══════════════════════════════════════════════════ */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {/* Worst Case Impact */}
+        <div className={`rounded-xl border p-5 ${levelBg(worstTailRisk > 15 ? 'Critical' : worstTailRisk > 8 ? 'Elevated' : 'Stable')}`}>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Worst Case Impact</div>
+          <div className={`text-[22px] font-extrabold font-mono ${levelColor(worstTailRisk > 15 ? 'Critical' : worstTailRisk > 8 ? 'Elevated' : 'Stable')}`}>€{worstTailRisk}M</div>
+          <div className="text-[9px] text-muted-foreground mt-1">Tail risk (99th percentile)</div>
+        </div>
+        {/* Average Correlation */}
+        <div className={`rounded-xl border p-5 ${levelBg(avgCorrelation > 0.65 ? 'Critical' : avgCorrelation > 0.35 ? 'Elevated' : 'Stable')}`}>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Avg Correlation</div>
+          <div className={`text-[22px] font-extrabold font-mono ${levelColor(avgCorrelation > 0.65 ? 'Critical' : avgCorrelation > 0.35 ? 'Elevated' : 'Stable')}`}>{(avgCorrelation * 100).toFixed(0)}%</div>
+          <div className="text-[9px] text-muted-foreground mt-1">Cross-entity dependency</div>
+        </div>
+        {/* Cascade Risk */}
+        <div className={`rounded-xl border p-5 ${levelBg(avgCascade > 0.6 ? 'Critical' : avgCascade > 0.3 ? 'Elevated' : 'Stable')}`}>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Cascade Risk</div>
+          <div className={`text-[22px] font-extrabold font-mono ${levelColor(avgCascade > 0.6 ? 'Critical' : avgCascade > 0.3 ? 'Elevated' : 'Stable')}`}>{(avgCascade * 100).toFixed(0)}%</div>
+          <div className="text-[9px] text-muted-foreground mt-1">Failure propagation</div>
+        </div>
+        {/* Portfolio Exposure Level */}
+        <div className={`rounded-xl border p-5 ${levelBg(worstInsurability.insurabilityStatus === 'Uninsurable' ? 'Critical' : worstInsurability.insurabilityStatus === 'At Risk' ? 'Elevated' : 'Stable')}`}>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Exposure Level</div>
+          <div className={`text-[18px] font-extrabold ${levelColor(worstInsurability.insurabilityStatus === 'Uninsurable' ? 'Critical' : worstInsurability.insurabilityStatus === 'At Risk' ? 'Elevated' : 'Stable')}`}>{worstInsurability.insurabilityStatus}</div>
+          <div className="text-[9px] text-muted-foreground mt-1">Worst entity status</div>
+        </div>
+      </div>
 
-        const avgCorrelation = entityEvolutions.reduce((s, e) => s + e.systemicCorrelationScore, 0) / entityEvolutions.length;
-        const avgCascade = entityEvolutions.reduce((s, e) => s + e.cascadeRiskScore, 0) / entityEvolutions.length;
-        const maxPortfolioImpact = entityEvolutions.reduce((max, e) => e.portfolioImpactScore > max.portfolioImpactScore ? e : max, entityEvolutions[0]);
-        const worstInsurability = entityEvolutions.reduce((worst, e) => {
-          const order = { 'Insurable': 0, 'At Risk': 1, 'Critical': 2, 'Uninsurable': 3 };
-          return (order[e.insurabilityStatus] || 0) > (order[worst.insurabilityStatus] || 0) ? e : worst;
-        }, entityEvolutions[0]);
-        const hiddenCorrelationCount = entityEvolutions.filter(e => e.systemicDetail.hiddenCorrelation).length;
+      {/* ══════════════════════════════════════════════════
+          STEP 3: WHAT CAN GO WRONG
+          ══════════════════════════════════════════════════ */}
+      <div className="flex items-center gap-3 mb-1">
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">What Can Go Wrong</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
 
-        const portfolioInsurColor =
-          worstInsurability.insurabilityStatus === 'Uninsurable' || worstInsurability.insurabilityStatus === 'Critical' ? 'text-fragile' :
-          worstInsurability.insurabilityStatus === 'At Risk' ? 'text-sensitive' : 'text-stable';
-        const portfolioImpactColor =
-          maxPortfolioImpact.portfolioImpact === 'Systemic' || maxPortfolioImpact.portfolioImpact === 'Critical' ? 'text-fragile' :
-          maxPortfolioImpact.portfolioImpact === 'Elevated' ? 'text-sensitive' : 'text-stable';
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[
+          {
+            title: 'Shared Model Failure',
+            desc: 'Multiple entities rely on the same AI model family. A single model vulnerability propagates across the portfolio simultaneously.',
+            level: avgCorrelation > 0.5 ? 'High' : 'Moderate',
+          },
+          {
+            title: 'Cloud Dependency Outage',
+            desc: 'Concentrated cloud infrastructure creates single points of failure. Provider incidents affect multiple entities at once.',
+            level: totalIncidents > 0 ? 'Active' : avgCorrelation > 0.4 ? 'Elevated' : 'Low',
+          },
+          {
+            title: 'Correlated Decision Errors',
+            desc: 'Entities using similar training data or governance frameworks produce correlated failures under the same stress conditions.',
+            level: avgCascade > 0.5 ? 'High' : 'Moderate',
+          },
+        ].map((scenario) => {
+          const sColor = levelColor(scenario.level === 'Active' || scenario.level === 'High' ? 'Critical' : scenario.level === 'Elevated' ? 'Elevated' : 'Stable');
+          const sBg = levelBg(scenario.level === 'Active' || scenario.level === 'High' ? 'Critical' : scenario.level === 'Elevated' ? 'Elevated' : 'Stable');
+          return (
+            <div key={scenario.title} className={`rounded-xl border p-5 ${sBg}`}>
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">{scenario.title}</div>
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${sColor}`}>{scenario.level}</span>
+              </div>
+              <div className="text-[11px] text-foreground font-medium leading-relaxed">{scenario.desc}</div>
+            </div>
+          );
+        })}
+      </div>
 
-        return (
-          <div className="bg-card border border-border rounded-xl p-6 space-y-4">
+      {/* Hidden Correlation Warning */}
+      {hiddenCorrelationCount > 0 && (
+        <div className="bg-sensitive-bg border-2 border-sensitive rounded-xl p-5">
+          <div className="flex items-start gap-3">
+            <span className="text-[18px]">⚠️</span>
             <div>
-              <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Portfolio Insurability Assessment</div>
-              <div className="text-[15px] font-bold text-foreground">Aggregate Risk & Systemic Exposure</div>
-              <div className="text-[11px] text-muted-foreground mt-1">Cross-entity correlation clustering and shared dependency analysis.</div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-secondary/50 rounded-lg p-3 text-center">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Worst Insurability</div>
-                <div className={`text-lg font-bold ${portfolioInsurColor}`}>{worstInsurability.insurabilityStatus}</div>
+              <div className="text-[13px] font-extrabold text-sensitive mb-1">Hidden Correlation Detected in {hiddenCorrelationCount} Entit{hiddenCorrelationCount > 1 ? 'ies' : 'y'}</div>
+              <div className="text-[11px] text-foreground font-medium leading-relaxed">
+                Individually moderate dependency factors combine to create aggregate systemic risk. Portfolio-wide failure scenarios cannot be excluded under correlated stress conditions.
               </div>
-              <div className="bg-secondary/50 rounded-lg p-3 text-center">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Portfolio Impact</div>
-                <div className={`text-lg font-bold ${portfolioImpactColor}`}>{maxPortfolioImpact.portfolioImpact}</div>
-              </div>
-              <div className="bg-secondary/50 rounded-lg p-3 text-center">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Avg Correlation</div>
-                <div className={`text-lg font-bold font-mono ${avgCorrelation > 0.65 ? 'text-fragile' : avgCorrelation > 0.35 ? 'text-sensitive' : 'text-stable'}`}>
-                  {(avgCorrelation * 100).toFixed(0)}%
-                </div>
-              </div>
-              <div className="bg-secondary/50 rounded-lg p-3 text-center">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Avg Cascade Risk</div>
-                <div className={`text-lg font-bold font-mono ${avgCascade > 0.6 ? 'text-fragile' : avgCascade > 0.3 ? 'text-sensitive' : 'text-stable'}`}>
-                  {avgCascade.toFixed(2)}
-                </div>
-              </div>
-            </div>
-
-            {hiddenCorrelationCount > 0 && (
-              <div className="p-3 bg-sensitive-bg border border-sensitive-border rounded-lg">
-                <div className="text-[11px] font-bold text-sensitive mb-1">⚠ Hidden Correlation Detected in {hiddenCorrelationCount} Entit{hiddenCorrelationCount > 1 ? 'ies' : 'y'}</div>
-                <div className="text-[10px] text-sensitive/80 leading-[1.5]">
-                  Individually moderate dependency factors combine to create aggregate systemic risk. Portfolio-wide failure scenarios cannot be excluded under correlated stress conditions.
-                </div>
-              </div>
-            )}
-
-            {/* Per-entity evolution summary */}
-            <div className="space-y-2">
-              <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">Entity Evolution Summary</div>
-              {normalizedEntities.map((entity, idx) => {
-                const evo = entityEvolutions[idx];
-                return (
-                  <div key={entity.id} className="flex items-center gap-3 p-2 bg-secondary/30 rounded-lg">
-                    <span className="text-[11px] font-semibold text-foreground w-[100px] truncate">{entity.name}</span>
-                    <span className={`text-[10px] font-bold ${
-                      evo.insurabilityStatus === 'Uninsurable' || evo.insurabilityStatus === 'Critical' ? 'text-fragile' :
-                      evo.insurabilityStatus === 'At Risk' ? 'text-sensitive' : 'text-stable'
-                    }`}>{evo.insurabilityStatus}</span>
-                    <span className={`text-[10px] font-mono ${
-                      evo.driftTrend === 'Critical Acceleration' ? 'text-fragile' :
-                      evo.driftTrend === 'Increasing Risk' ? 'text-sensitive' : 'text-stable'
-                    }`}>{evo.driftTrend}</span>
-                    <span className="text-[9px] text-muted-foreground ml-auto">{evo.coverageDecision.decision}</span>
-                  </div>
-                );
-              })}
             </div>
           </div>
-        );
-      })()}
+        </div>
+      )}
 
-      <SectionDivider title="Entity Breakdown" icon="🏢" subtitle="Individual entity risk profiles and weights" />
+      {/* ══════════════════════════════════════════════════
+          STEP 4: SIMPLIFIED ENTITY BREAKDOWN
+          ══════════════════════════════════════════════════ */}
+      <div className="flex items-center gap-3 mb-1">
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Entity Overview</span>
+        <div className="flex-1 h-px bg-border" />
+        <button onClick={addEntity} className="px-3 py-1.5 text-[10px] font-bold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+          + Add Entity
+        </button>
+      </div>
 
-      {/* Entity List */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground">Entity Breakdown</h3>
-          <button
-            onClick={addEntity}
-            className="px-3 py-1.5 text-[11px] font-medium rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
-          >
-            + Add Entity
+      <div className="bg-card border border-border rounded-xl divide-y divide-border overflow-hidden">
+        {normalizedEntities.map((entity, idx) => {
+          const { afi, band } = computeEntityAFI(entity.inputs);
+          const evo = entityEvolutions[idx];
+          const bandColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
+          const bandBg = band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable';
+
+          return (
+            <div key={entity.id} className="flex items-center gap-3 px-5 py-3.5">
+              {/* Color indicator */}
+              <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${bandBg}`} />
+
+              {/* Name */}
+              <input
+                value={entity.name}
+                onChange={e => updateEntityName(entity.id, e.target.value)}
+                className="flex-1 min-w-[100px] bg-transparent text-[13px] font-semibold text-foreground border-none outline-none focus:underline"
+              />
+
+              {/* Band label */}
+              <span className={`text-[11px] font-bold ${bandColor}`}>{band}</span>
+
+              {/* AFI */}
+              <span className="text-[11px] font-mono text-muted-foreground w-12 text-right">{afi.toFixed(2)}</span>
+
+              {/* Coverage decision */}
+              <span className="text-[9px] text-muted-foreground hidden sm:inline-block w-16 text-right">{evo?.coverageDecision.decision || '—'}</span>
+
+              {/* Weight */}
+              <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                <input
+                  type="number"
+                  value={entity.weight}
+                  onChange={e => updateEntityWeight(entity.id, parseFloat(e.target.value) || 0)}
+                  className="w-12 px-1.5 py-1 bg-secondary border border-border rounded text-[10px] text-center"
+                  min="0" max="100"
+                />
+                <span>%</span>
+              </div>
+
+              {/* Remove */}
+              {entities.length > 2 && (
+                <button onClick={() => removeEntity(entity.id)} className="text-[11px] text-muted-foreground hover:text-destructive transition-colors">✕</button>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ══════════════════════════════════════════════════
+          STEP 5: UNDERWRITING IMPACT
+          ══════════════════════════════════════════════════ */}
+      <div className="flex items-center gap-3 mb-1">
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Underwriting Impact</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Coverage Restriction */}
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Coverage Restriction</div>
+          <div className={`text-[14px] font-bold mb-2 ${riskColor}`}>
+            {portfolioRiskLevel === 'SYSTEMIC' ? 'Decline or Sublimit Required'
+              : portfolioRiskLevel === 'ELEVATED' ? 'Conditional — Governance Controls Required'
+              : 'Standard Terms Applicable'}
+          </div>
+          <div className="text-[10px] text-muted-foreground leading-relaxed">
+            {portfolioRiskLevel === 'SYSTEMIC'
+              ? 'Correlated failure modes across entities require coverage restrictions or exclusion clauses.'
+              : 'Current portfolio composition allows standard underwriting with monitoring.'}
+          </div>
+        </div>
+
+        {/* Aggregation Risk */}
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Aggregation Risk</div>
+          <div className={`text-[14px] font-bold mb-2 ${levelColor(avgCorrelation > 0.5 ? 'Critical' : avgCorrelation > 0.3 ? 'Elevated' : 'Stable')}`}>
+            {avgCorrelation > 0.5 ? 'Critical Concentration' : avgCorrelation > 0.3 ? 'Moderate Overlap' : 'Diversified'}
+          </div>
+          <div className="text-[10px] text-muted-foreground leading-relaxed">
+            {avgCorrelation > 0.5
+              ? 'Treaty structuring must account for correlated loss potential across entities.'
+              : 'Entity independence is sufficient for standard aggregation limits.'}
+          </div>
+        </div>
+
+        {/* Capital Allocation Pressure */}
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Capital Allocation</div>
+          <div className={`text-[14px] font-bold mb-2 ${levelColor(stableCount === 0 ? 'Critical' : stableCount < entities.length / 2 ? 'Elevated' : 'Stable')}`}>
+            {stableCount === 0 ? 'Maximum Reserve Required' : stableCount >= entities.length / 2 ? 'Capital Efficiency Available' : 'Partial Reserve Optimization'}
+          </div>
+          <div className="text-[10px] text-muted-foreground leading-relaxed">
+            {stableCount > 0
+              ? `${stableCount} of ${entities.length} entities qualify for Solvency II capital reduction (12–18% per stable entity).`
+              : 'No entities qualify for capital reserve reduction under current governance scores.'}
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════
+          STEP 6: COLLAPSED ADVANCED MODULES
+          ══════════════════════════════════════════════════ */}
+      <Collapsible open={showDetail} onOpenChange={setShowDetail}>
+        <CollapsibleTrigger className="w-full flex items-center justify-center gap-2 py-3 cursor-pointer">
+          <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-secondary border border-border hover:bg-accent transition-colors">
+            <span className="text-[11px] font-bold tracking-wider uppercase text-foreground">
+              {showDetail ? '▾ Hide Advanced Analysis' : '▸ View Advanced Analysis'}
+            </span>
           </button>
-        </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-4 pt-4">
 
-        <div className="space-y-3">
-          {normalizedEntities.map((entity) => {
-            const { components, afi, band } = computeEntityAFI(entity.inputs);
-
-            return (
-              <div key={entity.id} className="bg-card border border-border rounded-xl p-5 space-y-3">
-                <div className="flex items-center gap-3 flex-wrap">
-                  <input
-                    value={entity.name}
-                    onChange={e => updateEntityName(entity.id, e.target.value)}
-                    className="flex-1 min-w-[140px] px-3 py-2 bg-secondary border border-border rounded-md text-[13px] font-semibold text-foreground"
-                  />
-                  <div className="flex items-center gap-2 text-[12px] text-muted-foreground">
-                    <span>Weight:</span>
-                    <input
-                      type="number"
-                      value={entity.weight}
-                      onChange={e => updateEntityWeight(entity.id, parseFloat(e.target.value) || 0)}
-                      className="w-20 px-2 py-1.5 bg-secondary border border-border rounded-md text-[12px] text-center"
-                      min="0"
-                      max="100"
-                    />
-                    <span>%</span>
-                  </div>
-                  <span className="text-[10px] text-muted-foreground">
-                    ({(entity.normalizedWeight * 100).toFixed(1)}% of total)
-                  </span>
-                  {entities.length > 2 && (
-                    <button
-                      onClick={() => removeEntity(entity.id)}
-                      className="px-2 py-1 text-[11px] text-muted-foreground hover:text-destructive transition-colors"
-                    >
-                      ✕
-                    </button>
-                  )}
+          {/* Portfolio AFI Components */}
+          <div className="bg-card border border-border rounded-xl p-5">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Portfolio AFI Components (Weighted Average)</div>
+            <div className="grid grid-cols-5 gap-3">
+              {[
+                { label: 'DR', value: portfolioComponents.dr },
+                { label: 'JD', value: portfolioComponents.jd },
+                { label: 'RC', value: portfolioComponents.rc },
+                { label: 'CD', value: portfolioComponents.cd },
+                { label: 'NA', value: portfolioComponents.na },
+              ].map(c => (
+                <div key={c.label} className="bg-secondary/50 rounded-lg p-3 text-center">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground mb-1">{c.label}</div>
+                  <div className="text-[18px] font-bold font-mono text-foreground">{(c.value * 100).toFixed(0)}</div>
                 </div>
+              ))}
+            </div>
+          </div>
 
-                <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
-                  <MetricCell label="DR" value={(components.dr * 100).toFixed(0)} />
-                  <MetricCell label="JD" value={(components.jd * 100).toFixed(0)} />
-                  <MetricCell label="RC" value={(components.rc * 100).toFixed(0)} />
-                  <MetricCell label="CD" value={(components.cd * 100).toFixed(0)} />
-                  <MetricCell label="NA" value={(components.na * 100).toFixed(0)} />
-                  <MetricCell label="AFI" value={afi.toFixed(2)} />
-                  <div className={`bg-${getBandClass(band)}-bg border border-${getBandClass(band)}-border rounded-lg p-3 text-center`}>
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Band</div>
-                    <div className={`text-sm font-semibold text-${getBandClass(band)}`}>{band}</div>
-                  </div>
+          {/* Solvency II Capital Efficiency */}
+          <div className="bg-card border border-border rounded-xl p-5">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Solvency II Capital Efficiency</div>
+            {stableCount > 0 ? (
+              <div className="grid grid-cols-3 gap-3">
+                <div className="bg-secondary/50 rounded-lg p-3 text-center">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground mb-1">Stable Entities</div>
+                  <div className="text-[18px] font-bold text-stable font-mono">{stableCount} / {entities.length}</div>
+                </div>
+                <div className="bg-secondary/50 rounded-lg p-3 text-center">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground mb-1">Capital Reduction</div>
+                  <div className="text-[18px] font-bold text-foreground font-mono">12–18%</div>
+                </div>
+                <div className="bg-secondary/50 rounded-lg p-3 text-center">
+                  <div className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground mb-1">Cost of Capital</div>
+                  <div className="text-[18px] font-bold text-foreground font-mono">8% p.a.</div>
                 </div>
               </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <SectionDivider title="Capital & Solvency" icon="💰" subtitle="Solvency II capital efficiency and reserve optimization" />
-
-      {/* Capital Efficiency Calculator */}
-      <div className="bg-card border border-border rounded-xl p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-stable mb-1">✓ Solvency II Capital Efficiency</div>
-            <div className="text-[11px] text-muted-foreground">Estimated governance-driven capital reserve optimization</div>
+            ) : (
+              <div className="text-[11px] text-muted-foreground text-center py-3">No entities currently classified as Stable — optimize governance scores to unlock capital efficiency.</div>
+            )}
           </div>
-          <div className="text-[9px] text-muted-foreground">Based on current portfolio composition</div>
-        </div>
-        {stableCount > 0 ? (
-          <>
-            <div className="text-center mb-4">
-              <div className="text-[11px] text-muted-foreground mb-1">Projected annual capital release potential</div>
-              <div className="text-[10px] text-muted-foreground leading-[1.5] max-w-md mx-auto">
-                Entities classified as Stable qualify for reduced capital reserves under Solvency II Pillar 2 risk reclassification framework (EIOPA calibration: 12–18% reduction per entity).
-              </div>
+
+          {/* Quantum Vulnerability */}
+          <QuantumVulnerabilityAssessment />
+
+          {/* Interpretation */}
+          <div className="bg-card border border-border rounded-xl p-5">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Methodology Note</div>
+            <div className="text-[11px] text-muted-foreground leading-relaxed">
+              Portfolio AFI represents the weighted-average structural fragility across all entities. Aggregation assumes shared infrastructure dependencies. Actual risk may be higher under correlated failure modes. Framework: AGAF v4.3.0.
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
-              <div className="bg-secondary/50 rounded-lg p-3 text-center">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Stable Entities</div>
-                <div className="text-lg font-bold text-stable font-mono">{stableCount} / {normalizedEntities.length}</div>
-              </div>
-              <div className="bg-secondary/50 rounded-lg p-3 text-center">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Capital Reduction (EIOPA)</div>
-                <div className="text-lg font-bold text-foreground font-mono">12–18%</div>
-              </div>
-              <div className="bg-secondary/50 rounded-lg p-3 text-center">
-                <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">Cost of Capital Baseline</div>
-                <div className="text-lg font-bold text-foreground font-mono">8% p.a.</div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="text-center py-4">
-            <div className="text-[12px] text-muted-foreground">No entities currently classified as Stable</div>
-            <div className="text-[10px] text-muted-foreground mt-1">Optimize governance scores to unlock capital efficiency gains</div>
           </div>
-        )}
-        <div className="mt-4 text-[9px] text-muted-foreground leading-[1.5] border-t border-border pt-3">
-          Portfolio entities with improved governance scores (AFI reclassification from Sensitive/Fragile → Stable) require lower capital reserves under Solvency II Article 44 operational risk framework. Figures represent estimated opportunity based on current portfolio composition and standard EIOPA calibration factors. Not actuarial advice.
-        </div>
-      </div>
 
-      <SectionDivider title="Advanced Analysis" icon="🧬" subtitle="Quantum vulnerability and portfolio interpretation" />
-
-      {/* Quantum Vulnerability Assessment */}
-      <QuantumVulnerabilityAssessment />
-
-      {/* Interpretation */}
-      <div className="bg-card border border-border rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-foreground mb-3">Portfolio Interpretation</h3>
-        <p className="text-[12px] text-muted-foreground leading-relaxed mb-3">
-          Portfolio AFI represents the weighted-average structural fragility across all entities in this cluster.
-          This aggregation assumes entities share common infrastructure dependencies (model providers, cloud platforms,
-          governance frameworks). Actual portfolio risk may be higher if entities exhibit correlated failure modes
-          not captured in independent AFI assessments. Use this for concentration risk evaluation and treaty structuring.
-        </p>
-        <p className="text-[11px] text-muted-foreground leading-relaxed italic">
-          Swiss Re sigma insights 01/2026: "AI adoption creates emerging risk dimensions that do not fit neatly within traditional insurance boundaries." "New exposures arising from hyperscale data centres, high-performance computing facilities and expanded power &amp; energy infrastructure."
-        </p>
-      </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       <AppFooter />
     </div>
