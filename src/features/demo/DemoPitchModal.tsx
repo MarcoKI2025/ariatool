@@ -515,13 +515,14 @@ function Slide7() {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide8() {
+  const m = useMeridianLive();
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow dotColor="#60d090">Operational Underwriting · Premium Calculator & Peer Benchmarking</Eyebrow>
+      <Eyebrow dotColor="#60d090">Operational Underwriting · Premium Calculator & Capital Impact</Eyebrow>
       <DmH1>From risk score to<br /><span className="text-[#60d090]">actionable premium.</span></DmH1>
       <BodyText>
-        ARIA converts AFI scores into concrete insurance premiums using actuarial formulas, and positions each entity
-        against industry peer groups. Underwriters get pricing AND context in a single workflow.
+        ARIA converts AFI scores into concrete insurance premiums using actuarial formulas with evolution engine multipliers
+        (drift, cascade, correlation), and translates structural risk into heuristic loss ranges for capital allocation.
       </BodyText>
       <div className="grid grid-cols-2 gap-4 mb-5">
         {/* Premium Calculator */}
@@ -533,20 +534,20 @@ function Slide8() {
               <span className="text-[16px] font-bold font-mono text-[#eeeadc]">€500k – €50M</span>
             </div>
             <div className="flex justify-between items-baseline">
-              <span className="text-[10px] text-[#a8a49c]">Base Rate × AFI Multiplier</span>
-              <span className="text-[14px] font-bold font-mono text-[#ffc040]">1.2% – 2.5%</span>
+              <span className="text-[10px] text-[#a8a49c]">Base Rate × AFI × Evolution</span>
+              <span className="text-[14px] font-bold font-mono text-[#ffc040]">Future-Dominant</span>
             </div>
             <div className="flex justify-between items-baseline">
-              <span className="text-[10px] text-[#a8a49c]">Industry Factor</span>
-              <span className="text-[14px] font-bold font-mono text-[#9088e0]">0.8× – 1.5×</span>
+              <span className="text-[10px] text-[#a8a49c]">Drift + Cascade + Correlation</span>
+              <span className="text-[14px] font-bold font-mono text-[#9088e0]">Dynamic multipliers</span>
             </div>
             <div className="flex justify-between items-baseline border-t border-[#3a3828] pt-3">
-              <span className="text-[10px] text-[#a8a49c] font-bold">Example: Meridian (AFI 2.23)</span>
-              <span className="text-[20px] font-bold font-mono text-[#ff8070]">€192k/yr</span>
+              <span className="text-[10px] text-[#a8a49c] font-bold">Meridian (AFI {m.afi.toFixed(2)})</span>
+              <span className="text-[20px] font-bold font-mono text-[#ff8070]">{m.premium}/yr</span>
             </div>
           </div>
           <div className="mt-3 text-[9px] text-[#b0aca0] leading-[1.55]">
-            Interactive sliders for coverage amount and deductible options. Real-time recalculation. Full premium breakdown by component.
+            Interactive sliders for coverage and deductible. RSI/MCCI surcharge up to +15%. Evolution engine applies 60% future / 40% current weighting.
           </div>
         </div>
 
