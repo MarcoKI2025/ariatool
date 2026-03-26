@@ -296,7 +296,6 @@ export function CompanyView() {
   const { state, setInputs, updateInputs, runAnalysis, setPerspective, setActiveStep } = useApp();
   const { results, inputs: globalInputs, analysisComplete } = state;
   const heroRef = useRef<HTMLDivElement>(null);
-  const [showSticky, setShowSticky] = useState(false);
   const syncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // ── Local standalone inputs (mirrors ExposureInputs) ──
@@ -344,20 +343,6 @@ export function CompanyView() {
   // Cleanup sync timer
   useEffect(() => { return () => { if (syncTimerRef.current) clearTimeout(syncTimerRef.current); }; }, []);
 
-  // Sticky header
-  useEffect(() => {
-    const handleScroll = () => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        setShowSticky(rect.bottom < 0);
-      }
-    };
-    const main = document.querySelector('main');
-    if (main) {
-      main.addEventListener('scroll', handleScroll);
-      return () => main.removeEventListener('scroll', handleScroll);
-    }
-  }, []);
 
   // ── Derive AFI from local inputs (with size/revenue adjustments matching scoring.ts) ──
   const liveComponents = useMemo(() => computeAFIComponents(localInputs), [localInputs]);
@@ -447,19 +432,6 @@ export function CompanyView() {
 
   return (
     <div style={{ position: 'relative' }}>
-      {/* Sticky mini header */}
-      <div className="sticky top-0 z-10 bg-card border-b border-border px-3 sm:px-9 py-2.5 flex items-center justify-between gap-3" style={{
-        opacity: showSticky ? 1 : 0, transform: showSticky ? 'none' : 'translateY(-4px)',
-        transition: 'opacity .2s, transform .2s', pointerEvents: showSticky ? 'auto' : 'none',
-      }}>
-        <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
-          <span className="text-[12px] sm:text-[13px] font-bold text-foreground truncate">{companyName}</span>
-          <span className={band === 'Fragile' ? 'badge-fragile' : band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'} style={{ fontSize: 10, padding: '4px 10px', borderRadius: 5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{band}</span>
-        </div>
-        <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
-          <span className="text-[11px] sm:text-[12px] font-bold font-mono text-primary">{fmtK(sim.lo)} – {fmtK(sim.hi)} / yr</span>
-        </div>
-      </div>
 
       {/* Company View Header */}
       <div className="px-4 sm:px-7 pt-5">
