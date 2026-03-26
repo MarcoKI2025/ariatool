@@ -67,9 +67,7 @@ export function ExecutiveReport() {
   const cd100 = Math.round(components.cd * 100);
   const reportId = `ARIA-${Date.now().toString(36).toUpperCase()}`;
 
-  const evolution = useMemo<EvolutionAnalysis | null>(() => {
-    return computeEvolutionAnalysis(inputs, results);
-  }, [inputs, results]);
+  // evolution already computed above
 
   const insLabel = evolution ? insurabilityLabel(evolution) : (band === 'Fragile' ? 'NOT INSURABLE' : band === 'Sensitive' ? 'CONDITIONAL' : 'INSURABLE');
   const confidenceLevel = evolution?.confidence.level || 'Medium';
