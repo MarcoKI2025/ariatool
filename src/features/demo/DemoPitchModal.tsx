@@ -361,16 +361,18 @@ function Slide3() {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide4() {
+  const m = useMeridianLive();
+  const decisionLabel = m.decision === 'Decline' ? 'NOT INSURABLE' : m.decision === 'Accept' ? 'INSURABLE' : 'CONDITIONAL';
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#b53020">Live Case · Meridian Financial Group · Financial Services · Autonomous Trading AI</Eyebrow>
-      <DmH1><span className="text-[#ff4040]">DEPLOYMENT NOT APPROVED</span></DmH1>
-      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI 2.23 · Responsibility Fragmented · Governance signals above normal parameters</p>
+      <DmH1><span className="text-[#ff4040]">{decisionLabel}</span></DmH1>
+      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI {m.afi.toFixed(2)} · Coverage: {m.decision} · Unified Risk: {m.unified}</p>
       <div className="grid grid-cols-4 gap-3 mb-5">
-        <LossCell label="Authorization Status" value="NOT APPROVED" src="Unresolved governance risk" color="#ff4040" />
-        <LossCell label="Consequence Range" value="€80M–€250M" src="Indicative · structural patterns" color="#9c6200" />
-        <LossCell label="Accountability" value="FRAGMENTED" src="No clearly assigned owner" color="#b53020" />
-        <LossCell label="Systemic Exposure" value="Critical" src="Correlated dependency cluster" color="#f87070" />
+        <LossCell label="Coverage Decision" value={m.decision} src="Evolution Engine verdict" color="#ff4040" />
+        <LossCell label="Economic Loss Range" value={`€${m.economicLow}M–€${m.economicHigh}M`} src="Heuristic · market-calibrated" color="#9c6200" />
+        <LossCell label="Tail Risk" value={`€${m.tailRisk}M`} src="Cascade + correlation amplified" color="#b53020" />
+        <LossCell label="Systemic Correlation" value={m.systemicCorrelation} src={`Cascade: ${m.cascadeLabel}`} color="#f87070" />
       </div>
       <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
@@ -378,7 +380,7 @@ function Slide4() {
         </div>
         <MeridianChart />
       </div>
-      <InsightBox color="red" title="What This Engine Found — That No Audit Did" text="Meridian passes all compliance checks. But: autonomous trading execution without re-authorisation since Q3 2023, single-provider dependency creating critical concentration risk. The Deployment Authorization System classifies this as NOT APPROVED. The Consequence Engine projects €80M–€250M exposure range. The Responsibility Detector flags FRAGMENTED accountability — no clearly assigned governance owner." />
+      <InsightBox color="red" title="What This Engine Found — That No Audit Did" text={`Meridian passes all compliance checks. But: autonomous trading execution without re-authorisation since Q3 2023, single-provider dependency creating critical concentration risk. The Coverage Decision Engine classifies this as "${m.decision}". The Economic Loss model projects €${m.economicLow}M–€${m.economicHigh}M exposure (tail: €${m.tailRisk}M). Drift trend: ${m.driftTrend}. A persistent Decision Header tracks insurability status in real-time across all 11 views.`} />
     </div>
   );
 }
