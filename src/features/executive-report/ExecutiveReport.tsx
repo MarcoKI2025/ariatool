@@ -46,6 +46,11 @@ export function ExecutiveReport() {
   const [showOverlay, setShowOverlay] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
 
+  const evolution = useMemo<EvolutionAnalysis | null>(() => {
+    if (!analysisComplete || !results) return null;
+    return computeEvolutionAnalysis(inputs, results);
+  }, [analysisComplete, inputs, results]);
+
   if (!analysisComplete || !results) {
     return <LockedState title="Executive Report Locked" description="Complete the Exposure Analysis to generate a board-level executive report." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
