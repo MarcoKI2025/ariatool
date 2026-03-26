@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { X } from 'lucide-react';
 import { GapChart } from './charts/GapChart';
 import { DriftChart } from './charts/DriftChart';
@@ -6,6 +6,40 @@ import { MeridianChart } from './charts/MeridianChart';
 import { CompareChart } from './charts/CompareChart';
 import { ScenariosChart } from './charts/ScenariosChart';
 import { EUAIAChart } from './charts/EUAIAChart';
+import { DEMO_PROFILES, applyDemoProfile, computeDemoProfilePreview } from '@/lib/demoData';
+import { computeFullAnalysis } from '@/lib/scoring';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
+import { computeCapitalImpact } from '@/lib/capitalModel';
+import { calculatePremium, formatPremiumCurrency } from '@/lib/pricing';
+
+/** Compute live Meridian values from the engine — no hardcoding */
+function useMeridianLive() {
+  return useMemo(() => {
+    const meridian = DEMO_PROFILES.find(p => p.id === 'meridian');
+    if (!meridian) return { afi: 2.23, band: 'Fragile', premium: '€192k', lossLow: 1.5, lossHigh: 5.0, decision: 'Decline', unified: 'Critical' };
+    const inputs = applyDemoProfile(meridian);
+    const results = computeFullAnalysis(inputs);
+    const evolution = computeEvolutionAnalysis(inputs, results);
+    const capital = computeCapitalImpact(inputs, results);
+    const prem = calculatePremium(5000000, results.afi, inputs.industry, 0, null, { driftFactor: evolution.driftFactor, correlationMultiplier: evolution.correlationMultiplier, cascadeMultiplier: evolution.cascadeMultiplier });
+    return {
+      afi: results.afi,
+      band: results.band,
+      premium: formatPremiumCurrency(prem.annualPremium),
+      lossLow: capital.lossRange.low,
+      lossHigh: capital.lossRange.high,
+      decision: evolution.coverageDecision.decision,
+      unified: evolution.unifiedRiskLevel,
+      cascadeLabel: evolution.cascadeAmplification.label.split('—')[0].trim(),
+      systemicCorrelation: evolution.systemicCorrelation,
+      insurability: evolution.insurabilityStatus,
+      driftTrend: evolution.driftTrend,
+      economicLow: evolution.economicLoss.expectedLow,
+      economicHigh: evolution.economicLoss.expectedHigh,
+      tailRisk: evolution.economicLoss.tailRisk,
+    };
+  }, []);
+}
 
 interface DemoPitchModalProps {
   open: boolean;
