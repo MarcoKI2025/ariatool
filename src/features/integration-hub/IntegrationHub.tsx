@@ -7,6 +7,7 @@ import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, External
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 import { fetchCloudProviderStatus, type CloudProviderStatus, formatRelativeTime, getStatusColor, getStatusTextColor } from '@/lib/liveData';
 
 /* ── Integration Data ── */
@@ -490,6 +491,7 @@ export function IntegrationHub() {
         </DialogContent>
       </Dialog>
 
+      <StepNavigation currentStep={9} />
       <AppFooter />
     </div>
   );

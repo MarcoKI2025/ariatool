@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
 import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
@@ -76,12 +77,7 @@ export function ModelGovernanceComplete() {
       <ProductRoadmap />
       <AIIncidentsFeed />
 
-      {/* View nav footer */}
-      <div className="flex items-center justify-between pt-5 border-t border-border mt-7">
-        <button onClick={() => setActiveStep(5)} className="inline-flex items-center gap-[6px] bg-transparent text-secondary-foreground border border-border px-3 py-[6px] rounded-md text-[11px] font-medium hover:bg-secondary transition-colors cursor-pointer">← Executive Report</button>
-        <span className="text-[10px] text-muted-foreground italic">Step 6 of 6 · Model governance & methodology</span>
-        <span />
-      </div>
+      <StepNavigation currentStep={6} />
     </div>
   );
 }

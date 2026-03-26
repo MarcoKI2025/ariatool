@@ -10,6 +10,7 @@ import { ExposureInputs } from '@/lib/types';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { AppFooter } from '@/components/shared/AppFooter';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 import { DeploymentAuthorization } from '@/components/shared/DeploymentAuthorization';
 import { SystemEvolutionPanel } from '@/components/shared/SystemEvolutionPanel';
 import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
@@ -565,6 +566,7 @@ export function ExposureResults() {
         </button>
       </div>
 
+      <StepNavigation currentStep={1} />
       <AppFooter />
     </div>
   );
