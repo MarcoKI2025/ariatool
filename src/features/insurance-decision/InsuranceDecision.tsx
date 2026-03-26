@@ -1,4 +1,5 @@
 import React from 'react';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';

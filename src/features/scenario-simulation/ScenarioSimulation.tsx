@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
 import { LockedState } from '@/components/shared/UIComponents';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
