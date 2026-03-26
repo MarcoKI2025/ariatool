@@ -344,7 +344,14 @@ function Slide3() {
           <div className="text-[10px] text-[#b0aca0] leading-[1.5]">CLEARLY ASSIGNED · FRAGMENTED · NO ACCOUNTABLE ENTITY. Exposes structural responsibility gaps.</div>
         </div>
       </div>
-      <InsightBox color="purple" title="Research Basis · Proprietary Operationalisation" text="Ten structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001." />
+      <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-2 mt-2">Institutional Trust Layers (v4.3)</div>
+      <div className="grid grid-cols-4 gap-2.5 mb-4">
+        <ConstructBox code="Coverage Decision" name="Accept → Decline" desc="4-tier coverage verdict with portfolio-level overrides and hard insurability boundary." />
+        <ConstructBox code="Capital Impact" name="Loss Range Engine" desc="Heuristic loss range, capital stress, and operational impact — calibrated to €2.8M anchor." />
+        <ConstructBox code="Confidence" name="Assessment Integrity" desc="Input completeness, consistency, plausibility, and model stability scoring." />
+        <ConstructBox code="Exit Risk" name="Lock-In Detection" desc="Technical reversibility, data entanglement, dependency lock-in, and replacement cost." />
+      </div>
+      <InsightBox color="purple" title="Research Basis · Proprietary Operationalisation" text="Ten structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. Whitepaper available for download within the platform." />
     </div>
   );
 }
