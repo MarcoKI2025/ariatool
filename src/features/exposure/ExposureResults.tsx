@@ -119,7 +119,7 @@ export function ExposureResults() {
         <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">{inputs.companyName || 'Assessment'}</h1>
         <LiveIndicator label="Live Data" size="sm" />
         <span className="text-[11px] text-secondary-foreground">{inputs.industry} · Analysis run {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-        <button onClick={showEditForm} className="sm:ml-auto text-[11px] font-semibold text-primary hover:underline cursor-pointer bg-transparent border-none self-start">✎ Edit Profile</button>
+        <button onClick={showEditForm} className="sm:ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/30 bg-primary/10 text-[12px] font-semibold text-primary hover:bg-primary/20 transition-colors cursor-pointer">✎ Edit Profile</button>
       </div>
 
       {/* ══════════════════════════════════════════════════
