@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { X } from 'lucide-react';
 import { GapChart } from './charts/GapChart';
 import { DriftChart } from './charts/DriftChart';
@@ -6,6 +6,40 @@ import { MeridianChart } from './charts/MeridianChart';
 import { CompareChart } from './charts/CompareChart';
 import { ScenariosChart } from './charts/ScenariosChart';
 import { EUAIAChart } from './charts/EUAIAChart';
+import { DEMO_PROFILES, applyDemoProfile, computeDemoProfilePreview } from '@/lib/demoData';
+import { computeFullAnalysis } from '@/lib/scoring';
+import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
+import { computeCapitalImpact } from '@/lib/capitalModel';
+import { calculatePremium, formatPremiumCurrency } from '@/lib/pricing';
+
+/** Compute live Meridian values from the engine — no hardcoding */
+function useMeridianLive() {
+  return useMemo(() => {
+    const meridian = DEMO_PROFILES.find(p => p.id === 'meridian');
+    if (!meridian) return { afi: 2.23, band: 'Fragile', premium: '€192k', lossLow: 1.5, lossHigh: 5.0, decision: 'Decline', unified: 'Critical' };
+    const inputs = applyDemoProfile(meridian);
+    const results = computeFullAnalysis(inputs);
+    const evolution = computeEvolutionAnalysis(inputs, results);
+    const capital = computeCapitalImpact(inputs, results);
+    const prem = calculatePremium(5000000, results.afi, inputs.industry, 0, null, { driftFactor: evolution.driftFactor, correlationMultiplier: evolution.correlationMultiplier, cascadeMultiplier: evolution.cascadeMultiplier });
+    return {
+      afi: results.afi,
+      band: results.band,
+      premium: formatPremiumCurrency(prem.annualPremium),
+      lossLow: capital.lossRange.low,
+      lossHigh: capital.lossRange.high,
+      decision: evolution.coverageDecision.decision,
+      unified: evolution.unifiedRiskLevel,
+      cascadeLabel: evolution.cascadeAmplification.label.split('—')[0].trim(),
+      systemicCorrelation: evolution.systemicCorrelation,
+      insurability: evolution.insurabilityStatus,
+      driftTrend: evolution.driftTrend,
+      economicLow: evolution.economicLoss.expectedLow,
+      economicHigh: evolution.economicLoss.expectedHigh,
+      tailRisk: evolution.economicLoss.tailRisk,
+    };
+  }, []);
+}
 
 interface DemoPitchModalProps {
   open: boolean;
@@ -310,7 +344,14 @@ function Slide3() {
           <div className="text-[10px] text-[#b0aca0] leading-[1.5]">CLEARLY ASSIGNED · FRAGMENTED · NO ACCOUNTABLE ENTITY. Exposes structural responsibility gaps.</div>
         </div>
       </div>
-      <InsightBox color="purple" title="Research Basis · Proprietary Operationalisation" text="Ten structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001." />
+      <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-2 mt-2">Institutional Trust Layers (v4.3)</div>
+      <div className="grid grid-cols-4 gap-2.5 mb-4">
+        <ConstructBox code="Coverage Decision" name="Accept → Decline" desc="4-tier coverage verdict with portfolio-level overrides and hard insurability boundary." />
+        <ConstructBox code="Capital Impact" name="Loss Range Engine" desc="Heuristic loss range, capital stress, and operational impact — calibrated to €2.8M anchor." />
+        <ConstructBox code="Confidence" name="Assessment Integrity" desc="Input completeness, consistency, plausibility, and model stability scoring." />
+        <ConstructBox code="Exit Risk" name="Lock-In Detection" desc="Technical reversibility, data entanglement, dependency lock-in, and replacement cost." />
+      </div>
+      <InsightBox color="purple" title="Research Basis · Proprietary Operationalisation" text="Ten structured assessment constructs operationalised from published academic work (Kindermann 2026) and grounded in NIST AI RMF 1.0, EIOPA AI Opinion August 2025, LMA E&O Guidelines 2025, EU AI Act 2024/1689, ISO/IEC 42001. Whitepaper available for download within the platform." />
     </div>
   );
 }
@@ -320,16 +361,18 @@ function Slide3() {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide4() {
+  const m = useMeridianLive();
+  const decisionLabel = m.decision === 'Decline' ? 'NOT INSURABLE' : m.decision === 'Accept' ? 'INSURABLE' : 'CONDITIONAL';
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#b53020">Live Case · Meridian Financial Group · Financial Services · Autonomous Trading AI</Eyebrow>
-      <DmH1><span className="text-[#ff4040]">DEPLOYMENT NOT APPROVED</span></DmH1>
-      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI 2.23 · Responsibility Fragmented · Governance signals above normal parameters</p>
+      <DmH1><span className="text-[#ff4040]">{decisionLabel}</span></DmH1>
+      <p className="text-[18px] text-[#b8b4a8] font-medium mb-7">AFI {m.afi.toFixed(2)} · Coverage: {m.decision} · Unified Risk: {m.unified}</p>
       <div className="grid grid-cols-4 gap-3 mb-5">
-        <LossCell label="Authorization Status" value="NOT APPROVED" src="Unresolved governance risk" color="#ff4040" />
-        <LossCell label="Consequence Range" value="€80M–€250M" src="Indicative · structural patterns" color="#9c6200" />
-        <LossCell label="Accountability" value="FRAGMENTED" src="No clearly assigned owner" color="#b53020" />
-        <LossCell label="Systemic Exposure" value="Critical" src="Correlated dependency cluster" color="#f87070" />
+        <LossCell label="Coverage Decision" value={m.decision} src="Evolution Engine verdict" color="#ff4040" />
+        <LossCell label="Economic Loss Range" value={`€${m.economicLow}M–€${m.economicHigh}M`} src="Heuristic · market-calibrated" color="#9c6200" />
+        <LossCell label="Tail Risk" value={`€${m.tailRisk}M`} src="Cascade + correlation amplified" color="#b53020" />
+        <LossCell label="Systemic Correlation" value={m.systemicCorrelation} src={`Cascade: ${m.cascadeLabel}`} color="#f87070" />
       </div>
       <div className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-[#a8a49c] mb-3">
@@ -337,7 +380,7 @@ function Slide4() {
         </div>
         <MeridianChart />
       </div>
-      <InsightBox color="red" title="What This Engine Found — That No Audit Did" text="Meridian passes all compliance checks. But: autonomous trading execution without re-authorisation since Q3 2023, single-provider dependency creating critical concentration risk. The Deployment Authorization System classifies this as NOT APPROVED. The Consequence Engine projects €80M–€250M exposure range. The Responsibility Detector flags FRAGMENTED accountability — no clearly assigned governance owner." />
+      <InsightBox color="red" title="What This Engine Found — That No Audit Did" text={`Meridian passes all compliance checks. But: autonomous trading execution without re-authorisation since Q3 2023, single-provider dependency creating critical concentration risk. The Coverage Decision Engine classifies this as "${m.decision}". The Economic Loss model projects €${m.economicLow}M–€${m.economicHigh}M exposure (tail: €${m.tailRisk}M). Drift trend: ${m.driftTrend}. A persistent Decision Header tracks insurability status in real-time across all 11 views.`} />
     </div>
   );
 }
@@ -472,13 +515,14 @@ function Slide7() {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide8() {
+  const m = useMeridianLive();
   return (
     <div className="max-w-[900px] mx-auto">
-      <Eyebrow dotColor="#60d090">Operational Underwriting · Premium Calculator & Peer Benchmarking</Eyebrow>
+      <Eyebrow dotColor="#60d090">Operational Underwriting · Premium Calculator & Capital Impact</Eyebrow>
       <DmH1>From risk score to<br /><span className="text-[#60d090]">actionable premium.</span></DmH1>
       <BodyText>
-        ARIA converts AFI scores into concrete insurance premiums using actuarial formulas, and positions each entity
-        against industry peer groups. Underwriters get pricing AND context in a single workflow.
+        ARIA converts AFI scores into concrete insurance premiums using actuarial formulas with evolution engine multipliers
+        (drift, cascade, correlation), and translates structural risk into heuristic loss ranges for capital allocation.
       </BodyText>
       <div className="grid grid-cols-2 gap-4 mb-5">
         {/* Premium Calculator */}
@@ -490,20 +534,20 @@ function Slide8() {
               <span className="text-[16px] font-bold font-mono text-[#eeeadc]">€500k – €50M</span>
             </div>
             <div className="flex justify-between items-baseline">
-              <span className="text-[10px] text-[#a8a49c]">Base Rate × AFI Multiplier</span>
-              <span className="text-[14px] font-bold font-mono text-[#ffc040]">1.2% – 2.5%</span>
+              <span className="text-[10px] text-[#a8a49c]">Base Rate × AFI × Evolution</span>
+              <span className="text-[14px] font-bold font-mono text-[#ffc040]">Future-Dominant</span>
             </div>
             <div className="flex justify-between items-baseline">
-              <span className="text-[10px] text-[#a8a49c]">Industry Factor</span>
-              <span className="text-[14px] font-bold font-mono text-[#9088e0]">0.8× – 1.5×</span>
+              <span className="text-[10px] text-[#a8a49c]">Drift + Cascade + Correlation</span>
+              <span className="text-[14px] font-bold font-mono text-[#9088e0]">Dynamic multipliers</span>
             </div>
             <div className="flex justify-between items-baseline border-t border-[#3a3828] pt-3">
-              <span className="text-[10px] text-[#a8a49c] font-bold">Example: Meridian (AFI 2.23)</span>
-              <span className="text-[20px] font-bold font-mono text-[#ff8070]">€192k/yr</span>
+              <span className="text-[10px] text-[#a8a49c] font-bold">Meridian (AFI {m.afi.toFixed(2)})</span>
+              <span className="text-[20px] font-bold font-mono text-[#ff8070]">{m.premium}/yr</span>
             </div>
           </div>
           <div className="mt-3 text-[9px] text-[#b0aca0] leading-[1.55]">
-            Interactive sliders for coverage amount and deductible options. Real-time recalculation. Full premium breakdown by component.
+            Interactive sliders for coverage and deductible. RSI/MCCI surcharge up to +15%. Evolution engine applies 60% future / 40% current weighting.
           </div>
         </div>
 
@@ -557,6 +601,16 @@ function Slide8() {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide9() {
+  const caseProfiles = DEMO_PROFILES.filter(p => p.caseStudy);
+  const cases = [
+    { profileId: 'knight', name: 'Knight Capital', date: 'August 2012', loss: '€440M', desc: 'Dormant trading code activated during deployment. €440M lost in 45 minutes. Company collapsed within days.', source: 'SEC Report', color: '#ff4040' },
+    { profileId: 'uber', name: 'Uber Self-Driving', date: 'March 2018', loss: 'Fatal', desc: 'Autonomous vehicle struck and killed pedestrian in Tempe, AZ. Safety driver was distracted. Emergency braking disabled.', source: 'NTSB Report', color: '#b53020' },
+    { profileId: 'amazon', name: 'Amazon Hiring AI', date: '2015–2017', loss: '€150M+', desc: 'AI hiring tool systematically discriminated against women. Trained on 10 years of male-dominated hiring data.', source: 'Reuters Investigation', color: '#9c6200' },
+  ].map(c => {
+    const profile = caseProfiles.find(p => p.id === c.profileId);
+    const computed = profile ? computeDemoProfilePreview(profile) : { afi: 0, band: 'Fragile' };
+    return { ...c, afi: computed.afi.toFixed(2), band: computed.band };
+  });
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#b53020">Validation · Real-World AI Disasters — Retrospective Analysis</Eyebrow>
@@ -566,35 +620,7 @@ function Slide9() {
         that led to real-world losses. Not hindsight bias: structural pattern recognition.
       </BodyText>
       <div className="grid grid-cols-3 gap-4 mb-5">
-        {[
-          {
-            name: 'Knight Capital',
-            date: 'August 2012',
-            loss: '€440M',
-            afi: '9.85',
-            desc: 'Dormant trading code activated during deployment. €440M lost in 45 minutes. Company collapsed within days.',
-            source: 'SEC Report',
-            color: '#ff4040',
-          },
-          {
-            name: 'Uber Self-Driving',
-            date: 'March 2018',
-            loss: 'Fatal',
-            afi: '4.92',
-            desc: 'Autonomous vehicle struck and killed pedestrian in Tempe, AZ. Safety driver was distracted. Emergency braking disabled.',
-            source: 'NTSB Report',
-            color: '#b53020',
-          },
-          {
-            name: 'Amazon Hiring AI',
-            date: '2015–2017',
-            loss: '€150M+',
-            afi: '3.24',
-            desc: 'AI hiring tool systematically discriminated against women. Trained on 10 years of male-dominated hiring data.',
-            source: 'Reuters Investigation',
-            color: '#9c6200',
-          },
-        ].map((c, i) => (
+        {cases.map((c, i) => (
           <div key={i} className="bg-[#111108] border border-[#3a3828] rounded-[10px] p-4 flex flex-col">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#b53020]/20 text-[#ff8070] border border-[#b53020]/30">Case Study</span>
@@ -701,24 +727,38 @@ function Slide10() {
         </div>
 
         <div className="bg-[#111108] border border-[#1a4858] rounded-[10px] p-5">
-          <div className="text-[10px] font-bold text-[#70c0d0] uppercase tracking-[0.07em] mb-2">🛡️ Quantum Vulnerability</div>
-          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Post-Quantum Readiness</div>
+          <div className="text-[10px] font-bold text-[#70c0d0] uppercase tracking-[0.07em] mb-2">⚡ Dependency Shock Simulator</div>
+          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Infrastructure Stress Testing</div>
           <div className="text-[10px] text-[#b0aca0] leading-[1.55]">
-            Assesses cryptographic exposure, quantum timeline risk, and migration readiness across five domains:
-            encryption, key management, data-at-rest, data-in-transit, and algorithm agility. NIST PQC framework aligned.
+            Simulate Model Provider Failure, Governance Breakdown, and Oversight Collapse. Computes shocked AFI,
+            delta impact, and recovery difficulty — revealing systemic resilience gaps in real-time.
           </div>
         </div>
 
         <div className="bg-[#111108] border border-[#5a4000] rounded-[10px] p-5">
-          <div className="text-[10px] font-bold text-[#ffc040] uppercase tracking-[0.07em] mb-2">🤖 Agentic Swarm Analysis</div>
-          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Multi-Agent Coordination</div>
+          <div className="text-[10px] font-bold text-[#ffc040] uppercase tracking-[0.07em] mb-2">🤖 Agentic Swarm + Quantum</div>
+          <div className="text-[13px] font-bold text-[#eeeadc] mb-2">Multi-Agent & Post-Quantum</div>
           <div className="text-[10px] text-[#b0aca0] leading-[1.55]">
-            Visual agent coordination graph with delegation depth scoring, responsibility gap detection,
-            recursive loop identification, and tool-call authority mapping. Supports complex multi-agent orchestration patterns.
+            Visual agent coordination graph with delegation depth scoring and recursive loop detection.
+            Post-quantum cryptographic readiness across 5 NIST PQC domains. Whitepaper download available directly in the platform.
           </div>
         </div>
       </div>
-      <InsightBox color="teal" title="Cutting-Edge Risk Detection" text="These capabilities position ARIA 2–3 years ahead of any competing governance platform. Recursive self-improvement risk and quantum vulnerability assessment are not available in ANY other insurance underwriting tool — making this genuine first-mover IP." />
+      <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="bg-[#111108] border border-[#b53020] rounded-lg p-3 text-center">
+          <div className="text-[18px] font-bold font-mono text-[#ff8070]">Decision Header</div>
+          <div className="text-[9px] text-[#a8a49c] mt-1">Persistent insurability status across all views</div>
+        </div>
+        <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-3 text-center">
+          <div className="text-[18px] font-bold font-mono text-[#60d090]">Capital Impact</div>
+          <div className="text-[9px] text-[#a8a49c] mt-1">Heuristic loss range + stress + operational impact</div>
+        </div>
+        <div className="bg-[#111108] border border-[#3a3828] rounded-lg p-3 text-center">
+          <div className="text-[18px] font-bold font-mono text-[#9088e0]">Whitepaper</div>
+          <div className="text-[9px] text-[#a8a49c] mt-1">Full methodology PDF downloadable in-app</div>
+        </div>
+      </div>
+      <InsightBox color="teal" title="Cutting-Edge Risk Detection" text="These capabilities position ARIA 2–3 years ahead of any competing governance platform. The Decision Header provides 5-second insurability answers. Capital Impact translates risk into €M loss ranges. Dependency Shock reveals what happens when infrastructure fails. No other tool combines all of this." />
     </div>
   );
 }
@@ -762,6 +802,7 @@ function Slide11({ onClose }: { onClose: () => void }) {
 // ═══════════════════════════════════════════════════════════════════
 
 function Slide12({ onClose }: { onClose: () => void }) {
+  const m = useMeridianLive();
   return (
     <div className="max-w-[900px] mx-auto">
       <Eyebrow dotColor="#60d090">Company View · Standalone Insurance Premium Calculator</Eyebrow>
@@ -773,18 +814,18 @@ function Slide12({ onClose }: { onClose: () => void }) {
       <div className="grid grid-cols-3 gap-[10px] mb-3">
         <div className="p-3 bg-[#0a1a0a] border border-[#1a4028] rounded-[9px] text-center">
           <div className="text-[8px] text-[#60d090] font-bold uppercase tracking-[0.08em] mb-[5px]">Estimated Premium</div>
-          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">€420k–€680k</div>
+          <div className="text-[26px] font-bold font-mono text-[#ff6b5b]">{m.premium}/yr</div>
           <div className="text-[9px] text-[#9e9a90] mt-[2px]">Meridian Financial · Live calculation</div>
         </div>
         <div className="p-3 bg-[#1a0a06] border border-[#5a1810] rounded-[9px] text-center">
           <div className="text-[8px] text-[#ff8870] font-bold uppercase tracking-[0.08em] mb-[5px]">AFI Score</div>
-          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">2.23</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Fragile · Above 1.35 threshold</div>
+          <div className="text-[22px] font-bold font-mono text-[#ff6b5b]">{m.afi.toFixed(2)}</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">{m.band} · Above 1.35 threshold</div>
         </div>
         <div className="p-3 bg-[#0e100e] border border-[#2a2820] rounded-[9px] text-center">
-          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">Cost Impact</div>
-          <div className="text-[22px] font-bold font-mono text-[#ffc040]">Per Category</div>
-          <div className="text-[9px] text-[#9e9a90] mt-[2px]">See which changes reduce premium</div>
+          <div className="text-[8px] text-[#c0bcb0] font-bold uppercase tracking-[0.08em] mb-[5px]">Loss Range</div>
+          <div className="text-[22px] font-bold font-mono text-[#ffc040]">€{m.lossLow}M–€{m.lossHigh}M</div>
+          <div className="text-[9px] text-[#9e9a90] mt-[2px]">Capital Impact Engine · heuristic</div>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3 mb-4">
