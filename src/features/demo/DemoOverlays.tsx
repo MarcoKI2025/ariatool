@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
+import { DEMO_PROFILES, applyDemoProfile, computeDemoProfilePreview } from '@/lib/demoData';
 import { DemoPitchModal } from './DemoPitchModal';
 
 export function CompanyDemoOverlay() {
@@ -63,9 +63,10 @@ export function CompanyDemoOverlay() {
                     selected === idx ? 'border-stable bg-stable-bg' : 'border-border'
                   }`}
                 >
+                  {(() => { const pv = computeDemoProfilePreview(p); return (<>
                   <div className={`absolute top-0 left-0 right-0 h-[3px] rounded-t-xl opacity-60 ${
-                    p.band === 'Fragile' ? 'bg-gradient-to-r from-fragile to-fragile/50' :
-                    p.band === 'Sensitive' ? 'bg-gradient-to-r from-sensitive to-sensitive/50' :
+                    pv.band === 'Fragile' ? 'bg-gradient-to-r from-fragile to-fragile/50' :
+                    pv.band === 'Sensitive' ? 'bg-gradient-to-r from-sensitive to-sensitive/50' :
                     'bg-gradient-to-r from-stable to-stable/50'
                   }`} />
                   <div className="text-sm font-bold text-foreground">{p.name}</div>
@@ -73,10 +74,11 @@ export function CompanyDemoOverlay() {
                   <div className="text-[10px] text-muted-foreground leading-[1.55] flex-1 line-clamp-2">{p.description}</div>
                   <div className="flex items-center gap-2">
                     <div className={`text-[9px] font-bold uppercase tracking-wider px-2 py-[3px] rounded w-fit ${
-                      p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
-                    }`}>{p.band}</div>
+                      pv.band === 'Fragile' ? 'badge-fragile' : pv.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
+                    }`}>{pv.band}</div>
                     <div className="text-[11px] font-bold font-mono text-muted-foreground">{p.premiumEstimate}</div>
                   </div>
+                  </>); })()}
                 </button>
               );
             })}
