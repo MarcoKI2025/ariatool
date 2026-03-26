@@ -7,7 +7,7 @@ import { Chart, ArcElement, DoughnutController } from 'chart.js';
 import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
 import { SliderRow, SectionCard, InfoTip } from '@/components/shared/UIComponents';
 import { TOOLTIPS } from '@/lib/tooltips';
-import { DEMO_PROFILES, applyDemoProfile } from '@/lib/demoData';
+import { DEMO_PROFILES, applyDemoProfile, computeDemoProfilePreview } from '@/lib/demoData';
 import type { ExposureInputs } from '@/lib/types';
 
 Chart.register(ArcElement, DoughnutController);
@@ -465,12 +465,14 @@ export function CompanyView() {
                 >
                   <div className="text-[11px] font-bold text-foreground truncate">{p.name}</div>
                   <div className="text-[9px] text-muted-foreground mt-0.5">{p.industry}</div>
+                  {(() => { const pv = computeDemoProfilePreview(p); return (
                   <div className="flex items-center gap-1.5 mt-1.5">
                     <span className={`text-[8px] font-bold uppercase tracking-wider px-1.5 py-[2px] rounded ${
-                      p.band === 'Fragile' ? 'badge-fragile' : p.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
-                    }`}>{p.band}</span>
-                    <span className="text-[9px] font-mono text-muted-foreground">AFI {p.afi.toFixed(2)}</span>
+                      pv.band === 'Fragile' ? 'badge-fragile' : pv.band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable'
+                    }`}>{pv.band}</span>
+                    <span className="text-[9px] font-mono text-muted-foreground">AFI {pv.afi.toFixed(2)}</span>
                   </div>
+                  ); })()}
                 </button>
               );
             })}
