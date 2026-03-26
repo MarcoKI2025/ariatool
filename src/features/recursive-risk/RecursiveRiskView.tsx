@@ -52,12 +52,15 @@ export function RecursiveRiskView() {
   const rsiResult = calculateRSI(rsiFactors);
   const mcciResult = calculateMCCI(metacogCaps);
 
+  // Simulate performance trajectory based on automation and adaptation speed
+  const basePerf = 50;
+  const adaptRate = inputs.automation >= 4 ? 15 : inputs.automation >= 3 ? 10 : 5;
   const performanceHistory: PerformanceDataPoint[] = [
-    { timestamp: new Date('2026-01-01'), performance: 50, iteration: 0 },
-    { timestamp: new Date('2026-02-01'), performance: 60, iteration: 1 },
-    { timestamp: new Date('2026-03-01'), performance: 75, iteration: 2 },
+    { timestamp: new Date('2026-01-01'), performance: basePerf, iteration: 0 },
+    { timestamp: new Date('2026-02-01'), performance: basePerf + adaptRate, iteration: 1 },
+    { timestamp: new Date('2026-03-01'), performance: basePerf + adaptRate * 2 + (inputs.persistentMemory >= 3 ? 5 : 0), iteration: 2 },
   ];
-  const cgdResult = detectCompoundingGains(performanceHistory, 50);
+  const cgdResult = detectCompoundingGains(performanceHistory, basePerf);
 
   useEffect(() => {
     updateRecursiveRisk({

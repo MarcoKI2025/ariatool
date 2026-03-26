@@ -1,5 +1,6 @@
 import { DemoProfile, ExposureInputs } from './types';
 import { DEFAULT_INPUTS } from './constants';
+import { computeFullAnalysis } from './scoring';
 
 export const DEMO_PROFILES: DemoProfile[] = [
   {
@@ -307,4 +308,15 @@ export function applyDemoProfile(profile: DemoProfile): ExposureInputs {
     privacyBreach: profile.sliders.privacyBreach ?? 1,
     ipInfringement: profile.sliders.ipInfringement ?? 1,
   } as ExposureInputs;
+}
+
+/** Compute actual AFI/band from a demo profile's sliders — ensures display matches engine */
+const _profileCache = new Map<string, { afi: number; band: string }>();
+export function computeDemoProfilePreview(profile: DemoProfile): { afi: number; band: string } {
+  if (_profileCache.has(profile.id)) return _profileCache.get(profile.id)!;
+  const inputs = applyDemoProfile(profile);
+  const result = computeFullAnalysis(inputs);
+  const preview = { afi: result.afi, band: result.band };
+  _profileCache.set(profile.id, preview);
+  return preview;
 }

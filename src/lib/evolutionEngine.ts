@@ -7,7 +7,7 @@
 
 import { ExposureInputs, AFIComponents, AnalysisResults } from './types';
 import { computeAFIComponents, calcAFI, getBand, computeFullAnalysis } from './scoring';
-import { SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from './constants';
+import { SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, SIZE_MULTIPLIERS, SECTOR_MULTIPLIERS } from './constants';
 
 // ════════════════════════════════════════════════════════
 // TYPES
@@ -867,8 +867,8 @@ function computeEconomicLoss(
   correlationScore: number,
   projections: DriftProjection[]
 ): EconomicLossEstimate {
-  const sizeMul = ({ 'Startup (1–50)': 0.3, 'SME (50–250)': 0.6, 'Mid-Market (250–1000)': 1.0, 'Enterprise (1000–10000)': 2.0, 'Large Enterprise (10000+)': 4.0 } as Record<string, number>)[inputs.size] || 1.0;
-  const sectorMul = ({ 'Financial Services': 1.5, 'Healthcare': 1.3, 'Insurance': 1.4, 'Legal': 1.2, 'Transportation': 1.4 } as Record<string, number>)[inputs.industry] || 1.0;
+  const sizeMul = SIZE_MULTIPLIERS[inputs.size] || 1.0;
+  const sectorMul = SECTOR_MULTIPLIERS[inputs.industry] || 1.0;
 
   const base = 2.8 * sizeMul * sectorMul; // €M anchor
   const afiMul = Math.max(0.3, currentAfi);
