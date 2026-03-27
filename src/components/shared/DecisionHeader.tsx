@@ -76,24 +76,38 @@ export function DecisionHeader() {
   const actions = getActions(evolution);
 
   return (
-    <div className={`border-b-2 ${style.bg} px-4 sm:px-6 lg:px-8 py-2 sm:py-3 flex-shrink-0`}>
-      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2 sm:gap-3 lg:gap-8">
+    <div className={`border-b-2 ${style.bg} px-3 sm:px-6 lg:px-8 py-1.5 sm:py-3 flex-shrink-0`}>
+      {/* Mobile: single compact row */}
+      <div className="flex items-center gap-2 sm:hidden">
+        <div className={`w-2 h-2 rounded-full ${style.dot} animate-pulse flex-shrink-0`} />
+        <div className={`text-[13px] font-extrabold tracking-tight leading-none ${style.text} flex-shrink-0`}>{label}</div>
+        <div className="flex-1 min-w-0">
+          <span className="text-[9px] text-muted-foreground truncate block">
+            {inputs.companyName || 'No entity'}
+          </span>
+        </div>
+        <div className="text-right flex-shrink-0">
+          <div className="text-[11px] font-bold font-mono text-foreground">€{evolution.economicLoss.expectedLow}M–€{evolution.economicLoss.expectedHigh}M</div>
+        </div>
+      </div>
 
-        {/* Insurability Status — dominant */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${style.dot} animate-pulse`} />
+      {/* Desktop: full layout */}
+      <div className="hidden sm:flex flex-col lg:flex-row items-start lg:items-center gap-3 lg:gap-8">
+        {/* Insurability Status */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div className={`w-3 h-3 rounded-full ${style.dot} animate-pulse`} />
           <div>
-            <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">
               {inputs.companyName ? `${inputs.companyName} · ` : ''}Insurability Status
             </div>
-            <div className={`text-[16px] sm:text-[20px] lg:text-[24px] font-extrabold tracking-tight leading-none ${style.text}`}>{label}</div>
+            <div className={`text-[20px] lg:text-[24px] font-extrabold tracking-tight leading-none ${style.text}`}>{label}</div>
           </div>
         </div>
 
         <div className="hidden lg:block w-px h-10 bg-border" />
 
-        {/* Primary Drivers — compact on mobile */}
-        <div className="flex-1 min-w-0 hidden sm:block">
+        {/* Primary Drivers */}
+        <div className="flex-1 min-w-0">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Primary Drivers</div>
           <div className="flex flex-wrap gap-x-5 gap-y-1">
             {drivers.map((d, i) => (
@@ -105,20 +119,10 @@ export function DecisionHeader() {
           </div>
         </div>
 
-        {/* Mobile: inline driver badges */}
-        <div className="flex flex-wrap gap-x-3 gap-y-0.5 sm:hidden">
-          {drivers.map((d, i) => (
-            <span key={i} className="text-[10px]">
-              <span className="text-secondary-foreground">{d.label.split(' ')[0]}:</span>{' '}
-              <span className={`font-bold ${d.color}`}>{d.level}</span>
-            </span>
-          ))}
-        </div>
-
         <div className="hidden lg:block w-px h-10 bg-border" />
 
-        {/* Recommended Actions — hidden on mobile */}
-        <div className="flex-1 min-w-0 hidden md:block">
+        {/* Recommended Actions — hidden below lg */}
+        <div className="flex-1 min-w-0 hidden lg:block">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Recommended Actions</div>
           <div className="space-y-0.5">
             {actions.map((a, i) => (
@@ -134,8 +138,8 @@ export function DecisionHeader() {
 
         {/* Economic Exposure */}
         <div className="flex-shrink-0 sm:text-right">
-          <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-0.5">Loss Range</div>
-          <div className="text-[14px] sm:text-[16px] font-bold font-mono text-foreground">€{evolution.economicLoss.expectedLow}M – €{evolution.economicLoss.expectedHigh}M</div>
+          <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-0.5">Loss Range</div>
+          <div className="text-[16px] font-bold font-mono text-foreground">€{evolution.economicLoss.expectedLow}M – €{evolution.economicLoss.expectedHigh}M</div>
           <div className="text-[9px] text-muted-foreground">Tail: €{evolution.economicLoss.tailRisk}M</div>
         </div>
       </div>
