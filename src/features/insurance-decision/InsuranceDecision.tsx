@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
-import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
 import { TOOLTIPS } from '@/lib/tooltips';

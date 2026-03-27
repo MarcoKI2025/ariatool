@@ -3,7 +3,6 @@ import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
 import { LockedState } from '@/components/shared/UIComponents';
 import { AppFooter } from '@/components/shared/AppFooter';
-import { AppFooter } from '@/components/shared/AppFooter';
 import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { AgentCoordinationView } from '@/features/agent-coordination/AgentCoordinationView';
 import { ParametricTriggerLab } from '@/features/parametric/ParametricTriggerLab';

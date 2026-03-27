@@ -3,7 +3,6 @@ import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
 import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
 import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
-import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
 import { SectionDivider } from '@/components/shared/SectionDivider';
 
 export function ModelGovernanceComplete() {
