@@ -1,7 +1,6 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
 import { AppFooter } from '@/components/shared/AppFooter';
-import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 
 export function EvidenceLog() {

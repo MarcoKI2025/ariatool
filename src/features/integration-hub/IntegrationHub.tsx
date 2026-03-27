@@ -6,7 +6,6 @@ import {
 import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, ExternalLink, Zap, Database, Eye } from 'lucide-react';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { AppFooter } from '@/components/shared/AppFooter';
-import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { fetchCloudProviderStatus, type CloudProviderStatus, formatRelativeTime, getStatusColor, getStatusTextColor } from '@/lib/liveData';
 

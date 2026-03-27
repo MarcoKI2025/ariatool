@@ -11,7 +11,6 @@ import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { computeEvolutionAnalysis, EvolutionAnalysis } from '@/lib/evolutionEngine';
 import { exportToStructuredJSON, exportToCSV, generateAPIPayload } from '@/lib/exportFormats';
 import { AppFooter } from '@/components/shared/AppFooter';
-import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
