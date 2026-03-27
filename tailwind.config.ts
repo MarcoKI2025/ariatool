@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        mono: ['IBM Plex Mono', 'monospace'],
+        sans: ['DM Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['DM Mono', 'IBM Plex Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
