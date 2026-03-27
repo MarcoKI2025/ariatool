@@ -14,13 +14,11 @@ import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-interface PortfolioEntity {
-  id: string;
-  name: string;
-  inputs: ExposureInputs;
-  weight: number;
-}
+import { Button } from '@/components/ui/button';
+import { DEMO_INSUREDS, DEMO_PORTFOLIO_METRICS } from '@/data/demoScenario';
+import { analyzePortfolioImpact, type PortfolioEntity } from '@/lib/portfolioImpact';
+import { ComparativeDecisionPanel } from '@/features/demo/ComparativeDecisionPanel';
+import { PlayCircle, AlertTriangle } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════════
 // HELPERS
