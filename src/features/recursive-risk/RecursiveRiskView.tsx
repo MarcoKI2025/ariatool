@@ -194,45 +194,35 @@ export function RecursiveRiskView() {
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          STEP 2–4: 3 METRIC CARDS WITH INTERPRETATION
-          ══════════════════════════════════════════════════ */}
-      <div className="flex items-center gap-3 mb-1">
-        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Why This Assessment</span>
-        <div className="flex-1 h-px bg-border" />
-      </div>
+      {/* Why This Assessment */}
+      <div className="section-divider"><span>Why This Assessment</span></div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {metrics.map((m) => {
           const mColor = m.level === 'Critical' ? 'text-fragile' : m.level === 'Elevated' ? 'text-sensitive' : 'text-stable';
-          const mBg = m.level === 'Critical' ? 'bg-fragile-bg border-fragile-border' : m.level === 'Elevated' ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
           const barPct = m.inverted ? (100 - m.value) : m.value;
           const barColor = m.level === 'Critical' ? 'bg-fragile' : m.level === 'Elevated' ? 'bg-sensitive' : 'bg-stable';
 
           return (
-            <div key={m.label} className={`rounded-xl border p-5 ${mBg}`}>
-              {/* Level badge + label */}
+            <div key={m.label} className="bg-card border border-border rounded-lg p-5" style={{ boxShadow: 'var(--shadow-card)' }}>
               <div className="flex items-center justify-between mb-3">
-                <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">{m.label}</div>
+                <div className="label-xs">{m.label}</div>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${mColor}`}>{m.level}</span>
               </div>
 
-              {/* Visual indicator */}
               <div className="flex items-center gap-2 mb-3">
-                <div className="flex-1 h-2 bg-border rounded-full overflow-hidden">
+                <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
                   <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${Math.min(100, barPct)}%` }} />
                 </div>
-                <span className={`text-[12px] font-mono font-bold ${mColor}`}>{m.value.toFixed(0)}</span>
+                <span className={`text-[13px] metric-value font-bold ${mColor}`}>{m.value.toFixed(0)}</span>
               </div>
 
-              {/* Interpretation */}
               <div className="text-[11px] text-foreground font-medium leading-relaxed mb-3">
                 {m.meaning}
               </div>
 
-              {/* Why it matters */}
-              <div className="border-t border-border/50 pt-2.5">
-                <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Why This Matters</div>
+              <div className="border-t border-border pt-2.5">
+                <div className="label-xs mb-1" style={{ fontSize: '9px' }}>Why This Matters</div>
                 <div className="text-[10px] text-muted-foreground italic">{m.question}</div>
               </div>
             </div>
@@ -240,44 +230,32 @@ export function RecursiveRiskView() {
         })}
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          STEP 6: CRITICAL WARNING BOX
-          ══════════════════════════════════════════════════ */}
+      {/* Critical Warning */}
       {isCritical && (
-        <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-5">
-          <div className="flex items-start gap-3">
-            <span className="text-[18px]">⛔</span>
-            <div>
-              <div className="text-[13px] font-extrabold text-fragile mb-1">Unbounded Self-Improvement Warning</div>
-              <div className="text-[12px] text-foreground font-medium leading-relaxed">
-                Unbounded self-improvement may invalidate traditional risk controls. Standard actuarial models do not account for recursive capability acceleration.
-              </div>
-            </div>
+        <div className="bg-fragile-bg border border-fragile rounded-lg p-5">
+          <div className="text-[13px] font-bold text-fragile mb-1">Unbounded Self-Improvement Warning</div>
+          <div className="text-[12px] text-foreground leading-relaxed">
+            Unbounded self-improvement may invalidate traditional risk controls. Standard actuarial models do not account for recursive capability acceleration.
           </div>
         </div>
       )}
 
       {/* CGD Alert */}
       {cgdResult.alert && (
-        <div className="bg-sensitive-bg border border-sensitive-border rounded-xl p-5">
-          <div className="flex items-start gap-3">
-            <span className="text-[18px]">⚡</span>
-            <div>
-              <div className="text-[13px] font-bold text-sensitive">Compounding Gain Detected</div>
-              <div className="text-[11px] text-foreground/80 mt-1">{cgdResult.alertMessage}</div>
-            </div>
-          </div>
+        <div className="bg-sensitive-bg border border-sensitive-border rounded-lg p-4">
+          <div className="text-[12px] font-bold text-sensitive">Compounding Gain Detected</div>
+          <div className="text-[11px] text-muted-foreground mt-1">{cgdResult.alertMessage}</div>
         </div>
       )}
 
-      {/* Detected flags summary */}
+      {/* Detected flags */}
       {rsiResult.flags.length > 0 && (
-        <div className="bg-card border border-border rounded-xl p-5">
-          <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-3">Detected Capabilities</div>
+        <div className="bg-card border border-border rounded-lg p-5" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-3">Detected Capabilities</div>
           <div className="space-y-2">
             {rsiResult.flags.map((flag, i) => (
               <div key={i} className="flex items-start gap-2 text-[11px] text-foreground">
-                <span className="text-fragile mt-0.5">⚠</span>
+                <span className="text-fragile mt-0.5 text-[10px]">!</span>
                 <span className="font-medium">{flag}</span>
               </div>
             ))}
