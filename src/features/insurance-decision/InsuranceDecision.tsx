@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { useApp } from '@/hooks/useAppState';
@@ -11,6 +11,7 @@ import { CapitalImpactPanel } from '@/features/capital-impact/CapitalImpactPanel
 import { DependencyShockPanel } from '@/features/shock-simulator/DependencyShockPanel';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { SectionDivider } from '@/components/shared/SectionDivider';
+import { computeReinsuranceCapacityPressure } from '@/lib/capitalModel';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
@@ -905,7 +906,62 @@ export function InsuranceDecision() {
       {/* ═══ DEPENDENCY SHOCK SIMULATOR ═══ */}
       <DependencyShockPanel />
 
+      {/* ═══ REINSURANCE CAPACITY SIGNAL ═══ */}
+      <ReinsuranceCapacityCard inputs={inputs} results={results} />
+
       <StepNavigation currentStep={4} />
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// REINSURANCE CAPACITY SIGNAL CARD
+// ═══════════════════════════════════════════════════════════════
+
+function ReinsuranceCapacityCard({ inputs, results }: { inputs: any; results: any }) {
+  const reinsurance = useMemo(() => computeReinsuranceCapacityPressure(inputs, results), [inputs, results]);
+
+  const tierColor = reinsurance.pressure >= 80 ? 'text-fragile' : reinsurance.pressure >= 55 ? 'text-fragile' : reinsurance.pressure >= 30 ? 'text-sensitive' : 'text-stable';
+  const tierBg = reinsurance.pressure >= 80 ? 'bg-fragile-bg border-fragile-border' : reinsurance.pressure >= 55 ? 'bg-fragile-bg border-fragile-border' : reinsurance.pressure >= 30 ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
+  const barBg = reinsurance.pressure >= 80 ? 'bg-fragile' : reinsurance.pressure >= 55 ? 'bg-fragile' : reinsurance.pressure >= 30 ? 'bg-sensitive' : 'bg-stable';
+
+  return (
+    <div className={`rounded-xl border-2 p-6 mt-6 ${tierBg}`}>
+      <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">Reinsurance Capacity Signal</div>
+      <div className="flex items-center gap-4 mb-4">
+        <div>
+          <div className={`text-[36px] font-extrabold font-mono ${tierColor}`}>{reinsurance.pressure}</div>
+          <div className="text-[9px] text-muted-foreground">Pressure Score</div>
+        </div>
+        <div className="flex-1">
+          <div className="h-3 bg-border rounded-full overflow-hidden">
+            <div className={`h-full rounded-full transition-all ${barBg}`} style={{ width: `${reinsurance.pressure}%` }} />
+          </div>
+          <div className="flex justify-between mt-1 text-[8px] text-muted-foreground">
+            <span>Within Capacity</span><span>Approaching</span><span>Constrained</span><span>Withdrawal</span>
+          </div>
+        </div>
+        <div className={`px-3 py-1.5 rounded-lg text-[11px] font-bold ${tierBg} ${tierColor}`}>
+          {reinsurance.tier}
+        </div>
+      </div>
+
+      {reinsurance.triggers.length > 0 && (
+        <div className="mb-4 space-y-1">
+          <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Active Triggers</div>
+          {reinsurance.triggers.map((t, i) => (
+            <div key={i} className="text-[11px] text-foreground flex items-start gap-2">
+              <span className={`mt-0.5 ${tierColor}`}>▸</span> {t}
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="text-[12px] text-foreground leading-relaxed mb-3">{reinsurance.narrative}</div>
+
+      <div className="text-[9px] text-muted-foreground italic">
+        This is a qualitative heuristic signal. It does not represent actual reinsurance market capacity data.
+      </div>
     </div>
   );
 }
