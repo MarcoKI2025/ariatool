@@ -523,6 +523,53 @@ export function ExecutiveReport() {
             📄 Export ORSA Section
           </button>
         </div>
+        <div className="mt-4 pt-4 border-t border-border">
+          <div className="text-[11px] font-bold text-foreground mb-2">Data Export (External Systems)</div>
+          <div className="flex gap-3 flex-wrap">
+            <div className="flex flex-col items-start">
+              <button onClick={() => {
+                const json = exportToStructuredJSON(inputs, results);
+                const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = `aria-${(inputs.companyName || 'entity').replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.json`; a.click();
+                URL.revokeObjectURL(url);
+                toast.success('Structured JSON exported');
+              }} className="px-4 py-2 border border-border rounded-lg text-[12px] font-semibold text-foreground hover:bg-secondary transition-colors">
+                📦 Export JSON (Structured)
+              </button>
+              <span className="text-[9px] text-muted-foreground mt-1">For risk model integration</span>
+            </div>
+            <div className="flex flex-col items-start">
+              <button onClick={() => {
+                const csvData = exportToCSV([{
+                  name: inputs.companyName || 'Entity',
+                  inputs,
+                  afi: results.afi,
+                  band: results.band,
+                  weight: 100,
+                }]);
+                const blob = new Blob([csvData], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = `aria-portfolio-${Date.now()}.csv`; a.click();
+                URL.revokeObjectURL(url);
+                toast.success('CSV exported');
+              }} className="px-4 py-2 border border-border rounded-lg text-[12px] font-semibold text-foreground hover:bg-secondary transition-colors">
+                📊 Export CSV (Portfolio)
+              </button>
+              <span className="text-[9px] text-muted-foreground mt-1">For Excel / internal models</span>
+            </div>
+            <div className="flex flex-col items-start">
+              <button onClick={() => {
+                const payload = generateAPIPayload(inputs, results);
+                navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+                toast.success('API payload copied to clipboard');
+              }} className="px-4 py-2 border border-border rounded-lg text-[12px] font-semibold text-foreground hover:bg-secondary transition-colors">
+                🔗 Copy API Payload
+              </button>
+              <span className="text-[9px] text-muted-foreground mt-1">For API demonstration</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Metadata */}
