@@ -106,6 +106,7 @@ export interface AnalysisResults {
   rfsiLabel: string;
   rfsiDrivers: { contextVariability: number; semanticDriftRisk: number; evaluationMismatch: number; temporalInstability: number };
   frameDriftAlerts: FrameDriftAlert[];
+  cai: number;
 }
 
 export interface AuditLogEntry {
