@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalysis } from '@/lib/scoring';
+import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalysis, computePortfolioAccumulation, computeCAI } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
@@ -9,10 +9,12 @@ import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { DependencyNetwork } from './DependencyNetwork';
+import { SilentAIDetector } from './SilentAIDetector';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface PortfolioEntity {
   id: string;
