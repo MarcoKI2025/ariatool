@@ -263,39 +263,37 @@ export function RecursiveRiskView() {
         </div>
       )}
 
-      {/* ══════════════════════════════════════════════════
-          COLLAPSED DETAIL: MCCI toggles, confidence, etc.
-          ══════════════════════════════════════════════════ */}
+      {/* Detailed Assessment */}
       <Collapsible open={showDetail} onOpenChange={setShowDetail}>
         <CollapsibleTrigger className="w-full flex items-center justify-center gap-2 py-3 cursor-pointer">
-          <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-secondary border border-border hover:bg-accent transition-colors">
-            <span className="text-[11px] font-bold tracking-wider uppercase text-foreground">
-              {showDetail ? '▾ Hide Detailed Assessment' : '▸ View Detailed Assessment'}
+          <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-card border border-border hover:border-primary/40 transition-colors" style={{ boxShadow: 'var(--shadow-card)' }}>
+            <span className="text-[11px] font-semibold tracking-wider uppercase text-foreground">
+              {showDetail ? 'Hide Detailed Assessment' : 'View Detailed Assessment'}
             </span>
           </button>
         </CollapsibleTrigger>
         <CollapsibleContent className="space-y-4 pt-4">
 
-          {/* MCCI Capability Toggles */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          {/* MCCI */}
+          <div className="bg-card border border-border rounded-lg p-6" style={{ boxShadow: 'var(--shadow-card)' }}>
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Metacognitive Capability Index (MCCI)</div>
+                <div className="label-xs">Metacognitive Capability Index (MCCI)</div>
                 <div className="text-[11px] text-muted-foreground mt-0.5">Toggle detected capabilities to update the assessment</div>
               </div>
               <div className="text-right">
-                <div className={`text-[22px] font-bold font-mono ${mcciResult.tier === 'Advanced' || mcciResult.tier === 'Autonomous' ? 'text-fragile' : mcciResult.tier === 'Intermediate' ? 'text-sensitive' : 'text-stable'}`}>{mcciResult.mcci.toFixed(0)}</div>
+                <div className={`text-[22px] font-bold metric-value ${mcciResult.tier === 'Advanced' || mcciResult.tier === 'Autonomous' ? 'text-fragile' : mcciResult.tier === 'Intermediate' ? 'text-sensitive' : 'text-stable'}`}>{mcciResult.mcci.toFixed(0)}</div>
                 <div className="text-[9px] text-muted-foreground">{mcciResult.tier}</div>
               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
               {Object.entries(mcciResult.capabilities).map(([key, value]) => (
-                <div key={key} className="bg-secondary/30 rounded-lg px-3 py-2.5 text-center">
+                <div key={key} className="bg-secondary rounded-lg px-3 py-2.5 text-center">
                   <div className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </div>
-                  <div className="text-[16px] font-bold font-mono text-foreground mt-0.5">{value.toFixed(0)}</div>
+                  <div className="text-[16px] font-bold metric-value text-foreground mt-0.5">{value.toFixed(0)}</div>
                 </div>
               ))}
             </div>
@@ -303,14 +301,14 @@ export function RecursiveRiskView() {
             <div className="border-t border-border pt-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 {(Object.keys(metacogCaps) as (keyof MetacognitiveCapabilities)[]).map(key => (
-                  <label key={key} className="flex items-center gap-2 cursor-pointer select-none group">
+                  <label key={key} className="flex items-center gap-2.5 cursor-pointer select-none group py-1">
                     <input
                       type="checkbox"
                       checked={metacogCaps[key]}
                       onChange={() => setMetacogCaps(prev => ({ ...prev, [key]: !prev[key] }))}
-                      className="rounded border-border accent-primary w-3.5 h-3.5"
+                      className="rounded border-border accent-primary w-4 h-4"
                     />
-                    <span className="text-[11px] text-foreground/80 group-hover:text-foreground transition-colors">
+                    <span className="text-[11px] text-muted-foreground group-hover:text-foreground transition-colors">
                       {key.replace(/([A-Z])/g, ' $1').trim()}
                     </span>
                   </label>
@@ -320,15 +318,17 @@ export function RecursiveRiskView() {
           </div>
 
           {/* Confidence */}
-          <div className="bg-card border border-border rounded-xl p-5">
-            <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Assessment Confidence</div>
+          <div className="bg-card border border-border rounded-lg p-6" style={{ boxShadow: 'var(--shadow-card)' }}>
+            <div className="label-xs mb-4">Assessment Confidence</div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
               {Object.entries(confidence.breakdown).map(([key, value]) => (
-                <div key={key} className="bg-secondary/30 rounded-lg px-3 py-2.5 text-center">
-                  <div className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground">
+                <div key={key} className="bg-secondary rounded-lg px-3 py-3 text-center">
+                  <div className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground mb-1">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </div>
-                  <div className="text-[14px] font-bold text-foreground mt-0.5">{'★'.repeat(value)}{'☆'.repeat(5 - value)}</div>
+                  <div className="text-[14px] font-bold text-foreground" style={{ color: 'hsl(var(--primary))' }}>
+                    {'★'.repeat(value)}{'☆'.repeat(5 - value)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -338,13 +338,13 @@ export function RecursiveRiskView() {
           </div>
 
           {/* Governance Recommendations */}
-          <div className="bg-card border border-border rounded-xl p-5">
-            <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Governance Recommendations</div>
-            <div className="space-y-2">
+          <div className="bg-card border border-border rounded-lg p-6" style={{ boxShadow: 'var(--shadow-card)' }}>
+            <div className="label-xs mb-3">Governance Recommendations</div>
+            <div className="space-y-2.5">
               {rsiResult.recommendations.map((rec, i) => (
-                <div key={i} className="flex items-start gap-2 text-[11px] text-foreground">
-                  <span className="text-primary mt-0.5">→</span>
-                  <span className="font-medium">{rec}</span>
+                <div key={i} className="flex items-start gap-2.5 text-[12px] text-foreground">
+                  <span className="text-primary mt-0.5 text-[10px] font-bold">—</span>
+                  <span className="font-medium leading-relaxed">{rec}</span>
                 </div>
               ))}
             </div>
@@ -354,7 +354,7 @@ export function RecursiveRiskView() {
       </Collapsible>
 
       {/* Disclaimer */}
-      <div className="text-[9px] text-muted-foreground/60 text-center pt-4 border-t border-border">
+      <div className="text-[9px] text-muted-foreground text-center pt-4 border-t border-border">
         Recursive risk assessment based on AGAF v4.3.0. Hyperagent capabilities are self-reported and should be verified through technical audit.
       </div>
 
