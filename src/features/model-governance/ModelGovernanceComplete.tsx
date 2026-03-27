@@ -84,7 +84,7 @@ export function ModelGovernanceComplete() {
 
 function ModelGovernanceRegister() {
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="p-[12px_14px] sm:p-[16px_22px] border-b border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-1">◈ Model Governance Register · AGAF v3.0 · Required for audit trail</div>
@@ -190,7 +190,7 @@ function FrameworkAssumptions() {
   const iconMap = { holds: { icon: '✓', cls: 'bg-stable text-foreground' }, cond: { icon: '~', cls: 'bg-sensitive text-foreground' }, lim: { icon: '✗', cls: 'bg-fragile text-foreground' } };
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Scope & Assumptions</div>
@@ -231,7 +231,7 @@ function NonGoals() {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">§9.3 · Constraint Spaces</div>
@@ -265,7 +265,7 @@ function MeaningDriftRegister() {
   const mdrColor = mdr >= 0.6 ? 'text-fragile' : mdr >= 0.35 ? 'text-sensitive' : 'text-stable';
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">§5.1 · Behavioral Alignment Decay</div>
@@ -323,7 +323,7 @@ function MeaningDriftRegister() {
 
 function MethodologyWhitePaper() {
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="p-5 pb-4 flex items-start justify-between">
         <div>
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Methodology · Assessment Framework White Paper</div>
@@ -376,7 +376,7 @@ function MethodologyWhitePaper() {
 
 function AGAFMethodologyStatement() {
   return (
-    <div className="bg-secondary border border-border rounded-xl p-5 mb-5">
+    <div className="bg-secondary border border-border rounded-lg p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[10px]">◈ AI Governance Architecture Framework (AGAF) — Methodology Statement</div>
       <div className="text-[13px] font-bold text-foreground mb-2">What AGAF is — and what it is not</div>
       <div className="text-[11px] text-secondary-foreground leading-[1.65] mb-[14px]">
@@ -418,7 +418,7 @@ function AssessmentScopeDeclaration() {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-3">Assessment Scope Declaration — Under Which Conditions This Assessment Is Valid</div>
       <div className="space-y-0">
         {declarations.map((d, i) => (
@@ -438,7 +438,7 @@ function AssessmentScopeDeclaration() {
 
 function CalibrationParameters() {
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[10px]">Calibration Parameters · Loss Model Configuration</div>
       <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-4">
         Loss estimates are anchored to published market data — not proprietary claims databases. These multipliers can be replaced with portfolio-specific actuarial assumptions without changing the governance signal layer.
@@ -480,7 +480,7 @@ function RFSIPanel() {
   const { rfsi, rfsiTier, rfsiLabel, rfsiDrivers } = results;
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="p-4 pb-3 border-b border-border flex items-start justify-between">
         <div>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-1">◈ Reference Frame Stability Index (RFSI) <span className="text-[8px] px-[6px] py-[1px] bg-primary/10 border border-primary/30 rounded text-primary ml-1">Exploratory</span></div>
@@ -533,7 +533,7 @@ function FDAPanel() {
   const { frameDriftAlerts } = results;
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="p-4 pb-3 border-b border-border flex items-start justify-between">
         <div>
           <div className="text-[9px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[3px]">◈ Frame Drift Alert System (FDA)</div>
@@ -578,7 +578,7 @@ function FDAPanel() {
 
 function EvaluationLimitsPanel() {
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[4px]">◈ Evaluation Limits · The Boundaries of What Can Be Known</div>
       <div className="text-[16px] font-bold text-foreground mb-[6px]">What This Assessment Cannot Tell You</div>
       <div className="text-[11px] text-muted-foreground leading-[1.6] mb-4 max-w-[600px]">Every evaluation is a snapshot under constrained conditions. This panel makes the epistemic limits of this assessment explicit — not as a disclaimer, but as a first-class governance signal.</div>
@@ -618,7 +618,7 @@ function EpistemicLimitations() {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="p-6">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-2">◈ Epistemic Status · What This Assessment Cannot Guarantee</div>
         <div className="text-[18px] font-bold text-foreground mb-3">You Cannot Rely on This Evaluation</div>
@@ -644,7 +644,7 @@ function EpistemicLimitations() {
 
 function RegulatoryAlignment() {
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Regulatory Alignment Map · Framework Grounding</div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
@@ -692,7 +692,7 @@ function RegulatoryAlignment() {
 
 function ResearchFoundation() {
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="flex">
         <div className="w-[3px] bg-primary flex-shrink-0" />
         <div className="flex-1 p-[14px_18px]">
@@ -724,7 +724,7 @@ function ResearchFoundation() {
 
 function CompetitivePositioning() {
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Competitive Positioning · What This Engine Does Differently</div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
@@ -777,7 +777,7 @@ function APIIntegrationReference() {
 }`;
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="p-5 pb-4 flex items-start justify-between">
         <div>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Integration · API Specification</div>
@@ -831,7 +831,7 @@ function APIIntegrationReference() {
 
 function CalibrationTransparency() {
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">§ Calibration Transparency</div>
       <div className="text-[15px] font-bold text-foreground mb-4">How Was This Model Calibrated?</div>
       <div className="text-[11px] text-secondary-foreground leading-relaxed space-y-3">
@@ -869,7 +869,7 @@ function CalibrationTransparency() {
 
 function MethodologyTransparencyPanel() {
   return (
-    <section className="mb-5 border border-primary/20 rounded-xl p-5 bg-primary/5">
+    <section className="mb-5 border border-primary/20 rounded-lg p-5 bg-primary/5">
       <div className="flex items-center gap-2 mb-4">
         <span className="text-[18px]">🔬</span>
         <h3 className="text-[13px] font-bold text-foreground">
@@ -955,7 +955,7 @@ function FrameworkRevisionSchedule() {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mb-5">
+    <div className="bg-card border border-border rounded-lg overflow-hidden mb-5">
       <div className="p-5 pb-4 flex items-start justify-between">
         <div>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">§9.4 · Ongoing Negotiation</div>
@@ -1003,7 +1003,7 @@ function ProductRoadmap() {
   ];
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5">
+    <div className="bg-card border border-border rounded-lg p-5">
       <div className="flex items-center gap-3 mb-5">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">◈ Product Roadmap</div>
         <span className="text-[8px] font-bold px-2 py-0.5 bg-primary/10 text-primary border border-primary/30 rounded">2026–2028</span>
@@ -1043,7 +1043,7 @@ function AIIncidentsFeed() {
   }, []);
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 mb-5">
+    <div className="bg-card border border-border rounded-lg p-5 mb-5">
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">

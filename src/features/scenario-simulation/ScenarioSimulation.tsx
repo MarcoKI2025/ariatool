@@ -276,7 +276,7 @@ export function ScenarioSimulation() {
           { label: 'Agentic', value: s.agentic, sub: s.agenticLabel },
           { label: 'Aggregation', value: s.aggregation, sub: s.aggregationLabel },
         ].map((m, i) => (
-          <div key={i} className="bg-card border border-border rounded-xl p-4 text-center">
+          <div key={i} className="bg-card border border-border rounded-lg p-4 text-center">
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{m.label}</div>
             <div className={`text-[28px] sm:text-[36px] font-bold font-mono leading-none ${tierColor(m.value)}`}>{m.value}</div>
             <div className="text-[10px] text-muted-foreground mt-1">{m.sub}</div>
@@ -286,7 +286,7 @@ export function ScenarioSimulation() {
 
       {/* Recovery + Downtime */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-        <div className="bg-card border border-border rounded-xl p-5 flex items-center gap-4">
+        <div className="bg-card border border-border rounded-lg p-5 flex items-center gap-4">
           <div className="text-2xl">⏱</div>
           <div>
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Time to Recovery</div>
@@ -295,7 +295,7 @@ export function ScenarioSimulation() {
             }`}>{s.recovery}</div>
           </div>
         </div>
-        <div className="bg-card border border-border rounded-xl p-5 flex items-center gap-4">
+        <div className="bg-card border border-border rounded-lg p-5 flex items-center gap-4">
           <div className="text-2xl">🌊</div>
           <div>
             <div className="text-[8px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Operational Downtime Profile</div>
@@ -307,7 +307,7 @@ export function ScenarioSimulation() {
       <SectionDivider title="Stress Analysis" icon="⟲" subtitle="Stress multiplier table and cascade propagation" />
 
       {/* ═══ Stress Multiplier Table ═══ */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+      <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">
         <div className="px-5 py-3 border-b border-border">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Stress Multiplier Table</div>
           <div className="text-[11px] text-secondary-foreground mt-[2px]">How each metric shifts under Best Case, Expected, and Stress conditions</div>
@@ -335,7 +335,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* ═══ Cascade Propagation Circles ═══ */}
-      <div className="bg-card border-2 border-border rounded-xl p-6 mb-4 relative overflow-hidden">
+      <div className="bg-card border-2 border-border rounded-lg p-6 mb-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, hsl(var(--sensitive)), hsl(var(--fragile)), #7b0e0e)' }} />
         <div className="flex items-start justify-between mb-5">
           <div>
@@ -369,7 +369,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* ═══ What Changes Under This Scenario ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">What Changes Under This Scenario</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
@@ -388,7 +388,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* ═══ Loss Envelope Shift ═══ */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+      <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">
         <div className="px-5 py-3 border-b border-border">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Loss Envelope Shift Under Scenario</div>
           <div className="text-[11px] text-secondary-foreground mt-[2px]">How the loss bands change compared to baseline exposure</div>
@@ -419,7 +419,7 @@ export function ScenarioSimulation() {
       </div>
 
       {/* Impact narrative */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="text-[12px] text-foreground leading-[1.65]">
           <strong className="text-foreground">Impact Narrative — </strong>{s.narrative}
         </div>
@@ -427,11 +427,11 @@ export function ScenarioSimulation() {
 
       {/* Implications */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-        <div className="bg-card border-l-4 border-l-fragile border border-border rounded-xl p-5">
+        <div className="bg-card border-l-4 border-l-fragile border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Underwriting Implication</div>
           <div className="text-[12px] text-muted-foreground leading-[1.55]">{s.underwritingImplication}</div>
         </div>
-        <div className="bg-card border-l-4 border-l-sensitive border border-border rounded-xl p-5">
+        <div className="bg-card border-l-4 border-l-sensitive border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-sensitive mb-2">Operational Risk Implication</div>
           <div className="text-[12px] text-muted-foreground leading-[1.55]">{s.operationalImplication}</div>
         </div>
@@ -440,7 +440,7 @@ export function ScenarioSimulation() {
       <SectionDivider title="Scenario Comparison" icon="📋" subtitle="All scenarios side-by-side" />
 
       {/* ═══ Scenario Comparison Matrix ═══ */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+      <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">
         <div className="px-5 py-3 border-b border-border">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Scenario Comparison Matrix</div>
           <div className="text-[11px] text-secondary-foreground mt-[2px]">All four scenarios side-by-side — expected values</div>
@@ -574,7 +574,7 @@ function RobustnessTestingPanel({ inputs, baseAfi }: { inputs: ExposureInputs; b
   const stabilityColor = results.stability === 'Volatile' ? 'text-fragile' : results.stability === 'Moderate' ? 'text-sensitive' : 'text-stable';
 
   return (
-    <div className="bg-card border border-border rounded-xl p-5 sm:p-6 mb-4">
+    <div className="bg-card border border-border rounded-lg p-5 sm:p-6 mb-4">
       <div className="mb-4">
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">⟲ Parameter Robustness Testing · AFI Sensitivity Analysis</div>
         <div className="text-[11px] text-secondary-foreground leading-[1.55]">
@@ -586,7 +586,7 @@ function RobustnessTestingPanel({ inputs, baseAfi }: { inputs: ExposureInputs; b
         <div className="text-center py-6">
           <button
             onClick={() => setShowResults(true)}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] text-white rounded-xl font-semibold text-[13px] shadow-lg hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] text-white rounded-lg font-semibold text-[13px] shadow-lg hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] transition-all"
           >
             🎲 Run Robustness Test
           </button>

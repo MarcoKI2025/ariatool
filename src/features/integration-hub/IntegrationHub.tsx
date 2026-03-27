@@ -170,7 +170,7 @@ export function IntegrationHub() {
 
       {/* UseRestrictionBanner removed */}
       {/* Demo Disclaimer */}
-      <div className="rounded-xl p-4 border border-sensitive-border bg-sensitive-bg">
+      <div className="rounded-lg p-4 border border-sensitive-border bg-sensitive-bg">
         <div className="flex items-start gap-3">
           <span className="text-sensitive text-lg flex-shrink-0 mt-[1px]">🎭</span>
           <div>
@@ -209,7 +209,7 @@ export function IntegrationHub() {
       </div>
 
       {/* Live Cloud Provider Status Feed */}
-      <div className="bg-card border border-border rounded-xl p-5">
+      <div className="bg-card border border-border rounded-lg p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">
@@ -321,7 +321,7 @@ export function IntegrationHub() {
           <button
             key={integration.id}
             onClick={() => openDetail(integration)}
-            className="bg-card border border-border rounded-xl p-5 text-left hover:border-primary/30 hover:shadow-sm transition-all group"
+            className="bg-card border border-border rounded-lg p-5 text-left hover:border-primary/30 hover:shadow-sm transition-all group"
           >
             <div className="flex items-start gap-3">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -371,7 +371,7 @@ export function IntegrationHub() {
       </div>
 
       {/* Activity Feed */}
-      <div className="bg-card border border-border rounded-xl p-6">
+      <div className="bg-card border border-border rounded-lg p-6">
         <h3 className="text-sm font-semibold text-foreground mb-4">Live Activity Feed</h3>
         <div className="space-y-2">
           {ACTIVITY_FEED.map((item, i) => (
@@ -393,7 +393,7 @@ export function IntegrationHub() {
       </div>
 
       {/* Platform Statement */}
-      <div className="bg-card border border-border rounded-xl p-6">
+      <div className="bg-card border border-border rounded-lg p-6">
         <h3 className="text-sm font-semibold text-foreground mb-2">Platform Architecture</h3>
         <p className="text-[12px] text-muted-foreground leading-relaxed">
           The AI Governance Risk Engine operates as an open platform with standardised API interfaces for market data,
@@ -504,7 +504,7 @@ function StatCard({ label, value, accent }: { label: string; value: string; acce
     fragile: 'text-fragile',
   };
   return (
-    <div className="bg-card border border-border rounded-xl p-4 text-center">
+    <div className="bg-card border border-border rounded-lg p-4 text-center">
       <div className="text-[10px] text-muted-foreground uppercase tracking-wider mb-1">{label}</div>
       <div className={`text-xl font-bold font-mono ${accentClasses[accent] || 'text-foreground'}`}>{value}</div>
     </div>

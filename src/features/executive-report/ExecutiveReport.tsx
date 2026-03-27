@@ -151,7 +151,7 @@ export function ExecutiveReport() {
       {/* ══════════════════════════════════════════════════
           STEP 1: CORE MESSAGE — dominant statement
           ══════════════════════════════════════════════════ */}
-      <div className={`rounded-xl border-2 p-6 mb-5 ${
+      <div className={`rounded-lg border-2 p-6 mb-5 ${
         band === 'Fragile' ? 'bg-fragile-bg border-fragile' :
         band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' :
         'bg-stable-bg border-stable'
@@ -166,17 +166,17 @@ export function ExecutiveReport() {
           ══════════════════════════════════════════════════ */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {/* Insurability Status */}
-        <div className={`rounded-xl border p-5 ${levelBg(insLabel === 'NOT INSURABLE' ? 'Critical' : insLabel === 'CONDITIONAL' ? 'Elevated' : 'Stable')}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(insLabel === 'NOT INSURABLE' ? 'Critical' : insLabel === 'CONDITIONAL' ? 'Elevated' : 'Stable')}`}>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Insurability Status</div>
           <div className={`text-[22px] font-extrabold tracking-tight ${levelColor(insLabel)}`}>{insLabel}</div>
         </div>
         {/* Confidence */}
-        <div className={`rounded-xl border p-5 ${levelBg(confidenceLevel === 'Low' ? 'Critical' : confidenceLevel === 'Medium' ? 'Elevated' : 'Stable')}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(confidenceLevel === 'Low' ? 'Critical' : confidenceLevel === 'Medium' ? 'Elevated' : 'Stable')}`}>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Assessment Confidence</div>
           <div className={`text-[22px] font-extrabold tracking-tight ${levelColor(confidenceLevel === 'Low' ? 'Critical' : confidenceLevel === 'Medium' ? 'Elevated' : 'Stable')}`}>{confidenceLevel}</div>
         </div>
         {/* Action */}
-        <div className="rounded-xl border border-border bg-card p-5">
+        <div className="rounded-lg border border-border bg-card p-5">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Recommended Action</div>
           <div className="text-[13px] font-bold text-foreground leading-snug">{recommendedAction}</div>
         </div>
@@ -192,7 +192,7 @@ export function ExecutiveReport() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {/* Block 1: Recursive / Agentic Risk */}
-        <div className={`rounded-xl border p-5 ${levelBg(cascadeLevel)}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(cascadeLevel)}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Recursive / Agentic Risk</div>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(cascadeLevel)}`}>{cascadeLevel}</span>
@@ -216,7 +216,7 @@ export function ExecutiveReport() {
         </div>
 
         {/* Block 2: Systemic / Dependency Risk */}
-        <div className={`rounded-xl border p-5 ${levelBg(systemicLevel)}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(systemicLevel)}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Systemic / Dependency Risk</div>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(systemicLevel)}`}>{systemicLevel}</span>
@@ -240,7 +240,7 @@ export function ExecutiveReport() {
         </div>
 
         {/* Block 3: Governance / Control Gaps */}
-        <div className={`rounded-xl border p-5 ${levelBg(governanceLevel)}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(governanceLevel)}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Governance / Control Gaps</div>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(governanceLevel)}`}>{governanceLevel}</span>
@@ -272,7 +272,7 @@ export function ExecutiveReport() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         {/* Pricing */}
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Pricing Implications</div>
           {(() => {
             const premium = calculatePremium(5000000, afi, inputs.industry || 'General AI System', 0);
@@ -286,7 +286,7 @@ export function ExecutiveReport() {
           })()}
         </div>
         {/* Coverage */}
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Coverage Limitations</div>
           <div className="text-[13px] font-bold text-foreground mb-1">
             {evolution?.coverageDecision.decision || decisionClass}
@@ -297,7 +297,7 @@ export function ExecutiveReport() {
           </div>
         </div>
         {/* Capital Exposure */}
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Capital Exposure</div>
           {evolution ? (
             <>
@@ -322,7 +322,7 @@ export function ExecutiveReport() {
         <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div className={`rounded-xl border p-5 mb-6 ${band === 'Stable' ? 'bg-stable-bg border-stable-border' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' : 'bg-fragile-bg border-fragile-border'}`}>
+      <div className={`rounded-lg border p-5 mb-6 ${band === 'Stable' ? 'bg-stable-bg border-stable-border' : band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' : 'bg-fragile-bg border-fragile-border'}`}>
         <div className="text-[13px] font-bold text-foreground mb-3">
           {band === 'Stable' ? 'Maintain current status' : `${conditions.length} condition${conditions.length > 1 ? 's' : ''} required for standard insurability`}
         </div>
@@ -352,7 +352,7 @@ export function ExecutiveReport() {
         <CollapsibleContent className="space-y-4 pt-4">
 
           {/* AFI Components */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">AFI Component Breakdown</div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
@@ -370,7 +370,7 @@ export function ExecutiveReport() {
           </div>
 
           {/* Loss Envelope */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Loss Envelope</div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {[
@@ -388,7 +388,7 @@ export function ExecutiveReport() {
           </div>
 
           {/* Risk Indices */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Risk Indices</div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
@@ -411,7 +411,7 @@ export function ExecutiveReport() {
           {(() => {
             const peer = calculatePeerComparison(afi, inputs.industry || 'General', inputs);
             return (
-              <div className="bg-card border border-border rounded-xl p-5">
+              <div className="bg-card border border-border rounded-lg p-5">
                 <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Industry Peer Comparison · {peer.benchmark.industry} (n={peer.benchmark.sampleSize})</div>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   {[
@@ -432,7 +432,7 @@ export function ExecutiveReport() {
 
           {/* Evolution Analysis */}
           {evolution && (
-            <div className="bg-card border border-border rounded-xl p-5">
+            <div className="bg-card border border-border rounded-lg p-5">
               <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">System Evolution & Projections</div>
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-3">
                 <div className="p-3 bg-secondary border border-border rounded-lg text-center">
@@ -476,7 +476,7 @@ export function ExecutiveReport() {
 
           {/* Recursive Risk */}
           {state.recursiveRisk && (
-            <div className="bg-card border border-border rounded-xl p-5">
+            <div className="bg-card border border-border rounded-lg p-5">
               <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Recursive Risk Assessment</div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 {[
@@ -495,7 +495,7 @@ export function ExecutiveReport() {
           )}
 
           {/* Epistemic Status */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-2">Epistemic Status</div>
             <div className="text-[12px] text-foreground font-medium mb-2">This assessment is a structural governance signal — not actuarially certified.</div>
             <div className="text-[10px] text-muted-foreground leading-relaxed">
@@ -509,7 +509,7 @@ export function ExecutiveReport() {
       {/* ══════════════════════════════════════════════════
           EXPORT CONTROLS
           ══════════════════════════════════════════════════ */}
-      <div className="bg-card border border-border rounded-xl p-5 mt-6">
+      <div className="bg-card border border-border rounded-lg p-5 mt-6">
         <div className="text-[13px] font-bold text-foreground mb-3">Export & Share</div>
         <div className="flex gap-3 flex-wrap">
           <button onClick={copyReport} className="px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-[13px] font-semibold hover:bg-primary/90 transition-colors">

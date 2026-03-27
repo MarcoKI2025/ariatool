@@ -60,7 +60,7 @@ export function RiskOverview() {
       <SystemEvolutionPanel />
 
       {/* This Means interpretation */}
-      <div className="bg-card rounded-xl p-5 mb-4 border-l-4 border-l-fragile border border-border flex items-start gap-[14px]">
+      <div className="bg-card rounded-lg p-5 mb-4 border-l-4 border-l-fragile border border-border flex items-start gap-[14px]">
         <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
           band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
         }`}>
