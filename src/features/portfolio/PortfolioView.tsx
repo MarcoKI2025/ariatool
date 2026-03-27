@@ -127,6 +127,21 @@ export function PortfolioView() {
     [normalizedEntities.map(e => JSON.stringify(e.inputs)).join(',')]
   );
 
+  // Portfolio Accumulation Score
+  const accumulation = useMemo(() => {
+    const pasEntities = normalizedEntities.map(e => {
+      const { afi } = computeEntityAFI(e.inputs);
+      return { inputs: e.inputs, afi, weight: e.weight };
+    });
+    return computePortfolioAccumulation(pasEntities);
+  }, [normalizedEntities.map(e => JSON.stringify(e.inputs) + e.weight).join(',')]);
+
+  // Average CAI across entities
+  const avgCAI = useMemo(() => {
+    const total = normalizedEntities.reduce((sum, e) => sum + computeCAI(e.inputs), 0);
+    return Math.round(total / normalizedEntities.length);
+  }, [normalizedEntities.map(e => JSON.stringify(e.inputs)).join(',')]);
+
   const avgCorrelation = entityEvolutions.reduce((s, e) => s + e.systemicCorrelationScore, 0) / entityEvolutions.length;
   const avgCascade = entityEvolutions.reduce((s, e) => s + e.cascadeRiskScore, 0) / entityEvolutions.length;
   const worstInsurability = entityEvolutions.reduce((worst, e) => {
@@ -135,7 +150,6 @@ export function PortfolioView() {
   }, entityEvolutions[0]);
   const hiddenCorrelationCount = entityEvolutions.filter(e => e.systemicDetail.hiddenCorrelation).length;
 
-  // Portfolio-level risk label
   const portfolioRiskLevel =
     worstInsurability.insurabilityStatus === 'Uninsurable' || avgCascade > 0.6 ? 'SYSTEMIC' :
     worstInsurability.insurabilityStatus === 'Critical' || avgCorrelation > 0.6 ? 'ELEVATED' :
@@ -153,11 +167,18 @@ export function PortfolioView() {
   const riskColor = levelColor(portfolioRiskLevel === 'SYSTEMIC' ? 'Critical' : portfolioRiskLevel === 'ELEVATED' ? 'Elevated' : portfolioRiskLevel === 'MODERATE' ? 'Sensitive' : 'Stable');
   const riskBg = levelBg(portfolioRiskLevel === 'SYSTEMIC' ? 'Critical' : portfolioRiskLevel === 'ELEVATED' ? 'Elevated' : portfolioRiskLevel === 'MODERATE' ? 'Sensitive' : 'Stable');
 
-  // Worst case impact
   const worstTailRisk = Math.max(...entityEvolutions.map(e => e.economicLoss.tailRisk));
-
-  // Solvency stable count
   const stableCount = normalizedEntities.filter(e => computeEntityAFI(e.inputs).band === 'Stable').length;
+
+  // PAS color helpers
+  const pasColor = accumulation.pas >= 75 ? 'text-fragile' : accumulation.pas >= 50 ? 'text-fragile' : accumulation.pas >= 25 ? 'text-sensitive' : 'text-stable';
+  const pasBg = accumulation.pas >= 75 ? 'bg-fragile' : accumulation.pas >= 50 ? 'bg-fragile' : accumulation.pas >= 25 ? 'bg-sensitive' : 'bg-stable';
+  const pasBandBg = accumulation.pas >= 75 ? 'bg-fragile-bg border-fragile-border' : accumulation.pas >= 50 ? 'bg-fragile-bg border-fragile-border' : accumulation.pas >= 25 ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
+
+  const avgAFI = normalizedEntities.reduce((s, e) => {
+    const { afi } = computeEntityAFI(e.inputs);
+    return s + afi * e.normalizedWeight;
+  }, 0);
 
   return (
     <div className="space-y-6 max-w-5xl">
