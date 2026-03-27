@@ -133,7 +133,7 @@ export function ExposureResults() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {/* Block 1: Cascade / Recursive Risk */}
-        <div className={`rounded-xl border p-5 ${levelBg(cascadeLevel)}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(cascadeLevel)}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Recursive Risk</div>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(cascadeLevel)}`}>{cascadeLevel}</span>
@@ -157,7 +157,7 @@ export function ExposureResults() {
         </div>
 
         {/* Block 2: Systemic Exposure */}
-        <div className={`rounded-xl border p-5 ${levelBg(systemicLevel)}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(systemicLevel)}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Systemic Exposure</div>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(systemicLevel)}`}>{systemicLevel}</span>
@@ -181,7 +181,7 @@ export function ExposureResults() {
         </div>
 
         {/* Block 3: Governance / Model Weakness */}
-        <div className={`rounded-xl border p-5 ${levelBg(governanceLevel)}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(governanceLevel)}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Governance Weakness</div>
             <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(governanceLevel)}`}>{governanceLevel}</span>
@@ -231,7 +231,7 @@ export function ExposureResults() {
           />
 
           {/* Hero section */}
-          <div className="bg-card border border-border rounded-xl overflow-hidden">
+          <div className="bg-card border border-border rounded-lg overflow-hidden">
             <div className="p-6 pb-4">
               <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v4.3.0<InfoTip text={TOOLTIPS.afi} /></div>
               <div className="flex flex-col md:flex-row items-start gap-4 md:gap-8">
@@ -508,7 +508,7 @@ export function ExposureResults() {
           </div>
 
           {/* Category Comparison */}
-          <div className="bg-card border border-border rounded-xl p-7">
+          <div className="bg-card border border-border rounded-lg p-7">
             <div className="mb-5">
               <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-[6px]">Underwriting Intelligence Layer</div>
               <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">What this engine measures — and others cannot</div>

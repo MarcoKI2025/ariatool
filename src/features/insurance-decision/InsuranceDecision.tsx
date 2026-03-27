@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
@@ -39,10 +38,10 @@ export function InsuranceDecision() {
         </p>
       </div>
 
-      <UseRestrictionBanner />
+      {/* UseRestrictionBanner removed */}
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
-      <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${
+      <div className={`rounded-lg p-4 sm:p-6 mb-4 border-2 relative overflow-hidden ${
         band === 'Fragile' ? 'bg-card border-fragile' :
         band === 'Sensitive' ? 'bg-card border-sensitive' :
         'bg-card border-stable'
@@ -50,7 +49,7 @@ export function InsuranceDecision() {
         <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-muted-foreground mb-3">
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
-        <div className={`text-[18px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
+        <div className={`text-[18px] sm:text-[28px] font-bold metric-value tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
           {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
            decisionClass === 'Conditional Review' ? 'Conditional Review' :
            'Standard Coverage'}
@@ -90,7 +89,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 3. "THIS MEANS" CALLOUT ═══ */}
-      <div className={`bg-card rounded-xl p-5 mb-4 border-l-4 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'} border border-border flex items-start gap-[14px]`}>
+      <div className={`bg-card rounded-lg p-5 mb-4 border-l-4 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'} border border-border flex items-start gap-[14px]`}>
         <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0 mt-[2px] ${
           band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'
         }`}>
@@ -121,7 +120,7 @@ export function InsuranceDecision() {
       <h2 className="text-[18px] font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h2>
       <p className="text-[12px] text-muted-foreground mb-4 leading-[1.5]">Structural risk characterization for underwriting and financial exposure modelling.</p>
 
-      <div className={`rounded-xl p-5 mb-4 border-2 ${
+      <div className={`rounded-lg p-5 mb-4 border-2 ${
         band === 'Fragile' ? 'bg-fragile-bg border-fragile' :
         band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive' :
         'bg-stable-bg border-stable'
@@ -153,7 +152,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 5. INSURABILITY THRESHOLD BAR ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Insurability Threshold Position</div>
         <div className="relative h-[24px] rounded-full overflow-hidden mb-2" style={{
           background: 'linear-gradient(to right, hsl(var(--stable)) 0%, hsl(var(--stable)) 28%, hsl(var(--sensitive)) 28%, hsl(var(--sensitive)) 45%, hsl(var(--fragile)) 45%, hsl(var(--fragile)) 100%)'
@@ -209,7 +208,7 @@ export function InsuranceDecision() {
             { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', color: 'text-sensitive', highlight: false },
             { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Provider concentration · Tail risk', color: 'text-fragile', highlight: true },
           ].map((cell, i) => (
-            <div key={i} className={`rounded-xl p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
+            <div key={i} className={`rounded-lg p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
               <div className={`text-[9px] tracking-[0.08em] uppercase font-bold mb-2 ${cell.highlight ? 'text-fragile' : 'text-muted-foreground'}`}>{cell.label}</div>
               <div className={`text-[24px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
               <div className="text-[10px] text-muted-foreground mt-2">{cell.sub}</div>
@@ -244,7 +243,7 @@ export function InsuranceDecision() {
       <SectionDivider title="Cascade Propagation" icon="🌐" subtitle="How failure travels across systems and amplifies at each layer" />
 
       {/* ═══ 8. CASCADE PROPAGATION — CIRCLES + ARROWS ═══ */}
-      <div className="bg-card border-2 border-border rounded-xl p-3 sm:p-6 mb-4 relative overflow-hidden">
+      <div className="bg-card border-2 border-border rounded-lg p-3 sm:p-6 mb-4 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #f39c12, #c0392b, #7b0e0e)' }} />
         <div className="flex flex-col sm:flex-row items-start justify-between mb-5 gap-3">
           <div>
@@ -367,7 +366,7 @@ export function InsuranceDecision() {
                 Governance Assessment Signal · AI Governance Engine · {inputs.companyName || '—'}
                 <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded ml-1">◈ Committee-Grade</span>
               </div>
-              <div className={`text-[18px] sm:text-[42px] font-extrabold font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
+              <div className={`text-[18px] sm:text-[28px] font-bold metric-value font-mono leading-none tracking-wider uppercase mb-3 ${statusColorMap[statusCls]}`}>
                 {statusText}
               </div>
               <div className={`text-[13px] leading-[1.55] mb-4 max-w-[700px] ${rationaleColorMap[statusCls]}`}>
@@ -396,7 +395,7 @@ export function InsuranceDecision() {
       })()}
 
       {/* ═══ CONSEQUENCE LAYER ═══ */}
-      <div className={`rounded-xl p-[16px_20px] mb-4 border ${
+      <div className={`rounded-lg p-[16px_20px] mb-4 border ${
         band === 'Fragile' ? 'bg-fragile-bg border-fragile-border' :
         band === 'Sensitive' ? 'bg-sensitive-bg border-sensitive-border' :
         'bg-secondary border-border'
@@ -438,7 +437,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 10. PREMIUM ESTIMATE ROW ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">Premium Estimate & Structural Factors</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
@@ -491,7 +490,7 @@ export function InsuranceDecision() {
 
       {/* ═══ 13. REINSURANCE TREATY IMPLICATIONS ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-fragile mb-2">Excess-of-Loss XL Treaty</div>
           <div className="text-[13px] font-bold text-foreground mb-2">Reinsurance Layer Implications</div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
@@ -499,7 +498,7 @@ export function InsuranceDecision() {
           </div>
           <div className="mt-3 text-[10px] font-bold text-fragile">⚠ Treaty language gap — AI correlation not addressed</div>
         </div>
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-primary mb-2">Loss of Function Endorsement</div>
           <div className="text-[13px] font-bold text-foreground mb-2">AI-Specific Coverage Extension</div>
           <div className="text-[11px] text-muted-foreground leading-[1.55]">
@@ -519,7 +518,7 @@ export function InsuranceDecision() {
       </SectionCard>
 
       {/* ═══ 15. REINSURANCE € BOXES (dark panel) ═══ */}
-      <div className="bg-card border border-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-lg p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Existing Insurance applicable in Reinsurance</div>
         <div className="text-[14px] font-bold text-foreground mb-4">Estimated coverage applicable in AI-correlated scenarios</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -568,7 +567,7 @@ export function InsuranceDecision() {
       <SectionDivider title="Market Position & Portfolio" icon="🌍" subtitle="Market context, portfolio exposure, and provider dependency" />
 
       {/* ═══ 17. WHAT THE MARKET SEES ═══ */}
-      <div className="bg-card border border-border rounded-xl p-7 mb-5">
+      <div className="bg-card border border-border rounded-lg p-7 mb-5">
         <div className="mb-5">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-[6px]">What the Market Sees — AI Risk in Context</div>
           <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">How this framework positions relative to market</div>
@@ -604,7 +603,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 18. WHAT THE INSURER PORTFOLIO SEES (dark) ═══ */}
-      <div className="bg-card border border-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-lg p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-2">◆ What the insurer portfolio sees</div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
@@ -632,7 +631,7 @@ export function InsuranceDecision() {
         <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div className="bg-fragile-bg border border-fragile-border rounded-xl p-5 mb-4">
+      <div className="bg-fragile-bg border border-fragile-border rounded-lg p-5 mb-4">
         <div className="flex items-start justify-between mb-3">
           <div>
             <div className="text-[13px] font-bold text-foreground">📊 Portfolio-Level Exposure Signal<InfoTip text="Estimated aggregate exposure across multiple entities with similar dependency profiles. Swiss Re sigma 01/2026: Provider concentration creates accumulation risk." /></div>
@@ -673,7 +672,7 @@ export function InsuranceDecision() {
         <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="flex items-start justify-between mb-3">
           <div>
             <div className="text-[13px] font-bold text-foreground">🔗 Provider Dependency Structure<InfoTip text="Maps the flow from external AI providers through your core systems to internal operations. Red nodes indicate single points of failure." /></div>
@@ -730,7 +729,7 @@ export function InsuranceDecision() {
         <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="space-y-0">
           {[
             { num: 1, title: 'Apply significant premium loading above standard', badge: 'Required', badgeColor: 'bg-fragile-bg text-fragile border-fragile-border', numBg: 'bg-fragile-bg text-fragile', desc: 'Structural risk exceeds standard pricing assumptions. Dependency structures do not compensate for co-activation and aggregation exposure.' },
@@ -759,7 +758,7 @@ export function InsuranceDecision() {
         <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="text-[11px] text-secondary-foreground mb-3 leading-[1.5]">Each alert identifies where the system creates unpriced liability — persisting, scaling, or acting faster than governance can safely absorb.</div>
         {[
           { title: 'Unauthorized Operational Persistence', severity: 'High', color: 'border-l-sensitive', desc: `System continues operating without re-authorisation — liability accumulates with no upper bound. No re-authorisation mechanism exists. Proceeds toward critical exposure at current trajectory (score ${Math.round(components.cd * 100)}/100).` },
@@ -777,7 +776,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ INSURER OWN-EXPOSURE NOTE ═══ */}
-      <div className="bg-purple-bg border border-purple-border rounded-xl p-5 mb-4">
+      <div className="bg-purple-bg border border-purple-border rounded-lg p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-2">◈ Note for Insurer Buyers — Your Own AI Governance Exposure</div>
         <div className="text-[12px] font-semibold text-foreground mb-2">This tool assesses client deployments — but the same structural risks apply to the insurer's own AI systems.</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -803,7 +802,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* EU AI ACT PENALTY CALCULATOR */}
-      <div className="bg-secondary border border-border rounded-xl overflow-hidden mb-4 border border-border relative">
+      <div className="bg-secondary border border-border rounded-lg overflow-hidden mb-4 border border-border relative">
         <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: 'linear-gradient(to right, #b53020, #780808)' }} />
         <div className="p-[18px_22px_14px]">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-fragile mb-[6px]">⚖ EU AI Act — Art. 99 Regulatory Penalty Exposure</div>
@@ -836,7 +835,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* EU AI ACT COMPLIANCE CHECKLIST */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+      <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">
         <div className="p-[14px_20px] border-b border-border flex items-center justify-between">
           <div>
             <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-[3px]">EU AI Act · Deployer Obligations Checklist</div>
@@ -867,7 +866,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* EU AI ACT ENFORCEMENT TIMELINE */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+      <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">
         <div className="p-[14px_20px] border-b border-border">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-[3px]">EU AI Act — Enforcement Timeline · Regulation (EU) 2024/1689</div>
           <div className="text-[13px] font-bold text-foreground">When Obligations Apply — What Is Active Now</div>
@@ -896,7 +895,7 @@ export function InsuranceDecision() {
       <SectionDivider title="Premium Calculator" icon="💰" subtitle="Interactive actuarial pricing with coverage and deductible options" />
 
       {/* ═══ PREMIUM CALCULATOR ═══ */}
-      <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-4">
+      <div className="bg-card border-2 border-primary/30 rounded-lg p-4 sm:p-6 mb-4">
         <PremiumCalculator />
       </div>
 
@@ -926,11 +925,11 @@ function ReinsuranceCapacityCard({ inputs, results }: { inputs: any; results: an
   const barBg = reinsurance.pressure >= 80 ? 'bg-fragile' : reinsurance.pressure >= 55 ? 'bg-fragile' : reinsurance.pressure >= 30 ? 'bg-sensitive' : 'bg-stable';
 
   return (
-    <div className={`rounded-xl border-2 p-6 mt-6 ${tierBg}`}>
+    <div className={`rounded-lg border-2 p-6 mt-6 ${tierBg}`}>
       <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">Reinsurance Capacity Signal</div>
       <div className="flex items-center gap-4 mb-4">
         <div>
-          <div className={`text-[36px] font-extrabold font-mono ${tierColor}`}>{reinsurance.pressure}</div>
+          <div className={`text-[26px] font-bold metric-value ${tierColor}`}>{reinsurance.pressure}</div>
           <div className="text-[9px] text-muted-foreground">Pressure Score</div>
         </div>
         <div className="flex-1">

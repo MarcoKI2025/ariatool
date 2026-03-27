@@ -1,7 +1,6 @@
 import React from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
@@ -43,7 +42,7 @@ export function DecisionIntelligence() {
         </p>
       </div>
 
-      <UseRestrictionBanner />
+      {/* UseRestrictionBanner removed */}
 
       <SectionDivider title="Board-Level Assessment" icon="◈" subtitle="Executive summary and risk classification" />
 
@@ -58,7 +57,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO DIAGNOSIS ═══ */}
-      <div className={`rounded-xl p-4 sm:p-6 mb-4 border-2 ${bandBg}`}>
+      <div className={`rounded-lg p-4 sm:p-6 mb-4 border-2 ${bandBg}`}>
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Governance Exposure Engine v3.0</div>
         <div className={`text-[18px] sm:text-[28px] font-extrabold tracking-tight leading-[1.1] mb-3 uppercase ${bandColor}`}>
           {band === 'Fragile' ? 'Structural Exposure Detected' :
@@ -80,7 +79,7 @@ export function DecisionIntelligence() {
 
       {/* ═══ HERO SCORE + ECI ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-4 mb-0">
-        <div className="bg-card border border-border rounded-xl p-4 sm:p-6">
+        <div className="bg-card border border-border rounded-lg p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 sm:gap-6">
             <div>
               <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">
@@ -180,7 +179,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ HERO ACTIONS — Required Action pills + navigation ═══ */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 p-3 bg-card border border-border rounded-xl gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 p-3 bg-card border border-border rounded-lg gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[9px] text-muted-foreground font-bold tracking-[0.08em] uppercase mr-1">Required Action:</span>
           <span className={`px-3 py-1 rounded text-[10px] font-bold text-foreground ${band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable'}`}>
@@ -196,7 +195,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ GLOBAL INSIGHT ═══ */}
-      <div className="bg-card border border-border rounded-xl p-4 mb-4 text-[12px] text-secondary-foreground leading-[1.6]">
+      <div className="bg-card border border-border rounded-lg p-4 mb-4 text-[12px] text-secondary-foreground leading-[1.6]">
         <strong className="text-foreground">Standard compliance frameworks cannot detect, price, or reserve for this exposure.</strong> Continuation risk accumulates without a triggering incident. Responsibility is distributed without a named owner. Dependency deepens until exit becomes operationally impossible. This assessment quantifies what happens in the governance gap.
       </div>
 
@@ -220,7 +219,7 @@ export function DecisionIntelligence() {
       <SectionDivider title="Risk Indices" icon="📊" subtitle="AGRI, ALRI, SCRI, MDR — individual risk dimension scores" />
 
       {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
-      <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-4 sm:p-5 mb-4">
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚡ AI Governance Readiness Index (AGRI)<InfoTip text={TOOLTIPS.agri} /></div>
@@ -241,7 +240,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ ALRI — Standalone Panel (matches HTML position) ═══ */}
-      <div className="bg-card border border-border rounded-xl p-4 sm:p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-4 sm:p-5 mb-4">
         <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
           <div>
             <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">⚠ AI Liability Risk Index (ALRI)<InfoTip text={TOOLTIPS.alri} /></div>
@@ -264,7 +263,7 @@ export function DecisionIntelligence() {
       <SectionDivider title="Governance Decision" icon="⚖" subtitle="Required actions and committee signals" />
 
       {/* ═══ GOVERNANCE DECISION SIGNAL ═══ */}
-      <div className={`p-4 rounded-xl border-2 mb-4 ${
+      <div className={`p-4 rounded-lg border-2 mb-4 ${
         results.decisionClass === 'Approved' ? 'bg-stable-bg border-stable' :
         results.decisionClass === 'Conditional Review' ? 'bg-sensitive-bg border-sensitive' :
         'bg-fragile-bg border-fragile'
@@ -294,7 +293,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ EXECUTIVE DECISION LAYER (gradient-top-bar, actions, classification badge, bottom pills) ═══ */}
-      <div className="bg-card border border-border rounded-xl mb-4 relative overflow-hidden">
+      <div className="bg-card border border-border rounded-lg mb-4 relative overflow-hidden">
         {/* Gradient top bar */}
         <div className="absolute top-0 left-0 right-0 h-[4px]" style={{ background: 'linear-gradient(to right, #b53020, #c0392b, #4038b8)' }} />
         
@@ -384,7 +383,7 @@ export function DecisionIntelligence() {
 
       {/* ═══ AGRI / ALRI SUB-SCORE GRIDS ═══ */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">⚡ AGRI Sub-Scores</div>
           <div className="grid grid-cols-2 gap-2">
             {[
@@ -403,7 +402,7 @@ export function DecisionIntelligence() {
             ))}
           </div>
         </div>
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-3">⚠ ALRI Sub-Scores</div>
           <div className="grid grid-cols-3 gap-2">
             {[
@@ -427,7 +426,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ COMMITTEE REVIEW / DECISION PANEL ═══ */}
-      <div className={`rounded-xl p-5 mb-4 border-2 ${bandBg}`}>
+      <div className={`rounded-lg p-5 mb-4 border-2 ${bandBg}`}>
         <div className={`text-[18px] font-extrabold tracking-wider uppercase mb-3 ${bandColor}`}>
           {band === 'Fragile' ? 'Committee Review Required' : band === 'Sensitive' ? 'Conditional Review Process' : 'Standard Underwriting Process'}
         </div>
@@ -485,7 +484,7 @@ export function DecisionIntelligence() {
             { label: 'Base Risk Band', value: lossEnvelope.stress, sub: 'Structural governance exposure', highlight: false, color: 'text-sensitive' },
             { label: 'Critical Risk Band', value: lossEnvelope.tail, sub: 'Provider concentration · Tail risk', highlight: true, color: 'text-fragile' },
           ].map((cell, i) => (
-            <div key={i} className={`rounded-xl p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
+            <div key={i} className={`rounded-lg p-5 border ${cell.highlight ? 'bg-fragile-bg border-fragile-border' : 'bg-card border-border'}`}>
               <div className={`text-[9px] tracking-[0.08em] uppercase font-bold mb-2 ${cell.highlight ? 'text-fragile' : 'text-muted-foreground'}`}>{cell.label}</div>
               <div className={`text-[24px] font-bold font-mono leading-none ${cell.color}`}>{cell.value}</div>
               <div className="text-[10px] text-muted-foreground mt-2">{cell.sub}</div>
@@ -677,7 +676,7 @@ export function DecisionIntelligence() {
       </SectionCard>
 
       {/* ═══ RFSI — Assessment Validity Index ═══ */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+      <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">
         <div className="p-4 pb-3 border-b border-border flex items-start justify-between">
           <div>
             <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-1">◈ Assessment Validity Index <span className="text-[8px] px-[6px] py-[1px] bg-primary/10 border border-primary/30 rounded text-primary ml-1">Exploratory</span></div>
@@ -722,7 +721,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ FRAME DRIFT ALERTS ═══ */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden mb-4">
+      <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">
         <div className="p-4 pb-3 border-b border-border flex items-start justify-between">
           <div>
             <div className="text-[9px] font-bold tracking-[0.09em] uppercase text-muted-foreground mb-[3px]">◈ Governance Alignment Alert System</div>
@@ -759,7 +758,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* ═══ EVALUATION LIMITS ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 mb-4">
+      <div className="bg-card border border-border rounded-lg p-5 mb-4">
         <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-primary mb-[4px]">◈ Evaluation Limits · The Boundaries of What Can Be Known</div>
         <div className="text-[16px] font-bold text-foreground mb-[6px]">What This Assessment Cannot Tell You</div>
         <div className="text-[11px] text-muted-foreground leading-[1.6] mb-4 max-w-[600px]">Every evaluation is a snapshot under constrained conditions. This panel makes the epistemic limits of this assessment explicit — not as a disclaimer, but as a first-class governance signal.</div>
@@ -821,7 +820,7 @@ export function DecisionIntelligence() {
       <SectionDivider title="Market Context & Positioning" icon="🌍" subtitle="Industry comparison, traditional vs. structural detection" />
 
       {/* ═══ STANDARD UNDERWRITING PROCESS — WHERE TRADITIONAL MODELS STOP ═══ */}
-      <div className="bg-card border border-border rounded-xl p-5 sm:p-7 mb-5">
+      <div className="bg-card border border-border rounded-lg p-5 sm:p-7 mb-5">
         <div className="mb-5">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-primary mb-[6px]">Where Traditional Models Stop</div>
           <div className="text-[18px] font-bold text-foreground mb-1 tracking-tight">Standard Underwriting Process vs. Structural Risk Detection</div>
@@ -904,7 +903,7 @@ export function DecisionIntelligence() {
       <SectionDivider title="Epistemic Framework" icon="⚠" subtitle="Assessment limitations and operational constraints" />
 
       {/* ═══ EPISTEMIC STATUS ═══ */}
-      <div className="bg-card border border-border rounded-xl p-6 mb-4">
+      <div className="bg-card border border-border rounded-lg p-6 mb-4">
         <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-sensitive mb-3">◆ Epistemic Status · What This Assessment Cannot Guarantee</div>
         <div className="text-[18px] font-bold text-foreground mb-3">You Cannot Rely on This Evaluation</div>
         <div className="text-[11px] text-secondary-foreground leading-[1.6] mb-5">
@@ -1007,7 +1006,7 @@ export function DecisionIntelligence() {
       />
 
       {/* ═══ PEER BENCHMARKING ═══ */}
-      <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
+      <div className="bg-card border-2 border-primary/30 rounded-lg p-4 sm:p-6 mb-5">
         <div className="flex items-center gap-2 mb-4">
           <span className="text-lg">📊</span>
           <div>

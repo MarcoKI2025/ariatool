@@ -1,11 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Band } from '@/lib/types';
 
-interface InfoTipProps {
-  text: string;
-}
-
-export function InfoTip({ text }: InfoTipProps) {
+/* ── InfoTip ── */
+export function InfoTip({ text }: { text: string }) {
   const [show, setShow] = useState(false);
   const triggerRef = useRef<HTMLSpanElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -15,28 +12,23 @@ export function InfoTip({ text }: InfoTipProps) {
       const rect = triggerRef.current.getBoundingClientRect();
       const box = boxRef.current;
       box.style.left = `${rect.left}px`;
-      box.style.top = `${rect.bottom + 8}px`;
-      const boxRect = box.getBoundingClientRect();
-      if (boxRect.right > window.innerWidth) {
-        box.style.left = `${window.innerWidth - boxRect.width - 20}px`;
+      box.style.top = `${rect.bottom + 6}px`;
+      if (box.getBoundingClientRect().right > window.innerWidth) {
+        box.style.left = `${window.innerWidth - box.getBoundingClientRect().width - 16}px`;
       }
     }
   }, [show]);
 
   return (
     <span
-      className="relative inline-flex items-center cursor-help ml-[5px]"
+      ref={triggerRef}
+      className="tip"
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
-      ref={triggerRef}
     >
-      <i className="w-[14px] h-[14px] rounded-full bg-muted border border-border text-muted-foreground text-[9px] font-bold not-italic inline-flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-colors">i</i>
+      <span className="tip-ic">i</span>
       {show && (
-        <div
-          ref={boxRef}
-          className="fixed z-[9000] bg-[hsl(220,16%,13%)] text-[hsl(220,10%,92%)] text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-[hsl(220,10%,24%)] pointer-events-none"
-          style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.35)' }}
-        >
+        <div ref={boxRef} className="tip-box" style={{ display: 'block' }}>
           {text}
         </div>
       )}
@@ -44,6 +36,7 @@ export function InfoTip({ text }: InfoTipProps) {
   );
 }
 
+/* ── MetricCard ── */
 interface MetricCardProps {
   label: string;
   value: string | number;
@@ -52,173 +45,160 @@ interface MetricCardProps {
   icon?: string;
 }
 
-export function MetricCard({ label, value, sublabel, band, icon }: MetricCardProps) {
-  const colorClass = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : band === 'Stable' ? 'text-stable' : 'text-foreground';
+export function MetricCard({ label, value, sublabel, band }: MetricCardProps) {
+  const valueColor =
+    band === 'Fragile' ? 'hsl(var(--fragile))' :
+    band === 'Sensitive' ? 'hsl(var(--sensitive))' :
+    band === 'Stable' ? 'hsl(var(--stable))' : 'hsl(var(--tx))';
 
   return (
-    <div className="bg-card border border-border rounded-xl p-6">
-      <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-2 flex items-center gap-1.5">
-        {icon && <span>{icon}</span>}
-        {label}
-      </div>
-      <div className={`text-[26px] font-bold leading-[1.1] font-mono ${colorClass}`}>
+    <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-card)' }}>
+      <div className="label-xs mb-1.5">{label}</div>
+      <div
+        className="text-[26px] font-bold metric-value leading-none"
+        style={{ color: valueColor }}
+      >
         {value}
       </div>
-      {sublabel && <div className="text-[11px] text-secondary-foreground mt-2">{sublabel}</div>}
+      {sublabel && (
+        <div className="text-[11px] mt-1" style={{ color: 'hsl(var(--t2))' }}>{sublabel}</div>
+      )}
     </div>
   );
 }
 
-interface BandBadgeProps {
-  band: Band;
-  size?: 'sm' | 'md';
-}
-
-export function BandBadge({ band, size = 'sm' }: BandBadgeProps) {
-  const cls = band === 'Fragile' ? 'badge-fragile' : band === 'Sensitive' ? 'badge-sensitive' : 'badge-stable';
-  const sz = size === 'md' ? 'text-[11px] px-3 py-1' : 'text-[9px] px-[7px] py-[2px]';
+/* ── BandBadge ── */
+export function BandBadge({ band, size = 'sm' }: { band: Band; size?: 'sm' | 'md' }) {
+  const styles: Record<Band, React.CSSProperties> = {
+    Stable: { background: 'hsl(var(--stable-bg))', color: 'hsl(var(--stable))', border: '1px solid hsl(var(--stable-border))' },
+    Sensitive: { background: 'hsl(var(--sensitive-bg))', color: 'hsl(var(--sensitive))', border: '1px solid hsl(var(--sensitive-border))' },
+    Fragile: { background: 'hsl(var(--fragile-bg))', color: 'hsl(var(--fragile))', border: '1px solid hsl(var(--fragile-border))' },
+  };
+  const sz = size === 'md' ? 'text-[11px] px-3 py-1' : 'text-[10px] px-2 py-0.5';
   return (
-    <span className={`inline-flex items-center font-bold tracking-[0.05em] uppercase rounded ${cls} ${sz}`}>
+    <span className={`inline-flex items-center rounded font-bold uppercase tracking-wide ${sz}`} style={styles[band]}>
       {band}
     </span>
   );
 }
 
+/* ── SectionCard ── */
 interface SectionCardProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   children: React.ReactNode;
+  className?: string;
   highlight?: boolean;
   icon?: string;
   badgeText?: string;
   confidenceBadge?: string;
+  action?: React.ReactNode;
 }
 
-export function SectionCard({ title, subtitle, children, highlight, icon, badgeText, confidenceBadge }: SectionCardProps) {
+export function SectionCard({ title, subtitle, children, className = '', highlight, icon, badgeText, confidenceBadge, action }: SectionCardProps) {
   return (
-    <div className={`bg-card border rounded-xl p-4 sm:p-7 mb-5 ${highlight ? 'border-purple-border bg-purple-bg' : 'border-border'}`}>
-      <div className="flex items-start justify-between mb-3">
-        <div className="text-[10px] font-bold tracking-[0.09em] uppercase text-secondary-foreground flex items-center gap-[6px]">
-          {icon && <span>{icon}</span>}
-          {title}
+    <div className={`bg-card border border-border rounded-lg p-6 mb-4 ${highlight ? 'border-primary/30 bg-primary/5' : ''} ${className}`} style={{ boxShadow: 'var(--shadow-card)' }}>
+      {(title || subtitle) && (
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            {title && <div className="label-xs mb-1 flex items-center gap-1.5">{icon && <span>{icon}</span>}{title}</div>}
+            {subtitle && <div className="text-[12px]" style={{ color: 'hsl(var(--t2))' }} dangerouslySetInnerHTML={{ __html: subtitle }} />}
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {badgeText && (
+              <span className="text-[9px] font-semibold text-muted-foreground px-[7px] py-[2px] bg-secondary border border-border rounded">{badgeText}</span>
+            )}
+            {confidenceBadge && (
+              <span className="text-[8px] font-bold px-[7px] py-[2px] bg-primary/10 text-primary border border-primary/20 rounded">◈ {confidenceBadge}</span>
+            )}
+            {action && action}
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          {badgeText && (
-            <span className="text-[9px] font-semibold text-muted-foreground px-[7px] py-[2px] bg-secondary border border-border rounded">{badgeText}</span>
-          )}
-          {confidenceBadge && (
-            <span className="text-[8px] font-bold px-[7px] py-[2px] bg-purple-bg text-primary border border-purple-border rounded">◈ {confidenceBadge}</span>
-          )}
-        </div>
-      </div>
-      {subtitle && <div className="text-[11px] text-muted-foreground mt-1 mb-4 leading-[1.6]" dangerouslySetInnerHTML={{ __html: subtitle }} />}
-      {children}
+      )}
+      <div>{children}</div>
     </div>
   );
 }
 
+/* ── Banner ── */
 interface BannerProps {
   band: Band;
   title: string;
-  children: React.ReactNode;
+  subtitle?: string;
+  children?: React.ReactNode;
 }
 
-export function Banner({ band, title, children }: BannerProps) {
-  const cls = band === 'Fragile'
-    ? 'bg-fragile-bg border-fragile-border'
-    : band === 'Sensitive'
-    ? 'bg-sensitive-bg border-sensitive-border'
-    : 'bg-stable-bg border-stable-border';
-  const titleColor = band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable';
+export function Banner({ band, title, subtitle, children }: BannerProps) {
+  const borderColor =
+    band === 'Fragile' ? 'hsl(var(--fragile))' :
+    band === 'Sensitive' ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))';
+  const textColor =
+    band === 'Fragile' ? 'hsl(var(--fragile))' :
+    band === 'Sensitive' ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))';
 
   return (
-    <div className={`rounded-xl border p-7 mb-6 ${cls}`}>
-      <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[5px]">
-        Executive Signal
-      </div>
-      <div className={`text-[18px] font-extrabold tracking-[0.01em] mb-5 ${titleColor}`}>
+    <div className="rounded-lg p-6 mb-4 border bg-card" style={{ borderLeftWidth: 4, borderLeftColor: borderColor }}>
+      <div className="label-xs mb-2">Underwriting Decision</div>
+      <div className="text-[18px] font-bold tracking-tight mb-1" style={{ color: textColor }}>
         {title}
       </div>
+      {subtitle && (
+        <div className="text-[12px] mb-3" style={{ color: 'hsl(var(--t2))' }}>
+          {subtitle}
+        </div>
+      )}
       {children}
     </div>
   );
 }
 
+/* ── SliderRow ── */
 interface SliderRowProps {
   label: string;
+  description?: string;
   value: number;
   onChange: (v: number) => void;
   min?: number;
   max?: number;
-  description: string;
+  step?: number;
   tooltip?: string;
   explainText?: string;
   scaleLabels?: Record<number, string>;
 }
 
-export function SliderRow({ label, value, onChange, min = 1, max = 5, description, tooltip, explainText, scaleLabels }: SliderRowProps) {
-  const pct = ((value - min) / (max - min)) * 100;
+export function SliderRow({ label, description, value, onChange, min = 1, max = 5, step = 1, tooltip, explainText, scaleLabels }: SliderRowProps) {
   const [expanded, setExpanded] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const tooltipRef = React.useRef<HTMLDivElement>(null);
-  const triggerRef = React.useRef<HTMLSpanElement>(null);
-
-  // Position tooltip on hover
-  React.useEffect(() => {
-    if (showTooltip && tooltipRef.current && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const box = tooltipRef.current;
-      box.style.left = `${rect.left}px`;
-      box.style.top = `${rect.bottom + 8}px`;
-      // Adjust if off-screen right
-      const boxRect = box.getBoundingClientRect();
-      if (boxRect.right > window.innerWidth) {
-        box.style.left = `${window.innerWidth - boxRect.width - 20}px`;
-      }
-    }
-  }, [showTooltip]);
+  const pct = ((value - min) / (max - min)) * 100;
 
   return (
-    <div className="py-5 border-b border-border last:border-none last:pb-0">
-      <div className="flex items-center gap-2 mb-2">
-        <span className="flex-1 text-[13px] font-medium text-foreground">
-          {label}
-          {tooltip && (
-            <span
-              className="relative inline-flex items-center cursor-help ml-[5px]"
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-              ref={triggerRef}
-            >
-              <i className="w-[14px] h-[14px] rounded-full bg-muted border border-border text-muted-foreground text-[9px] font-bold not-italic inline-flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-colors">i</i>
-              {showTooltip && (
-                <div
-                  ref={tooltipRef}
-                  className="fixed z-[9000] bg-[hsl(220,16%,13%)] text-[hsl(220,10%,92%)] text-[11px] p-[10px_13px] rounded-lg w-[280px] leading-[1.6] border border-[hsl(220,10%,24%)] pointer-events-none"
-                  style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.35)' }}
-                >
-                  {tooltip}
-                </div>
-              )}
-            </span>
+    <div className="py-3 border-b border-border last:border-0 last:pb-0">
+      <div className="flex items-start justify-between gap-3 mb-1.5">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1">
+            <span className="text-[13px] font-medium" style={{ color: 'hsl(var(--tx))' }}>{label}</span>
+            {tooltip && <InfoTip text={tooltip} />}
+          </div>
+          {description && (
+            <div className="text-[11px] mt-0.5" style={{ color: 'hsl(var(--t3))' }}>
+              {description}
+            </div>
           )}
-        </span>
-        <span className="min-w-[28px] h-[22px] rounded-[5px] bg-primary text-primary-foreground text-[11px] font-bold font-mono flex items-center justify-center px-[6px]">
-          {value}
-        </span>
+        </div>
+        <div className="flex items-baseline gap-0.5 flex-shrink-0">
+          <span className="text-[16px] font-bold font-mono" style={{ color: 'hsl(var(--tx))' }}>{value}</span>
+          <span className="text-[11px]" style={{ color: 'hsl(var(--t3))' }}>/5</span>
+        </div>
       </div>
-      <div className="text-[11px] text-muted-foreground mb-2">{description}</div>
       <input
         type="range"
         min={min}
         max={max}
-        step={1}
+        step={step}
         value={value}
-        onChange={(e) => onChange(parseInt(e.target.value))}
-        style={{ '--fill': `${pct}%` } as React.CSSProperties}
-        className="w-full my-[6px]"
+        onChange={(e) => onChange(Number(e.target.value))}
+        style={{ '--fill': `${pct}%`, accentColor: 'hsl(var(--primary))' } as React.CSSProperties}
+        className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
       />
-      {/* Scale labels */}
       {scaleLabels && (
         <div className="flex justify-between mt-[2px]">
           <span className="text-[9px] text-muted-foreground">{scaleLabels[min]}</span>
@@ -232,7 +212,7 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
             {expanded ? '▼' : '▶'} Explain this
           </button>
           {expanded && (
-            <div className="mt-1 text-[11px] text-secondary-foreground leading-[1.55] p-[8px_10px] bg-secondary border border-border rounded-md">{explainText}</div>
+            <div className="mt-1 text-[11px] text-muted-foreground leading-[1.55] p-[8px_10px] bg-secondary border border-border rounded-md">{explainText}</div>
           )}
         </div>
       )}
@@ -240,6 +220,7 @@ export function SliderRow({ label, value, onChange, min = 1, max = 5, descriptio
   );
 }
 
+/* ── LockedState ── */
 export function LockedState({ title, description, onAction, actionLabel }: {
   title: string;
   description: string;
@@ -247,13 +228,20 @@ export function LockedState({ title, description, onAction, actionLabel }: {
   actionLabel?: string;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="text-4xl mb-4 opacity-30">🔒</div>
-      <h2 className="text-lg font-bold text-foreground mb-2">{title}</h2>
-      <p className="text-[13px] text-muted-foreground max-w-md mb-6 leading-relaxed">{description}</p>
+    <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-8">
+      <div
+        className="w-14 h-14 rounded-lg flex items-center justify-center text-[22px] mb-4"
+        style={{ background: 'hsl(var(--s2))', border: '1px solid hsl(var(--bd))' }}
+      >
+        🔒
+      </div>
+      <div className="text-[16px] font-bold mb-2" style={{ color: 'hsl(var(--tx))' }}>{title}</div>
+      <div className="text-[13px] max-w-md mb-6" style={{ color: 'hsl(var(--t2))' }}>
+        {description}
+      </div>
       {onAction && (
-        <button onClick={onAction} className="px-6 py-[10px] bg-primary text-primary-foreground rounded-lg text-[12px] font-semibold hover:bg-primary/90 transition-colors">
-          {actionLabel || 'Run Analysis'}
+        <button onClick={onAction} className="btn-p">
+          {actionLabel || 'Continue'}
         </button>
       )}
     </div>

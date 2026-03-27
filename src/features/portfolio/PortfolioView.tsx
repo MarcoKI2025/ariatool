@@ -4,7 +4,6 @@ import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalys
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
@@ -185,25 +184,13 @@ export function PortfolioView() {
       <RealCaseAlert />
 
       {/* Header */}
-      <div className="border-b border-border pb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">Step 7 · Portfolio Intelligence</div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
-          </div>
-          <div className="sm:text-right flex-shrink-0 space-y-1">
-            <LiveIndicator label={`${entities.length} entities monitored`} />
-            {totalIncidents > 0 && (
-              <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-sensitive-bg border border-sensitive-border">
-                <span className="w-1.5 h-1.5 rounded-full bg-sensitive animate-pulse" />
-                <span className="text-[9px] font-medium text-sensitive">{totalIncidents} Provider Incident{totalIncidents !== 1 ? 's' : ''} Active</span>
-              </div>
-            )}
-          </div>
-        </div>
+      <div className="mb-6">
+        <div className="label-xs mb-1.5">Step 7 of 11 · Portfolio Intelligence</div>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
+        <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed mt-1">
+          Multi-entity aggregation and systemic risk assessment across your portfolio.
+        </p>
       </div>
-
-      <UseRestrictionBanner />
 
       <Tabs defaultValue="portfolio" className="w-full">
         <TabsList className="mb-4">
@@ -212,7 +199,7 @@ export function PortfolioView() {
         </TabsList>
 
         <TabsContent value="portfolio" className="space-y-6">
-      <div className={`rounded-xl border-2 p-6 ${riskBg}`}>
+      <div className={`rounded-lg border-2 p-6 ${riskBg}`}>
         <div className="flex items-center gap-2 mb-2">
           <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground">Portfolio Risk:</span>
           <span className={`text-[14px] font-extrabold tracking-tight ${riskColor}`}>{portfolioRiskLevel}</span>
@@ -235,25 +222,25 @@ export function PortfolioView() {
           ══════════════════════════════════════════════════ */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {/* Worst Case Impact */}
-        <div className={`rounded-xl border p-5 ${levelBg(worstTailRisk > 15 ? 'Critical' : worstTailRisk > 8 ? 'Elevated' : 'Stable')}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(worstTailRisk > 15 ? 'Critical' : worstTailRisk > 8 ? 'Elevated' : 'Stable')}`}>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Worst Case Impact</div>
           <div className={`text-[22px] font-extrabold font-mono ${levelColor(worstTailRisk > 15 ? 'Critical' : worstTailRisk > 8 ? 'Elevated' : 'Stable')}`}>€{worstTailRisk}M</div>
           <div className="text-[9px] text-muted-foreground mt-1">Tail risk (99th percentile)</div>
         </div>
         {/* Average Correlation */}
-        <div className={`rounded-xl border p-5 ${levelBg(avgCorrelation > 0.65 ? 'Critical' : avgCorrelation > 0.35 ? 'Elevated' : 'Stable')}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(avgCorrelation > 0.65 ? 'Critical' : avgCorrelation > 0.35 ? 'Elevated' : 'Stable')}`}>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Avg Correlation</div>
           <div className={`text-[22px] font-extrabold font-mono ${levelColor(avgCorrelation > 0.65 ? 'Critical' : avgCorrelation > 0.35 ? 'Elevated' : 'Stable')}`}>{(avgCorrelation * 100).toFixed(0)}%</div>
           <div className="text-[9px] text-muted-foreground mt-1">Cross-entity dependency</div>
         </div>
         {/* Cascade Risk */}
-        <div className={`rounded-xl border p-5 ${levelBg(avgCascade > 0.6 ? 'Critical' : avgCascade > 0.3 ? 'Elevated' : 'Stable')}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(avgCascade > 0.6 ? 'Critical' : avgCascade > 0.3 ? 'Elevated' : 'Stable')}`}>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Cascade Risk</div>
           <div className={`text-[22px] font-extrabold font-mono ${levelColor(avgCascade > 0.6 ? 'Critical' : avgCascade > 0.3 ? 'Elevated' : 'Stable')}`}>{(avgCascade * 100).toFixed(0)}%</div>
           <div className="text-[9px] text-muted-foreground mt-1">Failure propagation</div>
         </div>
         {/* Portfolio Exposure Level */}
-        <div className={`rounded-xl border p-5 ${levelBg(worstInsurability.insurabilityStatus === 'Uninsurable' ? 'Critical' : worstInsurability.insurabilityStatus === 'At Risk' ? 'Elevated' : 'Stable')}`}>
+        <div className={`rounded-lg border p-5 ${levelBg(worstInsurability.insurabilityStatus === 'Uninsurable' ? 'Critical' : worstInsurability.insurabilityStatus === 'At Risk' ? 'Elevated' : 'Stable')}`}>
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Exposure Level</div>
           <div className={`text-[18px] font-extrabold ${levelColor(worstInsurability.insurabilityStatus === 'Uninsurable' ? 'Critical' : worstInsurability.insurabilityStatus === 'At Risk' ? 'Elevated' : 'Stable')}`}>{worstInsurability.insurabilityStatus}</div>
           <div className="text-[9px] text-muted-foreground mt-1">Worst entity status</div>
@@ -289,7 +276,7 @@ export function PortfolioView() {
           const sColor = levelColor(scenario.level === 'Active' || scenario.level === 'High' ? 'Critical' : scenario.level === 'Elevated' ? 'Elevated' : 'Stable');
           const sBg = levelBg(scenario.level === 'Active' || scenario.level === 'High' ? 'Critical' : scenario.level === 'Elevated' ? 'Elevated' : 'Stable');
           return (
-            <div key={scenario.title} className={`rounded-xl border p-5 ${sBg}`}>
+            <div key={scenario.title} className={`rounded-lg border p-5 ${sBg}`}>
               <div className="flex items-center justify-between mb-2">
                 <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">{scenario.title}</div>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${sColor}`}>{scenario.level}</span>
@@ -302,7 +289,7 @@ export function PortfolioView() {
 
       {/* Hidden Correlation Warning */}
       {hiddenCorrelationCount > 0 && (
-        <div className="bg-sensitive-bg border-2 border-sensitive rounded-xl p-5">
+        <div className="bg-sensitive-bg border-2 border-sensitive rounded-lg p-5">
           <div className="flex items-start gap-3">
             <span className="text-[18px]">⚠️</span>
             <div>
@@ -326,7 +313,7 @@ export function PortfolioView() {
         </button>
       </div>
 
-      <div className="bg-card border border-border rounded-xl divide-y divide-border overflow-hidden">
+      <div className="bg-card border border-border rounded-lg divide-y divide-border overflow-hidden">
         {normalizedEntities.map((entity, idx) => {
           const { afi, band } = computeEntityAFI(entity.inputs);
           const evo = entityEvolutions[idx];
@@ -383,12 +370,12 @@ export function PortfolioView() {
         <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div className={`rounded-xl border-2 p-6 ${pasBandBg}`}>
+      <div className={`rounded-lg border-2 p-6 ${pasBandBg}`}>
         {/* PAS Gauge */}
         <div className="flex items-center gap-4 mb-4">
           <div>
             <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Portfolio Accumulation Score</div>
-            <div className={`text-[36px] font-extrabold font-mono ${pasColor}`}>{accumulation.pas}</div>
+            <div className={`text-[26px] font-bold metric-value ${pasColor}`}>{accumulation.pas}</div>
           </div>
           <div className="flex-1">
             <div className="h-4 bg-border rounded-full overflow-hidden">
@@ -429,7 +416,7 @@ export function PortfolioView() {
 
         {/* Dominant Provider Alert */}
         {accumulation.dominantProvider && (
-          <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-4 mb-4">
+          <div className="bg-fragile-bg border-2 border-fragile rounded-lg p-4 mb-4">
             <div className="flex items-start gap-3">
               <span className="text-[18px]">⚠️</span>
               <div className="text-[12px] font-bold text-fragile leading-relaxed">
@@ -441,7 +428,7 @@ export function PortfolioView() {
 
         {/* High CAI Warning */}
         {avgCAI >= 60 && (
-          <div className="bg-sensitive-bg border border-sensitive rounded-xl p-4 mb-4">
+          <div className="bg-sensitive-bg border border-sensitive rounded-lg p-4 mb-4">
             <div className="text-[11px] font-bold text-sensitive">
               ⚠ High cascade potential — a failure in one entity's AI system may propagate rapidly across operationally connected cedants.
             </div>
@@ -468,7 +455,7 @@ export function PortfolioView() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Coverage Restriction */}
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Coverage Restriction</div>
           <div className={`text-[14px] font-bold mb-2 ${riskColor}`}>
             {portfolioRiskLevel === 'SYSTEMIC' ? 'Decline or Sublimit Required'
@@ -483,7 +470,7 @@ export function PortfolioView() {
         </div>
 
         {/* Aggregation Risk */}
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Aggregation Risk</div>
           <div className={`text-[14px] font-bold mb-2 ${levelColor(avgCorrelation > 0.5 ? 'Critical' : avgCorrelation > 0.3 ? 'Elevated' : 'Stable')}`}>
             {avgCorrelation > 0.5 ? 'Critical Concentration' : avgCorrelation > 0.3 ? 'Moderate Overlap' : 'Diversified'}
@@ -496,7 +483,7 @@ export function PortfolioView() {
         </div>
 
         {/* Capital Allocation Pressure */}
-        <div className="bg-card border border-border rounded-xl p-5">
+        <div className="bg-card border border-border rounded-lg p-5">
           <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-2">Capital Allocation</div>
           <div className={`text-[14px] font-bold mb-2 ${levelColor(stableCount === 0 ? 'Critical' : stableCount < entities.length / 2 ? 'Elevated' : 'Stable')}`}>
             {stableCount === 0 ? 'Maximum Reserve Required' : stableCount >= entities.length / 2 ? 'Capital Efficiency Available' : 'Partial Reserve Optimization'}
@@ -523,7 +510,7 @@ export function PortfolioView() {
         <CollapsibleContent className="space-y-4 pt-4">
 
           {/* Portfolio AFI Components */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Portfolio AFI Components (Weighted Average)</div>
             <div className="grid grid-cols-5 gap-3">
               {[
@@ -542,7 +529,7 @@ export function PortfolioView() {
           </div>
 
           {/* Solvency II Capital Efficiency */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Solvency II Capital Efficiency</div>
             {stableCount > 0 ? (
               <div className="grid grid-cols-3 gap-3">
@@ -568,7 +555,7 @@ export function PortfolioView() {
           <QuantumVulnerabilityAssessment />
 
           {/* Interpretation */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Methodology Note</div>
             <div className="text-[11px] text-muted-foreground leading-relaxed">
               Portfolio AFI represents the weighted-average structural fragility across all entities. Aggregation assumes shared infrastructure dependencies. Actual risk may be higher under correlated failure modes. Framework: AGAF v4.3.0.
@@ -581,7 +568,7 @@ export function PortfolioView() {
         </TabsContent>
 
         <TabsContent value="silent" className="space-y-6">
-          <div className="bg-card border border-border rounded-xl p-6">
+          <div className="bg-card border border-border rounded-lg p-6">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Silent AI Exposure Analysis</div>
             <h2 className="text-[16px] font-bold text-foreground mb-1">Silent AI Exposure Detector</h2>
             <p className="text-[11px] text-muted-foreground mb-4">Estimate how much AI risk may already exist in your conventional book of business without explicit recognition.</p>
