@@ -121,3 +121,48 @@ export function computeCapitalImpact(inputs: ExposureInputs, results: AnalysisRe
 
   return { lossRange, stressLevel, stressScore, operationalImpact, operationalScore, explanation, drivers };
 }
+
+// ============================================================================
+// REINSURANCE CAPACITY INDICATOR
+// ============================================================================
+
+export interface ReinsuranceCapacityResult {
+  pressure: number;
+  tier: 'Within Capacity' | 'Approaching Limit' | 'Capacity Constrained' | 'Market Withdrawal Risk';
+  narrative: string;
+  triggers: string[];
+}
+
+export function computeReinsuranceCapacityPressure(
+  inputs: ExposureInputs,
+  results: AnalysisResults,
+  portfolioContext?: { pas: number; entityCount: number }
+): ReinsuranceCapacityResult {
+  const base = (results.afi / 3.0) * 40 + (results.scri / 100) * 30 + results.correlationFactor * 30;
+  const portfolioBoost = portfolioContext ? (portfolioContext.pas / 100) * 20 : 0;
+  const pressure = Math.min(100, Math.round(base + portfolioBoost));
+
+  const tier: ReinsuranceCapacityResult['tier'] =
+    pressure >= 80 ? 'Market Withdrawal Risk' :
+    pressure >= 55 ? 'Capacity Constrained' :
+    pressure >= 30 ? 'Approaching Limit' :
+    'Within Capacity';
+
+  const triggers: string[] = [];
+  if (results.scri > 50) triggers.push('High SCRI indicates shared infrastructure dependency across market');
+  if (results.correlationFactor > 0.5) triggers.push('Elevated correlation factor signals synchronized failure potential');
+  if (results.afi > 1.35) triggers.push('AFI exceeds fragile threshold — structural risk beyond standard models');
+  if (portfolioContext && portfolioContext.pas > 50) triggers.push('Correlated portfolio AFI elevates aggregate reinsurance demand');
+  if (results.cai > 60) triggers.push('High cascade amplification increases expected loss severity');
+  if (inputs.cloudConcentration >= 4) triggers.push('Cloud provider concentration creates single-point-of-failure risk');
+
+  const narrative = pressure >= 80
+    ? `Reinsurance capacity is under severe pressure. With AFI at ${results.afi.toFixed(2)} and SCRI at ${results.scri}, this risk profile approaches market withdrawal thresholds. ${portfolioContext ? `Portfolio accumulation (PAS: ${portfolioContext.pas}) across ${portfolioContext.entityCount} entities further strains available capacity.` : ''}`
+    : pressure >= 55
+    ? `Capacity is constrained. The combination of structural risk (AFI ${results.afi.toFixed(2)}) and infrastructure concentration (SCRI ${results.scri}) limits available reinsurance capacity. Premium loading and coverage restrictions likely.`
+    : pressure >= 30
+    ? `Approaching capacity limits. Current structural indicators are within tolerance but trending toward constraint. Monitor concentration factors.`
+    : `Reinsurance capacity is within normal bounds. Standard treaty terms applicable.`;
+
+  return { pressure, tier, narrative, triggers };
+}
