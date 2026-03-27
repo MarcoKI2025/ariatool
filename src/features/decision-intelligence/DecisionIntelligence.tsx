@@ -1,7 +1,7 @@
 import React from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { BandBadge, SectionCard, LockedState, InfoTip } from '@/components/shared/UIComponents';
@@ -43,7 +43,7 @@ export function DecisionIntelligence() {
         </p>
       </div>
 
-      <UseRestrictionBanner />
+      {/* UseRestrictionBanner removed */}
 
       <SectionDivider title="Board-Level Assessment" icon="◈" subtitle="Executive summary and risk classification" />
 

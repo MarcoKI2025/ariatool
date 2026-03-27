@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 
@@ -47,7 +47,7 @@ export function EvidenceLog() {
 
   return (
     <div className="space-y-8 max-w-5xl">
-      <UseRestrictionBanner />
+      {/* UseRestrictionBanner removed */}
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>

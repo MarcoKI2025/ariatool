@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { computeEvolutionAnalysis, EvolutionAnalysis } from '@/lib/evolutionEngine';
 import { exportToStructuredJSON, exportToCSV, generateAPIPayload } from '@/lib/exportFormats';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -147,7 +147,7 @@ export function ExecutiveReport() {
         </div>
       </div>
 
-      <UseRestrictionBanner />
+      {/* UseRestrictionBanner removed */}
 
       {/* ══════════════════════════════════════════════════
           STEP 1: CORE MESSAGE — dominant statement

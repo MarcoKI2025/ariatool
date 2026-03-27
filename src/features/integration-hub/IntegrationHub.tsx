@@ -5,7 +5,7 @@ import {
 } from '@/components/ui/dialog';
 import { Shield, Cloud, FileText, BarChart3, Globe, Lock, CheckCircle2, ExternalLink, Zap, Database, Eye } from 'lucide-react';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { fetchCloudProviderStatus, type CloudProviderStatus, formatRelativeTime, getStatusColor, getStatusTextColor } from '@/lib/liveData';
@@ -169,7 +169,7 @@ export function IntegrationHub() {
         </p>
       </div>
 
-      <UseRestrictionBanner />
+      {/* UseRestrictionBanner removed */}
       {/* Demo Disclaimer */}
       <div className="rounded-xl p-4 border border-sensitive-border bg-sensitive-bg">
         <div className="flex items-start gap-3">
