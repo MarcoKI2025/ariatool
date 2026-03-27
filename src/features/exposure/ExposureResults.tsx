@@ -433,7 +433,7 @@ export function ExposureResults() {
           </SectionCard>
 
           {/* Sensitivity Table */}
-          <SectionCard title="Sensitivity Analysis — Variable Impact Ranking" icon="📊" subtitle="Which input variables have the largest marginal impact on AFI?">
+          <SectionCard title="Sensitivity Analysis — Variable Impact Ranking"  subtitle="Which input variables have the largest marginal impact on AFI?">
             <div className="overflow-x-auto">
               <table className="w-full text-[11px]">
                 <thead>

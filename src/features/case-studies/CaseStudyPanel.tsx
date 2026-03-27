@@ -25,7 +25,7 @@ export function CaseStudyPanel() {
 
   return (
     <>
-      <SectionDivider title="Case Study Library" icon="📋" subtitle="8 realistic AI deployment profiles for benchmarking" />
+      <SectionDivider title="Case Study Library"  subtitle="8 realistic AI deployment profiles for benchmarking" />
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="mb-4">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Industry Case Studies</div>

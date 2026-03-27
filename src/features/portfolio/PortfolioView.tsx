@@ -195,7 +195,7 @@ export function PortfolioView() {
       <Tabs defaultValue="portfolio" className="w-full">
         <TabsList className="mb-4">
           <TabsTrigger value="portfolio">Portfolio Risk</TabsTrigger>
-          <TabsTrigger value="silent">Silent AI Detector</TabsTrigger>
+          <TabsTrigger value="silent">Silent Exposure</TabsTrigger>
         </TabsList>
 
         <TabsContent value="portfolio" className="space-y-6">
@@ -416,13 +416,11 @@ export function PortfolioView() {
 
         {/* Dominant Provider Alert */}
         {accumulation.dominantProvider && (
-          <div className="bg-fragile-bg border-2 border-fragile rounded-lg p-4 mb-4">
-            <div className="flex items-start gap-3">
-              <span className="text-[18px]">⚠️</span>
-              <div className="text-[12px] font-bold text-fragile leading-relaxed">
-                {accumulation.dominantProvider} is a single point of failure — used by {accumulation.sharedProviderCount} of {entities.length} cedants. A single outage may trigger simultaneous claims across your portfolio.
-              </div>
-            </div>
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-fragile-bg border border-fragile-border mb-4">
+            <span className="text-fragile text-[12px]">⚠</span>
+            <span className="text-[11px] font-medium text-fragile">
+              {accumulation.dominantProvider} used by {accumulation.sharedProviderCount} of {entities.length} cedants — single-provider concentration risk.
+            </span>
           </div>
         )}
 

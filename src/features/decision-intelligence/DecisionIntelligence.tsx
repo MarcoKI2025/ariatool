@@ -44,7 +44,7 @@ export function DecisionIntelligence() {
 
       {/* UseRestrictionBanner removed */}
 
-      <SectionDivider title="Board-Level Assessment" icon="◈" subtitle="Executive summary and risk classification" />
+      <SectionDivider title="Board-Level Assessment"  subtitle="Executive summary and risk classification" />
 
       {/* ═══ HERO BOARD STATEMENT ═══ */}
       <div className={`bg-card rounded-[9px] mb-5 p-[18px_22px] border-l-4 flex items-start gap-3 ${band === 'Fragile' ? 'border-l-fragile' : band === 'Sensitive' ? 'border-l-sensitive' : 'border-l-stable'}`}>
@@ -216,7 +216,7 @@ export function DecisionIntelligence() {
         <BandBadge band={band} size="sm" />
       </div>
 
-      <SectionDivider title="Risk Indices" icon="📊" subtitle="AGRI, ALRI, SCRI, MDR — individual risk dimension scores" />
+      <SectionDivider title="Risk Indices"  subtitle="AGRI, ALRI, SCRI, MDR — individual risk dimension scores" />
 
       {/* ═══ AGRI — Standalone Panel (matches HTML position) ═══ */}
       <div className="bg-card border border-border rounded-lg p-4 sm:p-5 mb-4">
@@ -260,7 +260,7 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      <SectionDivider title="Governance Decision" icon="⚖" subtitle="Required actions and committee signals" />
+      <SectionDivider title="Governance Decision"  subtitle="Required actions and committee signals" />
 
       {/* ═══ GOVERNANCE DECISION SIGNAL ═══ */}
       <div className={`p-4 rounded-lg border-2 mb-4 ${
@@ -449,7 +449,7 @@ export function DecisionIntelligence() {
       <SectionDivider title="Deep Dive Analysis" icon="🔬" subtitle="AFI components, financial exposure, responsibility structure" />
 
       {/* ═══ AFI COMPONENT ANALYSIS — HORIZONTAL BARS (matches HTML) ═══ */}
-      <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
+      <SectionCard title="AFI Component Breakdown"  subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
         {[
           { label: 'Delegation Ratio (DR)', value: components.dr, desc: 'Autonomous decision share without human review', tooltip: TOOLTIPS.dr },
           { label: 'Justificatory Density (JD)', value: components.jd, desc: 'Governance transparency and audit coverage (protective)', tooltip: TOOLTIPS.jd, inverted: true },
@@ -477,7 +477,7 @@ export function DecisionIntelligence() {
       </SectionCard>
 
       {/* ═══ FINANCIAL EXPOSURE ═══ */}
-      <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope" icon="📊" subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
+      <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope"  subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Expected scenario · median market outcome', highlight: false, color: 'text-foreground' },
@@ -577,7 +577,7 @@ export function DecisionIntelligence() {
       </SectionCard>
 
       {/* ═══ SCRI ═══ */}
-      <SectionCard title="Systemic Concentration Risk Index (SCRI)" icon="🌐" subtitle="Infrastructure concentration creates correlated portfolio-level exposure.">
+      <SectionCard title="Systemic Concentration Risk Index (SCRI)"  subtitle="Infrastructure concentration creates correlated portfolio-level exposure.">
         <div className="flex items-start gap-6 mb-4">
           <div>
             <div className={`text-[48px] font-bold font-mono leading-none ${scri >= 65 ? 'text-fragile' : scri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{scri}</div>
@@ -608,7 +608,7 @@ export function DecisionIntelligence() {
       </SectionCard>
 
       {/* ═══ COMPOSITE RISK INDEX ═══ */}
-      <SectionCard title="Composite Risk Index" icon="📊" subtitle="Weighted blend: AFI (50%) + ALRI (30%) + AGRI (20%).">
+      <SectionCard title="Composite Risk Index"  subtitle="Weighted blend: AFI (50%) + ALRI (30%) + AGRI (20%).">
         <div className="flex items-center gap-6">
           <div className={`text-[64px] font-bold font-mono leading-none ${compositeRiskIndex >= 60 ? 'text-fragile' : compositeRiskIndex >= 35 ? 'text-sensitive' : 'text-stable'}`}>
             {compositeRiskIndex}
@@ -635,7 +635,7 @@ export function DecisionIntelligence() {
         </div>
       </SectionCard>
 
-      <SectionDivider title="Advanced Risk Signals" icon="🧬" subtitle="Meaning drift, assessment validity, frame drift alerts" />
+      <SectionDivider title="Advanced Risk Signals"  subtitle="Meaning drift, assessment validity, frame drift alerts" />
 
       {/* ═══ MDR — Meaning Drift Risk ═══ */}
       <SectionCard title="Meaning Drift Risk (MDR)" icon="🔄" subtitle="Behavioral alignment decay risk — from Kindermann (2026), Semantic Drift and Temporal Coherence in Long-Horizon AI Systems.">
@@ -817,7 +817,7 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      <SectionDivider title="Market Context & Positioning" icon="🌍" subtitle="Industry comparison, traditional vs. structural detection" />
+      <SectionDivider title="Market Context & Positioning"  subtitle="Industry comparison, traditional vs. structural detection" />
 
       {/* ═══ STANDARD UNDERWRITING PROCESS — WHERE TRADITIONAL MODELS STOP ═══ */}
       <div className="bg-card border border-border rounded-lg p-5 sm:p-7 mb-5">
@@ -900,7 +900,7 @@ export function DecisionIntelligence() {
         </div>
       </div>
 
-      <SectionDivider title="Epistemic Framework" icon="⚠" subtitle="Assessment limitations and operational constraints" />
+      <SectionDivider title="Epistemic Framework"  subtitle="Assessment limitations and operational constraints" />
 
       {/* ═══ EPISTEMIC STATUS ═══ */}
       <div className="bg-card border border-border rounded-lg p-6 mb-4">
@@ -942,7 +942,7 @@ export function DecisionIntelligence() {
       </div>
 
       {/* Assessment History */}
-      <SectionCard title="Assessment History" icon="📋" subtitle="Prior assessments for portfolio comparison and trend analysis.">
+      <SectionCard title="Assessment History"  subtitle="Prior assessments for portfolio comparison and trend analysis.">
         <div className="overflow-x-auto">
           <table className="w-full text-[11px]">
             <thead>

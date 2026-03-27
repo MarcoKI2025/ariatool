@@ -12,7 +12,7 @@ export function RiskOverview() {
     return <LockedState title="Risk Overview Locked" description="Complete the Exposure Analysis to unlock the risk overview with AFI scoring, governance exposure, and dependency analysis." onAction={() => setActiveStep(1)} actionLabel="Go to Exposure Analysis" />;
   }
 
-  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor } = results;
+  const { band, afi, structuralScore, components, eciTier, eciName, lossEnvelope, agri, amplificationFactor, correlationFactor, alri, scri, compositeRiskIndex } = results;
 
   return (
     <div>
@@ -81,38 +81,42 @@ export function RiskOverview() {
         </div>
       </div>
 
-      {/* Key metrics grid */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        <MetricCard label="AFI · Authority Fragility" value={afi.toFixed(2)} band={band} sublabel={`${band} — ${afi < 0.85 ? 'below threshold' : afi < 1.35 ? 'approaching threshold' : 'above threshold'}`} icon="📊" />
-        <MetricCard label="Governance Exposure" value={`${Math.round(components.jd * 100)}%`} band={components.jd < 0.4 ? 'Fragile' : components.jd < 0.6 ? 'Sensitive' : 'Stable'} sublabel="Justificatory Density" icon="🛡" />
-        <MetricCard label="Dependency Concentration" value={`${Math.round(components.rc * 100)}%`} band={components.rc > 0.7 ? 'Fragile' : components.rc > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Reversibility Cost" icon="🔗" />
-        <MetricCard label="Continuation Density" value={`${Math.round(components.cd * 100)}%`} band={components.cd > 0.7 ? 'Fragile' : components.cd > 0.5 ? 'Sensitive' : 'Stable'} sublabel="Integration lock-in" icon="⚙" />
-      </div>
-
-      {/* Continuation Risk / Dependency Lock-In / Portfolio Contagion */}
-      <div className="grid grid-cols-3 gap-3 mb-4">
-        <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[11px] font-bold text-foreground mb-2">Continuation Risk</div>
-          <div className="text-[11px] text-muted-foreground leading-[1.55]">
-            System persists without explicit re-authorisation — accumulating liability with no upper bound.
-          </div>
+      {/* KPI Summary Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+        <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-1.5">Authority Fragility (AFI)</div>
+          <div className="text-[26px] font-bold metric-value leading-none" style={{ color: band === 'Fragile' ? 'hsl(var(--fragile))' : band === 'Sensitive' ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))' }}>{afi.toFixed(2)}</div>
+          <BandBadge band={band} />
         </div>
-        <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[11px] font-bold text-foreground mb-2">Dependency Lock-In</div>
-          <div className="text-[11px] text-muted-foreground leading-[1.55]">
-            Provider concentration exceeds exit threshold — structural entrenchment creates single points of failure.
-          </div>
+        <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-1.5">Agentic Risk (AGRI)</div>
+          <div className="text-[26px] font-bold metric-value leading-none" style={{ color: agri >= 70 ? 'hsl(var(--fragile))' : agri >= 40 ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))' }}>{agri}</div>
+          <div className="text-[10px] mt-1" style={{ color: 'hsl(var(--t2))' }}>{agri >= 70 ? 'Elevated' : agri >= 40 ? 'Moderate' : 'Low'}</div>
         </div>
-        <div className="bg-card border border-border rounded-[10px] p-4">
-          <div className="text-[11px] font-bold text-foreground mb-2">Portfolio Contagion</div>
-          <div className="text-[11px] text-muted-foreground leading-[1.55]">
-            Shared AI infrastructure creates correlated exposure — significant non-linear amplification across operational layers (Swiss Re sigma insights 01/2026).
-          </div>
+        <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-1.5">Liability Risk (ALRI)</div>
+          <div className="text-[26px] font-bold metric-value leading-none" style={{ color: alri >= 70 ? 'hsl(var(--fragile))' : alri >= 40 ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))' }}>{alri}</div>
+          <div className="text-[10px] mt-1" style={{ color: 'hsl(var(--t2))' }}>AI-specific liability</div>
+        </div>
+        <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-1.5">Systemic Concentration (SCRI)</div>
+          <div className="text-[26px] font-bold metric-value leading-none" style={{ color: scri >= 70 ? 'hsl(var(--fragile))' : scri >= 40 ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))' }}>{scri}</div>
+          <div className="text-[10px] mt-1" style={{ color: 'hsl(var(--t2))' }}>Provider overlap</div>
+        </div>
+        <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-1.5">Cascade Amplification (CAI)</div>
+          <div className="text-[26px] font-bold metric-value leading-none" style={{ color: (results.cai ?? 0) >= 60 ? 'hsl(var(--fragile))' : (results.cai ?? 0) >= 30 ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))' }}>{results.cai ?? '—'}</div>
+          <div className="text-[10px] mt-1" style={{ color: 'hsl(var(--t2))' }}>{(results.cai ?? 0) >= 60 ? 'Cascading' : (results.cai ?? 0) >= 30 ? 'Amplifying' : 'Contained'}</div>
+        </div>
+        <div className="bg-card border border-border rounded-lg p-4" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-1.5">Composite Risk Index</div>
+          <div className="text-[26px] font-bold metric-value leading-none" style={{ color: compositeRiskIndex >= 70 ? 'hsl(var(--fragile))' : compositeRiskIndex >= 40 ? 'hsl(var(--sensitive))' : 'hsl(var(--stable))' }}>{compositeRiskIndex}</div>
+          <div className="text-[10px] mt-1" style={{ color: 'hsl(var(--t2))' }}>Weighted composite</div>
         </div>
       </div>
 
       {/* AFI Components */}
-      <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
+      <SectionCard title="AFI Component Breakdown"  subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
         {[
           { label: 'Delegation Ratio (DR)', value: components.dr, desc: 'Autonomous decision share without human review' },
           { label: 'Justificatory Density (JD)', value: components.jd, desc: 'Governance transparency and audit coverage', inverted: true },
@@ -134,7 +138,7 @@ export function RiskOverview() {
       </SectionCard>
 
       {/* Required Underwriting Actions */}
-      <SectionCard title="Required Underwriting Actions" icon="⚠" subtitle="All conditions must be met before standard coverage applies.">
+      <SectionCard title="Required Underwriting Actions"  subtitle="All conditions must be met before standard coverage applies.">
         <div className="space-y-3">
           {(band === 'Fragile' ? [
             { title: 'Apply significant premium loading above standard', body: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor.' },
@@ -176,7 +180,7 @@ export function RiskOverview() {
       </div>
 
       {/* AGRI */}
-      <SectionCard title="Agentic Risk Index (AGRI)" icon="🤖" subtitle="Autonomous system governance complexity signal.">
+      <SectionCard title="Agentic Risk Index (AGRI)"  subtitle="Autonomous system governance complexity signal.">
         <div className="flex items-end gap-3 mb-2">
           <span className={`text-[28px] font-bold font-mono ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</span>
           <span className="text-[11px] text-muted-foreground mb-1">/100</span>

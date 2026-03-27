@@ -79,31 +79,20 @@ export function ExposureAnalysis() {
 
       {/* Welcome banner */}
       {!dismissedWelcome && !analysisComplete && (
-        <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-4 sm:p-[18px] rounded-xl mb-5 border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--card)))' }}>
-          <div className="w-9 h-9 rounded-[9px] bg-primary flex items-center justify-center text-[16px] flex-shrink-0 text-white font-bold">⊕</div>
-          <div className="flex-1">
-            <div className="text-[15px] font-bold text-foreground mb-1 tracking-tight">Assess your AI risk exposure in 3 minutes</div>
-            <div className="text-[12px] text-secondary-foreground leading-[1.6] mb-[10px]">
-              Configure your AI deployment profile below — receive an executive risk score, estimated insurance cost range, and regulatory exposure signal ready for committee review.
-            </div>
-            <div className="flex gap-3 sm:gap-5 flex-wrap">
-              {['Fill in your AI profile', 'Generate risk assessment', 'Review results & export to board'].map((txt, i) => (
-                <div key={i} className="flex items-center gap-[6px] text-[11px] text-secondary-foreground">
-                  <span className="w-[18px] h-[18px] rounded-full bg-primary text-white inline-flex items-center justify-center text-[9px] font-bold flex-shrink-0">{i + 1}</span>
-                  {txt}
-                </div>
-              ))}
-            </div>
-          </div>
-          <button onClick={() => setDismissedWelcome(true)} className="text-muted-foreground hover:text-foreground text-[16px] p-1 flex-shrink-0 leading-none" title="Dismiss">✕</button>
+        <div className="bg-card border border-border rounded-lg p-5 mb-5">
+          <h2 className="text-[16px] font-bold text-foreground mb-1">Configure AI Risk Profile</h2>
+          <p className="text-[12px]" style={{ color: 'hsl(var(--t2))' }}>
+            Complete all sections below. Results unlock after running analysis.
+          </p>
+          <button onClick={() => setDismissedWelcome(true)} className="absolute top-3 right-3 text-muted-foreground hover:text-foreground text-sm" title="Dismiss">✕</button>
         </div>
       )}
 
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 1 of 11 · Entry Point</div>
+        <div className="label-xs mb-1.5">Step 1 of 11 · Entry Point</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Exposure Analysis</h1>
-        <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
-          Configure the AI deployment profile. All downstream outputs — risk scores, financial exposure, underwriting recommendations — derive exclusively from this input.
+        <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed">
+          Configure the AI deployment profile. All downstream outputs derive exclusively from this input.
         </p>
       </div>
 
@@ -122,69 +111,46 @@ export function ExposureAnalysis() {
         </div>
       </div>
 
-      {/* Demo profiles */}
-      <div className="rounded-xl p-[18px] px-5 mb-5 border border-border bg-secondary">
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <div className="text-[12px] font-bold text-foreground tracking-[0.01em]">⚡ New here? Start with a demo profile</div>
-            <div className="text-[10px] text-secondary-foreground mt-[3px]">Click any scenario below to pre-fill all inputs instantly — then click "Generate AI Risk Assessment" to see the full analysis. Takes 10 seconds.</div>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-          {DEMO_PROFILES.map((p, i) => {
-            const preview = computeDemoProfilePreview(p);
-            return (
-            <button
-              key={i}
-              onClick={() => setInputs(applyDemoProfile(p))}
-              className="text-center p-3 rounded-[9px] border border-border bg-card shadow-sm hover:border-primary hover:shadow-md hover:-translate-y-[1px] transition-all cursor-pointer flex flex-col items-center gap-1"
-            >
-              <div className="text-[11px] font-bold text-foreground leading-[1.3] text-center">{p.name}</div>
-              <div className="text-[9px] text-muted-foreground font-medium mt-[1px]">{p.industry}</div>
-              <div className={`mt-[3px] text-[8px] font-bold uppercase tracking-[0.06em] px-[7px] py-[2px] rounded-[3px] ${
-                preview.band === 'Fragile' ? 'badge-fragile' :
-                preview.band === 'Sensitive' ? 'badge-sensitive' :
-                'badge-stable'
-              }`}>{preview.band}</div>
-            </button>
-            );
-          })}
-        </div>
-        <div className="mt-[10px] text-[10px] text-muted-foreground italic">Each profile reflects a real-world AI deployment pattern with different risk characteristics. Adjust any slider after loading to explore scenarios.</div>
-      </div>
-
-      {/* Real Case Facts Card — appears after demo selection */}
-      <RealCaseFactsCard />
-
-      {/* Divider */}
-      <div className="flex items-center gap-3 my-5">
-        <div className="flex-1 h-px bg-border" />
-        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Or fill in manually</span>
-        <div className="flex-1 h-px bg-border" />
-      </div>
-
-      {/* Context frame */}
-      <div className="flex items-start gap-3 p-[14px] px-4 rounded-[9px] mb-5 border border-purple-border" style={{ background: 'linear-gradient(135deg, hsl(var(--purple-bg)), hsl(var(--secondary)))' }}>
-        <span className="text-[16px] flex-shrink-0 mt-[1px] text-primary">◈</span>
-        <div>
-          <div className="text-[12px] font-semibold text-foreground mb-[3px]">This analysis identifies structural AI risks that traditional underwriting and compliance frameworks do not capture.</div>
-          <div className="text-[11px] text-secondary-foreground leading-[1.55]">Specifically: continuation risk (the system persists without re-authorisation), dependency lock-in (cannot be exited without disruption), and cross-system propagation (failure amplifies across operational layers). All downstream outputs derive exclusively from this input.</div>
-        </div>
+      {/* Demo profiles — horizontal chips */}
+      <div className="flex gap-2 overflow-x-auto pb-2 mb-5 -mx-1 px-1">
+        {DEMO_PROFILES.map((p, i) => (
+          <button
+            key={i}
+            onClick={() => setInputs(applyDemoProfile(p))}
+            className="px-3 py-1.5 rounded border text-[11px] font-medium transition-colors whitespace-nowrap flex-shrink-0"
+            style={{
+              background: 'hsl(var(--sf))',
+              borderColor: 'hsl(var(--bd))',
+              color: 'hsl(var(--t2))',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = 'hsl(var(--primary))';
+              (e.currentTarget as HTMLElement).style.color = 'hsl(var(--primary))';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.borderColor = 'hsl(var(--bd))';
+              (e.currentTarget as HTMLElement).style.color = 'hsl(var(--t2))';
+            }}
+          >
+            {p.name}
+          </button>
+        ))}
       </div>
 
       {/* Progress bar */}
-      <div className="hidden sm:flex items-center gap-0 mb-5">
-        {PROGRESS_STEPS.map((step, i) => (
-          <React.Fragment key={i}>
-            <div className={`flex items-center gap-[6px] text-[10px] font-medium ${i <= progressIdx ? 'text-primary' : 'text-muted-foreground'}`}>
-              <div className={`w-[7px] h-[7px] rounded-full ${i <= progressIdx ? 'bg-primary' : 'bg-border'}`} />
-              {step}
-            </div>
-            {i < PROGRESS_STEPS.length - 1 && (
-              <div className={`flex-1 h-px mx-2 ${i < progressIdx ? 'bg-primary' : 'bg-border'}`} />
-            )}
-          </React.Fragment>
-        ))}
+      <div className="mb-5">
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[10px] font-medium" style={{ color: 'hsl(var(--t3))' }}>Profile completion</span>
+          <span className="text-[10px] font-mono font-bold" style={{ color: 'hsl(var(--primary))' }}>{progressIdx + 1} / 6</span>
+        </div>
+        <div className="h-1.5 bg-border rounded-full overflow-hidden">
+          <div className="h-full rounded-full transition-all" style={{ width: `${((progressIdx + 1) / 6) * 100}%`, background: 'hsl(var(--primary))' }} />
+        </div>
+        <div className="hidden sm:flex justify-between mt-1">
+          {['Company', 'Core AFI', 'Agent', 'Liability', 'Governance', 'Systemic'].map((label, i) => (
+            <span key={i} className="text-[9px] font-medium" style={{ color: i <= progressIdx ? 'hsl(var(--primary))' : 'hsl(var(--t3))' }}>{label}</span>
+          ))}
+        </div>
       </div>
 
       {/* Two-column layout */}
