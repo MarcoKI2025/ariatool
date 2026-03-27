@@ -17,9 +17,9 @@ export function RiskOverview() {
   return (
     <div>
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 11 · Core Analysis</div>
+        <div className="label-xs mb-1.5">Step 2 of 11 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Risk Overview</h1>
-        <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
+        <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed">
           Structural AI governance risk assessment for {inputs.companyName || 'the assessed entity'}.
         </p>
       </div>
@@ -46,8 +46,8 @@ export function RiskOverview() {
       </Banner>
 
       {/* Hero score */}
-      <div className="bg-card border border-border rounded-xl p-6 mb-4 text-center">
-        <div className={`text-[72px] font-bold font-mono leading-none tracking-tight ${
+      <div className="bg-card border border-border rounded-lg p-6 mb-4 text-center">
+        <div className={`text-[42px] font-bold metric-value leading-none tracking-tight ${
           band === 'Fragile' ? 'text-fragile' : band === 'Sensitive' ? 'text-sensitive' : 'text-stable'
         }`}>{structuralScore}</div>
         <div className="text-[13px] text-secondary-foreground mt-2">Structural Exposure Score</div>

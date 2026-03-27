@@ -4,7 +4,7 @@ import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalys
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
@@ -185,25 +185,13 @@ export function PortfolioView() {
       <RealCaseAlert />
 
       {/* Header */}
-      <div className="border-b border-border pb-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-muted-foreground mb-1">Step 7 · Portfolio Intelligence</div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
-          </div>
-          <div className="sm:text-right flex-shrink-0 space-y-1">
-            <LiveIndicator label={`${entities.length} entities monitored`} />
-            {totalIncidents > 0 && (
-              <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-sensitive-bg border border-sensitive-border">
-                <span className="w-1.5 h-1.5 rounded-full bg-sensitive animate-pulse" />
-                <span className="text-[9px] font-medium text-sensitive">{totalIncidents} Provider Incident{totalIncidents !== 1 ? 's' : ''} Active</span>
-              </div>
-            )}
-          </div>
-        </div>
+      <div className="mb-6">
+        <div className="label-xs mb-1.5">Step 7 of 11 · Portfolio Intelligence</div>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
+        <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed mt-1">
+          Multi-entity aggregation and systemic risk assessment across your portfolio.
+        </p>
       </div>
-
-      <UseRestrictionBanner />
 
       <Tabs defaultValue="portfolio" className="w-full">
         <TabsList className="mb-4">

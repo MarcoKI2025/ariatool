@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
 import { LockedState } from '@/components/shared/UIComponents';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { AppFooter } from '@/components/shared/AppFooter';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { AgenticSwarmVisualization } from '@/features/agentic/AgenticSwarmVisualization';
 import { AgentCoordinationView } from '@/features/agent-coordination/AgentCoordinationView';
@@ -235,14 +235,12 @@ export function ScenarioSimulation() {
   return (
     <div>
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 3 · Stress Testing</div>
+        <div className="label-xs mb-1.5">Step 3 of 11 · Stress Testing</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Scenario Simulation</h1>
-        <p className="text-[13px] text-secondary-foreground max-w-[620px] leading-relaxed">
+        <p className="text-[13px] text-muted-foreground max-w-[620px] leading-relaxed">
           Models exposure impact under adverse conditions. Each scenario stresses different structural failure vectors — calibrated against your deployment profile.
         </p>
       </div>
-
-      <UseRestrictionBanner />
 
       {/* How to interpret */}
       <div className="bg-secondary border border-border rounded-lg p-4 mb-5 text-[11px] text-muted-foreground leading-[1.55]">

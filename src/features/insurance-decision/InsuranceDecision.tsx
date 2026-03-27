@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { useApp } from '@/hooks/useAppState';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
 import { formatCurrency, formatDate } from '@/lib/formatters';
@@ -39,10 +39,10 @@ export function InsuranceDecision() {
         </p>
       </div>
 
-      <UseRestrictionBanner />
+      {/* UseRestrictionBanner removed */}
 
       {/* ═══ 1. HERO DECISION BANNER ═══ */}
-      <div className={`rounded-xl p-4 sm:p-8 mb-4 border-2 relative overflow-hidden ${
+      <div className={`rounded-lg p-4 sm:p-6 mb-4 border-2 relative overflow-hidden ${
         band === 'Fragile' ? 'bg-card border-fragile' :
         band === 'Sensitive' ? 'bg-card border-sensitive' :
         'bg-card border-stable'
@@ -50,7 +50,7 @@ export function InsuranceDecision() {
         <div className="text-[9px] font-bold tracking-[0.14em] uppercase text-muted-foreground mb-3">
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
-        <div className={`text-[18px] sm:text-[42px] font-extrabold tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
+        <div className={`text-[18px] sm:text-[28px] font-bold metric-value tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
           {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
            decisionClass === 'Conditional Review' ? 'Conditional Review' :
            'Standard Coverage'}

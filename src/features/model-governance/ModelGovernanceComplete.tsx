@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
 import { fetchAIIncidents, type AIIncident } from '@/lib/liveData';
-import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
+import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
 import { ComplianceDashboard } from '@/features/compliance/ComplianceDashboard';
 import { SectionDivider } from '@/components/shared/SectionDivider';
 
@@ -28,15 +28,12 @@ export function ModelGovernanceComplete() {
 
   return (
     <div>
-      <UseRestrictionBanner />
-      <ModelGovernanceRegister />
-
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">⊕ Step 6 · Model Governance · Assessment Scope Declaration · AI Governance Architecture Framework</div>
-        <div className="text-[22px] font-bold text-foreground tracking-tight mb-1">This framework assesses what it claims to assess —<br/>and knows what it does not.</div>
-        <div className="text-[12px] text-secondary-foreground leading-[1.6] max-w-[700px]">
-          Most risk tools give outputs without declaring assumptions. This panel makes the interpretive frame of the AI Exposure Engine explicit — the contexts in which assessments hold, the limits beyond which they degrade, and the conditions that would require revision. Based on "What Are We Aligning To?" (AGAF, Jan 2026).
-        </div>
+        <div className="label-xs mb-1.5">Step 6 of 11 · Model Governance</div>
+        <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Model Governance & Methodology</h1>
+        <p className="text-[13px] text-muted-foreground max-w-[700px] leading-relaxed">
+          Framework basis, scope declaration, calibration, and assessment boundary conditions.
+        </p>
       </div>
 
       <SectionDivider title="AGAF Methodology" icon="📐" subtitle="Framework basis, scope declaration, and calibration" />
@@ -45,7 +42,7 @@ export function ModelGovernanceComplete() {
 
       <SectionDivider title="EU AI Act Compliance" icon="🇪🇺" subtitle="Article-by-article assessment against EU Regulation 2024/1689" />
 
-      <div className="bg-card border-2 border-primary/30 rounded-xl p-4 sm:p-6 mb-5">
+      <div className="bg-card border-2 border-primary/30 rounded-lg p-4 sm:p-6 mb-5">
         <ComplianceDashboard />
       </div>
 
