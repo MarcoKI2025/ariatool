@@ -165,33 +165,32 @@ export function RecursiveRiskView() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-[18px] font-bold text-foreground tracking-tight">
-          🔄 Recursive Risk Assessment
+        <div className="label-xs mb-1">Step 10 of 11 · Advanced</div>
+        <h1 className="text-xl font-bold text-foreground tracking-tight">
+          Recursive Risk Assessment
         </h1>
-        <p className="text-[11px] text-muted-foreground mt-1">
+        <p className="text-[12px] text-muted-foreground mt-1">
           Self-improvement risk analysis for <span className="font-semibold text-foreground">{inputs.companyName || 'Current Entity'}</span>
         </p>
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          STEP 1: CLEAR RISK STATEMENT
-          ══════════════════════════════════════════════════ */}
-      <div className={`rounded-xl border-2 p-5 ${severityBg}`}>
-        <div className="flex items-start gap-3">
-          <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground flex-shrink-0 mt-1">
-            {isCritical ? '⛔' : isElevated ? '⚠️' : '✅'} {rsiResult.tier.toUpperCase()}
+      {/* Risk Statement */}
+      <div className={`rounded-lg border p-5 ${severityBg}`}>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground">
+            {rsiResult.tier.toUpperCase()}
           </span>
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] text-muted-foreground">
+              RSI <span className={`font-bold metric-value ${severityColor}`}>{rsiResult.rsi.toFixed(0)}</span>/100
+            </span>
+            <span className="text-[10px] text-muted-foreground">
+              MCCI <span className="font-bold metric-value text-foreground">{mcciResult.mcci.toFixed(0)}</span>
+            </span>
+          </div>
         </div>
-        <div className={`text-[17px] sm:text-[20px] font-extrabold leading-[1.3] tracking-tight mt-2 ${severityColor}`}>
+        <div className={`text-[15px] sm:text-[17px] font-bold leading-[1.35] tracking-tight ${severityColor}`}>
           {riskStatement}
-        </div>
-        <div className="flex items-center gap-4 mt-3">
-          <div className="text-[10px] text-muted-foreground">
-            RSI Score: <span className={`font-bold font-mono ${severityColor}`}>{rsiResult.rsi.toFixed(0)}</span>/100
-          </div>
-          <div className="text-[10px] text-muted-foreground">
-            MCCI: <span className="font-bold font-mono text-foreground">{mcciResult.mcci.toFixed(0)}</span> ({mcciResult.tier})
-          </div>
         </div>
       </div>
 
