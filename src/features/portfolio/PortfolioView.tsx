@@ -376,6 +376,89 @@ export function PortfolioView() {
       </div>
 
       {/* ══════════════════════════════════════════════════
+          ACCUMULATION RISK ENGINE
+          ══════════════════════════════════════════════════ */}
+      <div className="flex items-center gap-3 mb-1">
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Accumulation Risk Engine</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      <div className={`rounded-xl border-2 p-6 ${pasBandBg}`}>
+        {/* PAS Gauge */}
+        <div className="flex items-center gap-4 mb-4">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Portfolio Accumulation Score</div>
+            <div className={`text-[36px] font-extrabold font-mono ${pasColor}`}>{accumulation.pas}</div>
+          </div>
+          <div className="flex-1">
+            <div className="h-4 bg-border rounded-full overflow-hidden">
+              <div className={`h-full rounded-full transition-all ${pasBg}`} style={{ width: `${accumulation.pas}%` }} />
+            </div>
+            <div className="flex justify-between mt-1 text-[8px] text-muted-foreground">
+              <span>Low</span><span>Elevated</span><span>Critical</span><span>Systemic</span>
+            </div>
+          </div>
+          <div className={`px-3 py-1.5 rounded-lg text-[11px] font-bold ${pasBandBg} ${pasColor}`}>
+            {accumulation.accumulationBand}
+          </div>
+        </div>
+
+        {/* Sub-metrics: 4-column grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Provider Overlap</div>
+            <div className={`text-[20px] font-extrabold font-mono ${accumulation.sdr > 0.6 ? 'text-fragile' : accumulation.sdr > 0.3 ? 'text-sensitive' : 'text-stable'}`}>{Math.round(accumulation.sdr * 100)}%</div>
+            <div className="text-[9px] text-muted-foreground">Shared Dependency Ratio</div>
+          </div>
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Model Homogeneity</div>
+            <div className={`text-[20px] font-extrabold font-mono ${accumulation.mcs > 0.6 ? 'text-fragile' : accumulation.mcs > 0.3 ? 'text-sensitive' : 'text-stable'}`}>{Math.round(accumulation.mcs * 100)}</div>
+            <div className="text-[9px] text-muted-foreground">Model Concentration Score</div>
+          </div>
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Correlated Portfolio AFI</div>
+            <div className={`text-[20px] font-extrabold font-mono ${accumulation.cAFI > 1.35 ? 'text-fragile' : accumulation.cAFI > 0.85 ? 'text-sensitive' : 'text-stable'}`}>{accumulation.cAFI.toFixed(2)}</div>
+            <div className="text-[9px] text-muted-foreground">Accumulation-adjusted AFI</div>
+          </div>
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Avg Cascade Index</div>
+            <div className={`text-[20px] font-extrabold font-mono ${avgCAI >= 60 ? 'text-fragile' : avgCAI >= 30 ? 'text-sensitive' : 'text-stable'}`}>{avgCAI}</div>
+            <div className="text-[9px] text-muted-foreground">CAI across entities</div>
+          </div>
+        </div>
+
+        {/* Dominant Provider Alert */}
+        {accumulation.dominantProvider && (
+          <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <span className="text-[18px]">⚠️</span>
+              <div className="text-[12px] font-bold text-fragile leading-relaxed">
+                {accumulation.dominantProvider} is a single point of failure — used by {accumulation.sharedProviderCount} of {entities.length} cedants. A single outage may trigger simultaneous claims across your portfolio.
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* High CAI Warning */}
+        {avgCAI >= 60 && (
+          <div className="bg-sensitive-bg border border-sensitive rounded-xl p-4 mb-4">
+            <div className="text-[11px] font-bold text-sensitive">
+              ⚠ High cascade potential — a failure in one entity's AI system may propagate rapidly across operationally connected cedants.
+            </div>
+          </div>
+        )}
+
+        {/* Accumulation Narrative */}
+        <div className="text-[12px] text-foreground leading-relaxed">
+          Your portfolio of <strong>{entities.length}</strong> entities shows <strong className={pasColor}>{accumulation.accumulationBand.toLowerCase()}</strong> accumulation risk.{' '}
+          {Math.round(accumulation.sdr * 100)}% share at least one AI provider, creating correlated exposure.{' '}
+          The correlation-adjusted AFI of <strong className="font-mono">{accumulation.cAFI.toFixed(2)}</strong>{' '}
+          {accumulation.cAFI > avgAFI ? 'exceeds' : 'is close to'} the simple weighted average of <strong className="font-mono">{avgAFI.toFixed(2)}</strong>,{' '}
+          indicating {accumulation.cAFI > avgAFI * 1.2 ? 'severe' : accumulation.cAFI > avgAFI * 1.05 ? 'significant' : 'low'} hidden concentration.
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════
           STEP 5: UNDERWRITING IMPACT
           ══════════════════════════════════════════════════ */}
       <div className="flex items-center gap-3 mb-1">
