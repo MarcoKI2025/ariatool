@@ -116,7 +116,7 @@ export function RiskOverview() {
       </div>
 
       {/* AFI Components */}
-      <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
+      <SectionCard title="AFI Component Breakdown"  subtitle="Individual risk dimensions that compose the Authority Fragility Index.">
         {[
           { label: 'Delegation Ratio (DR)', value: components.dr, desc: 'Autonomous decision share without human review' },
           { label: 'Justificatory Density (JD)', value: components.jd, desc: 'Governance transparency and audit coverage', inverted: true },
@@ -138,7 +138,7 @@ export function RiskOverview() {
       </SectionCard>
 
       {/* Required Underwriting Actions */}
-      <SectionCard title="Required Underwriting Actions" icon="⚠" subtitle="All conditions must be met before standard coverage applies.">
+      <SectionCard title="Required Underwriting Actions"  subtitle="All conditions must be met before standard coverage applies.">
         <div className="space-y-3">
           {(band === 'Fragile' ? [
             { title: 'Apply significant premium loading above standard', body: 'Mandatory — structural risk exceeds standard pricing assumptions. Treat as minimum pricing floor.' },
@@ -180,7 +180,7 @@ export function RiskOverview() {
       </div>
 
       {/* AGRI */}
-      <SectionCard title="Agentic Risk Index (AGRI)" icon="🤖" subtitle="Autonomous system governance complexity signal.">
+      <SectionCard title="Agentic Risk Index (AGRI)"  subtitle="Autonomous system governance complexity signal.">
         <div className="flex items-end gap-3 mb-2">
           <span className={`text-[28px] font-bold font-mono ${agri >= 60 ? 'text-fragile' : agri >= 35 ? 'text-sensitive' : 'text-stable'}`}>{agri}</span>
           <span className="text-[11px] text-muted-foreground mb-1">/100</span>

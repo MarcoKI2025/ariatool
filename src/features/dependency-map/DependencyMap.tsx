@@ -32,7 +32,7 @@ export function DependencyMap() {
       </div>
 
       {/* Concentration summary */}
-      <SectionCard title="Concentration Summary" icon="🔗" highlight={isSingle}>
+      <SectionCard title="Concentration Summary"  highlight={isSingle}>
         <div className="flex items-center gap-3 mb-3">
           <BandBadge band={isSingle ? 'Fragile' : providers.length <= 2 ? 'Sensitive' : 'Stable'} size="md" />
           <span className="text-[13px] font-semibold text-foreground">
@@ -49,7 +49,7 @@ export function DependencyMap() {
       </SectionCard>
 
       {/* Dependency flow visualization */}
-      <SectionCard title="Architecture Risk View" icon="◈">
+      <SectionCard title="Architecture Risk View" >
         <div className="grid grid-cols-[1fr_36px_1fr_36px_1fr] items-center py-4">
           {/* External providers */}
           <div className="flex flex-col gap-2">
@@ -128,7 +128,7 @@ export function DependencyMap() {
       )}
 
       {/* Diversification commentary */}
-      <SectionCard title="Diversification Assessment" icon="📋">
+      <SectionCard title="Diversification Assessment" >
         <div className="text-[12px] text-secondary-foreground leading-relaxed">
           {providers.length >= 3
             ? 'Provider diversification is adequate. Multiple providers reduce correlated failure risk. Continue monitoring for infrastructure overlap between providers (shared cloud, compute, or data centre dependencies).'

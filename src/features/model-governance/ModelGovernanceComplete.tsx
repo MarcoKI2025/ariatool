@@ -35,29 +35,29 @@ export function ModelGovernanceComplete() {
         </p>
       </div>
 
-      <SectionDivider title="AGAF Methodology" icon="📐" subtitle="Framework basis, scope declaration, and calibration" />
+      <SectionDivider title="AGAF Methodology"  subtitle="Framework basis, scope declaration, and calibration" />
 
       <AGAFMethodologyStatement />
 
-      <SectionDivider title="EU AI Act Compliance" icon="🇪🇺" subtitle="Article-by-article assessment against EU Regulation 2024/1689" />
+      <SectionDivider title="EU AI Act Compliance"  subtitle="Article-by-article assessment against EU Regulation 2024/1689" />
 
       <div className="bg-card border-2 border-primary/30 rounded-lg p-4 sm:p-6 mb-5">
         <ComplianceDashboard />
       </div>
 
-      <SectionDivider title="Framework Assumptions" icon="🔒" subtitle="Boundary conditions, non-goals, and degradation signals" />
+      <SectionDivider title="Framework Assumptions"  subtitle="Boundary conditions, non-goals, and degradation signals" />
 
       <AssessmentScopeDeclaration />
       <CalibrationParameters />
       <FrameworkAssumptions />
       <NonGoals />
-      <SectionDivider title="Advanced Governance Signals" icon="🧬" subtitle="Meaning drift, RFSI, frame drift, evaluation limits" />
+      <SectionDivider title="Advanced Governance Signals"  subtitle="Meaning drift, RFSI, frame drift, evaluation limits" />
 
       <MeaningDriftRegister />
       <RFSIPanel />
       <FDAPanel />
       <EvaluationLimitsPanel />
-      <SectionDivider title="Research & Methodology" icon="📚" subtitle="White paper, epistemic limitations, regulatory alignment" />
+      <SectionDivider title="Research & Methodology"  subtitle="White paper, epistemic limitations, regulatory alignment" />
 
       <MethodologyWhitePaper />
       <EpistemicLimitations />
@@ -65,7 +65,7 @@ export function ModelGovernanceComplete() {
       <ResearchFoundation />
       <CalibrationTransparency />
       <MethodologyTransparencyPanel />
-      <SectionDivider title="Product & Roadmap" icon="🚀" subtitle="Competitive positioning, API integration, revision schedule" />
+      <SectionDivider title="Product & Roadmap"  subtitle="Competitive positioning, API integration, revision schedule" />
 
       <CompetitivePositioning />
       <APIIntegrationReference />

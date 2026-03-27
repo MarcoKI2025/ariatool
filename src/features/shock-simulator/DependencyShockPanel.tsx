@@ -18,7 +18,7 @@ export function DependencyShockPanel() {
 
   return (
     <>
-      <SectionDivider title="Dependency Shock Simulator" icon="💥" subtitle="Simulate infrastructure failures and governance breakdowns" />
+      <SectionDivider title="Dependency Shock Simulator"  subtitle="Simulate infrastructure failures and governance breakdowns" />
       <div className="bg-card border border-border rounded-xl p-5 mb-4">
         <div className="mb-4">
           <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-1">◈ Shock Simulation Engine</div>

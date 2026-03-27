@@ -265,7 +265,7 @@ export function ScenarioSimulation() {
         ))}
       </div>
 
-      <SectionDivider title="Impact Assessment" icon="📊" subtitle="Key exposure metrics under selected scenario" />
+      <SectionDivider title="Impact Assessment"  subtitle="Key exposure metrics under selected scenario" />
 
       {/* Score cards */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3 mb-4">
@@ -437,7 +437,7 @@ export function ScenarioSimulation() {
         </div>
       </div>
 
-      <SectionDivider title="Scenario Comparison" icon="📋" subtitle="All scenarios side-by-side" />
+      <SectionDivider title="Scenario Comparison"  subtitle="All scenarios side-by-side" />
 
       {/* ═══ Scenario Comparison Matrix ═══ */}
       <div className="bg-card border border-border rounded-lg overflow-hidden mb-4">

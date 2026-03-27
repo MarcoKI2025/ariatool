@@ -114,7 +114,7 @@ export function InsuranceDecision() {
         </div>
       </div>
 
-      <SectionDivider title="Financial Exposure Model" icon="💰" subtitle="Loss envelope, threshold position, and AFI component analysis" />
+      <SectionDivider title="Financial Exposure Model"  subtitle="Loss envelope, threshold position, and AFI component analysis" />
 
       {/* ═══ 4. INSURANCE & FINANCIAL EXPOSURE TITLE + COMMITTEE PANEL ═══ */}
       <h2 className="text-[18px] font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h2>
@@ -174,7 +174,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 6. AFI COMPONENT BARS ═══ */}
-      <SectionCard title="AFI Component Breakdown" icon="📊" subtitle="Structural risk dimensions contributing to the AFI score.">
+      <SectionCard title="AFI Component Breakdown"  subtitle="Structural risk dimensions contributing to the AFI score.">
         {[
           { label: 'Delegation Ratio (DR)', value: components.dr, tooltip: TOOLTIPS.dr },
           { label: 'Justificatory Density (JD)', value: components.jd, tooltip: TOOLTIPS.jd, inverted: true },
@@ -201,7 +201,7 @@ export function InsuranceDecision() {
       </SectionCard>
 
       {/* ═══ 7. FINANCIAL EXPOSURE — LOSS ENVELOPE ═══ */}
-      <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope" icon="📊" subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
+      <SectionCard title="Financial Exposure — Market-Calibrated Loss Envelope"  subtitle="Lloyd's AI/Tech-E&O Guidelines 2024–25 · Munich Re Q4 2025">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           {[
             { label: 'Expected Loss', value: lossEnvelope.expected, sub: 'Expected scenario · median market outcome', color: 'text-foreground', highlight: false },
@@ -240,7 +240,7 @@ export function InsuranceDecision() {
         </div>
       </SectionCard>
 
-      <SectionDivider title="Cascade Propagation" icon="🌐" subtitle="How failure travels across systems and amplifies at each layer" />
+      <SectionDivider title="Cascade Propagation"  subtitle="How failure travels across systems and amplifies at each layer" />
 
       {/* ═══ 8. CASCADE PROPAGATION — CIRCLES + ARROWS ═══ */}
       <div className="bg-card border-2 border-border rounded-lg p-3 sm:p-6 mb-4 relative overflow-hidden">
@@ -292,11 +292,11 @@ export function InsuranceDecision() {
         </div>
       </div>
 
-      <SectionDivider title="Underwriting Decision" icon="⚖" subtitle="Risk position, required actions, and operational decision" />
+      <SectionDivider title="Underwriting Decision"  subtitle="Risk position, required actions, and operational decision" />
 
       {/* ═══ 9. RISK POSITION + REQUIRED ACTIONS ═══ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-        <SectionCard title="Risk Position" icon="📋">
+        <SectionCard title="Risk Position" >
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
             {band === 'Fragile' ? (<>
               <div>• <strong className="text-foreground">Above underwriting tolerance</strong> — Structural baseline → AI-derived characteristic</div>
@@ -317,7 +317,7 @@ export function InsuranceDecision() {
             </>)}
           </div>
         </SectionCard>
-        <SectionCard title="Required Actions" icon="⚠">
+        <SectionCard title="Required Actions" >
           <div className="space-y-2 text-[11px] text-muted-foreground leading-[1.55]">
             {band === 'Fragile' ? (<>
               <div>• <strong className="text-foreground">Apply significant premium loading</strong> — Mandatory · structural risk exceeds standard pricing</div>
@@ -461,10 +461,10 @@ export function InsuranceDecision() {
 
 
 
-      <SectionDivider title="Coverage Conditions" icon="📋" subtitle="Underwriting conditions, anti-stacking, and reinsurance" />
+      <SectionDivider title="Coverage Conditions"  subtitle="Underwriting conditions, anti-stacking, and reinsurance" />
 
       {/* ═══ 12. UNDERWRITING CONDITIONS (numbered) ═══ */}
-      <SectionCard title="Underwriting Conditions for AI Coverage" icon="📋" subtitle="Required structural conditions before standard terms apply.">
+      <SectionCard title="Underwriting Conditions for AI Coverage"  subtitle="Required structural conditions before standard terms apply.">
         <div className="space-y-3">
           {[
             { num: 1, title: 'Implement quarterly AI re-authorisation cadence', status: 'MANDATORY', statusColor: 'bg-fragile text-foreground', desc: 'Each deployed AI system must undergo formal re-authorisation at least quarterly. Performance-based continuation is not acceptable as a governance standard. Re-authorisation must include explicit sign-off from a named human with stop authority.' },
@@ -537,7 +537,7 @@ export function InsuranceDecision() {
       </div>
 
       {/* ═══ 16. UNDERWRITING DECISION LOG ═══ */}
-      <SectionCard title="Underwriting Decision Log — Full Audit Trail" icon="📋" subtitle="Chronological record of all underwriting signals and decisions.">
+      <SectionCard title="Underwriting Decision Log — Full Audit Trail"  subtitle="Chronological record of all underwriting signals and decisions.">
         <div className="space-y-3">
           {[
             { num: 1, time: 'T+0', title: 'Exposure Analysis submitted', status: 'COMPLETE', statusColor: 'bg-stable text-foreground', desc: `${inputs.companyName || 'Entity'} · ${inputs.industry} · ${inputs.useCases?.length || 0} AI use cases · ${inputs.providers?.length || 0} provider dependencies` },
@@ -564,7 +564,7 @@ export function InsuranceDecision() {
         </div>
       </SectionCard>
 
-      <SectionDivider title="Market Position & Portfolio" icon="🌍" subtitle="Market context, portfolio exposure, and provider dependency" />
+      <SectionDivider title="Market Position & Portfolio"  subtitle="Market context, portfolio exposure, and provider dependency" />
 
       {/* ═══ 17. WHAT THE MARKET SEES ═══ */}
       <div className="bg-card border border-border rounded-lg p-7 mb-5">
@@ -892,7 +892,7 @@ export function InsuranceDecision() {
         </div>
       </div>
 
-      <SectionDivider title="Premium Calculator" icon="💰" subtitle="Interactive actuarial pricing with coverage and deductible options" />
+      <SectionDivider title="Premium Calculator"  subtitle="Interactive actuarial pricing with coverage and deductible options" />
 
       {/* ═══ PREMIUM CALCULATOR ═══ */}
       <div className="bg-card border-2 border-primary/30 rounded-lg p-4 sm:p-6 mb-4">
