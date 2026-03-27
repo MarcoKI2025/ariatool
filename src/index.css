@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,32 +6,62 @@
 
 @layer base {
   :root {
-    /* ═══ CLEAN WHITE DASHBOARD TOKENS ═══ */
-    --bg: 220 14% 96%;        /* #f4f5f7 — cool light grey */
-    --sf: 0 0% 100%;           /* #ffffff — pure white cards */
-    --s2: 220 10% 95%;         /* #f1f2f4 — subtle bg */
-    --s3: 220 8% 91%;          /* #e6e8eb — muted bg */
-    --bd: 220 9% 89%;          /* #e1e4e8 — light border */
-    --bd2: 220 7% 80%;         /* #c8ccd2 */
-    --tx: 220 20% 16%;         /* #1e2430 — deep text */
-    --t2: 220 8% 46%;          /* #6b7280 — secondary text */
-    --t3: 220 6% 60%;          /* #93969e — tertiary text */
+    --bg:        220 13% 95%;
+    --sf:        0 0% 100%;
+    --s2:        220 10% 97%;
+    --s3:        220 8% 93%;
+    --bd:        220 10% 88%;
+    --bd2:       220 8% 82%;
+    --tx:        215 28% 17%;
+    --t2:        215 14% 42%;
+    --t3:        215 10% 62%;
+    --ink:       215 55% 23%;
+    --primary:   214 72% 38%;
+    --primary-light: 214 65% 50%;
+    --primary-bg:    214 60% 96%;
+    --primary-border: 214 40% 82%;
+    --stable:    158 45% 32%;
+    --stable-bg: 158 30% 96%;
+    --stable-border: 158 25% 80%;
+    --sensitive:  36 75% 35%;
+    --sensitive-bg: 36 55% 96%;
+    --sensitive-border: 36 45% 78%;
+    --fragile:   355 60% 38%;
+    --fragile-bg: 355 45% 97%;
+    --fragile-border: 355 35% 82%;
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'DM Mono', 'IBM Plex Mono', monospace;
+    --radius: 0.375rem;
+    --radius-lg: 0.5rem;
+    --shadow-card:   0 1px 2px rgba(0,0,0,0.05), 0 1px 4px rgba(0,0,0,0.04);
+    --shadow-raised: 0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    --nav:           215 30% 14%;
+    --nav-fg:        215 15% 75%;
+    --nav-fg-active: 0 0% 100%;
+    --nav-border:    215 25% 20%;
+    --nav-active-bg: 215 45% 22%;
+    --nav-hover-bg:  215 25% 18%;
+    --nav-label:     215 12% 50%;
 
-    /* Strategic semantic colors */
-    --red: 4 72% 46%;          /* #c9392a */
-    --rb: 4 50% 97%;           /* #fef3f1 */
-    --rbr: 4 35% 86%;          /* #edc4bd */
-    --amb: 32 90% 38%;         /* #b87400 */
-    --ab: 38 70% 97%;          /* #fef9ee */
-    --abr: 38 45% 78%;         /* #dfc98e */
-    --grn: 152 55% 30%;        /* #227a44 */
-    --gb: 150 30% 96%;         /* #eff7f2 */
-    --gbr: 150 25% 78%;        /* #a8d2b8 */
-    --blu: 210 55% 34%;        /* #275a85 */
-    --bb: 210 40% 96%;         /* #edf2f8 */
-    --pur: 225 60% 50%;        /* #3366cc — professional blue */
-    --pb: 225 50% 97%;         /* #eef2fb */
-    --pbr: 225 30% 82%;        /* #b3c0da */
+    /* Legacy aliases for existing CSS classes */
+    --red: var(--fragile);
+    --rb: var(--fragile-bg);
+    --rbr: var(--fragile-border);
+    --amb: var(--sensitive);
+    --ab: var(--sensitive-bg);
+    --abr: var(--sensitive-border);
+    --grn: var(--stable);
+    --gb: var(--stable-bg);
+    --gbr: var(--stable-border);
+    --blu: 210 55% 34%;
+    --bb: 210 40% 96%;
+    --pur: var(--primary);
+    --pb: var(--primary-bg);
+    --pbr: var(--primary-border);
+    --purple: var(--primary);
+    --purple-light: var(--primary-light);
+    --purple-bg: var(--primary-bg);
+    --purple-border: var(--primary-border);
 
     /* Mapped to Tailwind tokens */
     --background: var(--bg);
@@ -40,74 +70,47 @@
     --card-foreground: var(--tx);
     --popover: var(--sf);
     --popover-foreground: var(--tx);
-    --primary: var(--pur);
     --primary-foreground: 0 0% 100%;
     --secondary: var(--s2);
     --secondary-foreground: var(--t2);
     --muted: var(--s3);
     --muted-foreground: var(--t3);
-    --accent: var(--pur);
-    --accent-foreground: 0 0% 100%;
-    --destructive: var(--red);
+    --accent: var(--primary-bg);
+    --accent-foreground: var(--primary);
+    --destructive: var(--fragile);
     --destructive-foreground: 0 0% 100%;
     --border: var(--bd);
     --input: var(--bd2);
-    --ring: var(--pur);
-    --radius: 0.5rem;
+    --ring: var(--primary);
 
-    /* Light chrome — sidebar + header */
-    --nav: 0 0% 100%;             /* white sidebar */
-    --chrome-bg: 0 0% 100%;       /* white */
-    --chrome-bg-hover: 220 14% 96%;
-    --chrome-bg-active: 225 40% 96%;
-    --chrome-fg: 220 8% 46%;      /* #6b7280 — body text */
-    --chrome-fg-bright: 220 20% 16%; /* #1e2430 — headings */
-    --chrome-fg-muted: 220 6% 60%;   /* #93969e — labels */
-    --chrome-border: 220 9% 89%;     /* light border */
-    --chrome-accent: 225 60% 50%;
+    /* Chrome aliases (legacy) */
+    --chrome-bg: var(--sf);
+    --chrome-bg-hover: var(--s2);
+    --chrome-bg-active: var(--primary-bg);
+    --chrome-fg: var(--t2);
+    --chrome-fg-bright: var(--tx);
+    --chrome-fg-muted: var(--t3);
+    --chrome-border: var(--bd);
+    --chrome-accent: var(--primary);
 
-    /* Status tokens */
-    --stable: var(--grn);
-    --stable-bg: var(--gb);
-    --stable-border: var(--gbr);
-    --sensitive: var(--amb);
-    --sensitive-bg: var(--ab);
-    --sensitive-border: var(--abr);
-    --fragile: var(--red);
-    --fragile-bg: var(--rb);
-    --fragile-border: var(--rbr);
-
-    /* Accent */
-    --purple: var(--pur);
-    --purple-light: 225 55% 58%;
-    --purple-bg: var(--pb);
-    --purple-border: var(--pbr);
-
-    /* Fonts */
-    --font-mono: 'IBM Plex Mono', monospace;
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-
-    /* Clean shadows */
-    --shadow-card: 0 1px 3px rgba(0,0,0,0.04);
-    --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.06);
-    --shadow-elevated: 0 8px 30px rgba(0,0,0,0.08);
-
-    /* Deep-tech glassmorphism tokens */
+    /* Glass tokens (legacy for BETA modules) */
     --glass-purple: 262 80% 50%;
     --glass-purple-light: 262 70% 65%;
     --glass-bg: 262 50% 98%;
     --glass-border: 262 30% 85%;
     --shadow-chrome: 0 1px 3px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.06);
+    --shadow-elevated: 0 8px 30px rgba(0,0,0,0.08);
 
     /* Sidebar */
     --sidebar-background: var(--nav);
-    --sidebar-foreground: var(--chrome-fg);
-    --sidebar-primary: 225 60% 50%;
+    --sidebar-foreground: var(--nav-fg);
+    --sidebar-border: var(--nav-border);
+    --sidebar-primary: var(--primary);
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: var(--chrome-bg-active);
-    --sidebar-accent-foreground: var(--chrome-fg-bright);
-    --sidebar-border: var(--chrome-border);
-    --sidebar-ring: var(--pur);
+    --sidebar-accent: var(--nav-active-bg);
+    --sidebar-accent-foreground: var(--nav-fg-active);
+    --sidebar-ring: var(--primary);
   }
 
   /* Dark mode */
@@ -151,10 +154,49 @@
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
     font-size: 14px;
-    line-height: 1.55;
+    line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.006em;
+  }
+}
+
+@layer components {
+  .label-xs {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: hsl(var(--t3));
+  }
+  .label-sm {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: hsl(var(--t2));
+  }
+  .metric-value {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 14px;
+  }
+  .section-divider span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: hsl(var(--t3));
+    white-space: nowrap;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: hsl(var(--bd));
   }
 }
 
