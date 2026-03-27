@@ -1,5 +1,79 @@
 import { Band, DecisionClass, AFIComponents, AnalysisResults, ExposureInputs, FrameDriftAlert } from './types';
-import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, DEFAULT_ELASTICITIES } from './constants';
+import { AFI_STABLE_MAX, AFI_SENSITIVE_MAX, SECTOR_MULTIPLIERS, SIZE_MULTIPLIERS, REVENUE_MULTIPLIERS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT, DEFAULT_ELASTICITIES, PROVIDERS } from './constants';
+
+// ============================================================================
+// PORTFOLIO ACCUMULATION SCORE (PAS)
+// ============================================================================
+
+export interface PortfolioAccumulationResult {
+  pas: number;
+  sdr: number;
+  mcs: number;
+  cAFI: number;
+  accumulationBand: 'Low' | 'Elevated' | 'Critical' | 'Systemic';
+  dominantProvider: string | null;
+  sharedProviderCount: number;
+}
+
+export function computePortfolioAccumulation(
+  entities: { inputs: ExposureInputs; afi: number; weight: number }[]
+): PortfolioAccumulationResult {
+  if (entities.length === 0) {
+    return { pas: 0, sdr: 0, mcs: 0, cAFI: 0, accumulationBand: 'Low', dominantProvider: null, sharedProviderCount: 0 };
+  }
+
+  // SDR: Shared Dependency Ratio
+  const providerCounts: Record<string, number> = {};
+  for (const entity of entities) {
+    for (const p of entity.inputs.providers) {
+      providerCounts[p] = (providerCounts[p] || 0) + 1;
+    }
+  }
+  const entitiesSharingProvider = new Set<number>();
+  for (let i = 0; i < entities.length; i++) {
+    for (const p of entities[i].inputs.providers) {
+      if (providerCounts[p] > 1) { entitiesSharingProvider.add(i); break; }
+    }
+  }
+  const sdr = entities.length > 1 ? entitiesSharingProvider.size / entities.length : 0;
+
+  // MCS: Model Concentration Score
+  const mcs = entities.reduce((sum, e) => sum + e.inputs.modelConcentration, 0) / entities.length / 5;
+
+  // cAFI: Correlated AFI
+  const totalWeight = entities.reduce((s, e) => s + e.weight, 0) || 1;
+  const weightedAFI = entities.reduce((s, e) => s + e.afi * (e.weight / totalWeight), 0);
+  const cAFI = parseFloat((weightedAFI * (1 + sdr)).toFixed(2));
+
+  // PAS
+  const pas = Math.min(100, Math.round((sdr * 40) + (mcs * 30) + (cAFI / 3.0 * 30)));
+
+  const accumulationBand: PortfolioAccumulationResult['accumulationBand'] =
+    pas >= 75 ? 'Systemic' : pas >= 50 ? 'Critical' : pas >= 25 ? 'Elevated' : 'Low';
+
+  // Dominant provider
+  let dominantProvider: string | null = null;
+  const threshold = entities.length * 0.5;
+  for (const [provider, count] of Object.entries(providerCounts)) {
+    if (count >= threshold) { dominantProvider = provider; break; }
+  }
+
+  return { pas, sdr, mcs, cAFI, accumulationBand, dominantProvider, sharedProviderCount: entitiesSharingProvider.size };
+}
+
+// ============================================================================
+// CASCADE AMPLIFICATION INDEX (CAI) — standalone
+// ============================================================================
+
+export function computeCAI(inputs: ExposureInputs): number {
+  return Math.round(Math.min(100,
+    (inputs.integrationDepth / 5) * 30 +
+    (inputs.actionDensity / 5) * 25 +
+    (inputs.multiAgent / 5) * 20 +
+    (inputs.toolCallAuthority / 5) * 15 +
+    ((6 - inputs.humanCheckpoints) / 5) * 10
+  ));
+}
 
 export function calcAFI(
   dr: number, jd: number, rc: number, cd: number, na: number,
@@ -229,6 +303,15 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
   const { rfsi, rfsiTier, rfsiLabel, rfsiDrivers } = computeRFSI(components, mdrNorm, false);
   const frameDriftAlerts = computeFrameDriftAlerts(components, band, inputs);
 
+  // Cascade Amplification Index (CAI)
+  const cai = Math.round(Math.min(100,
+    (inputs.integrationDepth / 5) * 30 +
+    (inputs.actionDensity / 5) * 25 +
+    (inputs.multiAgent / 5) * 20 +
+    (inputs.toolCallAuthority / 5) * 15 +
+    ((6 - inputs.humanCheckpoints) / 5) * 10
+  ));
+
   return {
     afi,
     band,
@@ -236,14 +319,12 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     ses,
     components,
     decisionClass: getDecisionClass(band),
-    // Qualitative loss envelope bands
     lossEnvelope: {
       expected: exposureBand.label,
       stress: afi < 0.85 ? 'Elevated Exposure' : 'Critical Exposure',
       tail: afi < 1.35 ? 'Critical Exposure' : 'Systemic Exposure',
       portfolio: 'Systemic Exposure',
     },
-    // Qualitative amplification description
     amplificationFactor: 'Significant non-linear amplification — not fully captured in traditional models',
     correlationFactor: parseFloat(cf.toFixed(2)),
     eciTier,
@@ -252,7 +333,6 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     alri,
     scri,
     compositeRiskIndex,
-    // Qualitative premium band
     premium: {
       band: band === 'Fragile' ? 'Critical' : band === 'Sensitive' ? 'Elevated' : 'Base',
       label: band === 'Fragile' ? 'Elevated financial exposure — Band: Critical' : band === 'Sensitive' ? 'Elevated financial exposure — Band: Elevated' : 'Standard exposure — Band: Base',
@@ -265,6 +345,7 @@ export function computeFullAnalysis(inputs: ExposureInputs): AnalysisResults {
     rfsiLabel,
     rfsiDrivers,
     frameDriftAlerts,
+    cai,
   };
 }
 

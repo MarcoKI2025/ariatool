@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useApp } from '@/hooks/useAppState';
-import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalysis } from '@/lib/scoring';
+import { calcAFI, getBand, computeAFIComponents, getBandClass, computeFullAnalysis, computePortfolioAccumulation, computeCAI } from '@/lib/scoring';
 import { ExposureInputs } from '@/lib/types';
 import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/lib/constants';
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
@@ -9,10 +9,12 @@ import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
 import { DependencyNetwork } from './DependencyNetwork';
+import { SilentAIDetector } from './SilentAIDetector';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
 import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface PortfolioEntity {
   id: string;
@@ -125,6 +127,21 @@ export function PortfolioView() {
     [normalizedEntities.map(e => JSON.stringify(e.inputs)).join(',')]
   );
 
+  // Portfolio Accumulation Score
+  const accumulation = useMemo(() => {
+    const pasEntities = normalizedEntities.map(e => {
+      const { afi } = computeEntityAFI(e.inputs);
+      return { inputs: e.inputs, afi, weight: e.weight };
+    });
+    return computePortfolioAccumulation(pasEntities);
+  }, [normalizedEntities.map(e => JSON.stringify(e.inputs) + e.weight).join(',')]);
+
+  // Average CAI across entities
+  const avgCAI = useMemo(() => {
+    const total = normalizedEntities.reduce((sum, e) => sum + computeCAI(e.inputs), 0);
+    return Math.round(total / normalizedEntities.length);
+  }, [normalizedEntities.map(e => JSON.stringify(e.inputs)).join(',')]);
+
   const avgCorrelation = entityEvolutions.reduce((s, e) => s + e.systemicCorrelationScore, 0) / entityEvolutions.length;
   const avgCascade = entityEvolutions.reduce((s, e) => s + e.cascadeRiskScore, 0) / entityEvolutions.length;
   const worstInsurability = entityEvolutions.reduce((worst, e) => {
@@ -133,7 +150,6 @@ export function PortfolioView() {
   }, entityEvolutions[0]);
   const hiddenCorrelationCount = entityEvolutions.filter(e => e.systemicDetail.hiddenCorrelation).length;
 
-  // Portfolio-level risk label
   const portfolioRiskLevel =
     worstInsurability.insurabilityStatus === 'Uninsurable' || avgCascade > 0.6 ? 'SYSTEMIC' :
     worstInsurability.insurabilityStatus === 'Critical' || avgCorrelation > 0.6 ? 'ELEVATED' :
@@ -151,11 +167,18 @@ export function PortfolioView() {
   const riskColor = levelColor(portfolioRiskLevel === 'SYSTEMIC' ? 'Critical' : portfolioRiskLevel === 'ELEVATED' ? 'Elevated' : portfolioRiskLevel === 'MODERATE' ? 'Sensitive' : 'Stable');
   const riskBg = levelBg(portfolioRiskLevel === 'SYSTEMIC' ? 'Critical' : portfolioRiskLevel === 'ELEVATED' ? 'Elevated' : portfolioRiskLevel === 'MODERATE' ? 'Sensitive' : 'Stable');
 
-  // Worst case impact
   const worstTailRisk = Math.max(...entityEvolutions.map(e => e.economicLoss.tailRisk));
-
-  // Solvency stable count
   const stableCount = normalizedEntities.filter(e => computeEntityAFI(e.inputs).band === 'Stable').length;
+
+  // PAS color helpers
+  const pasColor = accumulation.pas >= 75 ? 'text-fragile' : accumulation.pas >= 50 ? 'text-fragile' : accumulation.pas >= 25 ? 'text-sensitive' : 'text-stable';
+  const pasBg = accumulation.pas >= 75 ? 'bg-fragile' : accumulation.pas >= 50 ? 'bg-fragile' : accumulation.pas >= 25 ? 'bg-sensitive' : 'bg-stable';
+  const pasBandBg = accumulation.pas >= 75 ? 'bg-fragile-bg border-fragile-border' : accumulation.pas >= 50 ? 'bg-fragile-bg border-fragile-border' : accumulation.pas >= 25 ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
+
+  const avgAFI = normalizedEntities.reduce((s, e) => {
+    const { afi } = computeEntityAFI(e.inputs);
+    return s + afi * e.normalizedWeight;
+  }, 0);
 
   return (
     <div className="space-y-6 max-w-5xl">
@@ -182,9 +205,13 @@ export function PortfolioView() {
 
       <UseRestrictionBanner />
 
-      {/* ══════════════════════════════════════════════════
-          STEP 1: TOP SUMMARY — Portfolio Risk Statement
-          ══════════════════════════════════════════════════ */}
+      <Tabs defaultValue="portfolio" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="portfolio">Portfolio Risk</TabsTrigger>
+          <TabsTrigger value="silent">Silent AI Detector</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="portfolio" className="space-y-6">
       <div className={`rounded-xl border-2 p-6 ${riskBg}`}>
         <div className="flex items-center gap-2 mb-2">
           <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground">Portfolio Risk:</span>
@@ -349,6 +376,89 @@ export function PortfolioView() {
       </div>
 
       {/* ══════════════════════════════════════════════════
+          ACCUMULATION RISK ENGINE
+          ══════════════════════════════════════════════════ */}
+      <div className="flex items-center gap-3 mb-1">
+        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Accumulation Risk Engine</span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
+
+      <div className={`rounded-xl border-2 p-6 ${pasBandBg}`}>
+        {/* PAS Gauge */}
+        <div className="flex items-center gap-4 mb-4">
+          <div>
+            <div className="text-[9px] font-bold tracking-[0.1em] uppercase text-muted-foreground mb-1">Portfolio Accumulation Score</div>
+            <div className={`text-[36px] font-extrabold font-mono ${pasColor}`}>{accumulation.pas}</div>
+          </div>
+          <div className="flex-1">
+            <div className="h-4 bg-border rounded-full overflow-hidden">
+              <div className={`h-full rounded-full transition-all ${pasBg}`} style={{ width: `${accumulation.pas}%` }} />
+            </div>
+            <div className="flex justify-between mt-1 text-[8px] text-muted-foreground">
+              <span>Low</span><span>Elevated</span><span>Critical</span><span>Systemic</span>
+            </div>
+          </div>
+          <div className={`px-3 py-1.5 rounded-lg text-[11px] font-bold ${pasBandBg} ${pasColor}`}>
+            {accumulation.accumulationBand}
+          </div>
+        </div>
+
+        {/* Sub-metrics: 4-column grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Provider Overlap</div>
+            <div className={`text-[20px] font-extrabold font-mono ${accumulation.sdr > 0.6 ? 'text-fragile' : accumulation.sdr > 0.3 ? 'text-sensitive' : 'text-stable'}`}>{Math.round(accumulation.sdr * 100)}%</div>
+            <div className="text-[9px] text-muted-foreground">Shared Dependency Ratio</div>
+          </div>
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Model Homogeneity</div>
+            <div className={`text-[20px] font-extrabold font-mono ${accumulation.mcs > 0.6 ? 'text-fragile' : accumulation.mcs > 0.3 ? 'text-sensitive' : 'text-stable'}`}>{Math.round(accumulation.mcs * 100)}</div>
+            <div className="text-[9px] text-muted-foreground">Model Concentration Score</div>
+          </div>
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Correlated Portfolio AFI</div>
+            <div className={`text-[20px] font-extrabold font-mono ${accumulation.cAFI > 1.35 ? 'text-fragile' : accumulation.cAFI > 0.85 ? 'text-sensitive' : 'text-stable'}`}>{accumulation.cAFI.toFixed(2)}</div>
+            <div className="text-[9px] text-muted-foreground">Accumulation-adjusted AFI</div>
+          </div>
+          <div className="bg-card/50 rounded-lg p-3">
+            <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Avg Cascade Index</div>
+            <div className={`text-[20px] font-extrabold font-mono ${avgCAI >= 60 ? 'text-fragile' : avgCAI >= 30 ? 'text-sensitive' : 'text-stable'}`}>{avgCAI}</div>
+            <div className="text-[9px] text-muted-foreground">CAI across entities</div>
+          </div>
+        </div>
+
+        {/* Dominant Provider Alert */}
+        {accumulation.dominantProvider && (
+          <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <span className="text-[18px]">⚠️</span>
+              <div className="text-[12px] font-bold text-fragile leading-relaxed">
+                {accumulation.dominantProvider} is a single point of failure — used by {accumulation.sharedProviderCount} of {entities.length} cedants. A single outage may trigger simultaneous claims across your portfolio.
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* High CAI Warning */}
+        {avgCAI >= 60 && (
+          <div className="bg-sensitive-bg border border-sensitive rounded-xl p-4 mb-4">
+            <div className="text-[11px] font-bold text-sensitive">
+              ⚠ High cascade potential — a failure in one entity's AI system may propagate rapidly across operationally connected cedants.
+            </div>
+          </div>
+        )}
+
+        {/* Accumulation Narrative */}
+        <div className="text-[12px] text-foreground leading-relaxed">
+          Your portfolio of <strong>{entities.length}</strong> entities shows <strong className={pasColor}>{accumulation.accumulationBand.toLowerCase()}</strong> accumulation risk.{' '}
+          {Math.round(accumulation.sdr * 100)}% share at least one AI provider, creating correlated exposure.{' '}
+          The correlation-adjusted AFI of <strong className="font-mono">{accumulation.cAFI.toFixed(2)}</strong>{' '}
+          {accumulation.cAFI > avgAFI ? 'exceeds' : 'is close to'} the simple weighted average of <strong className="font-mono">{avgAFI.toFixed(2)}</strong>,{' '}
+          indicating {accumulation.cAFI > avgAFI * 1.2 ? 'severe' : accumulation.cAFI > avgAFI * 1.05 ? 'significant' : 'low'} hidden concentration.
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════
           STEP 5: UNDERWRITING IMPACT
           ══════════════════════════════════════════════════ */}
       <div className="flex items-center gap-3 mb-1">
@@ -467,6 +577,18 @@ export function PortfolioView() {
 
         </CollapsibleContent>
       </Collapsible>
+
+        </TabsContent>
+
+        <TabsContent value="silent" className="space-y-6">
+          <div className="bg-card border border-border rounded-xl p-6">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Silent AI Exposure Analysis</div>
+            <h2 className="text-[16px] font-bold text-foreground mb-1">Silent AI Exposure Detector</h2>
+            <p className="text-[11px] text-muted-foreground mb-4">Estimate how much AI risk may already exist in your conventional book of business without explicit recognition.</p>
+            <SilentAIDetector />
+          </div>
+        </TabsContent>
+      </Tabs>
 
       <StepNavigation currentStep={7} />
       <AppFooter />

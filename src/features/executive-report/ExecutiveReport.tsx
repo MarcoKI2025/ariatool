@@ -9,6 +9,7 @@ import { calculatePeerComparison, getRankingLabel, getRankingColor } from '@/lib
 import { toast } from 'sonner';
 import { AnalysisResults, ExposureInputs } from '@/lib/types';
 import { computeEvolutionAnalysis, EvolutionAnalysis } from '@/lib/evolutionEngine';
+import { exportToStructuredJSON, exportToCSV, generateAPIPayload } from '@/lib/exportFormats';
 import { UseRestrictionBanner } from '@/components/shared/UseRestrictionBanner';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
@@ -521,6 +522,53 @@ export function ExecutiveReport() {
           <button onClick={() => exportORSA(results, inputs)} className="px-5 py-2.5 border border-border rounded-lg text-[13px] font-semibold text-foreground hover:bg-secondary transition-colors">
             📄 Export ORSA Section
           </button>
+        </div>
+        <div className="mt-4 pt-4 border-t border-border">
+          <div className="text-[11px] font-bold text-foreground mb-2">Data Export (External Systems)</div>
+          <div className="flex gap-3 flex-wrap">
+            <div className="flex flex-col items-start">
+              <button onClick={() => {
+                const json = exportToStructuredJSON(inputs, results);
+                const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = `aria-${(inputs.companyName || 'entity').replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.json`; a.click();
+                URL.revokeObjectURL(url);
+                toast.success('Structured JSON exported');
+              }} className="px-4 py-2 border border-border rounded-lg text-[12px] font-semibold text-foreground hover:bg-secondary transition-colors">
+                📦 Export JSON (Structured)
+              </button>
+              <span className="text-[9px] text-muted-foreground mt-1">For risk model integration</span>
+            </div>
+            <div className="flex flex-col items-start">
+              <button onClick={() => {
+                const csvData = exportToCSV([{
+                  name: inputs.companyName || 'Entity',
+                  inputs,
+                  afi: results.afi,
+                  band: results.band,
+                  weight: 100,
+                }]);
+                const blob = new Blob([csvData], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = `aria-portfolio-${Date.now()}.csv`; a.click();
+                URL.revokeObjectURL(url);
+                toast.success('CSV exported');
+              }} className="px-4 py-2 border border-border rounded-lg text-[12px] font-semibold text-foreground hover:bg-secondary transition-colors">
+                📊 Export CSV (Portfolio)
+              </button>
+              <span className="text-[9px] text-muted-foreground mt-1">For Excel / internal models</span>
+            </div>
+            <div className="flex flex-col items-start">
+              <button onClick={() => {
+                const payload = generateAPIPayload(inputs, results);
+                navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+                toast.success('API payload copied to clipboard');
+              }} className="px-4 py-2 border border-border rounded-lg text-[12px] font-semibold text-foreground hover:bg-secondary transition-colors">
+                🔗 Copy API Payload
+              </button>
+              <span className="text-[9px] text-muted-foreground mt-1">For API demonstration</span>
+            </div>
+          </div>
         </div>
       </div>
 

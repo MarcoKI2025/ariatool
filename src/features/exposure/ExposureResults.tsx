@@ -336,11 +336,12 @@ export function ExposureResults() {
           </div>
 
           {/* AGRI / ALRI / SCRI */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {[
               { icon: '⚡', label: 'AGRI — Agentic Risk', score: agri, tier: agriTier, color: agriColor, desc: 'Multi-agent orchestration · Tool-call authority · Persistent memory', tooltip: TOOLTIPS.agri },
               { icon: '⚠', label: 'ALRI — Liability Risk', score: alri, tier: alriTier, color: alriColor, desc: 'Hallucination · Deepfake · Prompt injection · Model drift · Bias', tooltip: TOOLTIPS.alri },
               { icon: '🌐', label: 'SCRI — Systemic Concentration', score: scri, tier: scriTier, color: scriColor, desc: 'Cloud · Model · GPU provider concentration risk', tooltip: TOOLTIPS.scri },
+              { icon: '🔗', label: 'CAI — Cascade Amplification', score: results.cai, tier: results.cai >= 60 ? 'Cascading' : results.cai >= 30 ? 'Amplifying' : 'Contained', color: results.cai >= 60 ? 'text-fragile' : results.cai >= 30 ? 'text-sensitive' : 'text-stable', desc: results.cai >= 60 ? 'Failure propagates rapidly across connected systems with non-linear amplification.' : results.cai >= 30 ? 'Moderate cascade potential — containment possible but not guaranteed.' : 'Failure modes are contained with limited propagation potential.', tooltip: 'Cascade Amplification Index — measures how fast failure propagates across connected AI systems. Based on integration depth, action density, multi-agent orchestration, tool authority, and human checkpoint density.' },
             ].map((panel, i) => (
               <div key={i} className="bg-card border border-border rounded-[10px] p-4">
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{panel.icon} {panel.label}<InfoTip text={panel.tooltip} /></div>
