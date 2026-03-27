@@ -14,13 +14,11 @@ import { RealCaseAlert } from '@/features/demo/RealCaseFactsCard';
 import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-interface PortfolioEntity {
-  id: string;
-  name: string;
-  inputs: ExposureInputs;
-  weight: number;
-}
+import { Button } from '@/components/ui/button';
+import { DEMO_INSUREDS, DEMO_PORTFOLIO_METRICS } from '@/data/demoScenario';
+import { analyzePortfolioImpact, type PortfolioEntity } from '@/lib/portfolioImpact';
+import { ComparativeDecisionPanel } from '@/features/demo/ComparativeDecisionPanel';
+import { PlayCircle, AlertTriangle } from 'lucide-react';
 
 // ═══════════════════════════════════════════════════════════════
 // HELPERS
@@ -76,13 +74,40 @@ export function PortfolioView() {
     { id: '3', name: 'Client C', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 34 },
   ]);
 
+  const [demoMode, setDemoMode] = useState(false);
+  const [showComparative, setShowComparative] = useState(false);
+  const [selectedEntityForComparison, setSelectedEntityForComparison] = useState<string | null>(null);
+
+  const loadDemoScenario = () => {
+    setEntities(DEMO_INSUREDS.map(insured => ({
+      id: insured.id,
+      name: insured.name,
+      inputs: insured.inputs,
+      weight: insured.weight,
+    })));
+    setDemoMode(true);
+    setShowComparative(false);
+    setSelectedEntityForComparison(null);
+  };
+
+  const resetToDefault = () => {
+    setEntities([
+      { id: '1', name: hasAnalysis && analysisInputs.companyName ? analysisInputs.companyName : 'Client A', inputs: hasAnalysis ? { ...analysisInputs } : { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
+      { id: '2', name: 'Client B', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
+      { id: '3', name: 'Client C', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 34 },
+    ]);
+    setDemoMode(false);
+    setShowComparative(false);
+    setSelectedEntityForComparison(null);
+  };
+
   useEffect(() => {
-    if (hasAnalysis) {
+    if (hasAnalysis && !demoMode) {
       setEntities(prev => prev.map((e, i) =>
         i === 0 ? { ...e, name: analysisInputs.companyName || e.name, inputs: { ...analysisInputs } } : e
       ));
     }
-  }, [hasAnalysis, analysisInputs]);
+  }, [hasAnalysis, analysisInputs, demoMode]);
 
   const addEntity = () => {
     const newId = Date.now().toString();
@@ -186,11 +211,44 @@ export function PortfolioView() {
       {/* Header */}
       <div className="mb-6">
         <div className="label-xs mb-1.5">Step 7 of 11 · Portfolio Intelligence</div>
-        <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
-        <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed mt-1">
-          Multi-entity aggregation and systemic risk assessment across your portfolio.
-        </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
+            <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed mt-1">
+              Multi-entity aggregation and systemic risk assessment across your portfolio.
+            </p>
+          </div>
+          <div className="flex gap-2 flex-shrink-0">
+            {!demoMode ? (
+              <Button onClick={loadDemoScenario} variant="outline" size="sm" className="gap-1.5 text-xs">
+                <PlayCircle size={14} />
+                Load Demo Scenario
+              </Button>
+            ) : (
+              <Button onClick={resetToDefault} variant="ghost" size="sm" className="text-xs">
+                Reset Portfolio
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
+
+      {/* Demo Mode Banner */}
+      {demoMode && (
+        <div className="rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle size={18} className="text-primary flex-shrink-0 mt-0.5" />
+            <div>
+              <div className="text-[13px] font-bold text-foreground">Demo Mode Active: 30-Insured Portfolio</div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed mt-1">
+                This scenario demonstrates accumulation risk via shared GPT-4/Azure dependency across 30 insureds
+                (10 FinTech, 10 HealthTech, 10 Logistics). Critical case: Insured #23 (LendFlow Pro) —
+                AI-driven loan approval system with high autonomy, low reversibility.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Tabs defaultValue="portfolio" className="w-full">
         <TabsList className="mb-4">
@@ -361,6 +419,94 @@ export function PortfolioView() {
           );
         })}
       </div>
+
+      {/* ══════════════════════════════════════════════════
+          CRITICAL ENTITY ANALYSIS (Demo Mode Only)
+          ══════════════════════════════════════════════════ */}
+      {demoMode && (
+        <>
+          <div className="flex items-center gap-3 mb-1">
+            <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Critical Entity Analysis</span>
+            <div className="flex-1 h-px bg-border" />
+          </div>
+
+          <div className="rounded-lg border-2 border-fragile-border bg-fragile-bg/50 p-5 space-y-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle size={18} className="text-fragile flex-shrink-0 mt-0.5" />
+              <div>
+                <div className="text-[13px] font-bold text-fragile">Portfolio Impact Alert: Insured #23 (LendFlow Pro)</div>
+                <p className="text-[11px] text-muted-foreground leading-relaxed mt-1">
+                  This entity creates structural portfolio fragility via high autonomy, low reversibility,
+                  and recursive bias amplification. Removing this entity materially improves portfolio correlation
+                  and reduces tail risk.
+                </p>
+              </div>
+            </div>
+
+            {(() => {
+              const impact = analyzePortfolioImpact(entities, '23');
+              return (
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="bg-card rounded-lg p-3 text-center border border-border">
+                    <div className="text-[9px] font-bold tracking-widest uppercase text-muted-foreground mb-1">Current Correlation</div>
+                    <div className="text-[20px] font-extrabold font-mono text-fragile">{(impact.currentCorrelation * 100).toFixed(0)}%</div>
+                    <div className="text-[9px] text-muted-foreground">With LendFlow Pro</div>
+                  </div>
+                  <div className="bg-card rounded-lg p-3 text-center border border-border">
+                    <div className="text-[9px] font-bold tracking-widest uppercase text-muted-foreground mb-1">Without Entity</div>
+                    <div className="text-[20px] font-extrabold font-mono text-stable">{(impact.withoutEntityCorrelation * 100).toFixed(0)}%</div>
+                    <div className="text-[9px] text-muted-foreground">If declined</div>
+                  </div>
+                  <div className="bg-card rounded-lg p-3 text-center border border-border">
+                    <div className="text-[9px] font-bold tracking-widest uppercase text-muted-foreground mb-1">Tail Risk Delta</div>
+                    <div className="text-[20px] font-extrabold font-mono text-sensitive">€{impact.tailRiskDelta.toFixed(1)}M</div>
+                    <div className="text-[9px] text-muted-foreground">Risk reduction</div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            <Button
+              onClick={() => { setSelectedEntityForComparison('23'); setShowComparative(true); }}
+              variant="default"
+              className="w-full"
+            >
+              View Comparative Decision Analysis for Insured #23
+            </Button>
+          </div>
+
+          {/* Comparative Decision Panel */}
+          {showComparative && selectedEntityForComparison && (() => {
+            const entity = entities.find(e => e.id === selectedEntityForComparison);
+            if (!entity) return null;
+            const { afi, band } = computeEntityAFI(entity.inputs);
+            const demoInsured = DEMO_INSUREDS.find(d => d.id === selectedEntityForComparison);
+
+            return (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Decision Comparison</span>
+                  <Button onClick={() => setShowComparative(false)} variant="ghost" size="sm" className="text-xs">Close</Button>
+                </div>
+                <ComparativeDecisionPanel
+                  entity={entity}
+                  ariaDecision={afi > 1.35 ? 'Decline' : afi > 0.85 ? 'Conditional' : 'Accept'}
+                  ariaReasoning={demoInsured?.riskFlags || [
+                    'High structural dependency detected',
+                    'Low oversight relative to autonomy level',
+                    'Portfolio correlation impact exceeds threshold',
+                  ]}
+                  ariaAFI={afi}
+                  ariaBand={band}
+                  rsiScore={8.2}
+                  tailRisk={12}
+                  premium={80000}
+                />
+              </div>
+            );
+          })()}
+        </>
+      )}
 
       {/* ══════════════════════════════════════════════════
           ACCUMULATION RISK ENGINE
