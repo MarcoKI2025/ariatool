@@ -20,36 +20,33 @@ export function AppHeader() {
   return (
     <>
       <header
-        className="h-12 flex items-center justify-between px-4 sm:px-6 flex-shrink-0"
+        className="h-10 sm:h-12 flex items-center justify-between px-3 sm:px-6 flex-shrink-0"
         style={{
           background: 'hsl(var(--sf))',
           borderBottom: '1px solid hsl(var(--bd))',
         }}
       >
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-1.5 text-[12px] min-w-0">
-          <span className="font-mono font-medium" style={{ color: 'hsl(var(--t3))' }}>
-            Step {activeStep} of 11
+        {/* Breadcrumb — compact on mobile */}
+        <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-[12px] min-w-0 overflow-hidden">
+          <span className="font-mono font-medium flex-shrink-0" style={{ color: 'hsl(var(--t3))' }}>
+            {activeStep}/11
           </span>
           <span style={{ color: 'hsl(var(--t3))' }}>·</span>
           <span className="font-semibold truncate" style={{ color: 'hsl(var(--tx))' }}>
             {title}
           </span>
           {inputs.companyName && (
-            <>
-              <span style={{ color: 'hsl(var(--t3))' }}>·</span>
-              <span className="truncate max-w-[160px]" style={{ color: 'hsl(var(--t2))' }}>
-                {inputs.companyName}
-              </span>
-            </>
+            <span className="hidden sm:inline truncate max-w-[160px]" style={{ color: 'hsl(var(--t2))' }}>
+              · {inputs.companyName}
+            </span>
           )}
         </div>
 
-        {/* Controls */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        {/* Controls — hide less important on mobile */}
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           <button
             onClick={() => setMethodologyOpen(true)}
-            className="text-[11px] px-3 py-1.5 rounded border font-medium transition-colors hover:bg-secondary"
+            className="hidden sm:inline-flex text-[11px] px-3 py-1.5 rounded border font-medium transition-colors hover:bg-secondary"
             style={{ color: 'hsl(var(--t2))', borderColor: 'hsl(var(--bd))' }}
           >
             Methodology
@@ -59,7 +56,7 @@ export function AppHeader() {
               onClick={() => {
                 if (confirm('Reset analysis? All progress will be lost.')) resetAnalysis();
               }}
-              className="text-[11px] px-3 py-1.5 rounded border font-medium transition-colors hover:bg-destructive/5 hover:text-destructive"
+              className="hidden sm:inline-flex text-[11px] px-3 py-1.5 rounded border font-medium transition-colors hover:bg-destructive/5 hover:text-destructive"
               style={{ color: 'hsl(var(--t2))', borderColor: 'hsl(var(--bd))' }}
             >
               Reset
@@ -71,13 +68,13 @@ export function AppHeader() {
               <button
                 key={p}
                 onClick={() => setPerspective(p)}
-                className="px-2.5 py-1 rounded text-[11px] font-medium transition-colors capitalize"
+                className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded text-[10px] sm:text-[11px] font-medium transition-colors capitalize"
                 style={{
                   background: perspective === p ? 'hsl(var(--primary))' : 'transparent',
                   color: perspective === p ? 'white' : 'hsl(var(--t2))',
                 }}
               >
-                {p === 'underwriter' ? 'Underwriter' : 'Company'}
+                {p === 'underwriter' ? 'UW' : 'Co.'}
               </button>
             ))}
           </div>

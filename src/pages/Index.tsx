@@ -187,7 +187,7 @@ function AppContent() {
       <div className="app-main flex-1 flex flex-col overflow-hidden min-w-0">
         <AppHeader />
         <DecisionHeader />
-        <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-3 pb-32 sm:p-6 sm:pb-32 md:p-10 md:pb-32 lg:p-14 lg:pb-32">
+        <main ref={mainRef} className="app-content flex-1 overflow-y-auto p-2 pb-24 sm:p-6 sm:pb-32 md:p-10 md:pb-32 lg:p-14 lg:pb-32">
           {renderStep()}
         </main>
       </div>

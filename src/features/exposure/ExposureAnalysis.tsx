@@ -77,36 +77,36 @@ export function ExposureAnalysis() {
   return (
     <div>
 
-      {/* Welcome banner */}
+      {/* Welcome banner — compact on mobile */}
       {!dismissedWelcome && !analysisComplete && (
-        <div className="bg-card border border-border rounded-lg p-5 mb-5">
-          <h2 className="text-[16px] font-bold text-foreground mb-1">Configure AI Risk Profile</h2>
-          <p className="text-[12px]" style={{ color: 'hsl(var(--t2))' }}>
+        <div className="bg-card border border-border rounded-lg p-3 sm:p-5 mb-3 sm:mb-5 relative">
+          <h2 className="text-[14px] sm:text-[16px] font-bold text-foreground mb-0.5 sm:mb-1">Configure AI Risk Profile</h2>
+          <p className="text-[11px] sm:text-[12px]" style={{ color: 'hsl(var(--t2))' }}>
             Complete all sections below. Results unlock after running analysis.
           </p>
-          <button onClick={() => setDismissedWelcome(true)} className="absolute top-3 right-3 text-muted-foreground hover:text-foreground text-sm" title="Dismiss">✕</button>
+          <button onClick={() => setDismissedWelcome(true)} className="absolute top-2 right-2 sm:top-3 sm:right-3 text-muted-foreground hover:text-foreground text-sm" title="Dismiss">✕</button>
         </div>
       )}
 
-      <div className="mb-6">
-        <div className="label-xs mb-1.5">Step 1 of 11 · Entry Point</div>
-        <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Exposure Analysis</h1>
-        <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed">
+      <div className="mb-3 sm:mb-6">
+        <div className="label-xs mb-1">Step 1 of 11 · Entry Point</div>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-0.5 sm:mb-1 tracking-tight">Exposure Analysis</h1>
+        <p className="text-[11px] sm:text-[13px] text-muted-foreground max-w-[580px] leading-relaxed hidden sm:block">
           Configure the AI deployment profile. All downstream outputs derive exclusively from this input.
         </p>
       </div>
 
-      {/* Analysis status */}
-      <div className={`flex items-start gap-[10px] p-[11px] px-[15px] rounded-lg mb-[18px] border transition-all ${
+      {/* Analysis status — compact on mobile */}
+      <div className={`flex items-start gap-2 sm:gap-[10px] p-2.5 sm:p-[11px] px-3 sm:px-[15px] rounded-lg mb-3 sm:mb-[18px] border transition-all ${
         analysisComplete ? 'bg-stable-bg border-stable-border' : 'bg-secondary border-border'
       }`}>
-        <div className="text-sm flex-shrink-0 mt-[1px]">{analysisComplete ? '✓' : '🔒'}</div>
+        <div className="text-xs sm:text-sm flex-shrink-0 mt-[1px]">{analysisComplete ? '✓' : '🔒'}</div>
         <div>
-          <div className={`text-[12px] font-semibold mb-[2px] ${analysisComplete ? 'text-stable' : 'text-foreground'}`}>
-            {analysisComplete ? 'Analysis complete — systemic risk model generated.' : 'Complete Exposure Analysis to unlock risk insights, scenarios, insurance decisions, and board-level outputs.'}
+          <div className={`text-[11px] sm:text-[12px] font-semibold mb-[2px] ${analysisComplete ? 'text-stable' : 'text-foreground'}`}>
+            {analysisComplete ? 'Analysis complete.' : 'Complete analysis to unlock all downstream outputs.'}
           </div>
-          <div className="text-[11px] text-secondary-foreground leading-[1.5]">
-            {analysisComplete ? 'All downstream steps are now calibrated to the submitted profile.' : 'This guided flow prevents static dashboard behaviour — every downstream signal is computed from the submitted profile, not pre-filled.'}
+          <div className="text-[10px] sm:text-[11px] text-secondary-foreground leading-[1.5] hidden sm:block">
+            {analysisComplete ? 'All downstream steps are now calibrated to the submitted profile.' : 'Every downstream signal is computed from the submitted profile, not pre-filled.'}
           </div>
         </div>
       </div>
@@ -137,13 +137,13 @@ export function ExposureAnalysis() {
         ))}
       </div>
 
-      {/* Progress bar */}
-      <div className="mb-5">
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[10px] font-medium" style={{ color: 'hsl(var(--t3))' }}>Profile completion</span>
-          <span className="text-[10px] font-mono font-bold" style={{ color: 'hsl(var(--primary))' }}>{progressIdx + 1} / 6</span>
+      {/* Progress bar — compact on mobile */}
+      <div className="mb-3 sm:mb-5">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[9px] sm:text-[10px] font-medium" style={{ color: 'hsl(var(--t3))' }}>Profile completion</span>
+          <span className="text-[9px] sm:text-[10px] font-mono font-bold" style={{ color: 'hsl(var(--primary))' }}>{progressIdx + 1} / 6</span>
         </div>
-        <div className="h-1.5 bg-border rounded-full overflow-hidden">
+        <div className="h-1 sm:h-1.5 bg-border rounded-full overflow-hidden">
           <div className="h-full rounded-full transition-all" style={{ width: `${((progressIdx + 1) / 6) * 100}%`, background: 'hsl(var(--primary))' }} />
         </div>
         <div className="hidden sm:flex justify-between mt-1">
@@ -315,17 +315,15 @@ export function ExposureAnalysis() {
       {/* Case Study Library */}
       <CaseStudyPanel />
 
-      {/* Bottom action bar */}
-      <div className="fixed bottom-0 left-0 lg:left-[260px] right-0 flex flex-col items-center gap-2 px-4 sm:px-10 py-4 sm:py-5 z-10 bg-background">
+      {/* Bottom action bar — tighter on mobile */}
+      <div className="fixed bottom-0 left-0 lg:left-[240px] right-0 flex flex-col items-center gap-1 sm:gap-2 px-3 sm:px-10 py-2.5 sm:py-5 z-10 bg-background">
         <button
           onClick={handleRunAnalysis}
-          className="w-full max-w-4xl bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white text-[13px] sm:text-[15px] font-semibold rounded-xl py-3.5 sm:py-4 px-6 sm:px-8 border-none cursor-pointer tracking-[0.01em] shadow-lg transition-all duration-200 flex items-center justify-center gap-3"
+          className="w-full max-w-4xl bg-gradient-to-r from-[hsl(250,70%,56%)] to-[hsl(250,80%,62%)] hover:from-[hsl(250,70%,50%)] hover:to-[hsl(250,80%,56%)] text-white text-[12px] sm:text-[15px] font-semibold rounded-xl py-3 sm:py-4 px-4 sm:px-8 border-none cursor-pointer tracking-[0.01em] shadow-lg transition-all duration-200 flex items-center justify-center gap-2 sm:gap-3"
         >
-          <span className="text-[14px] sm:text-[16px]">▶</span>
-          Generate AI Risk Assessment
-          <span className="ml-1">→</span>
+          Generate AI Risk Assessment →
         </button>
-        <div className="text-[10px] sm:text-[11px] text-muted-foreground tracking-[0.03em] text-center">
+        <div className="text-[9px] sm:text-[11px] text-muted-foreground tracking-[0.03em] text-center hidden sm:block">
           Computes Risk Score · Insurance Cost Range · Regulatory Signal · Board-Ready Report
         </div>
       </div>
