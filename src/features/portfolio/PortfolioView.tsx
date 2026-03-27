@@ -74,13 +74,40 @@ export function PortfolioView() {
     { id: '3', name: 'Client C', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 34 },
   ]);
 
+  const [demoMode, setDemoMode] = useState(false);
+  const [showComparative, setShowComparative] = useState(false);
+  const [selectedEntityForComparison, setSelectedEntityForComparison] = useState<string | null>(null);
+
+  const loadDemoScenario = () => {
+    setEntities(DEMO_INSUREDS.map(insured => ({
+      id: insured.id,
+      name: insured.name,
+      inputs: insured.inputs,
+      weight: insured.weight,
+    })));
+    setDemoMode(true);
+    setShowComparative(false);
+    setSelectedEntityForComparison(null);
+  };
+
+  const resetToDefault = () => {
+    setEntities([
+      { id: '1', name: hasAnalysis && analysisInputs.companyName ? analysisInputs.companyName : 'Client A', inputs: hasAnalysis ? { ...analysisInputs } : { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
+      { id: '2', name: 'Client B', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 33 },
+      { id: '3', name: 'Client C', inputs: { ...DEFAULT_INPUTS } as ExposureInputs, weight: 34 },
+    ]);
+    setDemoMode(false);
+    setShowComparative(false);
+    setSelectedEntityForComparison(null);
+  };
+
   useEffect(() => {
-    if (hasAnalysis) {
+    if (hasAnalysis && !demoMode) {
       setEntities(prev => prev.map((e, i) =>
         i === 0 ? { ...e, name: analysisInputs.companyName || e.name, inputs: { ...analysisInputs } } : e
       ));
     }
-  }, [hasAnalysis, analysisInputs]);
+  }, [hasAnalysis, analysisInputs, demoMode]);
 
   const addEntity = () => {
     const newId = Date.now().toString();
@@ -184,11 +211,44 @@ export function PortfolioView() {
       {/* Header */}
       <div className="mb-6">
         <div className="label-xs mb-1.5">Step 7 of 11 · Portfolio Intelligence</div>
-        <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
-        <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed mt-1">
-          Multi-entity aggregation and systemic risk assessment across your portfolio.
-        </p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
+            <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed mt-1">
+              Multi-entity aggregation and systemic risk assessment across your portfolio.
+            </p>
+          </div>
+          <div className="flex gap-2 flex-shrink-0">
+            {!demoMode ? (
+              <Button onClick={loadDemoScenario} variant="outline" size="sm" className="gap-1.5 text-xs">
+                <PlayCircle size={14} />
+                Load Demo Scenario
+              </Button>
+            ) : (
+              <Button onClick={resetToDefault} variant="ghost" size="sm" className="text-xs">
+                Reset Portfolio
+              </Button>
+            )}
+          </div>
+        </div>
       </div>
+
+      {/* Demo Mode Banner */}
+      {demoMode && (
+        <div className="rounded-lg border-2 border-primary/30 bg-primary/5 p-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle size={18} className="text-primary flex-shrink-0 mt-0.5" />
+            <div>
+              <div className="text-[13px] font-bold text-foreground">Demo Mode Active: 30-Insured Portfolio</div>
+              <p className="text-[11px] text-muted-foreground leading-relaxed mt-1">
+                This scenario demonstrates accumulation risk via shared GPT-4/Azure dependency across 30 insureds
+                (10 FinTech, 10 HealthTech, 10 Logistics). Critical case: Insured #23 (LendFlow Pro) —
+                AI-driven loan approval system with high autonomy, low reversibility.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Tabs defaultValue="portfolio" className="w-full">
         <TabsList className="mb-4">
