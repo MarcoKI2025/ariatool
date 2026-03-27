@@ -83,7 +83,9 @@ export function DecisionHeader() {
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${style.dot} animate-pulse`} />
           <div>
-            <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Insurability Status</div>
+            <div className="text-[8px] sm:text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground">
+              {inputs.companyName ? `${inputs.companyName} · ` : ''}Insurability Status
+            </div>
             <div className={`text-[16px] sm:text-[20px] lg:text-[24px] font-extrabold tracking-tight leading-none ${style.text}`}>{label}</div>
           </div>
         </div>
