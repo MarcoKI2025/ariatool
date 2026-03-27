@@ -60,7 +60,7 @@ export function EvidenceLog() {
             Complete audit trail of all parameter changes and analysis runs. Required for underwriting-grade documentation and regulatory compliance.
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <button
             onClick={clearAuditLog}
             disabled={auditLog.length === 0}
