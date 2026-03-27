@@ -205,9 +205,13 @@ export function PortfolioView() {
 
       <UseRestrictionBanner />
 
-      {/* ══════════════════════════════════════════════════
-          STEP 1: TOP SUMMARY — Portfolio Risk Statement
-          ══════════════════════════════════════════════════ */}
+      <Tabs defaultValue="portfolio" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="portfolio">Portfolio Risk</TabsTrigger>
+          <TabsTrigger value="silent">Silent AI Detector</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="portfolio" className="space-y-6">
       <div className={`rounded-xl border-2 p-6 ${riskBg}`}>
         <div className="flex items-center gap-2 mb-2">
           <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground">Portfolio Risk:</span>
