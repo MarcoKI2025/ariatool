@@ -495,6 +495,18 @@ export function PortfolioView() {
         </CollapsibleContent>
       </Collapsible>
 
+        </TabsContent>
+
+        <TabsContent value="silent" className="space-y-6">
+          <div className="bg-card border border-border rounded-xl p-6">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Silent AI Exposure Analysis</div>
+            <h2 className="text-[16px] font-bold text-foreground mb-1">Silent AI Exposure Detector</h2>
+            <p className="text-[11px] text-muted-foreground mb-4">Estimate how much AI risk may already exist in your conventional book of business without explicit recognition.</p>
+            <SilentAIDetector />
+          </div>
+        </TabsContent>
+      </Tabs>
+
       <StepNavigation currentStep={7} />
       <AppFooter />
     </div>
