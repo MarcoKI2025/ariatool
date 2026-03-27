@@ -165,75 +165,64 @@ export function RecursiveRiskView() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-[18px] font-bold text-foreground tracking-tight">
-          🔄 Recursive Risk Assessment
+        <div className="label-xs mb-1">Step 10 of 11 · Advanced</div>
+        <h1 className="text-xl font-bold text-foreground tracking-tight">
+          Recursive Risk Assessment
         </h1>
-        <p className="text-[11px] text-muted-foreground mt-1">
+        <p className="text-[12px] text-muted-foreground mt-1">
           Self-improvement risk analysis for <span className="font-semibold text-foreground">{inputs.companyName || 'Current Entity'}</span>
         </p>
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          STEP 1: CLEAR RISK STATEMENT
-          ══════════════════════════════════════════════════ */}
-      <div className={`rounded-xl border-2 p-5 ${severityBg}`}>
-        <div className="flex items-start gap-3">
-          <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground flex-shrink-0 mt-1">
-            {isCritical ? '⛔' : isElevated ? '⚠️' : '✅'} {rsiResult.tier.toUpperCase()}
+      {/* Risk Statement */}
+      <div className={`rounded-lg border p-5 ${severityBg}`}>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-foreground">
+            {rsiResult.tier.toUpperCase()}
           </span>
+          <div className="flex items-center gap-3">
+            <span className="text-[10px] text-muted-foreground">
+              RSI <span className={`font-bold metric-value ${severityColor}`}>{rsiResult.rsi.toFixed(0)}</span>/100
+            </span>
+            <span className="text-[10px] text-muted-foreground">
+              MCCI <span className="font-bold metric-value text-foreground">{mcciResult.mcci.toFixed(0)}</span>
+            </span>
+          </div>
         </div>
-        <div className={`text-[17px] sm:text-[20px] font-extrabold leading-[1.3] tracking-tight mt-2 ${severityColor}`}>
+        <div className={`text-[15px] sm:text-[17px] font-bold leading-[1.35] tracking-tight ${severityColor}`}>
           {riskStatement}
-        </div>
-        <div className="flex items-center gap-4 mt-3">
-          <div className="text-[10px] text-muted-foreground">
-            RSI Score: <span className={`font-bold font-mono ${severityColor}`}>{rsiResult.rsi.toFixed(0)}</span>/100
-          </div>
-          <div className="text-[10px] text-muted-foreground">
-            MCCI: <span className="font-bold font-mono text-foreground">{mcciResult.mcci.toFixed(0)}</span> ({mcciResult.tier})
-          </div>
         </div>
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          STEP 2–4: 3 METRIC CARDS WITH INTERPRETATION
-          ══════════════════════════════════════════════════ */}
-      <div className="flex items-center gap-3 mb-1">
-        <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Why This Assessment</span>
-        <div className="flex-1 h-px bg-border" />
-      </div>
+      {/* Why This Assessment */}
+      <div className="section-divider"><span>Why This Assessment</span></div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {metrics.map((m) => {
           const mColor = m.level === 'Critical' ? 'text-fragile' : m.level === 'Elevated' ? 'text-sensitive' : 'text-stable';
-          const mBg = m.level === 'Critical' ? 'bg-fragile-bg border-fragile-border' : m.level === 'Elevated' ? 'bg-sensitive-bg border-sensitive-border' : 'bg-stable-bg border-stable-border';
           const barPct = m.inverted ? (100 - m.value) : m.value;
           const barColor = m.level === 'Critical' ? 'bg-fragile' : m.level === 'Elevated' ? 'bg-sensitive' : 'bg-stable';
 
           return (
-            <div key={m.label} className={`rounded-xl border p-5 ${mBg}`}>
-              {/* Level badge + label */}
+            <div key={m.label} className="bg-card border border-border rounded-lg p-5" style={{ boxShadow: 'var(--shadow-card)' }}>
               <div className="flex items-center justify-between mb-3">
-                <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">{m.label}</div>
+                <div className="label-xs">{m.label}</div>
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${mColor}`}>{m.level}</span>
               </div>
 
-              {/* Visual indicator */}
               <div className="flex items-center gap-2 mb-3">
-                <div className="flex-1 h-2 bg-border rounded-full overflow-hidden">
+                <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
                   <div className={`h-full rounded-full transition-all ${barColor}`} style={{ width: `${Math.min(100, barPct)}%` }} />
                 </div>
-                <span className={`text-[12px] font-mono font-bold ${mColor}`}>{m.value.toFixed(0)}</span>
+                <span className={`text-[13px] metric-value font-bold ${mColor}`}>{m.value.toFixed(0)}</span>
               </div>
 
-              {/* Interpretation */}
               <div className="text-[11px] text-foreground font-medium leading-relaxed mb-3">
                 {m.meaning}
               </div>
 
-              {/* Why it matters */}
-              <div className="border-t border-border/50 pt-2.5">
-                <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Why This Matters</div>
+              <div className="border-t border-border pt-2.5">
+                <div className="label-xs mb-1" style={{ fontSize: '9px' }}>Why This Matters</div>
                 <div className="text-[10px] text-muted-foreground italic">{m.question}</div>
               </div>
             </div>
@@ -241,44 +230,32 @@ export function RecursiveRiskView() {
         })}
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          STEP 6: CRITICAL WARNING BOX
-          ══════════════════════════════════════════════════ */}
+      {/* Critical Warning */}
       {isCritical && (
-        <div className="bg-fragile-bg border-2 border-fragile rounded-xl p-5">
-          <div className="flex items-start gap-3">
-            <span className="text-[18px]">⛔</span>
-            <div>
-              <div className="text-[13px] font-extrabold text-fragile mb-1">Unbounded Self-Improvement Warning</div>
-              <div className="text-[12px] text-foreground font-medium leading-relaxed">
-                Unbounded self-improvement may invalidate traditional risk controls. Standard actuarial models do not account for recursive capability acceleration.
-              </div>
-            </div>
+        <div className="bg-fragile-bg border border-fragile rounded-lg p-5">
+          <div className="text-[13px] font-bold text-fragile mb-1">Unbounded Self-Improvement Warning</div>
+          <div className="text-[12px] text-foreground leading-relaxed">
+            Unbounded self-improvement may invalidate traditional risk controls. Standard actuarial models do not account for recursive capability acceleration.
           </div>
         </div>
       )}
 
       {/* CGD Alert */}
       {cgdResult.alert && (
-        <div className="bg-sensitive-bg border border-sensitive-border rounded-xl p-5">
-          <div className="flex items-start gap-3">
-            <span className="text-[18px]">⚡</span>
-            <div>
-              <div className="text-[13px] font-bold text-sensitive">Compounding Gain Detected</div>
-              <div className="text-[11px] text-foreground/80 mt-1">{cgdResult.alertMessage}</div>
-            </div>
-          </div>
+        <div className="bg-sensitive-bg border border-sensitive-border rounded-lg p-4">
+          <div className="text-[12px] font-bold text-sensitive">Compounding Gain Detected</div>
+          <div className="text-[11px] text-muted-foreground mt-1">{cgdResult.alertMessage}</div>
         </div>
       )}
 
-      {/* Detected flags summary */}
+      {/* Detected flags */}
       {rsiResult.flags.length > 0 && (
-        <div className="bg-card border border-border rounded-xl p-5">
-          <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-3">Detected Capabilities</div>
+        <div className="bg-card border border-border rounded-lg p-5" style={{ boxShadow: 'var(--shadow-card)' }}>
+          <div className="label-xs mb-3">Detected Capabilities</div>
           <div className="space-y-2">
             {rsiResult.flags.map((flag, i) => (
               <div key={i} className="flex items-start gap-2 text-[11px] text-foreground">
-                <span className="text-fragile mt-0.5">⚠</span>
+                <span className="text-fragile mt-0.5 text-[10px]">!</span>
                 <span className="font-medium">{flag}</span>
               </div>
             ))}
@@ -286,39 +263,37 @@ export function RecursiveRiskView() {
         </div>
       )}
 
-      {/* ══════════════════════════════════════════════════
-          COLLAPSED DETAIL: MCCI toggles, confidence, etc.
-          ══════════════════════════════════════════════════ */}
+      {/* Detailed Assessment */}
       <Collapsible open={showDetail} onOpenChange={setShowDetail}>
         <CollapsibleTrigger className="w-full flex items-center justify-center gap-2 py-3 cursor-pointer">
-          <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-secondary border border-border hover:bg-accent transition-colors">
-            <span className="text-[11px] font-bold tracking-wider uppercase text-foreground">
-              {showDetail ? '▾ Hide Detailed Assessment' : '▸ View Detailed Assessment'}
+          <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-card border border-border hover:border-primary/40 transition-colors" style={{ boxShadow: 'var(--shadow-card)' }}>
+            <span className="text-[11px] font-semibold tracking-wider uppercase text-foreground">
+              {showDetail ? 'Hide Detailed Assessment' : 'View Detailed Assessment'}
             </span>
           </button>
         </CollapsibleTrigger>
         <CollapsibleContent className="space-y-4 pt-4">
 
-          {/* MCCI Capability Toggles */}
-          <div className="bg-card border border-border rounded-xl p-5">
+          {/* MCCI */}
+          <div className="bg-card border border-border rounded-lg p-6" style={{ boxShadow: 'var(--shadow-card)' }}>
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground">Metacognitive Capability Index (MCCI)</div>
+                <div className="label-xs">Metacognitive Capability Index (MCCI)</div>
                 <div className="text-[11px] text-muted-foreground mt-0.5">Toggle detected capabilities to update the assessment</div>
               </div>
               <div className="text-right">
-                <div className={`text-[22px] font-bold font-mono ${mcciResult.tier === 'Advanced' || mcciResult.tier === 'Autonomous' ? 'text-fragile' : mcciResult.tier === 'Intermediate' ? 'text-sensitive' : 'text-stable'}`}>{mcciResult.mcci.toFixed(0)}</div>
+                <div className={`text-[22px] font-bold metric-value ${mcciResult.tier === 'Advanced' || mcciResult.tier === 'Autonomous' ? 'text-fragile' : mcciResult.tier === 'Intermediate' ? 'text-sensitive' : 'text-stable'}`}>{mcciResult.mcci.toFixed(0)}</div>
                 <div className="text-[9px] text-muted-foreground">{mcciResult.tier}</div>
               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
               {Object.entries(mcciResult.capabilities).map(([key, value]) => (
-                <div key={key} className="bg-secondary/30 rounded-lg px-3 py-2.5 text-center">
+                <div key={key} className="bg-secondary rounded-lg px-3 py-2.5 text-center">
                   <div className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </div>
-                  <div className="text-[16px] font-bold font-mono text-foreground mt-0.5">{value.toFixed(0)}</div>
+                  <div className="text-[16px] font-bold metric-value text-foreground mt-0.5">{value.toFixed(0)}</div>
                 </div>
               ))}
             </div>
@@ -326,14 +301,14 @@ export function RecursiveRiskView() {
             <div className="border-t border-border pt-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                 {(Object.keys(metacogCaps) as (keyof MetacognitiveCapabilities)[]).map(key => (
-                  <label key={key} className="flex items-center gap-2 cursor-pointer select-none group">
+                  <label key={key} className="flex items-center gap-2.5 cursor-pointer select-none group py-1">
                     <input
                       type="checkbox"
                       checked={metacogCaps[key]}
                       onChange={() => setMetacogCaps(prev => ({ ...prev, [key]: !prev[key] }))}
-                      className="rounded border-border accent-primary w-3.5 h-3.5"
+                      className="rounded border-border accent-primary w-4 h-4"
                     />
-                    <span className="text-[11px] text-foreground/80 group-hover:text-foreground transition-colors">
+                    <span className="text-[11px] text-muted-foreground group-hover:text-foreground transition-colors">
                       {key.replace(/([A-Z])/g, ' $1').trim()}
                     </span>
                   </label>
@@ -343,15 +318,17 @@ export function RecursiveRiskView() {
           </div>
 
           {/* Confidence */}
-          <div className="bg-card border border-border rounded-xl p-5">
-            <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Assessment Confidence</div>
+          <div className="bg-card border border-border rounded-lg p-6" style={{ boxShadow: 'var(--shadow-card)' }}>
+            <div className="label-xs mb-4">Assessment Confidence</div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
               {Object.entries(confidence.breakdown).map(([key, value]) => (
-                <div key={key} className="bg-secondary/30 rounded-lg px-3 py-2.5 text-center">
-                  <div className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground">
+                <div key={key} className="bg-secondary rounded-lg px-3 py-3 text-center">
+                  <div className="text-[9px] font-bold uppercase tracking-wide text-muted-foreground mb-1">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
                   </div>
-                  <div className="text-[14px] font-bold text-foreground mt-0.5">{'★'.repeat(value)}{'☆'.repeat(5 - value)}</div>
+                  <div className="text-[14px] font-bold text-foreground" style={{ color: 'hsl(var(--primary))' }}>
+                    {'★'.repeat(value)}{'☆'.repeat(5 - value)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -361,13 +338,13 @@ export function RecursiveRiskView() {
           </div>
 
           {/* Governance Recommendations */}
-          <div className="bg-card border border-border rounded-xl p-5">
-            <div className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Governance Recommendations</div>
-            <div className="space-y-2">
+          <div className="bg-card border border-border rounded-lg p-6" style={{ boxShadow: 'var(--shadow-card)' }}>
+            <div className="label-xs mb-3">Governance Recommendations</div>
+            <div className="space-y-2.5">
               {rsiResult.recommendations.map((rec, i) => (
-                <div key={i} className="flex items-start gap-2 text-[11px] text-foreground">
-                  <span className="text-primary mt-0.5">→</span>
-                  <span className="font-medium">{rec}</span>
+                <div key={i} className="flex items-start gap-2.5 text-[12px] text-foreground">
+                  <span className="text-primary mt-0.5 text-[10px] font-bold">—</span>
+                  <span className="font-medium leading-relaxed">{rec}</span>
                 </div>
               ))}
             </div>
@@ -377,7 +354,7 @@ export function RecursiveRiskView() {
       </Collapsible>
 
       {/* Disclaimer */}
-      <div className="text-[9px] text-muted-foreground/60 text-center pt-4 border-t border-border">
+      <div className="text-[9px] text-muted-foreground text-center pt-4 border-t border-border">
         Recursive risk assessment based on AGAF v4.3.0. Hyperagent capabilities are self-reported and should be verified through technical audit.
       </div>
 
