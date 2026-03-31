@@ -6,7 +6,7 @@ import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/l
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
-import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
+
 import { DependencyNetwork } from './DependencyNetwork';
 import { SilentAIDetector } from './SilentAIDetector';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
@@ -210,7 +210,7 @@ export function PortfolioView() {
 
       {/* Header */}
       <div className="mb-6">
-        <div className="label-xs mb-1.5">Step 7 of 12 · Portfolio Intelligence</div>
+        <div className="label-xs mb-1.5">Step 7 of 10 · Portfolio Intelligence</div>
         <div className="flex items-start justify-between gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>
@@ -694,9 +694,6 @@ export function PortfolioView() {
               <div className="text-[11px] text-muted-foreground text-center py-3">No entities currently classified as Stable — optimize governance scores to unlock capital efficiency.</div>
             )}
           </div>
-
-          {/* Quantum Vulnerability */}
-          <QuantumVulnerabilityAssessment />
 
           {/* Interpretation */}
           <div className="bg-card border border-border rounded-lg p-5">

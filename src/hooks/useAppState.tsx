@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useMemo, useEffect } from 'react';
-import { AppState, Perspective, ExposureInputs, AnalysisResults, IATState, AuditLogEntry, RecursiveRiskState } from '@/lib/types';
+import { AppState, Perspective, ExposureInputs, AnalysisResults, IATState, AuditLogEntry } from '@/lib/types';
 import { DEFAULT_INPUTS } from '@/lib/constants';
 import { computeFullAnalysis } from '@/lib/scoring';
 
@@ -17,7 +17,6 @@ function createDefaultState(): AppState {
     iatState: { ...DEFAULT_IAT },
     darkMode: false,
     auditLog: [],
-    recursiveRisk: null,
   };
 }
 
@@ -41,7 +40,6 @@ function persistState(state: AppState) {
       iatState: state.iatState,
       darkMode: state.darkMode,
       auditLog: state.auditLog,
-      recursiveRisk: state.recursiveRisk,
     }));
   } catch (e) {
     // silent
@@ -59,7 +57,6 @@ interface AppContextType {
   toggleIAT: (criterion: number) => void;
   toggleDarkMode: () => void;
   clearAuditLog: () => void;
-  updateRecursiveRisk: (risk: RecursiveRiskState) => void;
   results: AnalysisResults | null;
   inputs: ExposureInputs;
 }
@@ -145,9 +142,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState(s => ({ ...s, auditLog: [] }));
   }, []);
 
-  const updateRecursiveRisk = useCallback((risk: RecursiveRiskState) => {
-    setState(s => ({ ...s, recursiveRisk: risk }));
-  }, []);
 
   const value = useMemo(() => ({
     state,
@@ -160,10 +154,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     toggleIAT,
     toggleDarkMode,
     clearAuditLog,
-    updateRecursiveRisk,
     results: state.results,
     inputs: state.inputs,
-  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode, clearAuditLog, updateRecursiveRisk]);
+  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode, clearAuditLog]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

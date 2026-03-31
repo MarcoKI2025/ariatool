@@ -106,7 +106,7 @@ export function ExecutiveReport() {
   if (conditions.length === 0) conditions.push('Maintain current governance cadence with annual re-assessment');
 
   const copyReport = () => {
-    const text = buildExecutiveReport(inputs, results, state.recursiveRisk);
+    const text = buildExecutiveReport(inputs, results);
     navigator.clipboard.writeText(text);
     toast.success('Executive summary copied to clipboard');
   };
@@ -474,25 +474,6 @@ export function ExecutiveReport() {
             </div>
           )}
 
-          {/* Recursive Risk */}
-          {state.recursiveRisk && (
-            <div className="bg-card border border-border rounded-lg p-5">
-              <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-3">Recursive Risk Assessment</div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                {[
-                  { label: 'RSI Score', value: state.recursiveRisk.rsiScore.toFixed(1), color: state.recursiveRisk.rsiScore >= 50 ? 'text-fragile' : state.recursiveRisk.rsiScore >= 30 ? 'text-sensitive' : 'text-stable' },
-                  { label: 'RSI Tier', value: state.recursiveRisk.rsiTier, color: 'text-foreground' },
-                  { label: 'MCCI Score', value: state.recursiveRisk.mcciScore.toFixed(0), color: state.recursiveRisk.mcciScore >= 55 ? 'text-fragile' : state.recursiveRisk.mcciScore >= 30 ? 'text-sensitive' : 'text-stable' },
-                  { label: 'MCCI Tier', value: state.recursiveRisk.mcciTier, color: 'text-foreground' },
-                ].map((m, i) => (
-                  <div key={i} className="p-3 bg-secondary border border-border rounded-lg">
-                    <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">{m.label}</div>
-                    <div className={`text-[18px] font-bold font-mono ${m.color}`}>{m.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Epistemic Status */}
           <div className="bg-card border border-border rounded-lg p-5">
