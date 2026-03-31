@@ -34,11 +34,10 @@ export function PremiumCalculator() {
 
   useEffect(() => {
     if (afi > 0) {
-      const rr = state.recursiveRisk ? { rsiScore: state.recursiveRisk.rsiScore, mcciScore: state.recursiveRisk.mcciScore } : null;
-      setCalculation(calculatePremium(coverage, afi, industry, deductible, rr, evolutionFactors));
+      setCalculation(calculatePremium(coverage, afi, industry, deductible, null, evolutionFactors));
       setScenarios(generatePremiumScenarios(coverage, afi, industry));
     }
-  }, [coverage, afi, industry, deductible, state.recursiveRisk, evolutionFactors]);
+  }, [coverage, afi, industry, deductible, evolutionFactors]);
 
   if (!calculation) {
     return (
