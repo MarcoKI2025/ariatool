@@ -99,7 +99,7 @@ export function InsurabilityFramework() {
       {/* Header */}
       <div>
         <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">
-          Step 12 of 12 · Framework
+          Step 10 of 10 · Framework
         </div>
         <h1 className="text-xl font-bold text-foreground mb-1 tracking-tight">
           Insurability Boundary Framework
