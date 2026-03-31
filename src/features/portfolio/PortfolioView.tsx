@@ -6,7 +6,7 @@ import { DEFAULT_INPUTS, SIZE_AFI_ADJUSTMENT, REVENUE_AFI_ADJUSTMENT } from '@/l
 import { LiveIndicator } from '@/components/shared/LiveIndicator';
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
-import { QuantumVulnerabilityAssessment } from '@/features/quantum/QuantumVulnerabilityAssessment';
+
 import { DependencyNetwork } from './DependencyNetwork';
 import { SilentAIDetector } from './SilentAIDetector';
 import { fetchCloudProviderStatus } from '@/lib/liveData';
