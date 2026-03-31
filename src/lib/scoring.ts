@@ -96,9 +96,9 @@ export function getBand(afi: number): Band {
 
 export function getDecisionClass(band: Band): DecisionClass {
   switch (band) {
-    case 'Fragile': return 'Escalate to Committee';
-    case 'Sensitive': return 'Conditional Review';
-    case 'Stable': return 'Approved';
+    case 'Fragile': return 'Tier 3: Beyond Standard Transfer';
+    case 'Sensitive': return 'Tier 2: Conditionally Insurable';
+    case 'Stable': return 'Tier 1: Insurable';
   }
 }
 

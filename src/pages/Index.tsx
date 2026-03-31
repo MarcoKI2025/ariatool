@@ -12,6 +12,7 @@ import { PortfolioView } from '@/features/portfolio/PortfolioView';
 import { EvidenceLog } from '@/features/evidence-log/EvidenceLog';
 import { IntegrationHub } from '@/features/integration-hub/IntegrationHub';
 import { RecursiveRiskView } from '@/features/recursive-risk/RecursiveRiskView';
+import { InsurabilityFramework } from '@/features/insurability-framework/InsurabilityFramework';
 import { TemporalTrackingView } from '@/features/temporal/TemporalTrackingView';
 import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
@@ -177,6 +178,7 @@ function AppContent() {
       case 9: return <IntegrationHub />;
       case 10: return <RecursiveRiskView />;
       case 11: return <TemporalTrackingView />;
+      case 12: return <InsurabilityFramework />;
       default: return <ExposureAnalysis />;
     }
   };

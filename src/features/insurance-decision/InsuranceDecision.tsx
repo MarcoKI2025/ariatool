@@ -31,7 +31,7 @@ export function InsuranceDecision() {
     <div>
       {/* Page header */}
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 4 of 11 · Underwriting Decision</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 4 of 12 · Underwriting Decision</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
           Financial exposure modelling and underwriting decision framework for {inputs.companyName || 'the assessed entity'}.
@@ -50,8 +50,8 @@ export function InsuranceDecision() {
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
         <div className={`text-[18px] sm:text-[28px] font-bold metric-value tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
-          {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
-           decisionClass === 'Conditional Review' ? 'Conditional Review' :
+          {decisionClass.startsWith('Tier 3') ? 'Beyond Standard Transfer' :
+           decisionClass.startsWith('Tier 2') ? 'Conditionally Insurable' :
            'Standard Coverage'}
         </div>
         <div className="text-[13px] text-secondary-foreground leading-[1.6] max-w-[700px] mb-4">
@@ -339,7 +339,7 @@ export function InsuranceDecision() {
 
       {/* ═══ OPERATIONAL DECISION PANEL (full-width dark ops-decision block) ═══ */}
       {(() => {
-        const statusCls = decisionClass === 'Approved' ? 'approved' : decisionClass === 'Conditional Review' ? 'conditional' : decisionClass === 'Escalate to Committee' ? 'escalate' : 'not-approved';
+        const statusCls = decisionClass.startsWith('Tier 1') ? 'approved' : decisionClass.startsWith('Tier 2') ? 'conditional' : decisionClass.startsWith('Tier 3') ? 'escalate' : 'not-approved';
         const bgMap: Record<string, string> = { approved: 'bg-secondary border-b border-stable/40', conditional: 'bg-secondary border-b border-sensitive/40', escalate: 'bg-secondary border-b border-primary/50', 'not-approved': 'bg-secondary border-b border-fragile/40' };
         const topBarMap: Record<string, string> = { approved: 'hsl(var(--stable))', conditional: 'hsl(var(--sensitive))', escalate: 'hsl(var(--primary))', 'not-approved': 'hsl(var(--fragile))' };
         const eyebrowColorMap: Record<string, string> = { approved: 'text-stable', conditional: 'text-sensitive', escalate: 'text-primary', 'not-approved': 'text-fragile' };
@@ -348,7 +348,7 @@ export function InsuranceDecision() {
         const consBgMap: Record<string, string> = { approved: 'bg-muted border-stable/40', conditional: 'bg-muted border-sensitive/40', escalate: 'bg-muted border-primary/40', 'not-approved': 'bg-muted border-fragile/40' };
         const dotBgMap: Record<string, string> = { approved: 'bg-stable', conditional: 'bg-sensitive', escalate: 'bg-primary', 'not-approved': 'bg-fragile' };
 
-        const statusText = decisionClass === 'Approved' ? 'APPROVED — STANDARD TERMS' : decisionClass === 'Conditional Review' ? 'CONDITIONAL REVIEW' : decisionClass === 'Escalate to Committee' ? 'ESCALATE TO COMMITTEE' : 'NOT APPROVED';
+        const statusText = decisionClass.startsWith('Tier 1') ? 'TIER 1 — INSURABLE' : decisionClass.startsWith('Tier 2') ? 'TIER 2 — CONDITIONALLY INSURABLE' : decisionClass.startsWith('Tier 3') ? 'TIER 3 — BEYOND STANDARD TRANSFER' : 'NOT APPROVED';
         const rationale = band === 'Fragile' ? 'Standard coverage terms cannot be issued at current structural exposure levels. The deployment profile exceeds underwriting tolerance — conditional re-entry requires documented structural remediation.' :
           band === 'Sensitive' ? 'Conditional coverage with mandatory governance improvements within 90 days. Failure to meet conditions results in escalation to NOT APPROVED.' :
           'Structural exposure within manageable bounds. Standard coverage terms with routine monitoring apply.';
