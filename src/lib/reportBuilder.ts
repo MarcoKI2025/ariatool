@@ -1,7 +1,7 @@
-import { AnalysisResults, ExposureInputs, RecursiveRiskState } from './types';
+import { AnalysisResults, ExposureInputs } from './types';
 import { formatDate } from './formatters';
 
-export function buildExecutiveReport(inputs: ExposureInputs, results: AnalysisResults, recursiveRisk?: RecursiveRiskState | null): string {
+export function buildExecutiveReport(inputs: ExposureInputs, results: AnalysisResults): string {
   const { band, afi, lossEnvelope, decisionClass, eciName, eciTier, components } = results;
   const date = formatDate();
 
