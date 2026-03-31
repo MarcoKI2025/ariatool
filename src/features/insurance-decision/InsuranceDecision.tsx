@@ -31,7 +31,7 @@ export function InsuranceDecision() {
     <div>
       {/* Page header */}
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 4 of 11 · Underwriting Decision</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 4 of 12 · Underwriting Decision</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Insurance & Financial Exposure</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
           Financial exposure modelling and underwriting decision framework for {inputs.companyName || 'the assessed entity'}.

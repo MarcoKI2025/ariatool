@@ -234,7 +234,7 @@ export function ScenarioSimulation() {
   return (
     <div>
       <div className="mb-6">
-        <div className="label-xs mb-1.5">Step 3 of 11 · Stress Testing</div>
+        <div className="label-xs mb-1.5">Step 3 of 12 · Stress Testing</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Scenario Simulation</h1>
         <p className="text-[13px] text-muted-foreground max-w-[620px] leading-relaxed">
           Models exposure impact under adverse conditions. Each scenario stresses different structural failure vectors — calibrated against your deployment profile.

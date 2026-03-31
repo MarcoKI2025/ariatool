@@ -89,7 +89,7 @@ export function ExposureAnalysis() {
       )}
 
       <div className="mb-3 sm:mb-6">
-        <div className="label-xs mb-1">Step 1 of 11 · Entry Point</div>
+        <div className="label-xs mb-1">Step 1 of 12 · Entry Point</div>
         <h1 className="text-xl sm:text-2xl font-bold text-foreground mb-0.5 sm:mb-1 tracking-tight">Exposure Analysis</h1>
         <p className="text-[11px] sm:text-[13px] text-muted-foreground max-w-[580px] leading-relaxed hidden sm:block">
           Configure the AI deployment profile. All downstream outputs derive exclusively from this input.

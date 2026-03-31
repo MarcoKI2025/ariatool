@@ -165,7 +165,7 @@ export function RecursiveRiskView() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <div className="label-xs mb-1">Step 10 of 11 · Advanced</div>
+        <div className="label-xs mb-1">Step 10 of 12 · Advanced</div>
         <h1 className="text-xl font-bold text-foreground tracking-tight">
           Recursive Risk Assessment
         </h1>

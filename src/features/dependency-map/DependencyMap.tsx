@@ -24,7 +24,7 @@ export function DependencyMap() {
   return (
     <div>
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 3 of 11 · Infrastructure</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 3 of 12 · Infrastructure</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Dependency Map</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
           Third-party concentration and single-point-of-failure analysis for {inputs.companyName || 'the assessed entity'}.

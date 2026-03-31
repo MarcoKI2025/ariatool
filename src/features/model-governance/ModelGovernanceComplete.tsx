@@ -28,7 +28,7 @@ export function ModelGovernanceComplete() {
   return (
     <div>
       <div className="mb-6">
-        <div className="label-xs mb-1.5">Step 6 of 11 · Model Governance</div>
+        <div className="label-xs mb-1.5">Step 6 of 12 · Model Governance</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Model Governance & Methodology</h1>
         <p className="text-[13px] text-muted-foreground max-w-[700px] leading-relaxed">
           Framework basis, scope declaration, calibration, and assessment boundary conditions.

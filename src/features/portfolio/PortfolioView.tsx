@@ -210,7 +210,7 @@ export function PortfolioView() {
 
       {/* Header */}
       <div className="mb-6">
-        <div className="label-xs mb-1.5">Step 7 of 11 · Portfolio Intelligence</div>
+        <div className="label-xs mb-1.5">Step 7 of 12 · Portfolio Intelligence</div>
         <div className="flex items-start justify-between gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">Portfolio & Systemic Risk</h1>

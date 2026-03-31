@@ -35,7 +35,7 @@ export function DecisionIntelligence() {
     <div>
       {/* Page header */}
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 11 · Core Analysis</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 12 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Decision Intelligence</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
           Multi-dimensional risk characterization using AFI, ECI, AGRI, ALRI, and SCRI indices — calibrated to {inputs.companyName || 'the assessed entity'}.
