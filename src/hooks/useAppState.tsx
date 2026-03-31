@@ -142,9 +142,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState(s => ({ ...s, auditLog: [] }));
   }, []);
 
-  const updateRecursiveRisk = useCallback((risk: RecursiveRiskState) => {
-    setState(s => ({ ...s, recursiveRisk: risk }));
-  }, []);
 
   const value = useMemo(() => ({
     state,
