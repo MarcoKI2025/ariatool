@@ -106,7 +106,7 @@ export function ExecutiveReport() {
   if (conditions.length === 0) conditions.push('Maintain current governance cadence with annual re-assessment');
 
   const copyReport = () => {
-    const text = buildExecutiveReport(inputs, results, state.recursiveRisk);
+    const text = buildExecutiveReport(inputs, results);
     navigator.clipboard.writeText(text);
     toast.success('Executive summary copied to clipboard');
   };
