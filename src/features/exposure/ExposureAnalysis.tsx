@@ -75,7 +75,7 @@ export function ExposureAnalysis() {
   const progressIdx = hasSystemic ? 5 : hasGov ? 4 : hasLiability ? 3 : hasAgent ? 2 : hasCoreAFI ? 1 : hasCompany ? 1 : 0;
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
 
       {/* Welcome banner — compact on mobile */}
       {!dismissedWelcome && !analysisComplete && (
