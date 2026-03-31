@@ -154,10 +154,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     toggleIAT,
     toggleDarkMode,
     clearAuditLog,
-    updateRecursiveRisk,
     results: state.results,
     inputs: state.inputs,
-  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode, clearAuditLog, updateRecursiveRisk]);
+  }), [state, setActiveStep, setPerspective, updateInputs, setInputs, runAnalysis, resetAnalysis, toggleIAT, toggleDarkMode, clearAuditLog]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
