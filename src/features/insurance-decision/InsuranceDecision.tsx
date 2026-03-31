@@ -339,7 +339,7 @@ export function InsuranceDecision() {
 
       {/* ═══ OPERATIONAL DECISION PANEL (full-width dark ops-decision block) ═══ */}
       {(() => {
-        const statusCls = decisionClass === 'Approved' ? 'approved' : decisionClass === 'Conditional Review' ? 'conditional' : decisionClass === 'Escalate to Committee' ? 'escalate' : 'not-approved';
+        const statusCls = decisionClass.startsWith('Tier 1') ? 'approved' : decisionClass.startsWith('Tier 2') ? 'conditional' : decisionClass.startsWith('Tier 3') ? 'escalate' : 'not-approved';
         const bgMap: Record<string, string> = { approved: 'bg-secondary border-b border-stable/40', conditional: 'bg-secondary border-b border-sensitive/40', escalate: 'bg-secondary border-b border-primary/50', 'not-approved': 'bg-secondary border-b border-fragile/40' };
         const topBarMap: Record<string, string> = { approved: 'hsl(var(--stable))', conditional: 'hsl(var(--sensitive))', escalate: 'hsl(var(--primary))', 'not-approved': 'hsl(var(--fragile))' };
         const eyebrowColorMap: Record<string, string> = { approved: 'text-stable', conditional: 'text-sensitive', escalate: 'text-primary', 'not-approved': 'text-fragile' };
