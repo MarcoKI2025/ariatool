@@ -46,6 +46,7 @@ export const NAV_STEPS = [
   { id: 9, title: 'Integration Hub', sublabel: 'Data feeds · APIs · Ecosystem', viewId: 'integration-hub' },
   { id: 10, title: 'Recursive Risk', sublabel: 'RSI · MCCI · Hyperagent analysis', viewId: 'recursive-risk' },
   { id: 11, title: 'Temporal Tracking', sublabel: 'Risk evolution · Snapshots', viewId: 'temporal-tracking' },
+  { id: 12, title: 'Insurability Framework', sublabel: '5 conditions · Tier classification', viewId: 'insurability-framework' },
 ];
 
 export const DEFAULT_ELASTICITIES = {

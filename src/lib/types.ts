@@ -1,5 +1,6 @@
 export type Band = 'Stable' | 'Sensitive' | 'Fragile';
-export type DecisionClass = 'Approved' | 'Conditional Review' | 'Escalate to Committee';
+export type DecisionClass = 'Tier 1: Insurable' | 'Tier 2: Conditionally Insurable' | 'Tier 3: Beyond Standard Transfer';
+export type TierShort = 'Tier 1' | 'Tier 2' | 'Tier 3';
 export type Perspective = 'underwriter' | 'company';
 
 export interface SliderInput {
