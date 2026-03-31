@@ -8,7 +8,7 @@ import { ExposureResults } from './ExposureResults';
 import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { ExposureInputs } from '@/lib/types';
-import { IATAssessmentPanel } from '@/features/iat/IATAssessmentPanel';
+
 import { CaseStudyPanel } from '@/features/case-studies/CaseStudyPanel';
 import { LoadingOverlay } from '@/components/shared/LoadingOverlay';
 import { RealCaseFactsCard } from '@/features/demo/RealCaseFactsCard';
