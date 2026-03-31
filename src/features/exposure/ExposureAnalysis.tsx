@@ -111,13 +111,13 @@ export function ExposureAnalysis() {
         </div>
       </div>
 
-      {/* Demo profiles — horizontal chips */}
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-5 -mx-1 px-1">
+      {/* Demo profiles — wrapping chips */}
+      <div className="flex flex-wrap gap-2 mb-5">
         {DEMO_PROFILES.map((p, i) => (
           <button
             key={i}
             onClick={() => setInputs(applyDemoProfile(p))}
-            className="px-3 py-1.5 rounded border text-[11px] font-medium transition-colors whitespace-nowrap flex-shrink-0"
+            className="px-3 py-1.5 rounded border text-[11px] font-medium transition-colors whitespace-nowrap"
             style={{
               background: 'hsl(var(--sf))',
               borderColor: 'hsl(var(--bd))',
