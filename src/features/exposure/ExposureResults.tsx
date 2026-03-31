@@ -294,9 +294,6 @@ export function ExposureResults() {
             </SectionCard>
           </div>
 
-          {/* Quantum Vulnerability */}
-          <QuantumVulnerabilityAssessment />
-
           {/* Metrics grid: DR, JD, RC, CD */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-card border border-border rounded-[10px] p-4">

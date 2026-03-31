@@ -1017,8 +1017,6 @@ export function DecisionIntelligence() {
         <PeerBenchmarking />
       </div>
 
-      {/* ═══ EXPLAINABILITY ═══ */}
-      <ExplainabilityPanel />
 
       {/* Agentic Swarm Visualization */}
       <AgenticSwarmVisualization agri={results.agri} />

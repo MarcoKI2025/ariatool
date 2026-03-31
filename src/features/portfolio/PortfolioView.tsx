@@ -695,9 +695,6 @@ export function PortfolioView() {
             )}
           </div>
 
-          {/* Quantum Vulnerability */}
-          <QuantumVulnerabilityAssessment />
-
           {/* Interpretation */}
           <div className="bg-card border border-border rounded-lg p-5">
             <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Methodology Note</div>

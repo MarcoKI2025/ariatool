@@ -173,10 +173,8 @@ function AppContent() {
       case 6: return <ModelGovernance />;
       case 7: return <PortfolioView />;
       case 8: return <EvidenceLog />;
-      case 9: return <IntegrationHub />;
-      case 10: return <RecursiveRiskView />;
-      case 11: return <TemporalTrackingView />;
-      case 12: return <InsurabilityFramework />;
+      case 9: return <TemporalTrackingView />;
+      case 10: return <InsurabilityFramework />;
       default: return <ExposureAnalysis />;
     }
   };
