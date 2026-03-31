@@ -348,7 +348,7 @@ export function InsuranceDecision() {
         const consBgMap: Record<string, string> = { approved: 'bg-muted border-stable/40', conditional: 'bg-muted border-sensitive/40', escalate: 'bg-muted border-primary/40', 'not-approved': 'bg-muted border-fragile/40' };
         const dotBgMap: Record<string, string> = { approved: 'bg-stable', conditional: 'bg-sensitive', escalate: 'bg-primary', 'not-approved': 'bg-fragile' };
 
-        const statusText = decisionClass === 'Approved' ? 'APPROVED — STANDARD TERMS' : decisionClass === 'Conditional Review' ? 'CONDITIONAL REVIEW' : decisionClass === 'Escalate to Committee' ? 'ESCALATE TO COMMITTEE' : 'NOT APPROVED';
+        const statusText = decisionClass.startsWith('Tier 1') ? 'TIER 1 — INSURABLE' : decisionClass.startsWith('Tier 2') ? 'TIER 2 — CONDITIONALLY INSURABLE' : decisionClass.startsWith('Tier 3') ? 'TIER 3 — BEYOND STANDARD TRANSFER' : 'NOT APPROVED';
         const rationale = band === 'Fragile' ? 'Standard coverage terms cannot be issued at current structural exposure levels. The deployment profile exceeds underwriting tolerance — conditional re-entry requires documented structural remediation.' :
           band === 'Sensitive' ? 'Conditional coverage with mandatory governance improvements within 90 days. Failure to meet conditions results in escalation to NOT APPROVED.' :
           'Structural exposure within manageable bounds. Standard coverage terms with routine monitoring apply.';

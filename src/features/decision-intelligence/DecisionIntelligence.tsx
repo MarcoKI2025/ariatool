@@ -264,8 +264,8 @@ export function DecisionIntelligence() {
 
       {/* ═══ GOVERNANCE DECISION SIGNAL ═══ */}
       <div className={`p-4 rounded-lg border-2 mb-4 ${
-        results.decisionClass === 'Approved' ? 'bg-stable-bg border-stable' :
-        results.decisionClass === 'Conditional Review' ? 'bg-sensitive-bg border-sensitive' :
+        results.decisionClass.startsWith('Tier 1') ? 'bg-stable-bg border-stable' :
+        results.decisionClass.startsWith('Tier 2') ? 'bg-sensitive-bg border-sensitive' :
         'bg-fragile-bg border-fragile'
       }`}>
         <div className="flex items-center justify-between mb-2">
@@ -273,17 +273,17 @@ export function DecisionIntelligence() {
             Governance Decision Signal
           </div>
           <span className={`px-3 py-1 rounded-full text-[11px] font-bold ${
-            results.decisionClass === 'Approved' ? 'bg-stable text-white' :
-            results.decisionClass === 'Conditional Review' ? 'bg-sensitive text-white' :
+            results.decisionClass.startsWith('Tier 1') ? 'bg-stable text-white' :
+            results.decisionClass.startsWith('Tier 2') ? 'bg-sensitive text-white' :
             'bg-fragile text-white'
           }`}>
             {results.decisionClass}
           </span>
         </div>
         <div className="text-[11px] text-foreground font-semibold mb-2">
-          {results.decisionClass === 'Approved' && 'Structural risk within acceptable governance parameters'}
-          {results.decisionClass === 'Conditional Review' && 'Governance drift detected — enhanced monitoring recommended'}
-          {results.decisionClass === 'Escalate to Committee' && 'High structural fragility — committee review required'}
+          {results.decisionClass.startsWith('Tier 1') && 'Structural risk within acceptable governance parameters'}
+          {results.decisionClass.startsWith('Tier 2') && 'Governance drift detected — enhanced monitoring recommended'}
+          {results.decisionClass.startsWith('Tier 3') && 'High structural fragility — committee review required'}
         </div>
         <div className="text-[10px] text-muted-foreground">
           This signal is derived from governance risk factors (delegation depth, audit density,
