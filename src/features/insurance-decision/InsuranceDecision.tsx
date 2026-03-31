@@ -50,8 +50,8 @@ export function InsuranceDecision() {
           ◆ Governance Exposure Engine · Underwriting Decision
         </div>
         <div className={`text-[18px] sm:text-[28px] font-bold metric-value tracking-wider uppercase leading-[1.1] mb-4 ${bandColor}`}>
-          {decisionClass === 'Escalate to Committee' ? 'Escalate to Committee' :
-           decisionClass === 'Conditional Review' ? 'Conditional Review' :
+          {decisionClass.startsWith('Tier 3') ? 'Beyond Standard Transfer' :
+           decisionClass.startsWith('Tier 2') ? 'Conditionally Insurable' :
            'Standard Coverage'}
         </div>
         <div className="text-[13px] text-secondary-foreground leading-[1.6] max-w-[700px] mb-4">
