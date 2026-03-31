@@ -17,7 +17,6 @@ function createDefaultState(): AppState {
     iatState: { ...DEFAULT_IAT },
     darkMode: false,
     auditLog: [],
-    recursiveRisk: null,
   };
 }
 
