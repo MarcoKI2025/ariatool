@@ -42,9 +42,9 @@ describe('getBand', () => {
 
 describe('getDecisionClass', () => {
   it('maps bands to correct decision classes', () => {
-    expect(getDecisionClass('Stable')).toBe('Approved');
-    expect(getDecisionClass('Sensitive')).toBe('Conditional Review');
-    expect(getDecisionClass('Fragile')).toBe('Escalate to Committee');
+    expect(getDecisionClass('Stable')).toBe('Tier 1: Insurable');
+    expect(getDecisionClass('Sensitive')).toBe('Tier 2: Conditionally Insurable');
+    expect(getDecisionClass('Fragile')).toBe('Tier 3: Beyond Standard Transfer');
   });
 });
 

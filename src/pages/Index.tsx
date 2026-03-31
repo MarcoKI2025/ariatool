@@ -178,6 +178,7 @@ function AppContent() {
       case 9: return <IntegrationHub />;
       case 10: return <RecursiveRiskView />;
       case 11: return <TemporalTrackingView />;
+      case 12: return <InsurabilityFramework />;
       default: return <ExposureAnalysis />;
     }
   };
