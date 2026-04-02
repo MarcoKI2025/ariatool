@@ -10,7 +10,6 @@ import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
 import { PortfolioView } from '@/features/portfolio/PortfolioView';
 import { EvidenceLog } from '@/features/evidence-log/EvidenceLog';
-import { InsurabilityFramework } from '@/features/insurability-framework/InsurabilityFramework';
 import { TemporalTrackingView } from '@/features/temporal/TemporalTrackingView';
 import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
