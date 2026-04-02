@@ -4,7 +4,7 @@ import { AppSidebar } from '@/components/layout/AppSidebar';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { ExposureAnalysis } from '@/features/exposure/ExposureAnalysis';
 import { DecisionIntelligence } from '@/features/decision-intelligence/DecisionIntelligence';
-import { ScenarioSimulation } from '@/features/scenario-simulation/ScenarioSimulation';
+
 import { InsuranceDecision } from '@/features/insurance-decision/InsuranceDecision';
 import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
