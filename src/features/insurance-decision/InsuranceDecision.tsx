@@ -24,9 +24,10 @@ export function InsuranceDecision() {
   const thresholdPos = Math.min(100, Math.round((afi / 3.0) * 100));
 
   const framework = evaluateFramework(inputs, results);
-  // Single source of truth: use the WORST of band-based and framework-based assessment
+  // Framework can escalate band-based tier by at most 1 step
+  // (e.g. Stable + challenged condition → REFER, not DECLINE)
   const bandTier = band === 'Fragile' ? 3 : band === 'Sensitive' ? 2 : 1;
-  const effectiveTier = Math.max(bandTier, framework.overallTier) as 1 | 2 | 3;
+  const effectiveTier = Math.min(bandTier + 1, Math.max(bandTier, framework.overallTier), 3) as 1 | 2 | 3;
 
   const decision = effectiveTier === 3 ? 'DECLINE' : effectiveTier === 2 ? 'REFER' : 'ACCEPT';
   const decisionBg = effectiveTier === 3 ? 'bg-fragile' : effectiveTier === 2 ? 'bg-sensitive' : 'bg-stable';
@@ -62,9 +63,9 @@ export function InsuranceDecision() {
         </div>
 
         <div className="text-[13px] text-foreground leading-[1.5] mb-4">
-          {band === 'Fragile'
+          {effectiveTier === 3
             ? 'Structural risk exceeds underwriting tolerance. Coverage requires committee review, mandatory remediation, and significant premium loading.'
-            : band === 'Sensitive'
+            : effectiveTier === 2
             ? 'Elevated risk profile. Conditional coverage available with governance improvement timeline and precautionary premium loading.'
             : 'Standard risk profile within tolerance. Normal underwriting terms apply with routine monitoring.'}
         </div>
