@@ -718,7 +718,7 @@ export function PortfolioView() {
         </TabsContent>
       </Tabs>
 
-      <StepNavigation currentStep={7} />
+      <StepNavigation currentStep={6} />
       <AppFooter />
     </div>
   );

@@ -1009,7 +1009,7 @@ export function InsuranceDecision() {
       {/* ═══ REINSURANCE CAPACITY SIGNAL ═══ */}
       <ReinsuranceCapacityCard inputs={inputs} results={results} />
 
-      <StepNavigation currentStep={4} />
+      <StepNavigation currentStep={3} />
     </div>
   );
 }

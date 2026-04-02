@@ -91,8 +91,8 @@ export function DecisionIntelligence() {
 
       {/* Quick action bar */}
       <div className="flex gap-2 mb-4">
-        <button onClick={() => setActiveStep(4)} className="px-3 py-[6px] bg-secondary text-foreground border border-border rounded-lg text-[11px] font-semibold hover:bg-muted transition-colors">Insurance Decision →</button>
-        <button onClick={() => setActiveStep(5)} className="px-3 py-[6px] bg-primary text-primary-foreground rounded-lg text-[11px] font-semibold hover:bg-primary/90 transition-colors">Generate Report</button>
+        <button onClick={() => setActiveStep(3)} className="px-3 py-[6px] bg-secondary text-foreground border border-border rounded-lg text-[11px] font-semibold hover:bg-muted transition-colors">Insurance Decision →</button>
+        <button onClick={() => setActiveStep(4)} className="px-3 py-[6px] bg-primary text-primary-foreground rounded-lg text-[11px] font-semibold hover:bg-primary/90 transition-colors">Generate Report</button>
       </div>
 
       {/* ═══ SECTION 2: KEY RISK INDICATORS ═══ */}

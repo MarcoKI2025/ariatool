@@ -161,7 +161,7 @@ export function EvidenceLog() {
         </div>
       </div>
 
-      <StepNavigation currentStep={8} />
+      <StepNavigation currentStep={7} />
       <AppFooter />
     </div>
   );

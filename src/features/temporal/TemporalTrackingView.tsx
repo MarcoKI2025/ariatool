@@ -231,7 +231,7 @@ export function TemporalTrackingView() {
         Temporal tracking uses local storage. Snapshots persist across sessions but are device-specific. Export functionality planned for v4.4.
       </div>
 
-      <StepNavigation currentStep={9} />
+      <StepNavigation currentStep={8} />
     </div>
   );
 }

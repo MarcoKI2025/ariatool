@@ -73,7 +73,7 @@ export function ModelGovernanceComplete() {
       <ProductRoadmap />
       <AIIncidentsFeed />
 
-      <StepNavigation currentStep={6} />
+      <StepNavigation currentStep={5} />
     </div>
   );
 }
