@@ -82,6 +82,102 @@ export function InsuranceDecision() {
         </div>
       </div>
 
+      {/* ═══ INSURABILITY ASSESSMENT (integrated from Framework) ═══ */}
+      {(() => {
+        const framework = evaluateFramework(inputs, results);
+        const tierColor = framework.overallTier === 1 ? 'text-stable' : framework.overallTier === 2 ? 'text-sensitive' : 'text-fragile';
+        const tierBg = framework.overallTier === 1 ? 'bg-stable/5 border-stable' : framework.overallTier === 2 ? 'bg-sensitive/5 border-sensitive' : 'bg-fragile/5 border-fragile';
+        const tierAction = framework.overallTier === 1 ? 'Accept — Standard Terms' : framework.overallTier === 2 ? 'Refer — Enhanced Terms Required' : 'Decline — Unacceptable Risk';
+        const criticalConditions = framework.conditions.filter(c => c.score >= 2);
+        const passedConditions = framework.conditions.filter(c => c.score === 1);
+
+        return (
+          <div className={`rounded-lg border-2 p-5 mb-4 ${tierBg}`}>
+            <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-foreground" />
+                <span className="text-[14px] font-bold text-foreground">Insurability Assessment</span>
+              </div>
+              <Badge className={`text-[11px] font-bold px-3 py-1 ${
+                framework.overallTier === 1 ? 'bg-stable text-white' :
+                framework.overallTier === 2 ? 'bg-sensitive text-white' :
+                'bg-fragile text-white'
+              }`}>
+                {tierAction}
+              </Badge>
+            </div>
+
+            <p className="text-[12px] text-foreground leading-relaxed mb-3">{framework.summary}</p>
+
+            {framework.criticalConditions.length > 0 && (
+              <Alert variant="destructive" className="border-fragile/30 bg-fragile/5 mb-3">
+                <AlertTriangle className="w-4 h-4" />
+                <AlertDescription className="text-[11px]">
+                  Critical conditions: {framework.criticalConditions.join(', ')}
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {/* Critical findings */}
+            {criticalConditions.length > 0 && (
+              <div className="space-y-2 mb-3">
+                <div className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground">Critical Findings</div>
+                {criticalConditions.map((c) => (
+                  <div key={c.condition} className="flex items-start gap-2 p-3 bg-card border border-border rounded-lg">
+                    <div className="flex-shrink-0 mt-0.5">
+                      {c.score === 3 ? <XCircle className="w-4 h-4 text-fragile" /> : <AlertTriangle className="w-4 h-4 text-sensitive" />}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-[12px] font-semibold text-foreground">{c.condition}</span>
+                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded border ${c.score === 3 ? 'bg-fragile/15 text-fragile border-fragile/30' : 'bg-sensitive/15 text-sensitive border-sensitive/30'}`}>{c.label}</span>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed mb-1">{c.reasoning}</p>
+                      {c.evidence.length > 0 && (
+                        <div className="space-y-0.5">
+                          {c.evidence.map((item, i) => (
+                            <div key={i} className="text-[10px] text-foreground flex items-start gap-1.5">
+                              <span className="text-muted-foreground mt-px">•</span>
+                              <span>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      <div className="text-[10px] text-primary/80 bg-primary/5 rounded px-2 py-1 border border-primary/10 mt-2">
+                        <span className="font-semibold">Recommendation:</span> {c.recommendation}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Passed conditions - collapsible */}
+            {passedConditions.length > 0 && (
+              <Collapsible>
+                <CollapsibleTrigger className="flex items-center gap-2 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer py-1">
+                  <span>▶</span>
+                  <span>Show All Conditions ({framework.conditions.length} total)</span>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-2 space-y-2">
+                  {passedConditions.map((c) => (
+                    <div key={c.condition} className="flex items-center gap-2 p-2 bg-card border border-border rounded-lg">
+                      <CheckCircle2 className="w-4 h-4 text-stable flex-shrink-0" />
+                      <span className="text-[12px] font-medium text-foreground">{c.condition}</span>
+                      <span className="text-[9px] font-bold px-2 py-0.5 rounded border bg-stable/15 text-stable border-stable/30 ml-auto">Strong</span>
+                    </div>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible>
+            )}
+
+            <div className="mt-3 pt-3 border-t border-border/50 text-[10px] text-muted-foreground leading-relaxed">
+              This evaluation applies industry-standard insurability criteria across five key dimensions. Classification follows proven underwriting frameworks adapted for AI-specific risk profiles.
+            </div>
+          </div>
+        );
+      })()}
+
       {/* ═══ 2. JUSTIFICATION CHIPS ═══ */}
       <div className="flex items-center gap-2 mb-4 flex-wrap">
         <span className="px-3 py-[6px] bg-card border border-border rounded-lg text-[10px] font-medium text-muted-foreground">

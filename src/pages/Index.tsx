@@ -173,7 +173,6 @@ function AppContent() {
       case 7: return <PortfolioView />;
       case 8: return <EvidenceLog />;
       case 9: return <TemporalTrackingView />;
-      case 10: return <InsurabilityFramework />;
       default: return <ExposureAnalysis />;
     }
   };
