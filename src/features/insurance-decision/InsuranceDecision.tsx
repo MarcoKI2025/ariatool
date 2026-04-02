@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StepNavigation } from '@/components/shared/StepNavigation';
 import { useApp } from '@/hooks/useAppState';
 import { SectionCard, LockedState, BandBadge, InfoTip } from '@/components/shared/UIComponents';
@@ -11,6 +11,11 @@ import { DependencyShockPanel } from '@/features/shock-simulator/DependencyShock
 import { AppFooter } from '@/components/shared/AppFooter';
 import { SectionDivider } from '@/components/shared/SectionDivider';
 import { computeReinsuranceCapacityPressure } from '@/lib/capitalModel';
+import { evaluateFramework } from '@/features/insurability-framework/frameworkLogic';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { CheckCircle2, AlertTriangle, XCircle, Shield } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export function InsuranceDecision() {
   const { state, setActiveStep } = useApp();
