@@ -17,7 +17,7 @@ export function RiskOverview() {
   return (
     <div>
       <div className="mb-6">
-        <div className="label-xs mb-1.5">Step 2 of 10 · Core Analysis</div>
+        <div className="label-xs mb-1.5">Step 2 of 9 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Risk Overview</h1>
         <p className="text-[13px] text-muted-foreground max-w-[580px] leading-relaxed">
           Structural AI governance risk assessment for {inputs.companyName || 'the assessed entity'}.
