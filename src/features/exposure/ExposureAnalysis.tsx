@@ -309,8 +309,6 @@ export function ExposureAnalysis() {
         </div>
       </div>
 
-      {/* Case Study Library */}
-      <CaseStudyPanel />
 
       {/* Bottom action bar — tighter on mobile */}
       <div className="fixed bottom-0 left-0 lg:left-[240px] right-0 flex flex-col items-center gap-1 sm:gap-2 px-3 sm:px-10 py-2.5 sm:py-5 z-10 bg-background">

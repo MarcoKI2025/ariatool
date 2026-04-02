@@ -108,8 +108,7 @@ export function ExposureResults() {
     return 'bg-stable-bg border-stable-border';
   }
 
-  // Top risk signals from results
-  const topSignals = results.signals?.slice(0, 3) || [
+  const topSignals = [
     { text: components.dr > 0.6 ? 'High delegation ratio — authority substantially transferred to AI systems' : 'Delegation ratio within acceptable bounds', color: components.dr > 0.6 ? 'fragile' : 'stable' },
     { text: components.jd < 0.4 ? 'Low justificatory density — insufficient audit trail coverage' : 'Audit trail coverage adequate', color: components.jd < 0.4 ? 'fragile' : 'stable' },
     { text: components.rc > 0.6 ? 'High reversibility cost — significant exit difficulty detected' : 'Exit flexibility maintained', color: components.rc > 0.6 ? 'fragile' : 'stable' },
