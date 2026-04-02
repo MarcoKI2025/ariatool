@@ -688,7 +688,7 @@ export function InsuranceDecision() {
             ))}
           </div>
           <div>
-            <div className="text-[10px] font-bold tracking-wider uppercase text-primary mb-[14px] pb-[10px] border-b-2 border-primary">Kindermann AI Governance Framework</div>
+            <div className="text-[10px] font-bold tracking-wider uppercase text-primary mb-[14px] pb-[10px] border-b-2 border-primary">ARIA Governance Framework</div>
             {[
               { text: 'Structural risk detection: Quantifies continuation risk, dependency lock-in, and cross-system propagation — invisible to compliance-only approaches.' },
               { text: 'AFI as single structural signal: One number that captures governance fragility, not compliance posture. Designed for underwriting, not checkbox audits.' },
