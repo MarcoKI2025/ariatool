@@ -24,12 +24,15 @@ export function InsuranceDecision() {
   const thresholdPos = Math.min(100, Math.round((afi / 3.0) * 100));
 
   const framework = evaluateFramework(inputs, results);
-  const tierAction = framework.overallTier === 1 ? 'Accept — Standard Terms' : framework.overallTier === 2 ? 'Refer — Enhanced Terms Required' : 'Decline — Unacceptable Risk';
+  // Single source of truth: use the WORST of band-based and framework-based assessment
+  const bandTier = band === 'Fragile' ? 3 : band === 'Sensitive' ? 2 : 1;
+  const effectiveTier = Math.max(bandTier, framework.overallTier) as 1 | 2 | 3;
+
+  const decision = effectiveTier === 3 ? 'DECLINE' : effectiveTier === 2 ? 'REFER' : 'ACCEPT';
+  const decisionBg = effectiveTier === 3 ? 'bg-fragile' : effectiveTier === 2 ? 'bg-sensitive' : 'bg-stable';
+  const tierAction = effectiveTier === 1 ? 'Accept — Standard Terms' : effectiveTier === 2 ? 'Refer — Enhanced Terms Required' : 'Decline — Unacceptable Risk';
   const criticalConditions = framework.conditions.filter(c => c.score >= 2);
   const passedConditions = framework.conditions.filter(c => c.score === 1);
-
-  const decision = band === 'Fragile' ? 'DECLINE' : band === 'Sensitive' ? 'REFER' : 'ACCEPT';
-  const decisionBg = band === 'Fragile' ? 'bg-fragile' : band === 'Sensitive' ? 'bg-sensitive' : 'bg-stable';
 
   return (
     <div>
