@@ -10,7 +10,6 @@ import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
 import { PortfolioView } from '@/features/portfolio/PortfolioView';
 import { EvidenceLog } from '@/features/evidence-log/EvidenceLog';
-import { InsurabilityFramework } from '@/features/insurability-framework/InsurabilityFramework';
 import { TemporalTrackingView } from '@/features/temporal/TemporalTrackingView';
 import { CompanyView } from '@/features/company-view/CompanyView';
 import { CompanyDemoOverlay, DemoPitchOverlay } from '@/features/demo/DemoOverlays';
@@ -174,7 +173,6 @@ function AppContent() {
       case 7: return <PortfolioView />;
       case 8: return <EvidenceLog />;
       case 9: return <TemporalTrackingView />;
-      case 10: return <InsurabilityFramework />;
       default: return <ExposureAnalysis />;
     }
   };

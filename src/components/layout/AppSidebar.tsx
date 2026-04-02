@@ -6,7 +6,7 @@ const NAV_SECTIONS = [
   { label: 'Assessment', steps: [1, 2, 3] },
   { label: 'Results', steps: [4, 5, 6] },
   { label: 'Portfolio', steps: [7, 8] },
-  { label: 'Advanced', steps: [9, 10] },
+  { label: 'Advanced', steps: [9] },
 ];
 
 export function AppSidebar() {

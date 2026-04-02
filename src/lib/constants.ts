@@ -44,7 +44,6 @@ export const NAV_STEPS = [
   { id: 7, title: 'Portfolio View', sublabel: 'Multi-entity · Aggregate AFI', viewId: 'portfolio' },
   { id: 8, title: 'Evidence Log', sublabel: 'Audit trail · Compliance', viewId: 'evidence-log' },
   { id: 9, title: 'Temporal Tracking', sublabel: 'Risk evolution · Snapshots', viewId: 'temporal-tracking' },
-  { id: 10, title: 'Insurability Framework', sublabel: '5 conditions · Tier classification', viewId: 'insurability-framework' },
 ];
 
 export const DEFAULT_ELASTICITIES = {
