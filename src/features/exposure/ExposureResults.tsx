@@ -11,31 +11,25 @@ import { LiveIndicator } from '@/components/shared/LiveIndicator';
 
 import { AppFooter } from '@/components/shared/AppFooter';
 import { StepNavigation } from '@/components/shared/StepNavigation';
-import { DeploymentAuthorization } from '@/components/shared/DeploymentAuthorization';
-import { SystemEvolutionPanel } from '@/components/shared/SystemEvolutionPanel';
-import { computeEvolutionAnalysis } from '@/lib/evolutionEngine';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 export function ExposureResults() {
   const { state, setActiveStep } = useApp();
   const { results, inputs } = state;
 
-  const [adjustments, setAdjustments] = useState({ dr: 0, jd: 0, rc: 0, cd: 0, na: 0, ses: 0 });
-  const hasAdjustments = Object.values(adjustments).some(v => v !== 0);
   const [showSupporting, setShowSupporting] = useState(false);
-
-  const adjFn = (base: number, pct: number) => Math.max(0.01, Math.min(1, base * (1 + pct / 100)));
+  const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
 
   const components = useMemo(() => {
     if (!results) return { dr: 0, jd: 0.5, rc: 0, cd: 0, na: 0.5 };
     return {
-      dr: adjFn(results.components.dr, adjustments.dr),
-      jd: adjFn(results.components.jd, adjustments.jd),
-      rc: adjFn(results.components.rc, adjustments.rc),
-      cd: adjFn(results.components.cd, adjustments.cd),
-      na: adjFn(results.components.na, adjustments.na),
+      dr: results.components.dr,
+      jd: results.components.jd,
+      rc: results.components.rc,
+      cd: results.components.cd,
+      na: results.components.na,
     };
-  }, [results, adjustments]);
+  }, [results]);
 
   const afi = useMemo(() => calcAFI(components.dr, components.jd, components.rc, components.cd, components.na), [components]);
   const band = useMemo(() => getBand(afi), [afi]);
@@ -43,8 +37,6 @@ export function ExposureResults() {
   const structuralScore = useMemo(() => Math.min(99, Math.round(afi * 60)), [afi]);
   const eciTier = useMemo(() => afi < 0.5 ? 0 : afi < 0.85 ? 1 : afi < 1.35 ? 2 : 3, [afi]);
   const eciName = useMemo(() => ['Reversible Tool', 'Persistent Service', 'Institutional Dependency', 'Critical Infrastructure'][eciTier], [eciTier]);
-
-  const evolution = useMemo(() => results ? computeEvolutionAnalysis(inputs, results) : null, [results, inputs]);
 
   if (!results) return null;
 
@@ -82,24 +74,28 @@ export function ExposureResults() {
   };
 
   // ── WHY THIS DECISION — 3 interpretive blocks ──
-  const cascadeLevel = evolution ? (evolution.cascadeRiskScore > 0.6 ? 'Critical' : evolution.cascadeRiskScore > 0.35 ? 'High' : 'Moderate') : 'N/A';
-  const cascadeExplanation = evolution
-    ? (evolution.cascadeRiskScore > 0.6 ? 'Failure propagates rapidly across dependent systems with non-linear amplification at each layer.'
-      : evolution.cascadeRiskScore > 0.35 ? 'Cascade propagation risk exists across connected systems — containment not guaranteed.'
-      : 'Isolated failure modes with limited propagation potential.')
-    : '';
-  const systemicLevel = evolution?.systemicCorrelation || 'N/A';
-  const systemicExplanation = evolution
-    ? (evolution.systemicCorrelation === 'High' ? 'Shared infrastructure dependencies create synchronized failure risk across the portfolio.'
-      : evolution.systemicCorrelation === 'Medium' ? 'Moderate dependency overlap — diversification recommended to reduce correlated exposure.'
-      : 'Limited systemic exposure — dependencies are sufficiently diversified.')
-    : '';
   const governanceExplanation = afi > 1.35
     ? 'Governance framework is structurally inadequate for the level of AI delegation. Oversight decay has exceeded reversibility thresholds.'
     : afi > 0.85
     ? 'Governance gaps are emerging. Delegation is outpacing oversight cadence, creating drift risk.'
     : 'Governance framework is aligned with current delegation levels. Monitoring cadence is sufficient.';
   const governanceLevel = afi > 1.35 ? 'Critical' : afi > 0.85 ? 'Elevated' : 'Adequate';
+
+  // Systemic exposure derived from SCRI
+  const systemicLevel = scri >= 65 ? 'High' : scri >= 35 ? 'Medium' : 'Low';
+  const systemicExplanation = scri >= 65
+    ? 'Shared infrastructure dependencies create synchronized failure risk across the portfolio.'
+    : scri >= 35
+    ? 'Moderate dependency overlap — diversification recommended to reduce correlated exposure.'
+    : 'Limited systemic exposure — dependencies are sufficiently diversified.';
+
+  // Liability exposure derived from ALRI
+  const liabilityLevel = alri >= 60 ? 'Critical' : alri >= 35 ? 'Elevated' : 'Low';
+  const liabilityExplanation = alri >= 60
+    ? 'Multiple liability vectors active — hallucination, bias, and model drift create compounding legal exposure.'
+    : alri >= 35
+    ? 'Liability risk is elevated in specific vectors. Targeted mitigation recommended.'
+    : 'Liability exposure is within manageable bounds. Standard controls sufficient.';
 
   function levelColor(level: string) {
     if (['Critical', 'High'].includes(level)) return 'text-fragile';
@@ -112,6 +108,12 @@ export function ExposureResults() {
     return 'bg-stable-bg border-stable-border';
   }
 
+  const topSignals = [
+    { text: components.dr > 0.6 ? 'High delegation ratio — authority substantially transferred to AI systems' : 'Delegation ratio within acceptable bounds', color: components.dr > 0.6 ? 'fragile' : 'stable' },
+    { text: components.jd < 0.4 ? 'Low justificatory density — insufficient audit trail coverage' : 'Audit trail coverage adequate', color: components.jd < 0.4 ? 'fragile' : 'stable' },
+    { text: components.rc > 0.6 ? 'High reversibility cost — significant exit difficulty detected' : 'Exit flexibility maintained', color: components.rc > 0.6 ? 'fragile' : 'stable' },
+  ];
+
   return (
     <div>
       {/* Entity info */}
@@ -120,6 +122,73 @@ export function ExposureResults() {
         <LiveIndicator label="Live Data" size="sm" />
         <span className="text-[11px] text-secondary-foreground">{inputs.industry} · Analysis run {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
         <button onClick={showEditForm} className="sm:ml-auto inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-primary/30 bg-primary/10 text-[12px] font-semibold text-primary hover:bg-primary/20 transition-colors cursor-pointer">✎ Edit Profile</button>
+      </div>
+
+      {/* ══════════════════════════════════════════════════
+          HERO: AFI Score + Underwriting Action + Top Risk Drivers
+          ══════════════════════════════════════════════════ */}
+      <div className="bg-card border border-border rounded-lg p-5 sm:p-6 mb-6">
+        <div className="flex flex-col md:flex-row items-start gap-5 md:gap-8">
+          {/* AFI Score */}
+          <div className="flex-shrink-0">
+            <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-2">Authority Fragility Index</div>
+            <div className={`text-[56px] sm:text-[72px] font-bold font-mono leading-none tracking-tight ${bandColor}`}>{afi.toFixed(2)}</div>
+            <div className="flex items-center gap-3 mt-2">
+              <BandBadge band={band} size="md" />
+              <span className={`text-[11px] font-bold ${bandColor}`}>{decisionClass}</span>
+            </div>
+          </div>
+
+          {/* Underwriting Action */}
+          <div className="flex-1">
+            <div className={`text-[18px] sm:text-[20px] font-extrabold tracking-tight leading-[1.15] mb-2 ${bandColor}`}>
+              Underwriting Action: {band === 'Fragile' ? 'DECLINE' : band === 'Sensitive' ? 'REFER' : 'ACCEPT'}
+            </div>
+            <div className="text-[12px] text-secondary-foreground leading-[1.6] mb-4 max-w-[500px]">
+              {band === 'Fragile' ? 'This system creates structural risk not captured in current underwriting models. Standard insurance transfer is not recommended.'
+                : band === 'Sensitive' ? 'Structural risk is emerging. Enhanced governance requirements and pricing adjustments required before acceptance.'
+                : 'Structural exposure is within tolerance. Standard terms applicable with routine monitoring.'}
+            </div>
+
+            {/* Top 3 Risk Drivers */}
+            <div className="space-y-2">
+              <div className="text-[9px] font-bold tracking-[0.08em] uppercase text-muted-foreground mb-1">Top Risk Drivers</div>
+              {topSignals.map((sig, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <span className={`text-[11px] font-bold flex-shrink-0 w-5 ${bandColor}`}>{i + 1}.</span>
+                  <span className="text-[11px] text-secondary-foreground leading-[1.5]">{sig.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ECI Tier */}
+          <div className="flex-shrink-0">
+            <div className={`p-3 rounded-lg ${bandBg} border`}>
+              <div className={`text-[22px] font-bold font-mono ${bandColor}`}>ECI-{eciTier}<InfoTip text={TOOLTIPS.eci} /></div>
+              <div className="text-[9px] text-muted-foreground uppercase tracking-wider">{eciName}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Risk Dimensions Summary */}
+        <div className="grid grid-cols-3 gap-3 mt-5 pt-5 border-t border-border">
+          <div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Governance Risk</div>
+            <div className={`text-[20px] font-bold font-mono ${agriColor}`}>{agri}<span className="text-[11px] text-muted-foreground">/100</span></div>
+            <div className={`text-[10px] font-semibold ${agriColor}`}>{agriTier}</div>
+          </div>
+          <div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Liability Risk</div>
+            <div className={`text-[20px] font-bold font-mono ${alriColor}`}>{alri}<span className="text-[11px] text-muted-foreground">/100</span></div>
+            <div className={`text-[10px] font-semibold ${alriColor}`}>{alriTier}</div>
+          </div>
+          <div>
+            <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">Systemic Risk</div>
+            <div className={`text-[20px] font-bold font-mono ${scriColor}`}>{scri}<span className="text-[11px] text-muted-foreground">/100</span></div>
+            <div className={`text-[10px] font-semibold ${scriColor}`}>{scriTier}</div>
+          </div>
+        </div>
       </div>
 
       {/* ══════════════════════════════════════════════════
@@ -132,55 +201,7 @@ export function ExposureResults() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {/* Block 1: Cascade / Recursive Risk */}
-        <div className={`rounded-lg border p-5 ${levelBg(cascadeLevel)}`}>
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Recursive Risk</div>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(cascadeLevel)}`}>{cascadeLevel}</span>
-          </div>
-          <div className="text-[12px] text-foreground font-medium leading-relaxed mb-3">{cascadeExplanation}</div>
-          {evolution && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-[9px] text-muted-foreground w-24">Cascade Score</span>
-                <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full ${evolution.cascadeRiskScore > 0.6 ? 'bg-fragile' : evolution.cascadeRiskScore > 0.35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(evolution.cascadeRiskScore * 100)}%` }} />
-                </div>
-                <span className="text-[10px] font-mono font-bold text-foreground">{Math.round(evolution.cascadeRiskScore * 100)}%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[9px] text-muted-foreground w-24">Amplification</span>
-                <span className="text-[10px] font-mono font-bold text-foreground">{evolution.cascadeAmplification.label}</span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Block 2: Systemic Exposure */}
-        <div className={`rounded-lg border p-5 ${levelBg(systemicLevel)}`}>
-          <div className="flex items-center justify-between mb-3">
-            <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Systemic Exposure</div>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(systemicLevel)}`}>{systemicLevel}</span>
-          </div>
-          <div className="text-[12px] text-foreground font-medium leading-relaxed mb-3">{systemicExplanation}</div>
-          {evolution && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-[9px] text-muted-foreground w-24">Correlation</span>
-                <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full ${evolution.systemicCorrelationScore > 0.6 ? 'bg-fragile' : evolution.systemicCorrelationScore > 0.35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(evolution.systemicCorrelationScore * 100)}%` }} />
-                </div>
-                <span className="text-[10px] font-mono font-bold text-foreground">{Math.round(evolution.systemicCorrelationScore * 100)}%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[9px] text-muted-foreground w-24">Dependency</span>
-                <span className="text-[10px] font-mono font-bold text-foreground">{evolution.dependencyTopology.exposure}</span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Block 3: Governance / Model Weakness */}
+        {/* Block 1: Governance Weakness */}
         <div className={`rounded-lg border p-5 ${levelBg(governanceLevel)}`}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Governance Weakness</div>
@@ -195,16 +216,72 @@ export function ExposureResults() {
               </div>
               <span className={`text-[10px] font-mono font-bold ${bandColor}`}>{afi.toFixed(2)}</span>
             </div>
+          </div>
+        </div>
+
+        {/* Block 2: Systemic Exposure */}
+        <div className={`rounded-lg border p-5 ${levelBg(systemicLevel)}`}>
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Systemic Exposure</div>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(systemicLevel)}`}>{systemicLevel}</span>
+          </div>
+          <div className="text-[12px] text-foreground font-medium leading-relaxed mb-3">{systemicExplanation}</div>
+          <div className="space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-[9px] text-muted-foreground w-24">Exit Risk</span>
-              <span className={`text-[10px] font-mono font-bold ${evolution ? levelColor(evolution.exitRisk.level === 'Structurally Locked-In' ? 'Critical' : evolution.exitRisk.level === 'Partially Reversible' ? 'Elevated' : 'Low') : 'text-muted-foreground'}`}>{evolution?.exitRisk.level || 'N/A'}</span>
+              <span className="text-[9px] text-muted-foreground w-24">SCRI</span>
+              <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
+                <div className={`h-full rounded-full ${scri >= 65 ? 'bg-fragile' : scri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${scri}%` }} />
+              </div>
+              <span className="text-[10px] font-mono font-bold text-foreground">{scri}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Block 3: Liability Exposure */}
+        <div className={`rounded-lg border p-5 ${levelBg(liabilityLevel)}`}>
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-foreground">Liability Exposure</div>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${levelColor(liabilityLevel)}`}>{liabilityLevel}</span>
+          </div>
+          <div className="text-[12px] text-foreground font-medium leading-relaxed mb-3">{liabilityExplanation}</div>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] text-muted-foreground w-24">ALRI</span>
+              <div className="flex-1 h-1.5 bg-border rounded-full overflow-hidden">
+                <div className={`h-full rounded-full ${alri >= 60 ? 'bg-fragile' : alri >= 35 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${alri}%` }} />
+              </div>
+              <span className="text-[10px] font-mono font-bold text-foreground">{alri}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ═══ SYSTEM EVOLUTION PANEL (Risk Authority) ═══ */}
-      <SystemEvolutionPanel />
+      {/* ══════════════════════════════════════════════════
+          TECHNICAL BREAKDOWN (Collapsible)
+          ══════════════════════════════════════════════════ */}
+      <Collapsible open={showTechnicalDetails} onOpenChange={setShowTechnicalDetails}>
+        <CollapsibleTrigger className="w-full flex items-center gap-2 py-3 cursor-pointer text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <span>{showTechnicalDetails ? '▼' : '▶'}</span>
+          <span>Show Technical Breakdown</span>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-3 pb-4">
+          <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-1">AFI Components</div>
+          {[
+            { label: 'DR', value: components.dr, name: 'Delegation Ratio', tooltip: TOOLTIPS.dr },
+            { label: 'JD', value: components.jd, name: 'Justificatory Density', tooltip: TOOLTIPS.jd },
+            { label: 'RC', value: components.rc, name: 'Reversibility Cost', tooltip: TOOLTIPS.rc },
+            { label: 'CD', value: components.cd, name: 'Continuation Density', tooltip: TOOLTIPS.cd },
+          ].map((c, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <span className="text-[9px] font-mono text-muted-foreground w-5 cursor-help" title={c.name}>{c.label}<InfoTip text={c.tooltip} /></span>
+              <div className="flex-1 h-[4px] bg-border rounded overflow-hidden">
+                <div className={`h-full rounded ${c.value > 0.7 ? 'bg-fragile' : c.value > 0.5 ? 'bg-sensitive' : 'bg-stable'}`} style={{ width: `${Math.round(c.value * 100)}%` }} />
+              </div>
+              <span className="text-[9px] font-mono text-muted-foreground w-6 text-right">{Math.round(c.value * 100)}</span>
+            </div>
+          ))}
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* ══════════════════════════════════════════════════
           SECTION 3: SUPPORTING ANALYSIS (collapsible)
@@ -219,17 +296,6 @@ export function ExposureResults() {
         </CollapsibleTrigger>
 
         <CollapsibleContent className="space-y-4">
-          {/* Deployment Authorization */}
-          <DeploymentAuthorization
-            band={band}
-            afi={afi}
-            structuralScore={structuralScore}
-            components={components}
-            agri={results.agri}
-            alri={results.alri}
-            companyName={inputs.companyName || 'Entity'}
-          />
-
           {/* Hero section */}
           <div className="bg-card border border-border rounded-lg overflow-hidden">
             <div className="p-6 pb-4">
@@ -332,13 +398,13 @@ export function ExposureResults() {
             </div>
           </div>
 
-          {/* AGRI / ALRI / SCRI */}
+          {/* AGRI / ALRI / SCRI / CAI */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {[
               { icon: '⚡', label: 'AGRI — Agentic Risk', score: agri, tier: agriTier, color: agriColor, desc: 'Multi-agent orchestration · Tool-call authority · Persistent memory', tooltip: TOOLTIPS.agri },
               { icon: '⚠', label: 'ALRI — Liability Risk', score: alri, tier: alriTier, color: alriColor, desc: 'Hallucination · Deepfake · Prompt injection · Model drift · Bias', tooltip: TOOLTIPS.alri },
               { icon: '🌐', label: 'SCRI — Systemic Concentration', score: scri, tier: scriTier, color: scriColor, desc: 'Cloud · Model · GPU provider concentration risk', tooltip: TOOLTIPS.scri },
-              { icon: '🔗', label: 'CAI — Cascade Amplification', score: results.cai, tier: results.cai >= 60 ? 'Cascading' : results.cai >= 30 ? 'Amplifying' : 'Contained', color: results.cai >= 60 ? 'text-fragile' : results.cai >= 30 ? 'text-sensitive' : 'text-stable', desc: results.cai >= 60 ? 'Failure propagates rapidly across connected systems with non-linear amplification.' : results.cai >= 30 ? 'Moderate cascade potential — containment possible but not guaranteed.' : 'Failure modes are contained with limited propagation potential.', tooltip: 'Cascade Amplification Index — measures how fast failure propagates across connected AI systems. Based on integration depth, action density, multi-agent orchestration, tool authority, and human checkpoint density.' },
+              { icon: '🔗', label: 'CAI — Cascade Amplification', score: results.cai, tier: results.cai >= 60 ? 'Cascading' : results.cai >= 30 ? 'Amplifying' : 'Contained', color: results.cai >= 60 ? 'text-fragile' : results.cai >= 30 ? 'text-sensitive' : 'text-stable', desc: results.cai >= 60 ? 'Failure propagates rapidly across connected systems with non-linear amplification.' : results.cai >= 30 ? 'Moderate cascade potential — containment possible but not guaranteed.' : 'Failure modes are contained with limited propagation potential.', tooltip: 'Cascade Amplification Index — measures how fast failure propagates across connected AI systems.' },
             ].map((panel, i) => (
               <div key={i} className="bg-card border border-border rounded-[10px] p-4">
                 <div className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mb-2">{panel.icon} {panel.label}<InfoTip text={panel.tooltip} /></div>
@@ -400,35 +466,6 @@ export function ExposureResults() {
             </div>
           </div>
 
-          {/* Adjustment Sliders */}
-          <SectionCard title="Real-Time Adjustment Controls" icon="🎛️" subtitle="Adjust AFI component weights to explore sensitivity.">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4">
-              {[
-                { key: 'dr', label: 'DR Adjustment', desc: 'Delegation Ratio modifier' },
-                { key: 'jd', label: 'JD Adjustment', desc: 'Justificatory Density modifier' },
-                { key: 'rc', label: 'RC Adjustment', desc: 'Reversibility Cost modifier' },
-                { key: 'cd', label: 'CD Adjustment', desc: 'Continuation Density modifier' },
-                { key: 'na', label: 'NA Adjustment', desc: 'Network Amplification modifier' },
-                { key: 'ses', label: 'SES Adjustment', desc: 'Structural Exposure modifier' },
-              ].map((s) => (
-                <div key={s.key} className="py-2">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[11px] font-medium text-foreground">{s.label}</span>
-                    <span className="text-[10px] font-mono font-bold text-primary">{adjustments[s.key as keyof typeof adjustments] > 0 ? '+' : ''}{adjustments[s.key as keyof typeof adjustments]}%</span>
-                  </div>
-                  <div className="text-[9px] text-muted-foreground mb-1">{s.desc}</div>
-                  <input type="range" min={-50} max={50} step={5} value={adjustments[s.key as keyof typeof adjustments]}
-                    onChange={(e) => setAdjustments(prev => ({ ...prev, [s.key]: parseInt(e.target.value) }))}
-                    className="w-full my-1" />
-                </div>
-              ))}
-            </div>
-            {hasAdjustments && (
-              <button onClick={() => setAdjustments({ dr: 0, jd: 0, rc: 0, cd: 0, na: 0, ses: 0 })}
-                className="text-[10px] text-primary hover:underline font-medium">Reset all adjustments</button>
-            )}
-          </SectionCard>
-
           {/* Sensitivity Table */}
           <SectionCard title="Sensitivity Analysis — Variable Impact Ranking"  subtitle="Which input variables have the largest marginal impact on AFI?">
             <div className="overflow-x-auto">
@@ -466,7 +503,7 @@ export function ExposureResults() {
           </SectionCard>
 
           {/* Scenario Robustness */}
-          <SectionCard title="Scenario Robustness Check" icon="🔬" subtitle="How stable is the current classification under parameter perturbation?">
+          <SectionCard title="Scenario Robustness Check" subtitle="How stable is the current classification under parameter perturbation?">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
                 { scenario: 'Oversight +1 Level', result: inputs.oversightLevel < 5 ? 'Potential band improvement' : 'Already at maximum', change: inputs.oversightLevel < 5 ? '↓ AFI' : '—', color: 'text-stable' },
