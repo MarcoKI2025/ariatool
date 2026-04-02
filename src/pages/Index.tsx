@@ -166,13 +166,12 @@ function AppContent() {
     switch (activeStep) {
       case 1: return <ExposureAnalysis />;
       case 2: return <DecisionIntelligence />;
-      case 3: return <ScenarioSimulation />;
-      case 4: return <InsuranceDecision />;
-      case 5: return <ExecutiveReport />;
-      case 6: return <ModelGovernance />;
-      case 7: return <PortfolioView />;
-      case 8: return <EvidenceLog />;
-      case 9: return <TemporalTrackingView />;
+      case 3: return <InsuranceDecision />;
+      case 4: return <ExecutiveReport />;
+      case 5: return <ModelGovernance />;
+      case 6: return <PortfolioView />;
+      case 7: return <EvidenceLog />;
+      case 8: return <TemporalTrackingView />;
       default: return <ExposureAnalysis />;
     }
   };
