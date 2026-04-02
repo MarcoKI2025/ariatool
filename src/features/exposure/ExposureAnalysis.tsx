@@ -9,7 +9,7 @@ import { SLIDER_CATEGORIES } from '@/lib/sliderConfigs';
 import { TOOLTIPS } from '@/lib/tooltips';
 import { ExposureInputs } from '@/lib/types';
 
-import { CaseStudyPanel } from '@/features/case-studies/CaseStudyPanel';
+
 import { LoadingOverlay } from '@/components/shared/LoadingOverlay';
 import { RealCaseFactsCard } from '@/features/demo/RealCaseFactsCard';
 
