@@ -24,7 +24,7 @@ export function DependencyMap() {
   return (
     <div className="overflow-x-hidden">
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 3 of 9 · Infrastructure</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 3 of 8 · Infrastructure</div>
         <h1 className="text-xl font-semibold text-foreground mb-1 tracking-tight">Dependency Map</h1>
         <p className="text-[12px] text-muted-foreground max-w-[580px] leading-relaxed">
           Interactive network visualization of shared dependencies across portfolio entities.

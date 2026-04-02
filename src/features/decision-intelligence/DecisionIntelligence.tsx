@@ -34,7 +34,7 @@ export function DecisionIntelligence() {
     <div>
       {/* Page header */}
       <div className="mb-6">
-        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 9 · Core Analysis</div>
+        <div className="text-[9px] font-bold tracking-[0.12em] uppercase text-muted-foreground mb-[6px]">Step 2 of 8 · Core Analysis</div>
         <h1 className="text-2xl font-bold text-foreground mb-1 tracking-tight">Decision Intelligence</h1>
         <p className="text-[13px] text-secondary-foreground max-w-[580px] leading-relaxed">
           Structural risk assessment for {inputs.companyName || 'the assessed entity'} — AFI scoring, risk classification, and governance signals.
@@ -91,8 +91,8 @@ export function DecisionIntelligence() {
 
       {/* Quick action bar */}
       <div className="flex gap-2 mb-4">
-        <button onClick={() => setActiveStep(4)} className="px-3 py-[6px] bg-secondary text-foreground border border-border rounded-lg text-[11px] font-semibold hover:bg-muted transition-colors">Insurance Decision →</button>
-        <button onClick={() => setActiveStep(5)} className="px-3 py-[6px] bg-primary text-primary-foreground rounded-lg text-[11px] font-semibold hover:bg-primary/90 transition-colors">Generate Report</button>
+        <button onClick={() => setActiveStep(3)} className="px-3 py-[6px] bg-secondary text-foreground border border-border rounded-lg text-[11px] font-semibold hover:bg-muted transition-colors">Insurance Decision →</button>
+        <button onClick={() => setActiveStep(4)} className="px-3 py-[6px] bg-primary text-primary-foreground rounded-lg text-[11px] font-semibold hover:bg-primary/90 transition-colors">Generate Report</button>
       </div>
 
       {/* ═══ SECTION 2: KEY RISK INDICATORS ═══ */}

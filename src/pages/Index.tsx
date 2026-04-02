@@ -4,7 +4,7 @@ import { AppSidebar } from '@/components/layout/AppSidebar';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { ExposureAnalysis } from '@/features/exposure/ExposureAnalysis';
 import { DecisionIntelligence } from '@/features/decision-intelligence/DecisionIntelligence';
-import { ScenarioSimulation } from '@/features/scenario-simulation/ScenarioSimulation';
+
 import { InsuranceDecision } from '@/features/insurance-decision/InsuranceDecision';
 import { ExecutiveReport } from '@/features/executive-report/ExecutiveReport';
 import { ModelGovernance } from '@/features/model-governance/ModelGovernance';
@@ -166,13 +166,12 @@ function AppContent() {
     switch (activeStep) {
       case 1: return <ExposureAnalysis />;
       case 2: return <DecisionIntelligence />;
-      case 3: return <ScenarioSimulation />;
-      case 4: return <InsuranceDecision />;
-      case 5: return <ExecutiveReport />;
-      case 6: return <ModelGovernance />;
-      case 7: return <PortfolioView />;
-      case 8: return <EvidenceLog />;
-      case 9: return <TemporalTrackingView />;
+      case 3: return <InsuranceDecision />;
+      case 4: return <ExecutiveReport />;
+      case 5: return <ModelGovernance />;
+      case 6: return <PortfolioView />;
+      case 7: return <EvidenceLog />;
+      case 8: return <TemporalTrackingView />;
       default: return <ExposureAnalysis />;
     }
   };

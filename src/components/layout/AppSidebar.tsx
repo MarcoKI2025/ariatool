@@ -3,10 +3,10 @@ import { useApp } from '@/hooks/useAppState';
 import { NAV_STEPS } from '@/lib/constants';
 
 const NAV_SECTIONS = [
-  { label: 'Assessment', steps: [1, 2, 3] },
-  { label: 'Results', steps: [4, 5, 6] },
-  { label: 'Portfolio', steps: [7, 8] },
-  { label: 'Advanced', steps: [9] },
+  { label: 'Assessment', steps: [1, 2] },
+  { label: 'Results', steps: [3, 4, 5] },
+  { label: 'Portfolio', steps: [6, 7] },
+  { label: 'Advanced', steps: [8] },
 ];
 
 export function AppSidebar() {

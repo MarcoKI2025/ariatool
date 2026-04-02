@@ -37,13 +37,12 @@ export const INDUSTRIES = [
 export const NAV_STEPS = [
   { id: 1, title: 'Exposure Analysis', sublabel: 'Configure AI profile · 29 inputs', viewId: 'exposure' },
   { id: 2, title: 'Decision Intelligence', sublabel: 'AFI · ECI · AGRI · ALRI · SCRI', viewId: 'decision-intelligence' },
-  { id: 3, title: 'Scenario Simulation', sublabel: 'Stress test · What-if · Sensitivity', viewId: 'scenario-simulation' },
-  { id: 4, title: 'Insurance Decision', sublabel: 'Loss envelope · Underwriting signals', viewId: 'insurance-decision' },
-  { id: 5, title: 'Executive Report', sublabel: 'Board summary · ORSA export', viewId: 'executive-report' },
-  { id: 6, title: 'Model Governance', sublabel: 'Methodology · Assumptions · Roadmap', viewId: 'model-governance' },
-  { id: 7, title: 'Portfolio View', sublabel: 'Multi-entity · Aggregate AFI', viewId: 'portfolio' },
-  { id: 8, title: 'Evidence Log', sublabel: 'Audit trail · Compliance', viewId: 'evidence-log' },
-  { id: 9, title: 'Temporal Tracking', sublabel: 'Risk evolution · Snapshots', viewId: 'temporal-tracking' },
+  { id: 3, title: 'Insurance Decision', sublabel: 'Loss envelope · Underwriting signals', viewId: 'insurance-decision' },
+  { id: 4, title: 'Executive Report', sublabel: 'Board summary · ORSA export', viewId: 'executive-report' },
+  { id: 5, title: 'Model Governance', sublabel: 'Methodology · Assumptions · Roadmap', viewId: 'model-governance' },
+  { id: 6, title: 'Portfolio View', sublabel: 'Multi-entity · Aggregate AFI', viewId: 'portfolio' },
+  { id: 7, title: 'Evidence Log', sublabel: 'Audit trail · Compliance', viewId: 'evidence-log' },
+  { id: 8, title: 'Temporal Tracking', sublabel: 'Risk evolution · Snapshots', viewId: 'temporal-tracking' },
 ];
 
 export const DEFAULT_ELASTICITIES = {

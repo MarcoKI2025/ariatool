@@ -563,7 +563,7 @@ export function ExecutiveReport() {
         </div>
       </div>
 
-      <StepNavigation currentStep={5} />
+      <StepNavigation currentStep={4} />
       <AppFooter />
     </div>
   );

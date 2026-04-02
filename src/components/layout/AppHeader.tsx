@@ -3,10 +3,9 @@ import { useApp } from '@/hooks/useAppState';
 import { MethodologyModal } from '@/features/methodology/MethodologyModal';
 
 const VIEW_TITLES: Record<string, string> = {
-  '1': 'Exposure Analysis', '2': 'Decision Intelligence', '3': 'Scenario Simulation',
-  '4': 'Insurance Decision', '5': 'Executive Report', '6': 'Model Governance',
-  '7': 'Portfolio View', '8': 'Evidence Log', '9': 'Integration Hub',
-  '10': 'Recursive Risk', '11': 'Temporal Tracking', company: 'Company View',
+  '1': 'Exposure Analysis', '2': 'Decision Intelligence', '3': 'Insurance Decision',
+  '4': 'Executive Report', '5': 'Model Governance', '6': 'Portfolio View',
+  '7': 'Evidence Log', '8': 'Temporal Tracking', company: 'Company View',
 };
 
 export function AppHeader() {
