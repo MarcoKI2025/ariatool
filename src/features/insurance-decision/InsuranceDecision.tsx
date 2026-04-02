@@ -63,9 +63,9 @@ export function InsuranceDecision() {
         </div>
 
         <div className="text-[13px] text-foreground leading-[1.5] mb-4">
-          {band === 'Fragile'
+          {effectiveTier === 3
             ? 'Structural risk exceeds underwriting tolerance. Coverage requires committee review, mandatory remediation, and significant premium loading.'
-            : band === 'Sensitive'
+            : effectiveTier === 2
             ? 'Elevated risk profile. Conditional coverage available with governance improvement timeline and precautionary premium loading.'
             : 'Standard risk profile within tolerance. Normal underwriting terms apply with routine monitoring.'}
         </div>
